@@ -1,0 +1,48 @@
+# Secrets: API keys live in backend/.env. Commit .env.example instead.
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+/__pycache__/
+__pycache__
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+
+# Demo database: rebuilt automatically on first start (or with run.ps1 -Reset)
+backend/data/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+
+# Frontend: installed and built by run.ps1
+node_modules/
+dist/
+*.tsbuildinfo
+.vite/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Office lock files, and the superseded deck (Munim-v3.pptx is the current one)
+~$*
+docs/Munim-v2.pptx

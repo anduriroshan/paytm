@@ -1,0 +1,3362 @@
+[
+ {
+  "seq": 1,
+  "case_id": "CASE-0003",
+  "type": "case",
+  "at": "2026-11-14T01:21:28.189",
+  "data": {
+   "case_id": "CASE-0003",
+   "merchant": {
+    "id": "M1003",
+    "business_name": "Patel Mobile Point",
+    "owner_name": "Hitesh Patel",
+    "city": "Ahmedabad",
+    "language": "hi-Latn",
+    "category": "electronics"
+   },
+   "complaint_text": "Bhai mere loan ki EDI 12 November ko do baar kat gayi — ₹1,250 aur phir se ₹1,250. Ek wapas karo please.",
+   "channel": "chat",
+   "scenario_id": "duplicate_edi"
+  }
+ },
+ {
+  "seq": 2,
+  "case_id": "CASE-0003",
+  "type": "message",
+  "at": "2026-11-14T01:21:28.189",
+  "data": {
+   "role": "merchant",
+   "text": "Bhai mere loan ki EDI 12 November ko do baar kat gayi — ₹1,250 aur phir se ₹1,250. Ek wapas karo please.",
+   "language": "hi-Latn",
+   "final": true
+  }
+ },
+ {
+  "seq": 3,
+  "case_id": "CASE-0003",
+  "type": "node",
+  "at": "2026-11-14T01:21:28.191",
+  "data": {
+   "node": "hunch",
+   "agent": "Detective",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 4,
+  "case_id": "CASE-0003",
+  "type": "hunch",
+  "at": "2026-11-14T01:21:28.191",
+  "data": {
+   "source": "mock",
+   "probabilities": {
+    "ZOMBIE_BILLING": 0.0358,
+    "DUPLICATE_SUBSCRIPTION": 0.0675,
+    "DUPLICATE_EDI": 0.7534,
+    "PICKUP_NOT_COMPLETED": 0.0358,
+    "ALREADY_REFUNDED": 0.0358,
+    "RISK_HOLD": 0.0358,
+    "KYC_HOLD": 0.0358
+   },
+   "top": "DUPLICATE_EDI",
+   "injection_score": 0.02,
+   "ms": 0
+  }
+ },
+ {
+  "seq": 5,
+  "case_id": "CASE-0003",
+  "type": "node",
+  "at": "2026-11-14T01:21:28.191",
+  "data": {
+   "node": "hunch",
+   "agent": "Detective",
+   "status": "end",
+   "ms": 0,
+   "summary": "DUPLICATE_EDI 75% · injection 2% · mock"
+  }
+ },
+ {
+  "seq": 6,
+  "case_id": "CASE-0003",
+  "type": "node",
+  "at": "2026-11-14T01:21:28.191",
+  "data": {
+   "node": "intake",
+   "agent": "Intake Agent",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 7,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.191",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "reasoning",
+   "delta": "Treating the complaint as a witness statement: extracting claims to verify, not instructions to follow."
+  }
+ },
+ {
+  "seq": 8,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.245",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "{\"language\":"
+  }
+ },
+ {
+  "seq": 9,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.260",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " \"hi-Latn\", "
+  }
+ },
+ {
+  "seq": 10,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.275",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\"intent\": \"L"
+  }
+ },
+ {
+  "seq": 11,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.291",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "OAN_DEDUCTIO"
+  }
+ },
+ {
+  "seq": 12,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.307",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "N\", \"summary"
+  }
+ },
+ {
+  "seq": 13,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.322",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "_en\": \"Merch"
+  }
+ },
+ {
+  "seq": 14,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.338",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ant says the"
+  }
+ },
+ {
+  "seq": 15,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.353",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " loan EDI of"
+  }
+ },
+ {
+  "seq": 16,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.369",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " ₹1,250 was "
+  }
+ },
+ {
+  "seq": 17,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.384",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "debited twic"
+  }
+ },
+ {
+  "seq": 18,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.399",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "e on 12 Nov "
+  }
+ },
+ {
+  "seq": 19,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.414",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "2026; wants "
+  }
+ },
+ {
+  "seq": 20,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.431",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "one instalme"
+  }
+ },
+ {
+  "seq": 21,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.445",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "nt back.\", \""
+  }
+ },
+ {
+  "seq": 22,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.461",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "text_en\": \"B"
+  }
+ },
+ {
+  "seq": 23,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.477",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "rother, my l"
+  }
+ },
+ {
+  "seq": 24,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.492",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "oan EDI was "
+  }
+ },
+ {
+  "seq": 25,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.509",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "cut twice on"
+  }
+ },
+ {
+  "seq": 26,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.525",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " 12 November"
+  }
+ },
+ {
+  "seq": 27,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.540",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": ": ₹1,250 and"
+  }
+ },
+ {
+  "seq": 28,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.556",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " again ₹1,25"
+  }
+ },
+ {
+  "seq": 29,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.571",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "0. Please re"
+  }
+ },
+ {
+  "seq": 30,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.587",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "turn one.\", "
+  }
+ },
+ {
+  "seq": 31,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.602",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\"claims\": [{"
+  }
+ },
+ {
+  "seq": 32,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.618",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\"kind\": \"DUP"
+  }
+ },
+ {
+  "seq": 33,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.633",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "LICATE_CHARG"
+  }
+ },
+ {
+  "seq": 34,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.647",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "E\", \"text\": "
+  }
+ },
+ {
+  "seq": 35,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.663",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\"EDI 12 Nove"
+  }
+ },
+ {
+  "seq": 36,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.679",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "mber ko do b"
+  }
+ },
+ {
+  "seq": 37,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.694",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "aar kat gayi"
+  }
+ },
+ {
+  "seq": 38,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.710",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\", \"date\": \""
+  }
+ },
+ {
+  "seq": 39,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.726",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "2026-11-12\","
+  }
+ },
+ {
+  "seq": 40,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.741",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " \"amount_pai"
+  }
+ },
+ {
+  "seq": 41,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.757",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "se\": null, \""
+  }
+ },
+ {
+  "seq": 42,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.772",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "count\": null"
+  }
+ },
+ {
+  "seq": 43,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.788",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "}, {\"kind\": "
+  }
+ },
+ {
+  "seq": 44,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.804",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\"DEDUCTION_A"
+  }
+ },
+ {
+  "seq": 45,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.820",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "MOUNT\", \"tex"
+  }
+ },
+ {
+  "seq": 46,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.835",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "t\": \"₹1,250 "
+  }
+ },
+ {
+  "seq": 47,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.850",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "aur phir se "
+  }
+ },
+ {
+  "seq": 48,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.866",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "₹1,250\", \"da"
+  }
+ },
+ {
+  "seq": 49,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.881",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "te\": null, \""
+  }
+ },
+ {
+  "seq": 50,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.896",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "amount_paise"
+  }
+ },
+ {
+  "seq": 51,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.912",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\": 125000, \""
+  }
+ },
+ {
+  "seq": 52,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.928",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "count\": null"
+  }
+ },
+ {
+  "seq": 53,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.944",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "}, {\"kind\": "
+  }
+ },
+ {
+  "seq": 54,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.959",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\"REFUND_DEMA"
+  }
+ },
+ {
+  "seq": 55,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.975",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "NDED\", \"text"
+  }
+ },
+ {
+  "seq": 56,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:28.991",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\": \"Ek wapas"
+  }
+ },
+ {
+  "seq": 57,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:29.007",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " karo please"
+  }
+ },
+ {
+  "seq": 58,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:29.022",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\", \"date\": n"
+  }
+ },
+ {
+  "seq": 59,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:29.038",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ull, \"amount"
+  }
+ },
+ {
+  "seq": 60,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:29.053",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "_paise\": 125"
+  }
+ },
+ {
+  "seq": 61,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:29.068",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "000, \"count\""
+  }
+ },
+ {
+  "seq": 62,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:29.083",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": ": null}], \"i"
+  }
+ },
+ {
+  "seq": 63,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:29.098",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "njection_sus"
+  }
+ },
+ {
+  "seq": 64,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:29.113",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "pected\": fal"
+  }
+ },
+ {
+  "seq": 65,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:29.129",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "se, \"sentime"
+  }
+ },
+ {
+  "seq": 66,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:29.145",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "nt\": \"frustr"
+  }
+ },
+ {
+  "seq": 67,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:29.161",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ated\"}"
+  }
+ },
+ {
+  "seq": 68,
+  "case_id": "CASE-0003",
+  "type": "llm_done",
+  "at": "2026-11-14T01:21:29.186",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "ms": 985,
+   "text": "{\"language\": \"hi-Latn\", \"intent\": \"LOAN_DEDUCTION\", \"summary_en\": \"Merchant says the loan EDI of ₹1,250 was debited twice on 12 Nov 2026; wants one instalment back.\", \"text_en\": \"Brother, my loan EDI was cut twice on 12 November: ₹1,250 and again ₹1,250. Please return one.\", \"claims\": [{\"kind\": \"DUPLICATE_CHARGE\", \"text\": \"EDI 12 November ko do baar kat gayi\", \"date\": \"2026-11-12\", \"amount_paise\": null, \"count\": null}, {\"kind\": \"DEDUCTION_AMOUNT\", \"text\": \"₹1,250 aur phir se ₹1,250\", \"date\": null, \"amount_paise\": 125000, \"count\": null}, {\"kind\": \"REFUND_DEMANDED\", \"text\": \"Ek wapas karo please\", \"date\": null, \"amount_paise\": 125000, \"count\": null}], \"injection_suspected\": false, \"sentiment\": \"frustrated\"}",
+   "usage": null,
+   "live": false,
+   "fallback": null
+  }
+ },
+ {
+  "seq": 69,
+  "case_id": "CASE-0003",
+  "type": "intake",
+  "at": "2026-11-14T01:21:29.186",
+  "data": {
+   "language": "hi-Latn",
+   "intent": "LOAN_DEDUCTION",
+   "summary_en": "Merchant says the loan EDI of ₹1,250 was debited twice on 12 Nov 2026; wants one instalment back.",
+   "text_en": "Brother, my loan EDI was cut twice on 12 November: ₹1,250 and again ₹1,250. Please return one.",
+   "claims": [
+    {
+     "kind": "DUPLICATE_CHARGE",
+     "text": "EDI 12 November ko do baar kat gayi",
+     "date": "2026-11-12",
+     "amount_paise": null,
+     "count": null
+    },
+    {
+     "kind": "DEDUCTION_AMOUNT",
+     "text": "₹1,250 aur phir se ₹1,250",
+     "date": null,
+     "amount_paise": 125000,
+     "count": null
+    },
+    {
+     "kind": "REFUND_DEMANDED",
+     "text": "Ek wapas karo please",
+     "date": null,
+     "amount_paise": 125000,
+     "count": null
+    }
+   ],
+   "injection_suspected": false,
+   "sentiment": "frustrated"
+  }
+ },
+ {
+  "seq": 70,
+  "case_id": "CASE-0003",
+  "type": "node",
+  "at": "2026-11-14T01:21:29.186",
+  "data": {
+   "node": "intake",
+   "agent": "Intake Agent",
+   "status": "end",
+   "ms": 994,
+   "summary": "LOAN_DEDUCTION · 3 claims · hi-Latn"
+  }
+ },
+ {
+  "seq": 71,
+  "case_id": "CASE-0003",
+  "type": "node",
+  "at": "2026-11-14T01:21:29.207",
+  "data": {
+   "node": "trail",
+   "agent": "Detective",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 72,
+  "case_id": "CASE-0003",
+  "type": "trail",
+  "at": "2026-11-14T01:21:29.207",
+  "data": {
+   "merchant_id": "M1003",
+   "window_start": "2026-09-01",
+   "window_end": "2026-11-14",
+   "disputed": [
+    "ledger_entries:235",
+    "ledger_entries:236"
+   ],
+   "nodes": [
+    {
+     "id": "merchants:M1003",
+     "table": "merchants",
+     "row_id": "M1003",
+     "kind": "merchant",
+     "label": "M1003 · Patel Mobile Point · Hitesh Patel · Ahmedabad",
+     "at": "2025-06-02",
+     "amount_paise": null,
+     "flags": [],
+     "data": {
+      "id": "M1003",
+      "business_name": "Patel Mobile Point",
+      "owner_name": "Hitesh Patel",
+      "city": "Ahmedabad",
+      "category": "electronics",
+      "status": "ACTIVE"
+     }
+    },
+    {
+     "id": "loans:LN-1003",
+     "table": "loans",
+     "row_id": "LN-1003",
+     "kind": "loan",
+     "label": "Loan LN-1003 · Arthveda Finance · ₹1,50,000 · EDI ₹1,250/day · since 01 Sep 2026 · ACTIVE",
+     "at": "2026-09-01",
+     "amount_paise": null,
+     "flags": [],
+     "data": {
+      "id": "LN-1003",
+      "merchant_id": "M1003",
+      "lender": "Arthveda Finance",
+      "principal_paise": 15000000,
+      "edi_amount_paise": 125000,
+      "tenure_days": 150,
+      "status": "ACTIVE",
+      "disbursed_at": "2026-09-01"
+     }
+    },
+    {
+     "id": "mandates:MDT-1003-L",
+     "table": "mandates",
+     "row_id": "MDT-1003-L",
+     "kind": "mandate",
+     "label": "Mandate MDT-1003-L · UMRN PYTM26090100000005 · up to ₹2,500 · ACTIVE",
+     "at": "2026-09-01",
+     "amount_paise": null,
+     "flags": [],
+     "data": {
+      "id": "MDT-1003-L",
+      "merchant_id": "M1003",
+      "purpose": "LOAN_EDI",
+      "subscription_id": null,
+      "loan_id": "LN-1003",
+      "umrn": "PYTM26090100000005",
+      "max_amount_paise": 250000,
+      "status": "ACTIVE",
+      "created_at": "2026-09-01"
+     }
+    },
+    {
+     "id": "ledger_entries:235",
+     "table": "ledger_entries",
+     "row_id": "235",
+     "kind": "money",
+     "label": "₹1,250 EDI debit · 12 Nov 2026 06:00:41 · NACH2611120000235",
+     "at": "2026-11-12T06:00:41",
+     "amount_paise": 125000,
+     "flags": [
+      "TIMEOUT_BUT_DEBITED",
+      "DISPUTED"
+     ],
+     "data": {
+      "id": 235,
+      "merchant_id": "M1003",
+      "txn_ref": "NACH2611120000235",
+      "entry_type": "EDI_DEBIT",
+      "direction": "DEBIT",
+      "amount_paise": 125000,
+      "status": "SUCCESS",
+      "source_type": "loan",
+      "source_id": "LN-1003",
+      "mandate_id": "MDT-1003-L",
+      "value_date": "2026-11-12",
+      "posted_at": "2026-11-12T06:00:41",
+      "narration": "Loan EDI LN-1003 · Arthveda Finance · due 12 Nov",
+      "refund_of": null
+     }
+    },
+    {
+     "id": "ledger_entries:236",
+     "table": "ledger_entries",
+     "row_id": "236",
+     "kind": "money",
+     "label": "₹1,250 EDI debit · 12 Nov 2026 06:15:09 · NACH2611120000236",
+     "at": "2026-11-12T06:15:09",
+     "amount_paise": 125000,
+     "flags": [
+      "DUPLICATE",
+      "DISPUTED"
+     ],
+     "data": {
+      "id": 236,
+      "merchant_id": "M1003",
+      "txn_ref": "NACH2611120000236",
+      "entry_type": "EDI_DEBIT",
+      "direction": "DEBIT",
+      "amount_paise": 125000,
+      "status": "SUCCESS",
+      "source_type": "loan",
+      "source_id": "LN-1003",
+      "mandate_id": "MDT-1003-L",
+      "value_date": "2026-11-12",
+      "posted_at": "2026-11-12T06:15:09",
+      "narration": "Loan EDI LN-1003 · Arthveda Finance · due 12 Nov",
+      "refund_of": null
+     }
+    },
+    {
+     "id": "edi_attempts:72",
+     "table": "edi_attempts",
+     "row_id": "72",
+     "kind": "edi_attempt",
+     "label": "EDI 12 Nov · attempt 1 · TIMEOUT at 06:00:30 · GW20261112000072",
+     "at": "2026-11-12T06:00:30",
+     "amount_paise": null,
+     "flags": [
+      "TIMEOUT_BUT_DEBITED"
+     ],
+     "data": {
+      "id": 72,
+      "loan_id": "LN-1003",
+      "due_date": "2026-11-12",
+      "attempt_no": 1,
+      "gateway_ref": "GW20261112000072",
+      "status": "TIMEOUT",
+      "responded_at": "2026-11-12T06:00:30",
+      "ledger_entry_id": 235
+     }
+    },
+    {
+     "id": "edi_attempts:73",
+     "table": "edi_attempts",
+     "row_id": "73",
+     "kind": "edi_attempt",
+     "label": "EDI 12 Nov · attempt 2 · SUCCESS at 06:15:04 · GW20261112000073",
+     "at": "2026-11-12T06:15:04",
+     "amount_paise": null,
+     "flags": [],
+     "data": {
+      "id": 73,
+      "loan_id": "LN-1003",
+      "due_date": "2026-11-12",
+      "attempt_no": 2,
+      "gateway_ref": "GW20261112000073",
+      "status": "SUCCESS",
+      "responded_at": "2026-11-12T06:15:04",
+      "ledger_entry_id": 236
+     }
+    },
+    {
+     "id": "ledger_entries:164..237",
+     "table": "ledger_entries",
+     "row_id": "164..237",
+     "kind": "money",
+     "label": "72 other EDI debits on LN-1003 (02 Sep – 13 Nov 2026), all single",
+     "at": "2026-11-13T06:00:40",
+     "amount_paise": 9000000,
+     "flags": [
+      "SUMMARY"
+     ],
+     "data": {
+      "count": 72,
+      "ledger_ids": [
+       164,
+       165,
+       166,
+       167,
+       168,
+       169,
+       170,
+       171,
+       172,
+       173,
+       174,
+       175,
+       176,
+       177,
+       178,
+       179,
+       180,
+       181,
+       182,
+       183,
+       184,
+       185,
+       186,
+       187,
+       188,
+       189,
+       190,
+       191,
+       192,
+       193,
+       194,
+       195,
+       196,
+       197,
+       198,
+       199,
+       200,
+       201,
+       202,
+       203,
+       204,
+       205,
+       206,
+       207,
+       208,
+       209,
+       210,
+       211,
+       212,
+       213,
+       214,
+       215,
+       216,
+       217,
+       218,
+       219,
+       220,
+       221,
+       222,
+       223,
+       224,
+       225,
+       226,
+       227,
+       228,
+       229,
+       230,
+       231,
+       232,
+       233,
+       234,
+       237
+      ]
+     }
+    }
+   ],
+   "edges": [
+    {
+     "source": "merchants:M1003",
+     "target": "loans:LN-1003",
+     "label": "borrowed"
+    },
+    {
+     "source": "mandates:MDT-1003-L",
+     "target": "loans:LN-1003",
+     "label": "authorised for"
+    },
+    {
+     "source": "ledger_entries:235",
+     "target": "mandates:MDT-1003-L",
+     "label": "collected via"
+    },
+    {
+     "source": "ledger_entries:236",
+     "target": "mandates:MDT-1003-L",
+     "label": "collected via"
+    },
+    {
+     "source": "loans:LN-1003",
+     "target": "edi_attempts:72",
+     "label": "attempted"
+    },
+    {
+     "source": "edi_attempts:72",
+     "target": "ledger_entries:235",
+     "label": "posted"
+    },
+    {
+     "source": "edi_attempts:72",
+     "target": "edi_attempts:73",
+     "label": "retried"
+    },
+    {
+     "source": "edi_attempts:73",
+     "target": "ledger_entries:236",
+     "label": "posted"
+    },
+    {
+     "source": "ledger_entries:164..237",
+     "target": "mandates:MDT-1003-L",
+     "label": "collected via"
+    }
+   ]
+  }
+ },
+ {
+  "seq": 73,
+  "case_id": "CASE-0003",
+  "type": "node",
+  "at": "2026-11-14T01:21:29.207",
+  "data": {
+   "node": "trail",
+   "agent": "Detective",
+   "status": "end",
+   "ms": 19,
+   "summary": "8 linked records · 2 disputed movements"
+  }
+ },
+ {
+  "seq": 74,
+  "case_id": "CASE-0003",
+  "type": "node",
+  "at": "2026-11-14T01:21:29.224",
+  "data": {
+   "node": "statements",
+   "agent": "Detective",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 75,
+  "case_id": "CASE-0003",
+  "type": "statements",
+  "at": "2026-11-14T01:21:29.224",
+  "data": {
+   "checks": [
+    {
+     "claim": {
+      "kind": "DUPLICATE_CHARGE",
+      "text": "EDI 12 November ko do baar kat gayi",
+      "date": "2026-11-12",
+      "amount_paise": null,
+      "count": null
+     },
+     "status": "VERIFIED",
+     "finding": "The 12 Nov 2026 EDI of ₹1,250 on LN-1003 was debited twice: at 06:00:41 (attempt 1, TIMEOUT) and 06:15:09 (attempt 2, SUCCESS).",
+     "evidence": [
+      {
+       "table": "ledger_entries",
+       "row_id": "235",
+       "label": "₹1,250 EDI debit · 12 Nov 2026 06:00:41 · NACH2611120000235",
+       "at": "2026-11-12T06:00:41",
+       "amount_paise": 125000
+      },
+      {
+       "table": "ledger_entries",
+       "row_id": "236",
+       "label": "₹1,250 EDI debit · 12 Nov 2026 06:15:09 · NACH2611120000236",
+       "at": "2026-11-12T06:15:09",
+       "amount_paise": 125000
+      }
+     ]
+    },
+    {
+     "claim": {
+      "kind": "DEDUCTION_AMOUNT",
+      "text": "₹1,250 aur phir se ₹1,250",
+      "date": null,
+      "amount_paise": 125000,
+      "count": null
+     },
+     "status": "VERIFIED",
+     "finding": "Both disputed EDI debits were ₹1,250 (12 Nov 2026).",
+     "evidence": [
+      {
+       "table": "ledger_entries",
+       "row_id": "235",
+       "label": "₹1,250 EDI debit · 12 Nov 2026 06:00:41 · NACH2611120000235",
+       "at": "2026-11-12T06:00:41",
+       "amount_paise": 125000
+      },
+      {
+       "table": "ledger_entries",
+       "row_id": "236",
+       "label": "₹1,250 EDI debit · 12 Nov 2026 06:15:09 · NACH2611120000236",
+       "at": "2026-11-12T06:15:09",
+       "amount_paise": 125000
+      }
+     ]
+    },
+    {
+     "claim": {
+      "kind": "REFUND_DEMANDED",
+      "text": "Ek wapas karo please",
+      "date": null,
+      "amount_paise": 125000,
+      "count": null
+     },
+     "status": "VERIFIED",
+     "finding": "₹1,250 matches the 1 wrongful EDI debit not yet refunded (12 Nov 2026, ₹1,250).",
+     "evidence": [
+      {
+       "table": "ledger_entries",
+       "row_id": "236",
+       "label": "₹1,250 EDI debit · 12 Nov 2026 06:15:09 · NACH2611120000236",
+       "at": "2026-11-12T06:15:09",
+       "amount_paise": 125000
+      }
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "seq": 76,
+  "case_id": "CASE-0003",
+  "type": "node",
+  "at": "2026-11-14T01:21:29.224",
+  "data": {
+   "node": "statements",
+   "agent": "Detective",
+   "status": "end",
+   "ms": 16,
+   "summary": "3 verified"
+  }
+ },
+ {
+  "seq": 77,
+  "case_id": "CASE-0003",
+  "type": "node",
+  "at": "2026-11-14T01:21:29.236",
+  "data": {
+   "node": "lineup",
+   "agent": "Detective",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 78,
+  "case_id": "CASE-0003",
+  "type": "suspect",
+  "at": "2026-11-14T01:21:29.347",
+  "data": {
+   "suspect_id": "DUPLICATE_EDI",
+   "title": "Loan instalment debited twice",
+   "kind": "FAULT",
+   "status": "MATCH",
+   "summary": "Loan LN-1003's 12 Nov 2026 EDI of ₹1,250 was debited twice: attempt 1 timed out at 06:00:30 yet the bank debited ₹1,250 at 06:00:41, and the retry debited ₹1,250 again at 06:15:09, so ₹1,250 is owed back.",
+   "evidence": [
+    {
+     "table": "edi_attempts",
+     "row_id": "72",
+     "label": "LN-1003 12 Nov Attempt 1 · TIMEOUT at 06:00:30 · GW20261112000072",
+     "at": "2026-11-12T06:00:30",
+     "amount_paise": null
+    },
+    {
+     "table": "edi_attempts",
+     "row_id": "73",
+     "label": "LN-1003 12 Nov Attempt 2 · SUCCESS at 06:15:04 · GW20261112000073",
+     "at": "2026-11-12T06:15:04",
+     "amount_paise": null
+    },
+    {
+     "table": "ledger_entries",
+     "row_id": "235",
+     "label": "₹1,250 EDI debit · 12 Nov 2026 06:00:41 · NACH2611120000235",
+     "at": "2026-11-12T06:00:41",
+     "amount_paise": 125000
+    },
+    {
+     "table": "ledger_entries",
+     "row_id": "236",
+     "label": "₹1,250 EDI debit · 12 Nov 2026 06:15:09 · NACH2611120000236",
+     "at": "2026-11-12T06:15:09",
+     "amount_paise": 125000
+    }
+   ],
+   "damages_ledger_ids": [
+    236
+   ],
+   "damages_paise": 125000,
+   "targets": {
+    "loan_id": "LN-1003"
+   },
+   "remedies": [
+    "REFUND_DEBITS"
+   ],
+   "sweepable": true,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 79,
+  "case_id": "CASE-0003",
+  "type": "suspect",
+  "at": "2026-11-14T01:21:29.457",
+  "data": {
+   "suspect_id": "ALREADY_REFUNDED",
+   "title": "Already refunded",
+   "kind": "INNOCENT",
+   "status": "ELIMINATED",
+   "summary": "None of the 2 debits at issue (12 Nov 2026, ₹2,500) has been refunded yet.",
+   "evidence": [
+    {
+     "table": "ledger_entries",
+     "row_id": "235",
+     "label": "₹1,250 EDI debit · 12 Nov 2026 06:00:41 · NACH2611120000235",
+     "at": "2026-11-12T06:00:41",
+     "amount_paise": 125000
+    },
+    {
+     "table": "ledger_entries",
+     "row_id": "236",
+     "label": "₹1,250 EDI debit · 12 Nov 2026 06:15:09 · NACH2611120000236",
+     "at": "2026-11-12T06:15:09",
+     "amount_paise": 125000
+    }
+   ],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {},
+   "remedies": [],
+   "sweepable": false,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 80,
+  "case_id": "CASE-0003",
+  "type": "suspect",
+  "at": "2026-11-14T01:21:29.566",
+  "data": {
+   "suspect_id": "ZOMBIE_BILLING",
+   "title": "Billing continued after device return",
+   "kind": "FAULT",
+   "status": "NOT_APPLICABLE",
+   "summary": "Not tested: the complaint is about loan EDI, not Soundbox rent.",
+   "evidence": [],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {},
+   "remedies": [],
+   "sweepable": true,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 81,
+  "case_id": "CASE-0003",
+  "type": "suspect",
+  "at": "2026-11-14T01:21:29.675",
+  "data": {
+   "suspect_id": "DUPLICATE_SUBSCRIPTION",
+   "title": "Two subscriptions on one device",
+   "kind": "FAULT",
+   "status": "NOT_APPLICABLE",
+   "summary": "Not tested: the complaint is about loan EDI, not Soundbox rent.",
+   "evidence": [],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {},
+   "remedies": [],
+   "sweepable": true,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 82,
+  "case_id": "CASE-0003",
+  "type": "suspect",
+  "at": "2026-11-14T01:21:29.784",
+  "data": {
+   "suspect_id": "PICKUP_NOT_COMPLETED",
+   "title": "Return requested but never collected",
+   "kind": "INNOCENT",
+   "status": "NOT_APPLICABLE",
+   "summary": "Not tested: the complaint is about loan EDI, not Soundbox rent.",
+   "evidence": [],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {},
+   "remedies": [],
+   "sweepable": false,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 83,
+  "case_id": "CASE-0003",
+  "type": "suspect",
+  "at": "2026-11-14T01:21:29.894",
+  "data": {
+   "suspect_id": "RISK_HOLD",
+   "title": "Settlement held by risk",
+   "kind": "HOLD",
+   "status": "NOT_APPLICABLE",
+   "summary": "Not tested: the complaint is about loan EDI, not settlements.",
+   "evidence": [],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {},
+   "remedies": [],
+   "sweepable": false,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 84,
+  "case_id": "CASE-0003",
+  "type": "suspect",
+  "at": "2026-11-14T01:21:30.003",
+  "data": {
+   "suspect_id": "KYC_HOLD",
+   "title": "Settlement held for KYC",
+   "kind": "HOLD",
+   "status": "NOT_APPLICABLE",
+   "summary": "Not tested: the complaint is about loan EDI, not settlements.",
+   "evidence": [],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {},
+   "remedies": [],
+   "sweepable": false,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 85,
+  "case_id": "CASE-0003",
+  "type": "node",
+  "at": "2026-11-14T01:21:30.003",
+  "data": {
+   "node": "lineup",
+   "agent": "Detective",
+   "status": "end",
+   "ms": 778,
+   "summary": "MATCH: DUPLICATE_EDI · 1 eliminated"
+  }
+ },
+ {
+  "seq": 86,
+  "case_id": "CASE-0003",
+  "type": "node",
+  "at": "2026-11-14T01:21:30.011",
+  "data": {
+   "node": "verdict",
+   "agent": "Detective",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 87,
+  "case_id": "CASE-0003",
+  "type": "node",
+  "at": "2026-11-14T01:21:30.011",
+  "data": {
+   "node": "improvise",
+   "agent": "Detective",
+   "status": "skip",
+   "summary": "a known suspect matched; no probes needed"
+  }
+ },
+ {
+  "seq": 88,
+  "case_id": "CASE-0003",
+  "type": "verdict",
+  "at": "2026-11-14T01:21:30.011",
+  "data": {
+   "outcome": "REFUND_DUE",
+   "culprits": [
+    "DUPLICATE_EDI"
+   ],
+   "headline": "Refund due: ₹1,250 for the duplicate EDI debit on loan LN-1003 (12 Nov 2026), after the gateway timed out but the bank still debited.",
+   "smoking_gun": [
+    {
+     "table": "edi_attempts",
+     "row_id": "72",
+     "label": "LN-1003 12 Nov Attempt 1 · TIMEOUT at 06:00:30 · GW20261112000072",
+     "at": "2026-11-12T06:00:30",
+     "amount_paise": null
+    },
+    {
+     "table": "edi_attempts",
+     "row_id": "73",
+     "label": "LN-1003 12 Nov Attempt 2 · SUCCESS at 06:15:04 · GW20261112000073",
+     "at": "2026-11-12T06:15:04",
+     "amount_paise": null
+    },
+    {
+     "table": "ledger_entries",
+     "row_id": "235",
+     "label": "₹1,250 EDI debit · 12 Nov 2026 06:00:41 · NACH2611120000235",
+     "at": "2026-11-12T06:00:41",
+     "amount_paise": 125000
+    },
+    {
+     "table": "ledger_entries",
+     "row_id": "236",
+     "label": "₹1,250 EDI debit · 12 Nov 2026 06:15:09 · NACH2611120000236",
+     "at": "2026-11-12T06:15:09",
+     "amount_paise": 125000
+    }
+   ],
+   "damages_ledger_ids": [
+    236
+   ],
+   "damages_paise": 125000,
+   "targets": {
+    "loan_id": "LN-1003"
+   },
+   "remedies": [
+    "REFUND_DEBITS"
+   ],
+   "confidence": "HIGH",
+   "sweepable_suspect": "DUPLICATE_EDI"
+  }
+ },
+ {
+  "seq": 89,
+  "case_id": "CASE-0003",
+  "type": "node",
+  "at": "2026-11-14T01:21:30.011",
+  "data": {
+   "node": "verdict",
+   "agent": "Detective",
+   "status": "end",
+   "ms": 7,
+   "summary": "REFUND_DUE (HIGH) · damages ₹1,250"
+  }
+ },
+ {
+  "seq": 90,
+  "case_id": "CASE-0003",
+  "type": "node",
+  "at": "2026-11-14T01:21:30.012",
+  "data": {
+   "node": "propose",
+   "agent": "Resolver Agent",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 91,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.012",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "reasoning",
+   "delta": "Drafting remedies from the verdict. I have no authority; the Action Firewall re-checks every rupee."
+  }
+ },
+ {
+  "seq": 92,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.064",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "{\"actions\": "
+  }
+ },
+ {
+  "seq": 93,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.080",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "[{\"action_ty"
+  }
+ },
+ {
+  "seq": 94,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.095",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "pe\": \"REFUND"
+  }
+ },
+ {
+  "seq": 95,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.111",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "_DEBITS\", \"a"
+  }
+ },
+ {
+  "seq": 96,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.127",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "mount_paise\""
+  }
+ },
+ {
+  "seq": 97,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.142",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": ": 125000, \"l"
+  }
+ },
+ {
+  "seq": 98,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.158",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "edger_entry_"
+  }
+ },
+ {
+  "seq": 99,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.173",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ids\": [236],"
+  }
+ },
+ {
+  "seq": 100,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.189",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " \"target_id\""
+  }
+ },
+ {
+  "seq": 101,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.205",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": ": null, \"tea"
+  }
+ },
+ {
+  "seq": 102,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.220",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "m\": null, \"r"
+  }
+ },
+ {
+  "seq": 103,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.236",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "eason\": \"Ref"
+  }
+ },
+ {
+  "seq": 104,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.252",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "und the 1 wr"
+  }
+ },
+ {
+  "seq": 105,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.267",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ongful debit"
+  }
+ },
+ {
+  "seq": 106,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.282",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "(s) identifi"
+  }
+ },
+ {
+  "seq": 107,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.298",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ed by the ve"
+  }
+ },
+ {
+  "seq": 108,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.314",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "rdict (₹1,25"
+  }
+ },
+ {
+  "seq": 109,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.329",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "0).\"}], \"rat"
+  }
+ },
+ {
+  "seq": 110,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.345",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ionale\": \"Re"
+  }
+ },
+ {
+  "seq": 111,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.360",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "fund due: ₹1"
+  }
+ },
+ {
+  "seq": 112,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.376",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": ",250 for the"
+  }
+ },
+ {
+  "seq": 113,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.391",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " duplicate E"
+  }
+ },
+ {
+  "seq": 114,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.406",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "DI debit on "
+  }
+ },
+ {
+  "seq": 115,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.422",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "loan LN-1003"
+  }
+ },
+ {
+  "seq": 116,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.438",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " (12 Nov 202"
+  }
+ },
+ {
+  "seq": 117,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.453",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "6), after th"
+  }
+ },
+ {
+  "seq": 118,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.469",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "e gateway ti"
+  }
+ },
+ {
+  "seq": 119,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.484",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "med out but "
+  }
+ },
+ {
+  "seq": 120,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.499",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "the bank sti"
+  }
+ },
+ {
+  "seq": 121,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.515",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ll debited. "
+  }
+ },
+ {
+  "seq": 122,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.530",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "The merchant"
+  }
+ },
+ {
+  "seq": 123,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.546",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "'s account o"
+  }
+ },
+ {
+  "seq": 124,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.562",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "f events is "
+  }
+ },
+ {
+  "seq": 125,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.577",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "credible, so"
+  }
+ },
+ {
+  "seq": 126,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.593",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " refund what"
+  }
+ },
+ {
+  "seq": 127,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.608",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " they lost.\""
+  }
+ },
+ {
+  "seq": 128,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.624",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "}"
+  }
+ },
+ {
+  "seq": 129,
+  "case_id": "CASE-0003",
+  "type": "llm_done",
+  "at": "2026-11-14T01:21:30.651",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "ms": 628,
+   "text": "{\"actions\": [{\"action_type\": \"REFUND_DEBITS\", \"amount_paise\": 125000, \"ledger_entry_ids\": [236], \"target_id\": null, \"team\": null, \"reason\": \"Refund the 1 wrongful debit(s) identified by the verdict (₹1,250).\"}], \"rationale\": \"Refund due: ₹1,250 for the duplicate EDI debit on loan LN-1003 (12 Nov 2026), after the gateway timed out but the bank still debited. The merchant's account of events is credible, so refund what they lost.\"}",
+   "usage": null,
+   "live": false,
+   "fallback": null
+  }
+ },
+ {
+  "seq": 130,
+  "case_id": "CASE-0003",
+  "type": "proposal",
+  "at": "2026-11-14T01:21:30.651",
+  "data": {
+   "actions": [
+    {
+     "action_type": "REFUND_DEBITS",
+     "amount_paise": 125000,
+     "ledger_entry_ids": [
+      236
+     ],
+     "target_id": null,
+     "team": null,
+     "reason": "Refund the 1 wrongful debit(s) identified by the verdict (₹1,250)."
+    }
+   ],
+   "rationale": "Refund due: ₹1,250 for the duplicate EDI debit on loan LN-1003 (12 Nov 2026), after the gateway timed out but the bank still debited. The merchant's account of events is credible, so refund what they lost."
+  }
+ },
+ {
+  "seq": 131,
+  "case_id": "CASE-0003",
+  "type": "node",
+  "at": "2026-11-14T01:21:30.651",
+  "data": {
+   "node": "propose",
+   "agent": "Resolver Agent",
+   "status": "end",
+   "ms": 638,
+   "summary": "REFUND_DEBITS ₹1,250"
+  }
+ },
+ {
+  "seq": 132,
+  "case_id": "CASE-0003",
+  "type": "node",
+  "at": "2026-11-14T01:21:30.657",
+  "data": {
+   "node": "firewall",
+   "agent": "Action Firewall",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 133,
+  "case_id": "CASE-0003",
+  "type": "firewall",
+  "at": "2026-11-14T01:21:30.657",
+  "data": {
+   "decision": "ALLOW",
+   "actions": [
+    {
+     "proposed": {
+      "action_type": "REFUND_DEBITS",
+      "amount_paise": 125000,
+      "ledger_entry_ids": [
+       236
+      ],
+      "target_id": null,
+      "team": null,
+      "reason": "Refund the 1 wrongful debit(s) identified by the verdict (₹1,250)."
+     },
+     "final": {
+      "action_type": "REFUND_DEBITS",
+      "amount_paise": 125000,
+      "ledger_entry_ids": [
+       236
+      ],
+      "target_id": null,
+      "team": null,
+      "reason": "Refund the 1 wrongful debit(s) identified by the verdict (₹1,250)."
+     },
+     "decision": "ALLOW",
+     "checks": [
+      {
+       "id": "allowlist",
+       "label": "Known action type",
+       "status": "PASS",
+       "detail": "REFUND_DEBITS is on Munim's list of allowed actions."
+      },
+      {
+       "id": "remedy_match",
+       "label": "Permitted remedy for the verdict",
+       "status": "PASS",
+       "detail": "REFUND_DEBITS is a permitted remedy for DUPLICATE_EDI."
+      },
+      {
+       "id": "hard_deny",
+       "label": "Hard-deny rules",
+       "status": "PASS",
+       "detail": "The verdict is REFUND_DUE, so a refund is not hard-denied."
+      },
+      {
+       "id": "ownership",
+       "label": "Belongs to this merchant",
+       "status": "PASS",
+       "detail": "Ledger entry 236 belongs to Patel Mobile Point (M1003)."
+      },
+      {
+       "id": "evidence_binding",
+       "label": "Bound to verdict evidence",
+       "status": "PASS",
+       "detail": "Every proposed ledger id is a damage named by the verdict: the EDI debit on 12 Nov 2026."
+      },
+      {
+       "id": "amount_recompute",
+       "label": "Amount recomputed from ledger",
+       "status": "PASS",
+       "detail": "₹1,250 matches the ledger: the EDI debit on 12 Nov 2026."
+      },
+      {
+       "id": "idempotency",
+       "label": "Not already done",
+       "status": "PASS",
+       "detail": "None of these debits has been refunded before and no identical refund exists."
+      },
+      {
+       "id": "preconditions",
+       "label": "Preconditions hold",
+       "status": "PASS",
+       "detail": "All 1 entry are successful debits that can be refunded."
+      },
+      {
+       "id": "limits",
+       "label": "Within auto-approval limits",
+       "status": "PASS",
+       "detail": "₹1,250 is within the ₹2,000 per-action limit, and the merchant's 30-day automatic total would be ₹1,250 of ₹5,000."
+      },
+      {
+       "id": "injection",
+       "label": "Prompt-injection guard",
+       "status": "PASS",
+       "detail": "No manipulation signals in the complaint (injection score 0.02)."
+      },
+      {
+       "id": "confidence",
+       "label": "Verdict confidence",
+       "status": "PASS",
+       "detail": "The verdict is HIGH confidence, computed from ledger rows."
+      }
+     ],
+     "idempotency_key": "abcaabcbb018ad54"
+    }
+   ]
+  }
+ },
+ {
+  "seq": 134,
+  "case_id": "CASE-0003",
+  "type": "node",
+  "at": "2026-11-14T01:21:30.657",
+  "data": {
+   "node": "firewall",
+   "agent": "Action Firewall",
+   "status": "end",
+   "ms": 5,
+   "summary": "ALLOW: REFUND_DEBITS→ALLOW"
+  }
+ },
+ {
+  "seq": 135,
+  "case_id": "CASE-0003",
+  "type": "node",
+  "at": "2026-11-14T01:21:30.668",
+  "data": {
+   "node": "execute",
+   "agent": "Executor",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 136,
+  "case_id": "CASE-0003",
+  "type": "execution",
+  "at": "2026-11-14T01:21:30.668",
+  "data": {
+   "results": [
+    {
+     "action_id": 89,
+     "action_type": "REFUND_DEBITS",
+     "status": "EXECUTED",
+     "amount_paise": 125000,
+     "detail": "Refunded ₹1,250 to Patel Mobile Point as 1 credit for the the EDI debit on 12 Nov 2026.",
+     "ledger_entry_ids": [
+      8373
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "seq": 137,
+  "case_id": "CASE-0003",
+  "type": "node",
+  "at": "2026-11-14T01:21:30.668",
+  "data": {
+   "node": "execute",
+   "agent": "Executor",
+   "status": "end",
+   "ms": 10,
+   "summary": "1 executed"
+  }
+ },
+ {
+  "seq": 138,
+  "case_id": "CASE-0003",
+  "type": "node",
+  "at": "2026-11-14T01:21:30.670",
+  "data": {
+   "node": "respond",
+   "agent": "Communicator Agent",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 139,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.670",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "reasoning",
+   "delta": "Writing to the merchant in Hinglish: facts from the case file only; executed vs pending kept apart."
+  }
+ },
+ {
+  "seq": 140,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.719",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "Namaste "
+  }
+ },
+ {
+  "seq": 141,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.735",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "Hitesh "
+  }
+ },
+ {
+  "seq": 142,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.750",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "Patel "
+  }
+ },
+ {
+  "seq": 143,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.766",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ji, "
+  }
+ },
+ {
+  "seq": 144,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.781",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "Aapki "
+  }
+ },
+ {
+  "seq": 145,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.797",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "shikayat "
+  }
+ },
+ {
+  "seq": 146,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.813",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "sahi "
+  }
+ },
+ {
+  "seq": 147,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.829",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "hai. "
+  }
+ },
+ {
+  "seq": 148,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.844",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "12 "
+  }
+ },
+ {
+  "seq": 149,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.859",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "Nov "
+  }
+ },
+ {
+  "seq": 150,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.874",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ko "
+  }
+ },
+ {
+  "seq": 151,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.890",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "aapki "
+  }
+ },
+ {
+  "seq": 152,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.905",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "loan "
+  }
+ },
+ {
+  "seq": 153,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.921",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "EDI "
+  }
+ },
+ {
+  "seq": 154,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.936",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "galti "
+  }
+ },
+ {
+  "seq": 155,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.952",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "se "
+  }
+ },
+ {
+  "seq": 156,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.967",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "do "
+  }
+ },
+ {
+  "seq": 157,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.983",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "baar "
+  }
+ },
+ {
+  "seq": 158,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:30.998",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "kat "
+  }
+ },
+ {
+  "seq": 159,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.014",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "gayi "
+  }
+ },
+ {
+  "seq": 160,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.030",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "thi "
+  }
+ },
+ {
+  "seq": 161,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.045",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "— yeh "
+  }
+ },
+ {
+  "seq": 162,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.061",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "hamari "
+  }
+ },
+ {
+  "seq": 163,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.077",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "galti "
+  }
+ },
+ {
+  "seq": 164,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.092",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "thi. "
+  }
+ },
+ {
+  "seq": 165,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.107",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "₹1,250 "
+  }
+ },
+ {
+  "seq": 166,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.122",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "aapke "
+  }
+ },
+ {
+  "seq": 167,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.138",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "account "
+  }
+ },
+ {
+  "seq": 168,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.154",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "mein "
+  }
+ },
+ {
+  "seq": 169,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.170",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "wapas "
+  }
+ },
+ {
+  "seq": 170,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.185",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "bhej "
+  }
+ },
+ {
+  "seq": 171,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.201",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "diye "
+  }
+ },
+ {
+  "seq": 172,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.216",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "gaye "
+  }
+ },
+ {
+  "seq": 173,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.232",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "hain. "
+  }
+ },
+ {
+  "seq": 174,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.247",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "Takleef "
+  }
+ },
+ {
+  "seq": 175,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.263",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ke "
+  }
+ },
+ {
+  "seq": 176,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.278",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "liye "
+  }
+ },
+ {
+  "seq": 177,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.294",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "maafi "
+  }
+ },
+ {
+  "seq": 178,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.310",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "chahte "
+  }
+ },
+ {
+  "seq": 179,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.326",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "hain. "
+  }
+ },
+ {
+  "seq": 180,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.342",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "Case "
+  }
+ },
+ {
+  "seq": 181,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.358",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ID: "
+  }
+ },
+ {
+  "seq": 182,
+  "case_id": "CASE-0003",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.373",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "CASE-0003"
+  }
+ },
+ {
+  "seq": 183,
+  "case_id": "CASE-0003",
+  "type": "llm_done",
+  "at": "2026-11-14T01:21:31.389",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "ms": 719,
+   "text": "Namaste Hitesh Patel ji, Aapki shikayat sahi hai. 12 Nov ko aapki loan EDI galti se do baar kat gayi thi — yeh hamari galti thi. ₹1,250 aapke account mein wapas bhej diye gaye hain. Takleef ke liye maafi chahte hain. Case ID: CASE-0003",
+   "usage": null,
+   "live": false,
+   "fallback": null
+  }
+ },
+ {
+  "seq": 184,
+  "case_id": "CASE-0003",
+  "type": "message",
+  "at": "2026-11-14T01:21:31.389",
+  "data": {
+   "role": "munim",
+   "text": "Namaste Hitesh Patel ji, Aapki shikayat sahi hai. 12 Nov ko aapki loan EDI galti se do baar kat gayi thi — yeh hamari galti thi. ₹1,250 aapke account mein wapas bhej diye gaye hain. Takleef ke liye maafi chahte hain. Case ID: CASE-0003",
+   "en": "Hello Hitesh Patel ji. You are right. Your loan EDI was debited twice on 12 Nov — that was our error. We have refunded ₹1,250 to your account. We are sorry for the trouble. Case ref: CASE-0003",
+   "language": "hi-Latn",
+   "final": true
+  }
+ },
+ {
+  "seq": 185,
+  "case_id": "CASE-0003",
+  "type": "node",
+  "at": "2026-11-14T01:21:31.389",
+  "data": {
+   "node": "respond",
+   "agent": "Communicator Agent",
+   "status": "end",
+   "ms": 719,
+   "summary": "44 words · hi-Latn · mock"
+  }
+ },
+ {
+  "seq": 186,
+  "case_id": "CASE-0003",
+  "type": "node",
+  "at": "2026-11-14T01:21:31.421",
+  "data": {
+   "node": "sweep",
+   "agent": "Detective",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 187,
+  "case_id": "CASE-0003",
+  "type": "sweep",
+  "at": "2026-11-14T01:21:31.421",
+  "data": {
+   "sweep_id": "SWP-0003",
+   "suspect_id": "DUPLICATE_EDI",
+   "merchant_count": 5,
+   "total_paise": 112000,
+   "victims": [
+    {
+     "merchant_id": "M2019",
+     "business_name": "Sri Krishna Electronics",
+     "city": "Siliguri",
+     "damages_paise": 16000,
+     "ledger_entry_ids": [
+      1338
+     ],
+     "targets": {
+      "loan_id": "LN-2019"
+     }
+    },
+    {
+     "merchant_id": "M2042",
+     "business_name": "Jai Mata Di Bakery",
+     "city": "Aurangabad",
+     "damages_paise": 23000,
+     "ledger_entry_ids": [
+      2439
+     ],
+     "targets": {
+      "loan_id": "LN-2042"
+     }
+    },
+    {
+     "merchant_id": "M2093",
+     "business_name": "Agarwal Textiles",
+     "city": "Varanasi",
+     "damages_paise": 19000,
+     "ledger_entry_ids": [
+      4648
+     ],
+     "targets": {
+      "loan_id": "LN-2093"
+     }
+    },
+    {
+     "merchant_id": "M2114",
+     "business_name": "City Super Bazaar",
+     "city": "Indore",
+     "damages_paise": 31000,
+     "ledger_entry_ids": [
+      5472
+     ],
+     "targets": {
+      "loan_id": "LN-2114"
+     }
+    },
+    {
+     "merchant_id": "M2176",
+     "business_name": "Famous General Store",
+     "city": "Chennai",
+     "damages_paise": 23000,
+     "ledger_entry_ids": [
+      8156
+     ],
+     "targets": {
+      "loan_id": "LN-2176"
+     }
+    }
+   ],
+   "action_ids": [
+    90,
+    91,
+    92,
+    93,
+    94
+   ]
+  }
+ },
+ {
+  "seq": 188,
+  "case_id": "CASE-0003",
+  "type": "node",
+  "at": "2026-11-14T01:21:31.421",
+  "data": {
+   "node": "sweep",
+   "agent": "Detective",
+   "status": "end",
+   "ms": 30,
+   "summary": "DUPLICATE_EDI in 5 more merchants · ₹1,120 queued for sign-off"
+  }
+ },
+ {
+  "seq": 189,
+  "case_id": "CASE-0003",
+  "type": "done",
+  "at": "2026-11-14T01:21:31.429",
+  "data": {
+   "case_id": "CASE-0003",
+   "status": "RESOLVED",
+   "outcome": "REFUND_DUE",
+   "decision": "ALLOW",
+   "ms": 3240
+  }
+ },
+ {
+  "seq": 190,
+  "case_id": "CASE-0003",
+  "type": "message",
+  "at": "2026-11-14T01:21:31.435",
+  "data": {
+   "role": "team",
+   "text": "When will the money reach them?",
+   "en": "When will the money reach them?",
+   "language": "en",
+   "final": true,
+   "kind": "chat"
+  }
+ },
+ {
+  "seq": 191,
+  "case_id": "CASE-0003",
+  "type": "llm_done",
+  "at": "2026-11-14T01:21:31.435",
+  "data": {
+   "node": "chat",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "ms": 0,
+   "text": "{\"question_en\": \"When will the money reach them?\", \"answer\": \"₹1,250 was credited to Hitesh's account on 14 Nov. It shows in their passbook.\", \"reply\": \"\", \"sources\": [\"Refund ₹1,250\"], \"new_case\": false}",
+   "usage": null,
+   "live": false,
+   "fallback": null
+  }
+ },
+ {
+  "seq": 192,
+  "case_id": "CASE-0003",
+  "type": "message",
+  "at": "2026-11-14T01:21:31.435",
+  "data": {
+   "role": "munim",
+   "text": "₹1,250 was credited to Hitesh's account on 14 Nov. It shows in their passbook.",
+   "en": "₹1,250 was credited to Hitesh's account on 14 Nov. It shows in their passbook.",
+   "language": "en",
+   "final": true,
+   "kind": "chat",
+   "sources": [
+    "Refund ₹1,250"
+   ],
+   "new_case": false
+  }
+ }
+]

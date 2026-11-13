@@ -1,0 +1,5235 @@
+[
+ {
+  "seq": 1,
+  "case_id": "CASE-0008",
+  "type": "case",
+  "at": "2026-11-14T01:21:45.066",
+  "data": {
+   "case_id": "CASE-0008",
+   "merchant": {
+    "id": "M1008",
+    "business_name": "Krishna Sweets",
+    "owner_name": "Ganesh Kulkarni",
+    "city": "Pune",
+    "language": "hi-Latn",
+    "category": "sweets"
+   },
+   "complaint_text": "Kal ka settlement kam aaya hai. Soundbox ne kal ₹18,220 ka collection bataya, par bank mein sirf ₹15,880 aaya. ₹2,340 kahan gaye? Koi hold bhi nahi dikh raha.",
+   "channel": "chat",
+   "scenario_id": "cold_case"
+  }
+ },
+ {
+  "seq": 2,
+  "case_id": "CASE-0008",
+  "type": "message",
+  "at": "2026-11-14T01:21:45.066",
+  "data": {
+   "role": "merchant",
+   "text": "Kal ka settlement kam aaya hai. Soundbox ne kal ₹18,220 ka collection bataya, par bank mein sirf ₹15,880 aaya. ₹2,340 kahan gaye? Koi hold bhi nahi dikh raha.",
+   "language": "hi-Latn",
+   "final": true
+  }
+ },
+ {
+  "seq": 3,
+  "case_id": "CASE-0008",
+  "type": "node",
+  "at": "2026-11-14T01:21:45.069",
+  "data": {
+   "node": "hunch",
+   "agent": "Detective",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 4,
+  "case_id": "CASE-0008",
+  "type": "hunch",
+  "at": "2026-11-14T01:21:45.069",
+  "data": {
+   "source": "mock",
+   "probabilities": {
+    "ZOMBIE_BILLING": 0.0842,
+    "DUPLICATE_SUBSCRIPTION": 0.0842,
+    "DUPLICATE_EDI": 0.0842,
+    "PICKUP_NOT_COMPLETED": 0.0842,
+    "ALREADY_REFUNDED": 0.0842,
+    "RISK_HOLD": 0.323,
+    "KYC_HOLD": 0.2562
+   },
+   "top": "RISK_HOLD",
+   "injection_score": 0.04,
+   "ms": 1
+  }
+ },
+ {
+  "seq": 5,
+  "case_id": "CASE-0008",
+  "type": "node",
+  "at": "2026-11-14T01:21:45.069",
+  "data": {
+   "node": "hunch",
+   "agent": "Detective",
+   "status": "end",
+   "ms": 1,
+   "summary": "RISK_HOLD 32% · injection 4% · mock"
+  }
+ },
+ {
+  "seq": 6,
+  "case_id": "CASE-0008",
+  "type": "node",
+  "at": "2026-11-14T01:21:45.069",
+  "data": {
+   "node": "intake",
+   "agent": "Intake Agent",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 7,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.069",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "reasoning",
+   "delta": "Treating the complaint as a witness statement: extracting claims to verify, not instructions to follow."
+  }
+ },
+ {
+  "seq": 8,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.128",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "{\"language\":"
+  }
+ },
+ {
+  "seq": 9,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.143",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " \"hi-Latn\", "
+  }
+ },
+ {
+  "seq": 10,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.158",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\"intent\": \"S"
+  }
+ },
+ {
+  "seq": 11,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.174",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ETTLEMENT_IS"
+  }
+ },
+ {
+  "seq": 12,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.190",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "SUE\", \"summa"
+  }
+ },
+ {
+  "seq": 13,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.205",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ry_en\": \"Mer"
+  }
+ },
+ {
+  "seq": 14,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.221",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "chant says y"
+  }
+ },
+ {
+  "seq": 15,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.236",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "esterday's ("
+  }
+ },
+ {
+  "seq": 16,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.252",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "2026-11-13) "
+  }
+ },
+ {
+  "seq": 17,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.268",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "settlement w"
+  }
+ },
+ {
+  "seq": 18,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.284",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "as ₹2,340 sh"
+  }
+ },
+ {
+  "seq": 19,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.299",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ort: Soundbo"
+  }
+ },
+ {
+  "seq": 20,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.314",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "x showed ₹18"
+  }
+ },
+ {
+  "seq": 21,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.330",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": ",220 collect"
+  }
+ },
+ {
+  "seq": 22,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.345",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ed but only "
+  }
+ },
+ {
+  "seq": 23,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.361",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "₹15,880 reac"
+  }
+ },
+ {
+  "seq": 24,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.377",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "hed the bank"
+  }
+ },
+ {
+  "seq": 25,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.393",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "; no hold vi"
+  }
+ },
+ {
+  "seq": 26,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.409",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "sible.\", \"te"
+  }
+ },
+ {
+  "seq": 27,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.425",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "xt_en\": \"Yes"
+  }
+ },
+ {
+  "seq": 28,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.440",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "terday's set"
+  }
+ },
+ {
+  "seq": 29,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.456",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "tlement came"
+  }
+ },
+ {
+  "seq": 30,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.472",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " in short. T"
+  }
+ },
+ {
+  "seq": 31,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.488",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "he Soundbox "
+  }
+ },
+ {
+  "seq": 32,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.502",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "showed ₹18,2"
+  }
+ },
+ {
+  "seq": 33,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.518",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "20 collected"
+  }
+ },
+ {
+  "seq": 34,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.534",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " yesterday, "
+  }
+ },
+ {
+  "seq": 35,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.549",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "but only ₹15"
+  }
+ },
+ {
+  "seq": 36,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.566",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": ",880 reached"
+  }
+ },
+ {
+  "seq": 37,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.582",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " the bank. W"
+  }
+ },
+ {
+  "seq": 38,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.597",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "here did ₹2,"
+  }
+ },
+ {
+  "seq": 39,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.612",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "340 go? I ca"
+  }
+ },
+ {
+  "seq": 40,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.628",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "n't see any "
+  }
+ },
+ {
+  "seq": 41,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.644",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "hold either."
+  }
+ },
+ {
+  "seq": 42,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.659",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\", \"claims\":"
+  }
+ },
+ {
+  "seq": 43,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.675",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " [{\"kind\": \""
+  }
+ },
+ {
+  "seq": 44,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.690",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "SETTLEMENT_S"
+  }
+ },
+ {
+  "seq": 45,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.705",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "HORT\", \"text"
+  }
+ },
+ {
+  "seq": 46,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.721",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\": \"₹2,340 k"
+  }
+ },
+ {
+  "seq": 47,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.736",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ahan gaye?\","
+  }
+ },
+ {
+  "seq": 48,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.751",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " \"date\": \"20"
+  }
+ },
+ {
+  "seq": 49,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.766",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "26-11-13\", \""
+  }
+ },
+ {
+  "seq": 50,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.782",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "amount_paise"
+  }
+ },
+ {
+  "seq": 51,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.797",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\": 234000, \""
+  }
+ },
+ {
+  "seq": 52,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.813",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "count\": null"
+  }
+ },
+ {
+  "seq": 53,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.828",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "}], \"injecti"
+  }
+ },
+ {
+  "seq": 54,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.844",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "on_suspected"
+  }
+ },
+ {
+  "seq": 55,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.859",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\": false, \"s"
+  }
+ },
+ {
+  "seq": 56,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.875",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "entiment\": \""
+  }
+ },
+ {
+  "seq": 57,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:45.890",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "frustrated\"}"
+  }
+ },
+ {
+  "seq": 58,
+  "case_id": "CASE-0008",
+  "type": "llm_done",
+  "at": "2026-11-14T01:21:45.917",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "ms": 836,
+   "text": "{\"language\": \"hi-Latn\", \"intent\": \"SETTLEMENT_ISSUE\", \"summary_en\": \"Merchant says yesterday's (2026-11-13) settlement was ₹2,340 short: Soundbox showed ₹18,220 collected but only ₹15,880 reached the bank; no hold visible.\", \"text_en\": \"Yesterday's settlement came in short. The Soundbox showed ₹18,220 collected yesterday, but only ₹15,880 reached the bank. Where did ₹2,340 go? I can't see any hold either.\", \"claims\": [{\"kind\": \"SETTLEMENT_SHORT\", \"text\": \"₹2,340 kahan gaye?\", \"date\": \"2026-11-13\", \"amount_paise\": 234000, \"count\": null}], \"injection_suspected\": false, \"sentiment\": \"frustrated\"}",
+   "usage": null,
+   "live": false,
+   "fallback": null
+  }
+ },
+ {
+  "seq": 59,
+  "case_id": "CASE-0008",
+  "type": "intake",
+  "at": "2026-11-14T01:21:45.917",
+  "data": {
+   "language": "hi-Latn",
+   "intent": "SETTLEMENT_ISSUE",
+   "summary_en": "Merchant says yesterday's (2026-11-13) settlement was ₹2,340 short: Soundbox showed ₹18,220 collected but only ₹15,880 reached the bank; no hold visible.",
+   "text_en": "Yesterday's settlement came in short. The Soundbox showed ₹18,220 collected yesterday, but only ₹15,880 reached the bank. Where did ₹2,340 go? I can't see any hold either.",
+   "claims": [
+    {
+     "kind": "SETTLEMENT_SHORT",
+     "text": "₹2,340 kahan gaye?",
+     "date": "2026-11-13",
+     "amount_paise": 234000,
+     "count": null
+    }
+   ],
+   "injection_suspected": false,
+   "sentiment": "frustrated"
+  }
+ },
+ {
+  "seq": 60,
+  "case_id": "CASE-0008",
+  "type": "node",
+  "at": "2026-11-14T01:21:45.917",
+  "data": {
+   "node": "intake",
+   "agent": "Intake Agent",
+   "status": "end",
+   "ms": 847,
+   "summary": "SETTLEMENT_ISSUE · 1 claims · hi-Latn"
+  }
+ },
+ {
+  "seq": 61,
+  "case_id": "CASE-0008",
+  "type": "node",
+  "at": "2026-11-14T01:21:45.969",
+  "data": {
+   "node": "trail",
+   "agent": "Detective",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 62,
+  "case_id": "CASE-0008",
+  "type": "trail",
+  "at": "2026-11-14T01:21:45.969",
+  "data": {
+   "merchant_id": "M1008",
+   "window_start": "2026-11-12",
+   "window_end": "2026-11-14",
+   "disputed": [
+    "settlements:STL-1008-20261113"
+   ],
+   "nodes": [
+    {
+     "id": "merchants:M1008",
+     "table": "merchants",
+     "row_id": "M1008",
+     "kind": "merchant",
+     "label": "M1008 · Krishna Sweets · Ganesh Kulkarni · Pune",
+     "at": "2025-07-01",
+     "amount_paise": null,
+     "flags": [],
+     "data": {
+      "id": "M1008",
+      "business_name": "Krishna Sweets",
+      "owner_name": "Ganesh Kulkarni",
+      "city": "Pune",
+      "category": "sweets",
+      "status": "ACTIVE"
+     }
+    },
+    {
+     "id": "settlements:STL-1008-20261113",
+     "table": "settlements",
+     "row_id": "STL-1008-20261113",
+     "kind": "settlement",
+     "label": "STL-1008-20261113 · 13 Nov 2026 · SETTLED · net ₹15,880 (gross ₹18,220 − ₹2,340) · UTR PYTMN2611130000351",
+     "at": "2026-11-13T21:34:33",
+     "amount_paise": 1588000,
+     "flags": [
+      "UNEXPLAINED_DEDUCTION",
+      "DISPUTED"
+     ],
+     "data": {
+      "id": "STL-1008-20261113",
+      "merchant_id": "M1008",
+      "batch_date": "2026-11-13",
+      "gross_paise": 1822000,
+      "deductions_paise": 234000,
+      "net_paise": 1588000,
+      "status": "SETTLED",
+      "utr": "PYTMN2611130000351",
+      "settled_at": "2026-11-13T21:34:33",
+      "mdr_paise": 0,
+      "payment_count": 16,
+      "other_deductions": 234000
+     }
+    },
+    {
+     "id": "payments:1587",
+     "table": "payments",
+     "row_id": "1587",
+     "kind": "payments_summary",
+     "label": "16 payments (16 UPI) batched into STL-1008-20261113 · gross ₹18,220 · MDR ₹0",
+     "at": "2026-11-13T21:31:00",
+     "amount_paise": 1822000,
+     "flags": [
+      "SUMMARY"
+     ],
+     "data": {
+      "count": 16,
+      "modes": {
+       "UPI": 16
+      },
+      "mdr_paise": 0
+     }
+    },
+    {
+     "id": "ledger_entries:552",
+     "table": "ledger_entries",
+     "row_id": "552",
+     "kind": "money",
+     "label": "₹15,880 settlement credit · 13 Nov 2026 · NEFT2611130000552",
+     "at": "2026-11-13T21:34:33",
+     "amount_paise": 1588000,
+     "flags": [],
+     "data": {
+      "id": 552,
+      "merchant_id": "M1008",
+      "txn_ref": "NEFT2611130000552",
+      "entry_type": "SETTLEMENT_CREDIT",
+      "direction": "CREDIT",
+      "amount_paise": 1588000,
+      "status": "SUCCESS",
+      "source_type": "settlement",
+      "source_id": "STL-1008-20261113",
+      "mandate_id": null,
+      "value_date": "2026-11-13",
+      "posted_at": "2026-11-13T21:34:33",
+      "narration": "Settlement STL-1008-20261113 · 16 payments · UTR PYTMN2611130000351",
+      "refund_of": null
+     }
+    },
+    {
+     "id": "settlements:STL-1008-20261015..STL-1008-20261112",
+     "table": "settlements",
+     "row_id": "STL-1008-20261015..STL-1008-20261112",
+     "kind": "settlement",
+     "label": "29 other settlements (15 Oct – 12 Nov 2026), ₹59,940.63 net, all paid out",
+     "at": "2026-11-12",
+     "amount_paise": 5994063,
+     "flags": [
+      "SUMMARY"
+     ],
+     "data": {
+      "count": 29,
+      "settlement_ids": [
+       "STL-1008-20261015",
+       "STL-1008-20261016",
+       "STL-1008-20261017",
+       "STL-1008-20261018",
+       "STL-1008-20261019",
+       "STL-1008-20261020",
+       "STL-1008-20261021",
+       "STL-1008-20261022",
+       "STL-1008-20261023",
+       "STL-1008-20261024",
+       "STL-1008-20261025",
+       "STL-1008-20261026",
+       "STL-1008-20261027",
+       "STL-1008-20261028",
+       "STL-1008-20261029",
+       "STL-1008-20261030",
+       "STL-1008-20261031",
+       "STL-1008-20261101",
+       "STL-1008-20261102",
+       "STL-1008-20261103",
+       "STL-1008-20261104",
+       "STL-1008-20261105",
+       "STL-1008-20261106",
+       "STL-1008-20261107",
+       "STL-1008-20261108",
+       "STL-1008-20261109",
+       "STL-1008-20261110",
+       "STL-1008-20261111",
+       "STL-1008-20261112"
+      ]
+     }
+    }
+   ],
+   "edges": [
+    {
+     "source": "settlements:STL-1008-20261113",
+     "target": "merchants:M1008",
+     "label": "payout to"
+    },
+    {
+     "source": "payments:1587",
+     "target": "settlements:STL-1008-20261113",
+     "label": "batched"
+    },
+    {
+     "source": "settlements:STL-1008-20261113",
+     "target": "ledger_entries:552",
+     "label": "paid out as"
+    },
+    {
+     "source": "settlements:STL-1008-20261015..STL-1008-20261112",
+     "target": "merchants:M1008",
+     "label": "payout to"
+    }
+   ]
+  }
+ },
+ {
+  "seq": 63,
+  "case_id": "CASE-0008",
+  "type": "node",
+  "at": "2026-11-14T01:21:45.969",
+  "data": {
+   "node": "trail",
+   "agent": "Detective",
+   "status": "end",
+   "ms": 50,
+   "summary": "5 linked records · 1 disputed movements"
+  }
+ },
+ {
+  "seq": 64,
+  "case_id": "CASE-0008",
+  "type": "node",
+  "at": "2026-11-14T01:21:46.005",
+  "data": {
+   "node": "statements",
+   "agent": "Detective",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 65,
+  "case_id": "CASE-0008",
+  "type": "statements",
+  "at": "2026-11-14T01:21:46.005",
+  "data": {
+   "checks": [
+    {
+     "claim": {
+      "kind": "SETTLEMENT_SHORT",
+      "text": "₹2,340 kahan gaye?",
+      "date": "2026-11-13",
+      "amount_paise": 234000,
+      "count": null
+     },
+     "status": "VERIFIED",
+     "finding": "STL-1008-20261113 (13 Nov 2026): gross ₹18,220 − net ₹15,880 = ₹2,340 deducted, MDR ₹0, so ₹2,340 is not MDR.",
+     "evidence": [
+      {
+       "table": "settlements",
+       "row_id": "STL-1008-20261113",
+       "label": "STL-1008-20261113 · 13 Nov 2026 · SETTLED · net ₹15,880 (gross ₹18,220 − ₹2,340) · UTR PYTMN2611130000351",
+       "at": "2026-11-13T21:34:33",
+       "amount_paise": 1588000
+      }
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "seq": 66,
+  "case_id": "CASE-0008",
+  "type": "node",
+  "at": "2026-11-14T01:21:46.005",
+  "data": {
+   "node": "statements",
+   "agent": "Detective",
+   "status": "end",
+   "ms": 35,
+   "summary": "1 verified"
+  }
+ },
+ {
+  "seq": 67,
+  "case_id": "CASE-0008",
+  "type": "node",
+  "at": "2026-11-14T01:21:46.038",
+  "data": {
+   "node": "lineup",
+   "agent": "Detective",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 68,
+  "case_id": "CASE-0008",
+  "type": "suspect",
+  "at": "2026-11-14T01:21:46.139",
+  "data": {
+   "suspect_id": "RISK_HOLD",
+   "title": "Settlement held by risk",
+   "kind": "HOLD",
+   "status": "ELIMINATED",
+   "summary": "There is no active risk hold on M1008's payouts; the latest settlement, STL-1008-20261113, was paid out on 13 Nov 2026 (UTR PYTMN2611130000351).",
+   "evidence": [
+    {
+     "table": "settlements",
+     "row_id": "STL-1008-20261113",
+     "label": "STL-1008-20261113 · 13 Nov 2026 · SETTLED · net ₹15,880 (gross ₹18,220 − ₹2,340) · UTR PYTMN2611130000351",
+     "at": "2026-11-13T21:34:33",
+     "amount_paise": 1588000
+    }
+   ],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {},
+   "remedies": [],
+   "sweepable": false,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 69,
+  "case_id": "CASE-0008",
+  "type": "suspect",
+  "at": "2026-11-14T01:21:46.248",
+  "data": {
+   "suspect_id": "KYC_HOLD",
+   "title": "Settlement held for KYC",
+   "kind": "HOLD",
+   "status": "ELIMINATED",
+   "summary": "There is no active KYC hold on M1008's payouts; the latest settlement, STL-1008-20261113, was paid out on 13 Nov 2026 (UTR PYTMN2611130000351).",
+   "evidence": [
+    {
+     "table": "settlements",
+     "row_id": "STL-1008-20261113",
+     "label": "STL-1008-20261113 · 13 Nov 2026 · SETTLED · net ₹15,880 (gross ₹18,220 − ₹2,340) · UTR PYTMN2611130000351",
+     "at": "2026-11-13T21:34:33",
+     "amount_paise": 1588000
+    }
+   ],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {},
+   "remedies": [],
+   "sweepable": false,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 70,
+  "case_id": "CASE-0008",
+  "type": "suspect",
+  "at": "2026-11-14T01:21:46.357",
+  "data": {
+   "suspect_id": "ZOMBIE_BILLING",
+   "title": "Billing continued after device return",
+   "kind": "FAULT",
+   "status": "NOT_APPLICABLE",
+   "summary": "Not tested: the complaint is about settlements, not Soundbox rent.",
+   "evidence": [],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {},
+   "remedies": [],
+   "sweepable": true,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 71,
+  "case_id": "CASE-0008",
+  "type": "suspect",
+  "at": "2026-11-14T01:21:46.465",
+  "data": {
+   "suspect_id": "DUPLICATE_SUBSCRIPTION",
+   "title": "Two subscriptions on one device",
+   "kind": "FAULT",
+   "status": "NOT_APPLICABLE",
+   "summary": "Not tested: the complaint is about settlements, not Soundbox rent.",
+   "evidence": [],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {},
+   "remedies": [],
+   "sweepable": true,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 72,
+  "case_id": "CASE-0008",
+  "type": "suspect",
+  "at": "2026-11-14T01:21:46.573",
+  "data": {
+   "suspect_id": "DUPLICATE_EDI",
+   "title": "Loan instalment debited twice",
+   "kind": "FAULT",
+   "status": "NOT_APPLICABLE",
+   "summary": "Not tested: the complaint is about settlements, not loan EDI.",
+   "evidence": [],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {},
+   "remedies": [],
+   "sweepable": true,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 73,
+  "case_id": "CASE-0008",
+  "type": "suspect",
+  "at": "2026-11-14T01:21:46.682",
+  "data": {
+   "suspect_id": "PICKUP_NOT_COMPLETED",
+   "title": "Return requested but never collected",
+   "kind": "INNOCENT",
+   "status": "NOT_APPLICABLE",
+   "summary": "Not tested: the complaint is about settlements, not Soundbox rent.",
+   "evidence": [],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {},
+   "remedies": [],
+   "sweepable": false,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 74,
+  "case_id": "CASE-0008",
+  "type": "suspect",
+  "at": "2026-11-14T01:21:46.792",
+  "data": {
+   "suspect_id": "ALREADY_REFUNDED",
+   "title": "Already refunded",
+   "kind": "INNOCENT",
+   "status": "NOT_APPLICABLE",
+   "summary": "Not tested: the complaint is about settlements, not Soundbox rent or loan EDI.",
+   "evidence": [],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {},
+   "remedies": [],
+   "sweepable": false,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 75,
+  "case_id": "CASE-0008",
+  "type": "node",
+  "at": "2026-11-14T01:21:46.792",
+  "data": {
+   "node": "lineup",
+   "agent": "Detective",
+   "status": "end",
+   "ms": 785,
+   "summary": "no known suspect matches · 2 eliminated"
+  }
+ },
+ {
+  "seq": 76,
+  "case_id": "CASE-0008",
+  "type": "node",
+  "at": "2026-11-14T01:21:46.794",
+  "data": {
+   "node": "improvise",
+   "agent": "Detective",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 77,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:46.794",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "reasoning",
+   "delta": "No catalogued suspect fits. Next read-only probe, scoped to M1008."
+  }
+ },
+ {
+  "seq": 78,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:46.853",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "{\"done\": fal"
+  }
+ },
+ {
+  "seq": 79,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:46.868",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "se, \"purpose"
+  }
+ },
+ {
+  "seq": 80,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:46.884",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\": \"Settleme"
+  }
+ },
+ {
+  "seq": 81,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:46.899",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "nt breakdown"
+  }
+ },
+ {
+  "seq": 82,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:46.915",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " for 13 Nov:"
+  }
+ },
+ {
+  "seq": 83,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:46.930",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " does gross "
+  }
+ },
+ {
+  "seq": 84,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:46.946",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "− deductions"
+  }
+ },
+ {
+  "seq": 85,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:46.962",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " explain the"
+  }
+ },
+ {
+  "seq": 86,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:46.976",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " gap, and is"
+  }
+ },
+ {
+  "seq": 87,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:46.992",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " it MDR or s"
+  }
+ },
+ {
+  "seq": 88,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.007",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "omething els"
+  }
+ },
+ {
+  "seq": 89,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.023",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "e?\", \"sql\": "
+  }
+ },
+ {
+  "seq": 90,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.039",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\"SELECT s.id"
+  }
+ },
+ {
+  "seq": 91,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.054",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": ", s.batch_da"
+  }
+ },
+ {
+  "seq": 92,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.071",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "te, s.gross_"
+  }
+ },
+ {
+  "seq": 93,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.087",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "paise, s.ded"
+  }
+ },
+ {
+  "seq": 94,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.102",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "uctions_pais"
+  }
+ },
+ {
+  "seq": 95,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.117",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "e, s.net_pai"
+  }
+ },
+ {
+  "seq": 96,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.132",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "se, s.status"
+  }
+ },
+ {
+  "seq": 97,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.148",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": ", s.utr, s.s"
+  }
+ },
+ {
+  "seq": 98,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.163",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ettled_at,\\n"
+  }
+ },
+ {
+  "seq": 99,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.179",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "       (SELE"
+  }
+ },
+ {
+  "seq": 100,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.195",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "CT COUNT(*) "
+  }
+ },
+ {
+  "seq": 101,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.210",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "FROM payment"
+  }
+ },
+ {
+  "seq": 102,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.227",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "s p WHERE p."
+  }
+ },
+ {
+  "seq": 103,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.242",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "settlement_i"
+  }
+ },
+ {
+  "seq": 104,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.259",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "d = s.id AND"
+  }
+ },
+ {
+  "seq": 105,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.273",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " p.merchant_"
+  }
+ },
+ {
+  "seq": 106,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.289",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "id = 'M1008'"
+  }
+ },
+ {
+  "seq": 107,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.308",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": ") AS payment"
+  }
+ },
+ {
+  "seq": 108,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.336",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "_count,\\n   "
+  }
+ },
+ {
+  "seq": 109,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.352",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "    (SELECT "
+  }
+ },
+ {
+  "seq": 110,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.367",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "COALESCE(SUM"
+  }
+ },
+ {
+  "seq": 111,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.382",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "(p.mdr_paise"
+  }
+ },
+ {
+  "seq": 112,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.398",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "), 0) FROM p"
+  }
+ },
+ {
+  "seq": 113,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.414",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ayments p WH"
+  }
+ },
+ {
+  "seq": 114,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.429",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ERE p.settle"
+  }
+ },
+ {
+  "seq": 115,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.445",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ment_id = s."
+  }
+ },
+ {
+  "seq": 116,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.461",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "id AND p.mer"
+  }
+ },
+ {
+  "seq": 117,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.477",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "chant_id = '"
+  }
+ },
+ {
+  "seq": 118,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.493",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "M1008') AS m"
+  }
+ },
+ {
+  "seq": 119,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.508",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "dr_paise\\nFR"
+  }
+ },
+ {
+  "seq": 120,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.523",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "OM settlemen"
+  }
+ },
+ {
+  "seq": 121,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.539",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ts s\\nWHERE "
+  }
+ },
+ {
+  "seq": 122,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.554",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "s.merchant_i"
+  }
+ },
+ {
+  "seq": 123,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.570",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "d = 'M1008' "
+  }
+ },
+ {
+  "seq": 124,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.585",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "AND (s.id = "
+  }
+ },
+ {
+  "seq": 125,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.600",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "'STL-1008-20"
+  }
+ },
+ {
+  "seq": 126,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.615",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "261113' OR s"
+  }
+ },
+ {
+  "seq": 127,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.630",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": ".batch_date "
+  }
+ },
+ {
+  "seq": 128,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.646",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "= '2026-11-1"
+  }
+ },
+ {
+  "seq": 129,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.661",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "3')\", \"findi"
+  }
+ },
+ {
+  "seq": 130,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.677",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ng\": null, \""
+  }
+ },
+ {
+  "seq": 131,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.694",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "evidence_led"
+  }
+ },
+ {
+  "seq": 132,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.708",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ger_ids\": []"
+  }
+ },
+ {
+  "seq": 133,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.723",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "}"
+  }
+ },
+ {
+  "seq": 134,
+  "case_id": "CASE-0008",
+  "type": "llm_done",
+  "at": "2026-11-14T01:21:47.759",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "ms": 944,
+   "text": "{\"done\": false, \"purpose\": \"Settlement breakdown for 13 Nov: does gross − deductions explain the gap, and is it MDR or something else?\", \"sql\": \"SELECT s.id, s.batch_date, s.gross_paise, s.deductions_paise, s.net_paise, s.status, s.utr, s.settled_at,\\n       (SELECT COUNT(*) FROM payments p WHERE p.settlement_id = s.id AND p.merchant_id = 'M1008') AS payment_count,\\n       (SELECT COALESCE(SUM(p.mdr_paise), 0) FROM payments p WHERE p.settlement_id = s.id AND p.merchant_id = 'M1008') AS mdr_paise\\nFROM settlements s\\nWHERE s.merchant_id = 'M1008' AND (s.id = 'STL-1008-20261113' OR s.batch_date = '2026-11-13')\", \"finding\": null, \"evidence_ledger_ids\": []}",
+   "usage": null,
+   "live": false,
+   "fallback": null
+  }
+ },
+ {
+  "seq": 135,
+  "case_id": "CASE-0008",
+  "type": "probe",
+  "at": "2026-11-14T01:21:47.759",
+  "data": {
+   "step": 1,
+   "purpose": "Settlement breakdown for 13 Nov: does gross − deductions explain the gap, and is it MDR or something else?",
+   "sql": "SELECT s.id, s.batch_date, s.gross_paise, s.deductions_paise, s.net_paise, s.status, s.utr, s.settled_at,\n       (SELECT COUNT(*) FROM payments p WHERE p.settlement_id = s.id AND p.merchant_id = 'M1008') AS payment_count,\n       (SELECT COALESCE(SUM(p.mdr_paise), 0) FROM payments p WHERE p.settlement_id = s.id AND p.merchant_id = 'M1008') AS mdr_paise\nFROM settlements s\nWHERE s.merchant_id = 'M1008' AND (s.id = 'STL-1008-20261113' OR s.batch_date = '2026-11-13')",
+   "ok": true,
+   "columns": [
+    "id",
+    "batch_date",
+    "gross_paise",
+    "deductions_paise",
+    "net_paise",
+    "status",
+    "utr",
+    "settled_at",
+    "payment_count",
+    "mdr_paise"
+   ],
+   "rows": [
+    [
+     "STL-1008-20261113",
+     "2026-11-13",
+     1822000,
+     234000,
+     1588000,
+     "SETTLED",
+     "PYTMN2611130000351",
+     "2026-11-13T21:34:33",
+     16,
+     0
+    ]
+   ],
+   "error": null,
+   "ms": 12
+  }
+ },
+ {
+  "seq": 136,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.759",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "reasoning",
+   "delta": "No catalogued suspect fits. Next read-only probe, scoped to M1008."
+  }
+ },
+ {
+  "seq": 137,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.816",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "{\"done\": fal"
+  }
+ },
+ {
+  "seq": 138,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.833",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "se, \"purpose"
+  }
+ },
+ {
+  "seq": 139,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.848",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\": \"Which le"
+  }
+ },
+ {
+  "seq": 140,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.863",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "dger movemen"
+  }
+ },
+ {
+  "seq": 141,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.880",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ts on 13 Nov"
+  }
+ },
+ {
+  "seq": 142,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.894",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " (chargeback"
+  }
+ },
+ {
+  "seq": 143,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.911",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "s, adjustmen"
+  }
+ },
+ {
+  "seq": 144,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.927",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ts) make up "
+  }
+ },
+ {
+  "seq": 145,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.941",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "the deductio"
+  }
+ },
+ {
+  "seq": 146,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.957",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ns?\", \"sql\":"
+  }
+ },
+ {
+  "seq": 147,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.972",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " \"SELECT l.i"
+  }
+ },
+ {
+  "seq": 148,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:47.987",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "d AS ledger_"
+  }
+ },
+ {
+  "seq": 149,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.003",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "id, l.entry_"
+  }
+ },
+ {
+  "seq": 150,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.019",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "type, l.dire"
+  }
+ },
+ {
+  "seq": 151,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.034",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ction, l.amo"
+  }
+ },
+ {
+  "seq": 152,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.050",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "unt_paise, l"
+  }
+ },
+ {
+  "seq": 153,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.066",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": ".status, l.s"
+  }
+ },
+ {
+  "seq": 154,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.081",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ource_type, "
+  }
+ },
+ {
+  "seq": 155,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.097",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "l.source_id,"
+  }
+ },
+ {
+  "seq": 156,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.112",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\\n       l.v"
+  }
+ },
+ {
+  "seq": 157,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.128",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "alue_date, l"
+  }
+ },
+ {
+  "seq": 158,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.143",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": ".narration, "
+  }
+ },
+ {
+  "seq": 159,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.159",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "c.id AS char"
+  }
+ },
+ {
+  "seq": 160,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.175",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "geback_id, c"
+  }
+ },
+ {
+  "seq": 161,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.190",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": ".reason AS c"
+  }
+ },
+ {
+  "seq": 162,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.206",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "hargeback_re"
+  }
+ },
+ {
+  "seq": 163,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.223",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ason, c.stat"
+  }
+ },
+ {
+  "seq": 164,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.238",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "us AS charge"
+  }
+ },
+ {
+  "seq": 165,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.253",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "back_status,"
+  }
+ },
+ {
+  "seq": 166,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.270",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\\n       c.r"
+  }
+ },
+ {
+  "seq": 167,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.285",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "aised_at, p."
+  }
+ },
+ {
+  "seq": 168,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.301",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "mode AS paym"
+  }
+ },
+ {
+  "seq": 169,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.317",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ent_mode, p."
+  }
+ },
+ {
+  "seq": 170,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.332",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "paid_at AS p"
+  }
+ },
+ {
+  "seq": 171,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.348",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ayment_date\\"
+  }
+ },
+ {
+  "seq": 172,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.364",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "nFROM ledger"
+  }
+ },
+ {
+  "seq": 173,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.380",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "_entries l\\n"
+  }
+ },
+ {
+  "seq": 174,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.395",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "LEFT JOIN ch"
+  }
+ },
+ {
+  "seq": 175,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.412",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "argebacks c "
+  }
+ },
+ {
+  "seq": 176,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.427",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ON l.source_"
+  }
+ },
+ {
+  "seq": 177,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.442",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "type = 'char"
+  }
+ },
+ {
+  "seq": 178,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.458",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "geback' AND "
+  }
+ },
+ {
+  "seq": 179,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.475",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "c.id = l.sou"
+  }
+ },
+ {
+  "seq": 180,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.489",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "rce_id AND c"
+  }
+ },
+ {
+  "seq": 181,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.504",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": ".merchant_id"
+  }
+ },
+ {
+  "seq": 182,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.520",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " = 'M1008'\\n"
+  }
+ },
+ {
+  "seq": 183,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.536",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "LEFT JOIN pa"
+  }
+ },
+ {
+  "seq": 184,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.551",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "yments p ON "
+  }
+ },
+ {
+  "seq": 185,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.567",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "p.id = c.pay"
+  }
+ },
+ {
+  "seq": 186,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.582",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ment_id\\nWHE"
+  }
+ },
+ {
+  "seq": 187,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.598",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "RE l.merchan"
+  }
+ },
+ {
+  "seq": 188,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.614",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "t_id = 'M100"
+  }
+ },
+ {
+  "seq": 189,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.631",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "8' AND l.val"
+  }
+ },
+ {
+  "seq": 190,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.645",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ue_date = '2"
+  }
+ },
+ {
+  "seq": 191,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.661",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "026-11-13'\\n"
+  }
+ },
+ {
+  "seq": 192,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.678",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ORDER BY l.i"
+  }
+ },
+ {
+  "seq": 193,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.693",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "d\", \"finding"
+  }
+ },
+ {
+  "seq": 194,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.709",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\": null, \"ev"
+  }
+ },
+ {
+  "seq": 195,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.724",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "idence_ledge"
+  }
+ },
+ {
+  "seq": 196,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.739",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "r_ids\": []}"
+  }
+ },
+ {
+  "seq": 197,
+  "case_id": "CASE-0008",
+  "type": "llm_done",
+  "at": "2026-11-14T01:21:48.777",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "ms": 996,
+   "text": "{\"done\": false, \"purpose\": \"Which ledger movements on 13 Nov (chargebacks, adjustments) make up the deductions?\", \"sql\": \"SELECT l.id AS ledger_id, l.entry_type, l.direction, l.amount_paise, l.status, l.source_type, l.source_id,\\n       l.value_date, l.narration, c.id AS chargeback_id, c.reason AS chargeback_reason, c.status AS chargeback_status,\\n       c.raised_at, p.mode AS payment_mode, p.paid_at AS payment_date\\nFROM ledger_entries l\\nLEFT JOIN chargebacks c ON l.source_type = 'chargeback' AND c.id = l.source_id AND c.merchant_id = 'M1008'\\nLEFT JOIN payments p ON p.id = c.payment_id\\nWHERE l.merchant_id = 'M1008' AND l.value_date = '2026-11-13'\\nORDER BY l.id\", \"finding\": null, \"evidence_ledger_ids\": []}",
+   "usage": null,
+   "live": false,
+   "fallback": null
+  }
+ },
+ {
+  "seq": 198,
+  "case_id": "CASE-0008",
+  "type": "probe",
+  "at": "2026-11-14T01:21:48.777",
+  "data": {
+   "step": 2,
+   "purpose": "Which ledger movements on 13 Nov (chargebacks, adjustments) make up the deductions?",
+   "sql": "SELECT l.id AS ledger_id, l.entry_type, l.direction, l.amount_paise, l.status, l.source_type, l.source_id,\n       l.value_date, l.narration, c.id AS chargeback_id, c.reason AS chargeback_reason, c.status AS chargeback_status,\n       c.raised_at, p.mode AS payment_mode, p.paid_at AS payment_date\nFROM ledger_entries l\nLEFT JOIN chargebacks c ON l.source_type = 'chargeback' AND c.id = l.source_id AND c.merchant_id = 'M1008'\nLEFT JOIN payments p ON p.id = c.payment_id\nWHERE l.merchant_id = 'M1008' AND l.value_date = '2026-11-13'\nORDER BY l.id",
+   "ok": true,
+   "columns": [
+    "ledger_id",
+    "entry_type",
+    "direction",
+    "amount_paise",
+    "status",
+    "source_type",
+    "source_id",
+    "value_date",
+    "narration",
+    "chargeback_id",
+    "chargeback_reason",
+    "chargeback_status",
+    "raised_at",
+    "payment_mode",
+    "payment_date"
+   ],
+   "rows": [
+    [
+     522,
+     "CHARGEBACK_DEBIT",
+     "DEBIT",
+     234000,
+     "SUCCESS",
+     "chargeback",
+     "CB-1008-01",
+     "2026-11-13",
+     "Chargeback adj. CB-1008-01",
+     "CB-1008-01",
+     "GOODS_NOT_RECEIVED",
+     "DEBITED",
+     "2026-11-06T11:30:00",
+     "CARD",
+     "2026-10-28T19:05:12"
+    ],
+    [
+     552,
+     "SETTLEMENT_CREDIT",
+     "CREDIT",
+     1588000,
+     "SUCCESS",
+     "settlement",
+     "STL-1008-20261113",
+     "2026-11-13",
+     "Settlement STL-1008-20261113 · 16 payments · UTR PYTMN2611130000351",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "error": null,
+   "ms": 13
+  }
+ },
+ {
+  "seq": 199,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.777",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "reasoning",
+   "delta": "No catalogued suspect fits. Next read-only probe, scoped to M1008."
+  }
+ },
+ {
+  "seq": 200,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.832",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "{\"done\": tru"
+  }
+ },
+ {
+  "seq": 201,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.847",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "e, \"purpose\""
+  }
+ },
+ {
+  "seq": 202,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.864",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": ": \"Cause fou"
+  }
+ },
+ {
+  "seq": 203,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.878",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "nd: a charge"
+  }
+ },
+ {
+  "seq": 204,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.894",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "back debit e"
+  }
+ },
+ {
+  "seq": 205,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.909",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "xplains the "
+  }
+ },
+ {
+  "seq": 206,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.925",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "short settle"
+  }
+ },
+ {
+  "seq": 207,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.940",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ment.\", \"sql"
+  }
+ },
+ {
+  "seq": 208,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.956",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\": null, \"fi"
+  }
+ },
+ {
+  "seq": 209,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.971",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "nding\": \"Set"
+  }
+ },
+ {
+  "seq": 210,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:48.986",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "tlement STL-"
+  }
+ },
+ {
+  "seq": 211,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.001",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "1008-2026111"
+  }
+ },
+ {
+  "seq": 212,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.017",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "3 for 13 Nov"
+  }
+ },
+ {
+  "seq": 213,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.032",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": ": gross ₹18,"
+  }
+ },
+ {
+  "seq": 214,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.048",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "220, deducti"
+  }
+ },
+ {
+  "seq": 215,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.064",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ons ₹2,340, "
+  }
+ },
+ {
+  "seq": 216,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.080",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "net ₹15,880;"
+  }
+ },
+ {
+  "seq": 217,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.095",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " MDR on its "
+  }
+ },
+ {
+  "seq": 218,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.111",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "payments is "
+  }
+ },
+ {
+  "seq": 219,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.127",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "₹0. The gap "
+  }
+ },
+ {
+  "seq": 220,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.143",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "is chargebac"
+  }
+ },
+ {
+  "seq": 221,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.158",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "k CB-1008-01"
+  }
+ },
+ {
+  "seq": 222,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.175",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " (GOODS_NOT_"
+  }
+ },
+ {
+  "seq": 223,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.189",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "RECEIVED) of"
+  }
+ },
+ {
+  "seq": 224,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.204",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " ₹2,340 on a"
+  }
+ },
+ {
+  "seq": 225,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.220",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " card paymen"
+  }
+ },
+ {
+  "seq": 226,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.235",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "t of 28 Oct "
+  }
+ },
+ {
+  "seq": 227,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.251",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "debited on 1"
+  }
+ },
+ {
+  "seq": 228,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.267",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "3 Nov as led"
+  }
+ },
+ {
+  "seq": 229,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.283",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ger entry 52"
+  }
+ },
+ {
+  "seq": 230,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.298",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "2 (\\\"Chargeb"
+  }
+ },
+ {
+  "seq": 231,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.314",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ack adj. CB-"
+  }
+ },
+ {
+  "seq": 232,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.330",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "1008-01\\\"). "
+  }
+ },
+ {
+  "seq": 233,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.346",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "Not a system"
+  }
+ },
+ {
+  "seq": 234,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.361",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " fault; the "
+  }
+ },
+ {
+  "seq": 235,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.377",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "merchant can"
+  }
+ },
+ {
+  "seq": 236,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.392",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " contest the"
+  }
+ },
+ {
+  "seq": 237,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.408",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " chargeback "
+  }
+ },
+ {
+  "seq": 238,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.422",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "with proof o"
+  }
+ },
+ {
+  "seq": 239,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.439",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "f delivery.\""
+  }
+ },
+ {
+  "seq": 240,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.453",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": ", \"evidence_"
+  }
+ },
+ {
+  "seq": 241,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.469",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ledger_ids\":"
+  }
+ },
+ {
+  "seq": 242,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.484",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " [522]}"
+  }
+ },
+ {
+  "seq": 243,
+  "case_id": "CASE-0008",
+  "type": "llm_done",
+  "at": "2026-11-14T01:21:49.500",
+  "data": {
+   "node": "improvise",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "ms": 722,
+   "text": "{\"done\": true, \"purpose\": \"Cause found: a chargeback debit explains the short settlement.\", \"sql\": null, \"finding\": \"Settlement STL-1008-20261113 for 13 Nov: gross ₹18,220, deductions ₹2,340, net ₹15,880; MDR on its payments is ₹0. The gap is chargeback CB-1008-01 (GOODS_NOT_RECEIVED) of ₹2,340 on a card payment of 28 Oct debited on 13 Nov as ledger entry 522 (\\\"Chargeback adj. CB-1008-01\\\"). Not a system fault; the merchant can contest the chargeback with proof of delivery.\", \"evidence_ledger_ids\": [522]}",
+   "usage": null,
+   "live": false,
+   "fallback": null
+  }
+ },
+ {
+  "seq": 244,
+  "case_id": "CASE-0008",
+  "type": "node",
+  "at": "2026-11-14T01:21:49.500",
+  "data": {
+   "node": "improvise",
+   "agent": "Detective",
+   "status": "end",
+   "ms": 2705,
+   "summary": "2 read-only probe(s) · Settlement STL-1008-20261113 for 13 Nov: gross ₹18,220, deductions ₹2,340, net ₹15,880; MD"
+  }
+ },
+ {
+  "seq": 245,
+  "case_id": "CASE-0008",
+  "type": "node",
+  "at": "2026-11-14T01:21:49.512",
+  "data": {
+   "node": "verdict",
+   "agent": "Detective",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 246,
+  "case_id": "CASE-0008",
+  "type": "verdict",
+  "at": "2026-11-14T01:21:49.512",
+  "data": {
+   "outcome": "IMPROVISED",
+   "culprits": [],
+   "headline": "Likely explained: a ₹2,340 chargeback debit (CB-1008-01) on 13 Nov 2026 accounts for the deduction; not a system fault, needs human confirmation.",
+   "smoking_gun": [
+    {
+     "table": "ledger_entries",
+     "row_id": "522",
+     "label": "₹2,340 chargeback debit · 13 Nov 2026 · Chargeback adj. CB-1008-01",
+     "at": "2026-11-13",
+     "amount_paise": 234000
+    },
+    {
+     "table": "settlements",
+     "row_id": "STL-1008-20261113",
+     "label": "STL-1008-20261113 · 13 Nov 2026 · SETTLED · net ₹15,880 (gross ₹18,220 − ₹2,340)",
+     "at": "2026-11-13T21:34:33",
+     "amount_paise": 1588000
+    }
+   ],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {},
+   "remedies": [
+    "ESCALATE",
+    "NO_ACTION"
+   ],
+   "confidence": "LOW",
+   "sweepable_suspect": null
+  }
+ },
+ {
+  "seq": 247,
+  "case_id": "CASE-0008",
+  "type": "node",
+  "at": "2026-11-14T01:21:49.512",
+  "data": {
+   "node": "verdict",
+   "agent": "Detective",
+   "status": "end",
+   "ms": 10,
+   "summary": "IMPROVISED (LOW)"
+  }
+ },
+ {
+  "seq": 248,
+  "case_id": "CASE-0008",
+  "type": "node",
+  "at": "2026-11-14T01:21:49.513",
+  "data": {
+   "node": "propose",
+   "agent": "Resolver Agent",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 249,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.513",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "reasoning",
+   "delta": "Drafting remedies from the verdict. I have no authority; the Action Firewall re-checks every rupee."
+  }
+ },
+ {
+  "seq": 250,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.562",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "{\"actions\": "
+  }
+ },
+ {
+  "seq": 251,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.578",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "[{\"action_ty"
+  }
+ },
+ {
+  "seq": 252,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.592",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "pe\": \"ESCALA"
+  }
+ },
+ {
+  "seq": 253,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.608",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "TE\", \"amount"
+  }
+ },
+ {
+  "seq": 254,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.623",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "_paise\": 0, "
+  }
+ },
+ {
+  "seq": 255,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.639",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\"ledger_entr"
+  }
+ },
+ {
+  "seq": 256,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.654",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "y_ids\": [], "
+  }
+ },
+ {
+  "seq": 257,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.670",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\"target_id\":"
+  }
+ },
+ {
+  "seq": 258,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.686",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " null, \"team"
+  }
+ },
+ {
+  "seq": 259,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.701",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\": \"payments"
+  }
+ },
+ {
+  "seq": 260,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.717",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\", \"reason\":"
+  }
+ },
+ {
+  "seq": 261,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.732",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " \"Help the m"
+  }
+ },
+ {
+  "seq": 262,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.749",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "erchant cont"
+  }
+ },
+ {
+  "seq": 263,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.764",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "est the char"
+  }
+ },
+ {
+  "seq": 264,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.779",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "geback.\"}], "
+  }
+ },
+ {
+  "seq": 265,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.796",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\"rationale\":"
+  }
+ },
+ {
+  "seq": 266,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.811",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " \"Likely exp"
+  }
+ },
+ {
+  "seq": 267,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.826",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "lained: a ₹2"
+  }
+ },
+ {
+  "seq": 268,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.842",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": ",340 chargeb"
+  }
+ },
+ {
+  "seq": 269,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.862",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ack debit (C"
+  }
+ },
+ {
+  "seq": 270,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.888",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "B-1008-01) o"
+  }
+ },
+ {
+  "seq": 271,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.904",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "n 13 Nov 202"
+  }
+ },
+ {
+  "seq": 272,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.919",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "6 accounts f"
+  }
+ },
+ {
+  "seq": 273,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.935",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "or the deduc"
+  }
+ },
+ {
+  "seq": 274,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.950",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "tion; not a "
+  }
+ },
+ {
+  "seq": 275,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.966",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "system fault"
+  }
+ },
+ {
+  "seq": 276,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.981",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": ", needs huma"
+  }
+ },
+ {
+  "seq": 277,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:49.997",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "n confirmati"
+  }
+ },
+ {
+  "seq": 278,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.012",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "on. Low conf"
+  }
+ },
+ {
+  "seq": 279,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.028",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "idence: hand"
+  }
+ },
+ {
+  "seq": 280,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.043",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " to the paym"
+  }
+ },
+ {
+  "seq": 281,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.058",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ents team ra"
+  }
+ },
+ {
+  "seq": 282,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.075",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ther than mo"
+  }
+ },
+ {
+  "seq": 283,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.090",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ve money.\"}"
+  }
+ },
+ {
+  "seq": 284,
+  "case_id": "CASE-0008",
+  "type": "llm_done",
+  "at": "2026-11-14T01:21:50.118",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "ms": 593,
+   "text": "{\"actions\": [{\"action_type\": \"ESCALATE\", \"amount_paise\": 0, \"ledger_entry_ids\": [], \"target_id\": null, \"team\": \"payments\", \"reason\": \"Help the merchant contest the chargeback.\"}], \"rationale\": \"Likely explained: a ₹2,340 chargeback debit (CB-1008-01) on 13 Nov 2026 accounts for the deduction; not a system fault, needs human confirmation. Low confidence: hand to the payments team rather than move money.\"}",
+   "usage": null,
+   "live": false,
+   "fallback": null
+  }
+ },
+ {
+  "seq": 285,
+  "case_id": "CASE-0008",
+  "type": "proposal",
+  "at": "2026-11-14T01:21:50.118",
+  "data": {
+   "actions": [
+    {
+     "action_type": "ESCALATE",
+     "amount_paise": 0,
+     "ledger_entry_ids": [],
+     "target_id": null,
+     "team": "payments",
+     "reason": "Help the merchant contest the chargeback."
+    }
+   ],
+   "rationale": "Likely explained: a ₹2,340 chargeback debit (CB-1008-01) on 13 Nov 2026 accounts for the deduction; not a system fault, needs human confirmation. Low confidence: hand to the payments team rather than move money."
+  }
+ },
+ {
+  "seq": 286,
+  "case_id": "CASE-0008",
+  "type": "node",
+  "at": "2026-11-14T01:21:50.118",
+  "data": {
+   "node": "propose",
+   "agent": "Resolver Agent",
+   "status": "end",
+   "ms": 605,
+   "summary": "ESCALATE"
+  }
+ },
+ {
+  "seq": 287,
+  "case_id": "CASE-0008",
+  "type": "node",
+  "at": "2026-11-14T01:21:50.126",
+  "data": {
+   "node": "firewall",
+   "agent": "Action Firewall",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 288,
+  "case_id": "CASE-0008",
+  "type": "firewall",
+  "at": "2026-11-14T01:21:50.126",
+  "data": {
+   "decision": "ALLOW",
+   "actions": [
+    {
+     "proposed": {
+      "action_type": "ESCALATE",
+      "amount_paise": 0,
+      "ledger_entry_ids": [],
+      "target_id": null,
+      "team": "payments",
+      "reason": "Help the merchant contest the chargeback."
+     },
+     "final": {
+      "action_type": "ESCALATE",
+      "amount_paise": 0,
+      "ledger_entry_ids": [],
+      "target_id": null,
+      "team": "payments",
+      "reason": "Help the merchant contest the chargeback."
+     },
+     "decision": "ALLOW",
+     "checks": [
+      {
+       "id": "allowlist",
+       "label": "Known action type",
+       "status": "PASS",
+       "detail": "ESCALATE is on Munim's list of allowed actions."
+      },
+      {
+       "id": "remedy_match",
+       "label": "Permitted remedy for the verdict",
+       "status": "PASS",
+       "detail": "ESCALATE is always permitted, whatever the verdict."
+      },
+      {
+       "id": "hard_deny",
+       "label": "Hard-deny rules",
+       "status": "SKIP",
+       "detail": "No hard-deny rule covers ESCALATE."
+      },
+      {
+       "id": "ownership",
+       "label": "Belongs to this merchant",
+       "status": "SKIP",
+       "detail": "ESCALATE names no ledger entry or record to check."
+      },
+      {
+       "id": "evidence_binding",
+       "label": "Bound to verdict evidence",
+       "status": "SKIP",
+       "detail": "ESCALATE is not a refund, so it is not bound to ledger damages."
+      },
+      {
+       "id": "amount_recompute",
+       "label": "Amount recomputed from ledger",
+       "status": "SKIP",
+       "detail": "ESCALATE moves no money."
+      },
+      {
+       "id": "idempotency",
+       "label": "Not already done",
+       "status": "PASS",
+       "detail": "No identical ESCALATE has been executed before."
+      },
+      {
+       "id": "preconditions",
+       "label": "Preconditions hold",
+       "status": "PASS",
+       "detail": "The payments team is a valid escalation target."
+      },
+      {
+       "id": "limits",
+       "label": "Within auto-approval limits",
+       "status": "SKIP",
+       "detail": "ESCALATE moves no money."
+      },
+      {
+       "id": "injection",
+       "label": "Prompt-injection guard",
+       "status": "PASS",
+       "detail": "No manipulation signals in the complaint (injection score 0.04)."
+      },
+      {
+       "id": "confidence",
+       "label": "Verdict confidence",
+       "status": "SKIP",
+       "detail": "ESCALATE moves no money, so verdict confidence does not gate it."
+      }
+     ],
+     "idempotency_key": "2b73e536044c1888"
+    }
+   ]
+  }
+ },
+ {
+  "seq": 289,
+  "case_id": "CASE-0008",
+  "type": "node",
+  "at": "2026-11-14T01:21:50.126",
+  "data": {
+   "node": "firewall",
+   "agent": "Action Firewall",
+   "status": "end",
+   "ms": 6,
+   "summary": "ALLOW: ESCALATE→ALLOW"
+  }
+ },
+ {
+  "seq": 290,
+  "case_id": "CASE-0008",
+  "type": "node",
+  "at": "2026-11-14T01:21:50.133",
+  "data": {
+   "node": "execute",
+   "agent": "Executor",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 291,
+  "case_id": "CASE-0008",
+  "type": "execution",
+  "at": "2026-11-14T01:21:50.133",
+  "data": {
+   "results": [
+    {
+     "action_id": 100,
+     "action_type": "ESCALATE",
+     "status": "EXECUTED",
+     "amount_paise": 0,
+     "detail": "Escalated to the payments team with the full case file: Help the merchant contest the chargeback.",
+     "ledger_entry_ids": []
+    }
+   ]
+  }
+ },
+ {
+  "seq": 292,
+  "case_id": "CASE-0008",
+  "type": "node",
+  "at": "2026-11-14T01:21:50.133",
+  "data": {
+   "node": "execute",
+   "agent": "Executor",
+   "status": "end",
+   "ms": 5,
+   "summary": "1 executed"
+  }
+ },
+ {
+  "seq": 293,
+  "case_id": "CASE-0008",
+  "type": "node",
+  "at": "2026-11-14T01:21:50.134",
+  "data": {
+   "node": "respond",
+   "agent": "Communicator Agent",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 294,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.134",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "reasoning",
+   "delta": "Writing to the merchant in Hinglish: facts from the case file only; executed vs pending kept apart."
+  }
+ },
+ {
+  "seq": 295,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.184",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "Namaste "
+  }
+ },
+ {
+  "seq": 296,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.199",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "Ganesh "
+  }
+ },
+ {
+  "seq": 297,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.214",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "Kulkarni "
+  }
+ },
+ {
+  "seq": 298,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.229",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ji, "
+  }
+ },
+ {
+  "seq": 299,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.245",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "Humne "
+  }
+ },
+ {
+  "seq": 300,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.261",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "13 "
+  }
+ },
+ {
+  "seq": 301,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.277",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "Nov "
+  }
+ },
+ {
+  "seq": 302,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.292",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ke "
+  }
+ },
+ {
+  "seq": 303,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.308",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "settlement "
+  }
+ },
+ {
+  "seq": 304,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.323",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ki "
+  }
+ },
+ {
+  "seq": 305,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.339",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "jaanch "
+  }
+ },
+ {
+  "seq": 306,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.354",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ki. "
+  }
+ },
+ {
+  "seq": 307,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.369",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "₹2,340 "
+  }
+ },
+ {
+  "seq": 308,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.384",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ek "
+  }
+ },
+ {
+  "seq": 309,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.400",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "chargeback "
+  }
+ },
+ {
+  "seq": 310,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.415",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "(CB-1008-01) "
+  }
+ },
+ {
+  "seq": 311,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.431",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ki "
+  }
+ },
+ {
+  "seq": 312,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.445",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "wajah "
+  }
+ },
+ {
+  "seq": 313,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.461",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "se "
+  }
+ },
+ {
+  "seq": 314,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.477",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "kate "
+  }
+ },
+ {
+  "seq": 315,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.493",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "hain. "
+  }
+ },
+ {
+  "seq": 316,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.508",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "Humne "
+  }
+ },
+ {
+  "seq": 317,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.525",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "aapka "
+  }
+ },
+ {
+  "seq": 318,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.540",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "case "
+  }
+ },
+ {
+  "seq": 319,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.555",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "payments "
+  }
+ },
+ {
+  "seq": 320,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.571",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "team "
+  }
+ },
+ {
+  "seq": 321,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.586",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ko "
+  }
+ },
+ {
+  "seq": 322,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.601",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "bhej "
+  }
+ },
+ {
+  "seq": 323,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.617",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "diya "
+  }
+ },
+ {
+  "seq": 324,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.632",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "hai, "
+  }
+ },
+ {
+  "seq": 325,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.648",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "taaki "
+  }
+ },
+ {
+  "seq": 326,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.664",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "aap "
+  }
+ },
+ {
+  "seq": 327,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.680",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "is "
+  }
+ },
+ {
+  "seq": 328,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.696",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "chargeback "
+  }
+ },
+ {
+  "seq": 329,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.710",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ko "
+  }
+ },
+ {
+  "seq": 330,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.726",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "contest "
+  }
+ },
+ {
+  "seq": 331,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.742",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "kar "
+  }
+ },
+ {
+  "seq": 332,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.757",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "saken. "
+  }
+ },
+ {
+  "seq": 333,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.773",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "Case "
+  }
+ },
+ {
+  "seq": 334,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.788",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ID: "
+  }
+ },
+ {
+  "seq": 335,
+  "case_id": "CASE-0008",
+  "type": "llm",
+  "at": "2026-11-14T01:21:50.804",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "CASE-0008"
+  }
+ },
+ {
+  "seq": 336,
+  "case_id": "CASE-0008",
+  "type": "llm_done",
+  "at": "2026-11-14T01:21:50.821",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "ms": 684,
+   "text": "Namaste Ganesh Kulkarni ji, Humne 13 Nov ke settlement ki jaanch ki. ₹2,340 ek chargeback (CB-1008-01) ki wajah se kate hain. Humne aapka case payments team ko bhej diya hai, taaki aap is chargeback ko contest kar saken. Case ID: CASE-0008",
+   "usage": null,
+   "live": false,
+   "fallback": null
+  }
+ },
+ {
+  "seq": 337,
+  "case_id": "CASE-0008",
+  "type": "message",
+  "at": "2026-11-14T01:21:50.821",
+  "data": {
+   "role": "munim",
+   "text": "Namaste Ganesh Kulkarni ji, Humne 13 Nov ke settlement ki jaanch ki. ₹2,340 ek chargeback (CB-1008-01) ki wajah se kate hain. Humne aapka case payments team ko bhej diya hai, taaki aap is chargeback ko contest kar saken. Case ID: CASE-0008",
+   "en": "Hello Ganesh Kulkarni ji. We checked your settlement for 13 Nov. The ₹2,340 was deducted for a chargeback (CB-1008-01). We have passed your case to our payments team so that you can contest the chargeback. Case ref: CASE-0008",
+   "language": "hi-Latn",
+   "final": true
+  }
+ },
+ {
+  "seq": 338,
+  "case_id": "CASE-0008",
+  "type": "node",
+  "at": "2026-11-14T01:21:50.821",
+  "data": {
+   "node": "sweep",
+   "agent": "Detective",
+   "status": "skip",
+   "summary": "no fleet-wide fault to sweep for"
+  }
+ },
+ {
+  "seq": 339,
+  "case_id": "CASE-0008",
+  "type": "node",
+  "at": "2026-11-14T01:21:50.821",
+  "data": {
+   "node": "respond",
+   "agent": "Communicator Agent",
+   "status": "end",
+   "ms": 685,
+   "summary": "41 words · hi-Latn · mock"
+  }
+ },
+ {
+  "seq": 340,
+  "case_id": "CASE-0008",
+  "type": "done",
+  "at": "2026-11-14T01:21:50.834",
+  "data": {
+   "case_id": "CASE-0008",
+   "status": "ESCALATED",
+   "outcome": "IMPROVISED",
+   "decision": "ALLOW",
+   "ms": 5768
+  }
+ },
+ {
+  "seq": 341,
+  "case_id": "CASE-0008",
+  "type": "message",
+  "at": "2026-11-14T01:21:50.843",
+  "data": {
+   "role": "team",
+   "text": "Paisa kab tak aayega?",
+   "en": "When will the money come?",
+   "language": "hi-Latn",
+   "final": true,
+   "kind": "chat"
+  }
+ },
+ {
+  "seq": 342,
+  "case_id": "CASE-0008",
+  "type": "llm_done",
+  "at": "2026-11-14T01:21:50.843",
+  "data": {
+   "node": "chat",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "ms": 0,
+   "text": "{\"question_en\": \"When will the money come?\", \"answer\": \"Likely explained: a ₹2,340 chargeback debit (CB-1008-01) on 13 Nov 2026 accounts for the deduction; not a system fault, needs human confirmation. Passed to the payments team.\", \"reply\": \"Humne 13 Nov ke settlement ki jaanch ki. ₹2,340 ek chargeback (CB-1008-01) ki wajah se kate hain. Humne aapka case payments team ko bhej diya hai, taaki aap is chargeback ko contest kar saken.\", \"sources\": [\"₹2,340 chargeback debit\", \"STL-1008-20261113 · 13 Nov 2026\"], \"new_case\": false}",
+   "usage": null,
+   "live": false,
+   "fallback": null
+  }
+ },
+ {
+  "seq": 343,
+  "case_id": "CASE-0008",
+  "type": "message",
+  "at": "2026-11-14T01:21:50.843",
+  "data": {
+   "role": "munim",
+   "text": "Likely explained: a ₹2,340 chargeback debit (CB-1008-01) on 13 Nov 2026 accounts for the deduction; not a system fault, needs human confirmation. Passed to the payments team.",
+   "en": "Likely explained: a ₹2,340 chargeback debit (CB-1008-01) on 13 Nov 2026 accounts for the deduction; not a system fault, needs human confirmation. Passed to the payments team.",
+   "language": "en",
+   "final": true,
+   "kind": "chat",
+   "sources": [
+    "₹2,340 chargeback debit",
+    "STL-1008-20261113 · 13 Nov 2026"
+   ],
+   "new_case": false,
+   "reply": {
+    "text": "Humne 13 Nov ke settlement ki jaanch ki. ₹2,340 ek chargeback (CB-1008-01) ki wajah se kate hain. Humne aapka case payments team ko bhej diya hai, taaki aap is chargeback ko contest kar saken.",
+    "language": "hi-Latn"
+   }
+  }
+ }
+]

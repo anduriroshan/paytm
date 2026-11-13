@@ -1,0 +1,2778 @@
+[
+ {
+  "seq": 1,
+  "case_id": "CASE-0006",
+  "type": "case",
+  "at": "2026-11-14T01:21:37.975",
+  "data": {
+   "case_id": "CASE-0006",
+   "merchant": {
+    "id": "M1006",
+    "business_name": "Sri Sai Medicals",
+    "owner_name": "P. Venkata Rao",
+    "city": "Vijayawada",
+    "language": "te",
+    "category": "pharmacy"
+   },
+   "complaint_text": "గత మూడు రోజులుగా నా సెటిల్‌మెంట్ డబ్బులు బ్యాంక్‌కి రాలేదు. ఏం జరిగింది? త్వరగా చెప్పండి.",
+   "channel": "chat",
+   "scenario_id": "kyc_hold"
+  }
+ },
+ {
+  "seq": 2,
+  "case_id": "CASE-0006",
+  "type": "message",
+  "at": "2026-11-14T01:21:37.975",
+  "data": {
+   "role": "merchant",
+   "text": "గత మూడు రోజులుగా నా సెటిల్‌మెంట్ డబ్బులు బ్యాంక్‌కి రాలేదు. ఏం జరిగింది? త్వరగా చెప్పండి.",
+   "language": "te",
+   "final": true
+  }
+ },
+ {
+  "seq": 3,
+  "case_id": "CASE-0006",
+  "type": "node",
+  "at": "2026-11-14T01:21:37.977",
+  "data": {
+   "node": "hunch",
+   "agent": "Detective",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 4,
+  "case_id": "CASE-0006",
+  "type": "hunch",
+  "at": "2026-11-14T01:21:37.977",
+  "data": {
+   "source": "mock",
+   "probabilities": {
+    "ZOMBIE_BILLING": 0.0937,
+    "DUPLICATE_SUBSCRIPTION": 0.0937,
+    "DUPLICATE_EDI": 0.0937,
+    "PICKUP_NOT_COMPLETED": 0.0937,
+    "ALREADY_REFUNDED": 0.0937,
+    "RISK_HOLD": 0.1686,
+    "KYC_HOLD": 0.3631
+   },
+   "top": "KYC_HOLD",
+   "injection_score": 0.03,
+   "ms": 0
+  }
+ },
+ {
+  "seq": 5,
+  "case_id": "CASE-0006",
+  "type": "node",
+  "at": "2026-11-14T01:21:37.977",
+  "data": {
+   "node": "hunch",
+   "agent": "Detective",
+   "status": "end",
+   "ms": 0,
+   "summary": "KYC_HOLD 36% · injection 3% · mock"
+  }
+ },
+ {
+  "seq": 6,
+  "case_id": "CASE-0006",
+  "type": "node",
+  "at": "2026-11-14T01:21:37.977",
+  "data": {
+   "node": "intake",
+   "agent": "Intake Agent",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 7,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:37.977",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "reasoning",
+   "delta": "Treating the complaint as a witness statement: extracting claims to verify, not instructions to follow."
+  }
+ },
+ {
+  "seq": 8,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.028",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "{\"language\":"
+  }
+ },
+ {
+  "seq": 9,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.044",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " \"te\", \"inte"
+  }
+ },
+ {
+  "seq": 10,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.059",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "nt\": \"SETTLE"
+  }
+ },
+ {
+  "seq": 11,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.076",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "MENT_ISSUE\","
+  }
+ },
+ {
+  "seq": 12,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.091",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " \"summary_en"
+  }
+ },
+ {
+  "seq": 13,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.106",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\": \"Merchant"
+  }
+ },
+ {
+  "seq": 14,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.122",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "'s settlemen"
+  }
+ },
+ {
+  "seq": 15,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.137",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ts have not "
+  }
+ },
+ {
+  "seq": 16,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.153",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "reached the "
+  }
+ },
+ {
+  "seq": 17,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.168",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "bank for the"
+  }
+ },
+ {
+  "seq": 18,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.184",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " last 3 days"
+  }
+ },
+ {
+  "seq": 19,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.199",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "; asks what "
+  }
+ },
+ {
+  "seq": 20,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.215",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "happened.\", "
+  }
+ },
+ {
+  "seq": 21,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.231",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\"text_en\": \""
+  }
+ },
+ {
+  "seq": 22,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.246",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "For the last"
+  }
+ },
+ {
+  "seq": 23,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.262",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " three days "
+  }
+ },
+ {
+  "seq": 24,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.278",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "my settlemen"
+  }
+ },
+ {
+  "seq": 25,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.294",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "t money hasn"
+  }
+ },
+ {
+  "seq": 26,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.310",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "'t reached t"
+  }
+ },
+ {
+  "seq": 27,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.326",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "he bank. Wha"
+  }
+ },
+ {
+  "seq": 28,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.341",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "t happened? "
+  }
+ },
+ {
+  "seq": 29,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.355",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "Please tell "
+  }
+ },
+ {
+  "seq": 30,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.371",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "me quickly.\""
+  }
+ },
+ {
+  "seq": 31,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.386",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": ", \"claims\": "
+  }
+ },
+ {
+  "seq": 32,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.402",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "[{\"kind\": \"S"
+  }
+ },
+ {
+  "seq": 33,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.417",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ETTLEMENT_NO"
+  }
+ },
+ {
+  "seq": 34,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.433",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "T_RECEIVED\","
+  }
+ },
+ {
+  "seq": 35,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.449",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " \"text\": \"గత"
+  }
+ },
+ {
+  "seq": 36,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.465",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " మూడు రోజులు"
+  }
+ },
+ {
+  "seq": 37,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.481",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "గా నా సెటిల్"
+  }
+ },
+ {
+  "seq": 38,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.496",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "‌మెంట్ డబ్బు"
+  }
+ },
+ {
+  "seq": 39,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.512",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "లు బ్యాంక్‌క"
+  }
+ },
+ {
+  "seq": 40,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.528",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ి రాలేదు\", \""
+  }
+ },
+ {
+  "seq": 41,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.545",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "date\": null,"
+  }
+ },
+ {
+  "seq": 42,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.559",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " \"amount_pai"
+  }
+ },
+ {
+  "seq": 43,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.575",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "se\": null, \""
+  }
+ },
+ {
+  "seq": 44,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.590",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "count\": 3}],"
+  }
+ },
+ {
+  "seq": 45,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.606",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " \"injection_"
+  }
+ },
+ {
+  "seq": 46,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.620",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "suspected\": "
+  }
+ },
+ {
+  "seq": 47,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.636",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "false, \"sent"
+  }
+ },
+ {
+  "seq": 48,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.652",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "iment\": \"fru"
+  }
+ },
+ {
+  "seq": 49,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:38.667",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "strated\"}"
+  }
+ },
+ {
+  "seq": 50,
+  "case_id": "CASE-0006",
+  "type": "llm_done",
+  "at": "2026-11-14T01:21:38.695",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "ms": 705,
+   "text": "{\"language\": \"te\", \"intent\": \"SETTLEMENT_ISSUE\", \"summary_en\": \"Merchant's settlements have not reached the bank for the last 3 days; asks what happened.\", \"text_en\": \"For the last three days my settlement money hasn't reached the bank. What happened? Please tell me quickly.\", \"claims\": [{\"kind\": \"SETTLEMENT_NOT_RECEIVED\", \"text\": \"గత మూడు రోజులుగా నా సెటిల్‌మెంట్ డబ్బులు బ్యాంక్‌కి రాలేదు\", \"date\": null, \"amount_paise\": null, \"count\": 3}], \"injection_suspected\": false, \"sentiment\": \"frustrated\"}",
+   "usage": null,
+   "live": false,
+   "fallback": null
+  }
+ },
+ {
+  "seq": 51,
+  "case_id": "CASE-0006",
+  "type": "intake",
+  "at": "2026-11-14T01:21:38.695",
+  "data": {
+   "language": "te",
+   "intent": "SETTLEMENT_ISSUE",
+   "summary_en": "Merchant's settlements have not reached the bank for the last 3 days; asks what happened.",
+   "text_en": "For the last three days my settlement money hasn't reached the bank. What happened? Please tell me quickly.",
+   "claims": [
+    {
+     "kind": "SETTLEMENT_NOT_RECEIVED",
+     "text": "గత మూడు రోజులుగా నా సెటిల్‌మెంట్ డబ్బులు బ్యాంక్‌కి రాలేదు",
+     "date": null,
+     "amount_paise": null,
+     "count": 3
+    }
+   ],
+   "injection_suspected": false,
+   "sentiment": "frustrated"
+  }
+ },
+ {
+  "seq": 52,
+  "case_id": "CASE-0006",
+  "type": "node",
+  "at": "2026-11-14T01:21:38.695",
+  "data": {
+   "node": "intake",
+   "agent": "Intake Agent",
+   "status": "end",
+   "ms": 717,
+   "summary": "SETTLEMENT_ISSUE · 1 claims · te"
+  }
+ },
+ {
+  "seq": 53,
+  "case_id": "CASE-0006",
+  "type": "node",
+  "at": "2026-11-14T01:21:38.737",
+  "data": {
+   "node": "trail",
+   "agent": "Detective",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 54,
+  "case_id": "CASE-0006",
+  "type": "trail",
+  "at": "2026-11-14T01:21:38.737",
+  "data": {
+   "merchant_id": "M1006",
+   "window_start": "2026-11-10",
+   "window_end": "2026-11-14",
+   "disputed": [
+    "settlements:STL-1006-20261111",
+    "settlements:STL-1006-20261112",
+    "settlements:STL-1006-20261113"
+   ],
+   "nodes": [
+    {
+     "id": "merchants:M1006",
+     "table": "merchants",
+     "row_id": "M1006",
+     "kind": "merchant",
+     "label": "M1006 · Sri Sai Medicals · P. Venkata Rao · Vijayawada",
+     "at": "2025-10-03",
+     "amount_paise": null,
+     "flags": [],
+     "data": {
+      "id": "M1006",
+      "business_name": "Sri Sai Medicals",
+      "owner_name": "P. Venkata Rao",
+      "city": "Vijayawada",
+      "category": "pharmacy",
+      "status": "ACTIVE"
+     }
+    },
+    {
+     "id": "settlements:STL-1006-20261111",
+     "table": "settlements",
+     "row_id": "STL-1006-20261111",
+     "kind": "settlement",
+     "label": "STL-1006-20261111 · 11 Nov 2026 · HELD · net ₹9,800 (gross ₹9,800 − ₹0)",
+     "at": "2026-11-11",
+     "amount_paise": 980000,
+     "flags": [
+      "HELD",
+      "DISPUTED"
+     ],
+     "data": {
+      "id": "STL-1006-20261111",
+      "merchant_id": "M1006",
+      "batch_date": "2026-11-11",
+      "gross_paise": 980000,
+      "deductions_paise": 0,
+      "net_paise": 980000,
+      "status": "HELD",
+      "utr": null,
+      "settled_at": null,
+      "mdr_paise": 0,
+      "payment_count": 10,
+      "other_deductions": 0
+     }
+    },
+    {
+     "id": "payments:1179",
+     "table": "payments",
+     "row_id": "1179",
+     "kind": "payments_summary",
+     "label": "10 payments (10 UPI) batched into STL-1006-20261111 · gross ₹9,800 · MDR ₹0",
+     "at": "2026-11-11T21:33:54",
+     "amount_paise": 980000,
+     "flags": [
+      "SUMMARY"
+     ],
+     "data": {
+      "count": 10,
+      "modes": {
+       "UPI": 10
+      },
+      "mdr_paise": 0
+     }
+    },
+    {
+     "id": "holds:HLD-1006-01",
+     "table": "holds",
+     "row_id": "HLD-1006-01",
+     "kind": "hold",
+     "label": "KYC hold HLD-1006-01 · KYC_DOC_EXPIRED · ACTIVE since 11 Nov 2026 06:00 · Drug licence expired on 10 Nov 2026",
+     "at": "2026-11-11T06:00:00",
+     "amount_paise": null,
+     "flags": [
+      "ACTIVE_HOLD"
+     ],
+     "data": {
+      "id": "HLD-1006-01",
+      "merchant_id": "M1006",
+      "settlement_id": "STL-1006-20261111",
+      "hold_type": "KYC",
+      "reason_code": "KYC_DOC_EXPIRED",
+      "reason_text": "Drug licence expired on 10 Nov 2026",
+      "status": "ACTIVE",
+      "placed_at": "2026-11-11T06:00:00",
+      "released_at": null
+     }
+    },
+    {
+     "id": "kyc_documents:16",
+     "table": "kyc_documents",
+     "row_id": "16",
+     "kind": "kyc",
+     "label": "Drug licence · EXPIRED 10 Nov 2026",
+     "at": "2026-11-10",
+     "amount_paise": null,
+     "flags": [
+      "EXPIRED"
+     ],
+     "data": {
+      "id": 16,
+      "merchant_id": "M1006",
+      "doc_type": "DRUG_LICENSE",
+      "status": "EXPIRED",
+      "verified_at": "2025-10-04",
+      "expires_at": "2026-11-10"
+     }
+    },
+    {
+     "id": "settlements:STL-1006-20261112",
+     "table": "settlements",
+     "row_id": "STL-1006-20261112",
+     "kind": "settlement",
+     "label": "STL-1006-20261112 · 12 Nov 2026 · HELD · net ₹11,240 (gross ₹11,240 − ₹0)",
+     "at": "2026-11-12",
+     "amount_paise": 1124000,
+     "flags": [
+      "HELD",
+      "DISPUTED"
+     ],
+     "data": {
+      "id": "STL-1006-20261112",
+      "merchant_id": "M1006",
+      "batch_date": "2026-11-12",
+      "gross_paise": 1124000,
+      "deductions_paise": 0,
+      "net_paise": 1124000,
+      "status": "HELD",
+      "utr": null,
+      "settled_at": null,
+      "mdr_paise": 0,
+      "payment_count": 12,
+      "other_deductions": 0
+     }
+    },
+    {
+     "id": "payments:1191",
+     "table": "payments",
+     "row_id": "1191",
+     "kind": "payments_summary",
+     "label": "12 payments (12 UPI) batched into STL-1006-20261112 · gross ₹11,240 · MDR ₹0",
+     "at": "2026-11-12T21:07:14",
+     "amount_paise": 1124000,
+     "flags": [
+      "SUMMARY"
+     ],
+     "data": {
+      "count": 12,
+      "modes": {
+       "UPI": 12
+      },
+      "mdr_paise": 0
+     }
+    },
+    {
+     "id": "settlements:STL-1006-20261113",
+     "table": "settlements",
+     "row_id": "STL-1006-20261113",
+     "kind": "settlement",
+     "label": "STL-1006-20261113 · 13 Nov 2026 · HELD · net ₹10,600 (gross ₹10,600 − ₹0)",
+     "at": "2026-11-13",
+     "amount_paise": 1060000,
+     "flags": [
+      "HELD",
+      "DISPUTED"
+     ],
+     "data": {
+      "id": "STL-1006-20261113",
+      "merchant_id": "M1006",
+      "batch_date": "2026-11-13",
+      "gross_paise": 1060000,
+      "deductions_paise": 0,
+      "net_paise": 1060000,
+      "status": "HELD",
+      "utr": null,
+      "settled_at": null,
+      "mdr_paise": 0,
+      "payment_count": 11,
+      "other_deductions": 0
+     }
+    },
+    {
+     "id": "payments:1202",
+     "table": "payments",
+     "row_id": "1202",
+     "kind": "payments_summary",
+     "label": "11 payments (11 UPI) batched into STL-1006-20261113 · gross ₹10,600 · MDR ₹0",
+     "at": "2026-11-13T21:37:48",
+     "amount_paise": 1060000,
+     "flags": [
+      "SUMMARY"
+     ],
+     "data": {
+      "count": 11,
+      "modes": {
+       "UPI": 11
+      },
+      "mdr_paise": 0
+     }
+    },
+    {
+     "id": "settlements:STL-1006-20261015..STL-1006-20261110",
+     "table": "settlements",
+     "row_id": "STL-1006-20261015..STL-1006-20261110",
+     "kind": "settlement",
+     "label": "27 other settlements (15 Oct – 10 Nov 2026), ₹1,30,529 net, all paid out",
+     "at": "2026-11-10",
+     "amount_paise": 13052900,
+     "flags": [
+      "SUMMARY"
+     ],
+     "data": {
+      "count": 27,
+      "settlement_ids": [
+       "STL-1006-20261015",
+       "STL-1006-20261016",
+       "STL-1006-20261017",
+       "STL-1006-20261018",
+       "STL-1006-20261019",
+       "STL-1006-20261020",
+       "STL-1006-20261021",
+       "STL-1006-20261022",
+       "STL-1006-20261023",
+       "STL-1006-20261024",
+       "STL-1006-20261025",
+       "STL-1006-20261026",
+       "STL-1006-20261027",
+       "STL-1006-20261028",
+       "STL-1006-20261029",
+       "STL-1006-20261030",
+       "STL-1006-20261031",
+       "STL-1006-20261101",
+       "STL-1006-20261102",
+       "STL-1006-20261103",
+       "STL-1006-20261104",
+       "STL-1006-20261105",
+       "STL-1006-20261106",
+       "STL-1006-20261107",
+       "STL-1006-20261108",
+       "STL-1006-20261109",
+       "STL-1006-20261110"
+      ]
+     }
+    }
+   ],
+   "edges": [
+    {
+     "source": "settlements:STL-1006-20261111",
+     "target": "merchants:M1006",
+     "label": "payout to"
+    },
+    {
+     "source": "payments:1179",
+     "target": "settlements:STL-1006-20261111",
+     "label": "batched"
+    },
+    {
+     "source": "settlements:STL-1006-20261111",
+     "target": "holds:HLD-1006-01",
+     "label": "held by"
+    },
+    {
+     "source": "holds:HLD-1006-01",
+     "target": "kyc_documents:16",
+     "label": "because"
+    },
+    {
+     "source": "settlements:STL-1006-20261112",
+     "target": "merchants:M1006",
+     "label": "payout to"
+    },
+    {
+     "source": "payments:1191",
+     "target": "settlements:STL-1006-20261112",
+     "label": "batched"
+    },
+    {
+     "source": "settlements:STL-1006-20261112",
+     "target": "holds:HLD-1006-01",
+     "label": "held by"
+    },
+    {
+     "source": "settlements:STL-1006-20261113",
+     "target": "merchants:M1006",
+     "label": "payout to"
+    },
+    {
+     "source": "payments:1202",
+     "target": "settlements:STL-1006-20261113",
+     "label": "batched"
+    },
+    {
+     "source": "settlements:STL-1006-20261113",
+     "target": "holds:HLD-1006-01",
+     "label": "held by"
+    },
+    {
+     "source": "settlements:STL-1006-20261015..STL-1006-20261110",
+     "target": "merchants:M1006",
+     "label": "payout to"
+    }
+   ]
+  }
+ },
+ {
+  "seq": 55,
+  "case_id": "CASE-0006",
+  "type": "node",
+  "at": "2026-11-14T01:21:38.737",
+  "data": {
+   "node": "trail",
+   "agent": "Detective",
+   "status": "end",
+   "ms": 41,
+   "summary": "10 linked records · 3 disputed movements"
+  }
+ },
+ {
+  "seq": 56,
+  "case_id": "CASE-0006",
+  "type": "node",
+  "at": "2026-11-14T01:21:38.771",
+  "data": {
+   "node": "statements",
+   "agent": "Detective",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 57,
+  "case_id": "CASE-0006",
+  "type": "statements",
+  "at": "2026-11-14T01:21:38.771",
+  "data": {
+   "checks": [
+    {
+     "claim": {
+      "kind": "SETTLEMENT_NOT_RECEIVED",
+      "text": "గత మూడు రోజులుగా నా సెటిల్‌మెంట్ డబ్బులు బ్యాంక్‌కి రాలేదు",
+      "date": null,
+      "amount_paise": null,
+      "count": 3
+     },
+     "status": "VERIFIED",
+     "finding": "3 settlements (11 Nov – 13 Nov 2026, ₹31,640 net) are HELD by KYC hold HLD-1006-01 since 11 Nov 2026.",
+     "evidence": [
+      {
+       "table": "holds",
+       "row_id": "HLD-1006-01",
+       "label": "KYC hold HLD-1006-01 · KYC_DOC_EXPIRED · ACTIVE since 11 Nov 2026 06:00",
+       "at": "2026-11-11T06:00:00",
+       "amount_paise": null
+      },
+      {
+       "table": "settlements",
+       "row_id": "STL-1006-20261111",
+       "label": "STL-1006-20261111 · 11 Nov 2026 · HELD · net ₹9,800 (gross ₹9,800 − ₹0)",
+       "at": "2026-11-11",
+       "amount_paise": 980000
+      },
+      {
+       "table": "settlements",
+       "row_id": "STL-1006-20261112",
+       "label": "STL-1006-20261112 · 12 Nov 2026 · HELD · net ₹11,240 (gross ₹11,240 − ₹0)",
+       "at": "2026-11-12",
+       "amount_paise": 1124000
+      },
+      {
+       "table": "settlements",
+       "row_id": "STL-1006-20261113",
+       "label": "STL-1006-20261113 · 13 Nov 2026 · HELD · net ₹10,600 (gross ₹10,600 − ₹0)",
+       "at": "2026-11-13",
+       "amount_paise": 1060000
+      }
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "seq": 58,
+  "case_id": "CASE-0006",
+  "type": "node",
+  "at": "2026-11-14T01:21:38.771",
+  "data": {
+   "node": "statements",
+   "agent": "Detective",
+   "status": "end",
+   "ms": 33,
+   "summary": "1 verified"
+  }
+ },
+ {
+  "seq": 59,
+  "case_id": "CASE-0006",
+  "type": "node",
+  "at": "2026-11-14T01:21:38.819",
+  "data": {
+   "node": "lineup",
+   "agent": "Detective",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 60,
+  "case_id": "CASE-0006",
+  "type": "suspect",
+  "at": "2026-11-14T01:21:38.931",
+  "data": {
+   "suspect_id": "KYC_HOLD",
+   "title": "Settlement held for KYC",
+   "kind": "HOLD",
+   "status": "MATCH",
+   "summary": "3 settlements (11 Nov – 13 Nov 2026, ₹31,640 net) have been held since 11 Nov 2026 by KYC hold HLD-1006-01 because the drug licence expired on 10 Nov 2026; updating the document releases them.",
+   "evidence": [
+    {
+     "table": "holds",
+     "row_id": "HLD-1006-01",
+     "label": "KYC hold HLD-1006-01 · KYC_DOC_EXPIRED · ACTIVE since 11 Nov 2026 06:00",
+     "at": "2026-11-11T06:00:00",
+     "amount_paise": null
+    },
+    {
+     "table": "kyc_documents",
+     "row_id": "16",
+     "label": "Drug licence · EXPIRED 10 Nov 2026",
+     "at": "2026-11-10",
+     "amount_paise": null
+    },
+    {
+     "table": "settlements",
+     "row_id": "STL-1006-20261111",
+     "label": "STL-1006-20261111 · 11 Nov 2026 · HELD · net ₹9,800 (gross ₹9,800 − ₹0)",
+     "at": "2026-11-11",
+     "amount_paise": 980000
+    },
+    {
+     "table": "settlements",
+     "row_id": "STL-1006-20261112",
+     "label": "STL-1006-20261112 · 12 Nov 2026 · HELD · net ₹11,240 (gross ₹11,240 − ₹0)",
+     "at": "2026-11-12",
+     "amount_paise": 1124000
+    },
+    {
+     "table": "settlements",
+     "row_id": "STL-1006-20261113",
+     "label": "STL-1006-20261113 · 13 Nov 2026 · HELD · net ₹10,600 (gross ₹10,600 − ₹0)",
+     "at": "2026-11-13",
+     "amount_paise": 1060000
+    }
+   ],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {
+    "hold_id": "HLD-1006-01",
+    "settlement_ids": "STL-1006-20261111,STL-1006-20261112,STL-1006-20261113"
+   },
+   "remedies": [
+    "SEND_KYC_LINK"
+   ],
+   "sweepable": false,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 61,
+  "case_id": "CASE-0006",
+  "type": "suspect",
+  "at": "2026-11-14T01:21:39.040",
+  "data": {
+   "suspect_id": "RISK_HOLD",
+   "title": "Settlement held by risk",
+   "kind": "HOLD",
+   "status": "ELIMINATED",
+   "summary": "There is no active risk hold; the only active hold is KYC hold HLD-1006-01.",
+   "evidence": [
+    {
+     "table": "holds",
+     "row_id": "HLD-1006-01",
+     "label": "KYC hold HLD-1006-01 · KYC_DOC_EXPIRED · ACTIVE since 11 Nov 2026 06:00",
+     "at": "2026-11-11T06:00:00",
+     "amount_paise": null
+    }
+   ],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {},
+   "remedies": [],
+   "sweepable": false,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 62,
+  "case_id": "CASE-0006",
+  "type": "suspect",
+  "at": "2026-11-14T01:21:39.149",
+  "data": {
+   "suspect_id": "ZOMBIE_BILLING",
+   "title": "Billing continued after device return",
+   "kind": "FAULT",
+   "status": "NOT_APPLICABLE",
+   "summary": "Not tested: the complaint is about settlements, not Soundbox rent.",
+   "evidence": [],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {},
+   "remedies": [],
+   "sweepable": true,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 63,
+  "case_id": "CASE-0006",
+  "type": "suspect",
+  "at": "2026-11-14T01:21:39.259",
+  "data": {
+   "suspect_id": "DUPLICATE_SUBSCRIPTION",
+   "title": "Two subscriptions on one device",
+   "kind": "FAULT",
+   "status": "NOT_APPLICABLE",
+   "summary": "Not tested: the complaint is about settlements, not Soundbox rent.",
+   "evidence": [],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {},
+   "remedies": [],
+   "sweepable": true,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 64,
+  "case_id": "CASE-0006",
+  "type": "suspect",
+  "at": "2026-11-14T01:21:39.368",
+  "data": {
+   "suspect_id": "DUPLICATE_EDI",
+   "title": "Loan instalment debited twice",
+   "kind": "FAULT",
+   "status": "NOT_APPLICABLE",
+   "summary": "Not tested: the complaint is about settlements, not loan EDI.",
+   "evidence": [],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {},
+   "remedies": [],
+   "sweepable": true,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 65,
+  "case_id": "CASE-0006",
+  "type": "suspect",
+  "at": "2026-11-14T01:21:39.477",
+  "data": {
+   "suspect_id": "PICKUP_NOT_COMPLETED",
+   "title": "Return requested but never collected",
+   "kind": "INNOCENT",
+   "status": "NOT_APPLICABLE",
+   "summary": "Not tested: the complaint is about settlements, not Soundbox rent.",
+   "evidence": [],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {},
+   "remedies": [],
+   "sweepable": false,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 66,
+  "case_id": "CASE-0006",
+  "type": "suspect",
+  "at": "2026-11-14T01:21:39.586",
+  "data": {
+   "suspect_id": "ALREADY_REFUNDED",
+   "title": "Already refunded",
+   "kind": "INNOCENT",
+   "status": "NOT_APPLICABLE",
+   "summary": "Not tested: the complaint is about settlements, not Soundbox rent or loan EDI.",
+   "evidence": [],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {},
+   "remedies": [],
+   "sweepable": false,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 67,
+  "case_id": "CASE-0006",
+  "type": "node",
+  "at": "2026-11-14T01:21:39.587",
+  "data": {
+   "node": "lineup",
+   "agent": "Detective",
+   "status": "end",
+   "ms": 813,
+   "summary": "MATCH: KYC_HOLD · 1 eliminated"
+  }
+ },
+ {
+  "seq": 68,
+  "case_id": "CASE-0006",
+  "type": "node",
+  "at": "2026-11-14T01:21:39.600",
+  "data": {
+   "node": "verdict",
+   "agent": "Detective",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 69,
+  "case_id": "CASE-0006",
+  "type": "node",
+  "at": "2026-11-14T01:21:39.600",
+  "data": {
+   "node": "improvise",
+   "agent": "Detective",
+   "status": "skip",
+   "summary": "a known suspect matched; no probes needed"
+  }
+ },
+ {
+  "seq": 70,
+  "case_id": "CASE-0006",
+  "type": "verdict",
+  "at": "2026-11-14T01:21:39.600",
+  "data": {
+   "outcome": "HOLD_EXPLAINED",
+   "culprits": [
+    "KYC_HOLD"
+   ],
+   "headline": "Payout held for KYC: hold HLD-1006-01 is keeping back 3 settlements (₹31,640) until the expired drug licence is updated.",
+   "smoking_gun": [
+    {
+     "table": "holds",
+     "row_id": "HLD-1006-01",
+     "label": "KYC hold HLD-1006-01 · KYC_DOC_EXPIRED · ACTIVE since 11 Nov 2026 06:00",
+     "at": "2026-11-11T06:00:00",
+     "amount_paise": null
+    },
+    {
+     "table": "kyc_documents",
+     "row_id": "16",
+     "label": "Drug licence · EXPIRED 10 Nov 2026",
+     "at": "2026-11-10",
+     "amount_paise": null
+    },
+    {
+     "table": "settlements",
+     "row_id": "STL-1006-20261111",
+     "label": "STL-1006-20261111 · 11 Nov 2026 · HELD · net ₹9,800 (gross ₹9,800 − ₹0)",
+     "at": "2026-11-11",
+     "amount_paise": 980000
+    },
+    {
+     "table": "settlements",
+     "row_id": "STL-1006-20261112",
+     "label": "STL-1006-20261112 · 12 Nov 2026 · HELD · net ₹11,240 (gross ₹11,240 − ₹0)",
+     "at": "2026-11-12",
+     "amount_paise": 1124000
+    },
+    {
+     "table": "settlements",
+     "row_id": "STL-1006-20261113",
+     "label": "STL-1006-20261113 · 13 Nov 2026 · HELD · net ₹10,600 (gross ₹10,600 − ₹0)",
+     "at": "2026-11-13",
+     "amount_paise": 1060000
+    }
+   ],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {
+    "hold_id": "HLD-1006-01",
+    "settlement_ids": "STL-1006-20261111,STL-1006-20261112,STL-1006-20261113"
+   },
+   "remedies": [
+    "SEND_KYC_LINK"
+   ],
+   "confidence": "HIGH",
+   "sweepable_suspect": null
+  }
+ },
+ {
+  "seq": 71,
+  "case_id": "CASE-0006",
+  "type": "node",
+  "at": "2026-11-14T01:21:39.600",
+  "data": {
+   "node": "verdict",
+   "agent": "Detective",
+   "status": "end",
+   "ms": 11,
+   "summary": "HOLD_EXPLAINED (HIGH)"
+  }
+ },
+ {
+  "seq": 72,
+  "case_id": "CASE-0006",
+  "type": "node",
+  "at": "2026-11-14T01:21:39.601",
+  "data": {
+   "node": "propose",
+   "agent": "Resolver Agent",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 73,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:39.601",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "reasoning",
+   "delta": "Drafting remedies from the verdict. I have no authority; the Action Firewall re-checks every rupee."
+  }
+ },
+ {
+  "seq": 74,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:39.662",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "{\"actions\": "
+  }
+ },
+ {
+  "seq": 75,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:39.678",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "[{\"action_ty"
+  }
+ },
+ {
+  "seq": 76,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:39.694",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "pe\": \"SEND_K"
+  }
+ },
+ {
+  "seq": 77,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:39.710",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "YC_LINK\", \"a"
+  }
+ },
+ {
+  "seq": 78,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:39.726",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "mount_paise\""
+  }
+ },
+ {
+  "seq": 79,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:39.742",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": ": 0, \"ledger"
+  }
+ },
+ {
+  "seq": 80,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:39.758",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "_entry_ids\":"
+  }
+ },
+ {
+  "seq": 81,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:39.772",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " [], \"target"
+  }
+ },
+ {
+  "seq": 82,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:39.788",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "_id\": \"HLD-1"
+  }
+ },
+ {
+  "seq": 83,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:39.803",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "006-01\", \"te"
+  }
+ },
+ {
+  "seq": 84,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:39.819",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "am\": null, \""
+  }
+ },
+ {
+  "seq": 85,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:39.834",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "reason\": \"Pa"
+  }
+ },
+ {
+  "seq": 86,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:39.849",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "youts are he"
+  }
+ },
+ {
+  "seq": 87,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:39.865",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ld for an ex"
+  }
+ },
+ {
+  "seq": 88,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:39.881",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "pired KYC do"
+  }
+ },
+ {
+  "seq": 89,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:39.896",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "cument; send"
+  }
+ },
+ {
+  "seq": 90,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:39.912",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " the re-KYC "
+  }
+ },
+ {
+  "seq": 91,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:39.928",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "link.\"}], \"r"
+  }
+ },
+ {
+  "seq": 92,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:39.943",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ationale\": \""
+  }
+ },
+ {
+  "seq": 93,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:39.958",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "Payouts are "
+  }
+ },
+ {
+  "seq": 94,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:39.973",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "held for a K"
+  }
+ },
+ {
+  "seq": 95,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:39.989",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "YC document;"
+  }
+ },
+ {
+  "seq": 96,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.004",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " the merchan"
+  }
+ },
+ {
+  "seq": 97,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.020",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "t must updat"
+  }
+ },
+ {
+  "seq": 98,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.035",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "e it, so sen"
+  }
+ },
+ {
+  "seq": 99,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.051",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "d the re-KYC"
+  }
+ },
+ {
+  "seq": 100,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.067",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " link.\"}"
+  }
+ },
+ {
+  "seq": 101,
+  "case_id": "CASE-0006",
+  "type": "llm_done",
+  "at": "2026-11-14T01:21:40.096",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "ms": 480,
+   "text": "{\"actions\": [{\"action_type\": \"SEND_KYC_LINK\", \"amount_paise\": 0, \"ledger_entry_ids\": [], \"target_id\": \"HLD-1006-01\", \"team\": null, \"reason\": \"Payouts are held for an expired KYC document; send the re-KYC link.\"}], \"rationale\": \"Payouts are held for a KYC document; the merchant must update it, so send the re-KYC link.\"}",
+   "usage": null,
+   "live": false,
+   "fallback": null
+  }
+ },
+ {
+  "seq": 102,
+  "case_id": "CASE-0006",
+  "type": "proposal",
+  "at": "2026-11-14T01:21:40.096",
+  "data": {
+   "actions": [
+    {
+     "action_type": "SEND_KYC_LINK",
+     "amount_paise": 0,
+     "ledger_entry_ids": [],
+     "target_id": "HLD-1006-01",
+     "team": null,
+     "reason": "Payouts are held for an expired KYC document; send the re-KYC link."
+    }
+   ],
+   "rationale": "Payouts are held for a KYC document; the merchant must update it, so send the re-KYC link."
+  }
+ },
+ {
+  "seq": 103,
+  "case_id": "CASE-0006",
+  "type": "node",
+  "at": "2026-11-14T01:21:40.096",
+  "data": {
+   "node": "propose",
+   "agent": "Resolver Agent",
+   "status": "end",
+   "ms": 494,
+   "summary": "SEND_KYC_LINK"
+  }
+ },
+ {
+  "seq": 104,
+  "case_id": "CASE-0006",
+  "type": "node",
+  "at": "2026-11-14T01:21:40.102",
+  "data": {
+   "node": "firewall",
+   "agent": "Action Firewall",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 105,
+  "case_id": "CASE-0006",
+  "type": "firewall",
+  "at": "2026-11-14T01:21:40.102",
+  "data": {
+   "decision": "ALLOW",
+   "actions": [
+    {
+     "proposed": {
+      "action_type": "SEND_KYC_LINK",
+      "amount_paise": 0,
+      "ledger_entry_ids": [],
+      "target_id": "HLD-1006-01",
+      "team": null,
+      "reason": "Payouts are held for an expired KYC document; send the re-KYC link."
+     },
+     "final": {
+      "action_type": "SEND_KYC_LINK",
+      "amount_paise": 0,
+      "ledger_entry_ids": [],
+      "target_id": "HLD-1006-01",
+      "team": null,
+      "reason": "Payouts are held for an expired KYC document; send the re-KYC link."
+     },
+     "decision": "ALLOW",
+     "checks": [
+      {
+       "id": "allowlist",
+       "label": "Known action type",
+       "status": "PASS",
+       "detail": "SEND_KYC_LINK is on Munim's list of allowed actions."
+      },
+      {
+       "id": "remedy_match",
+       "label": "Permitted remedy for the verdict",
+       "status": "PASS",
+       "detail": "SEND_KYC_LINK is a permitted remedy for KYC_HOLD."
+      },
+      {
+       "id": "hard_deny",
+       "label": "Hard-deny rules",
+       "status": "SKIP",
+       "detail": "No hard-deny rule covers SEND_KYC_LINK."
+      },
+      {
+       "id": "ownership",
+       "label": "Belongs to this merchant",
+       "status": "PASS",
+       "detail": "Hold HLD-1006-01 belongs to Sri Sai Medicals (M1006)."
+      },
+      {
+       "id": "evidence_binding",
+       "label": "Bound to verdict evidence",
+       "status": "SKIP",
+       "detail": "SEND_KYC_LINK is not a refund, so it is not bound to ledger damages."
+      },
+      {
+       "id": "amount_recompute",
+       "label": "Amount recomputed from ledger",
+       "status": "SKIP",
+       "detail": "SEND_KYC_LINK moves no money."
+      },
+      {
+       "id": "idempotency",
+       "label": "Not already done",
+       "status": "PASS",
+       "detail": "No identical SEND_KYC_LINK has been executed before."
+      },
+      {
+       "id": "preconditions",
+       "label": "Preconditions hold",
+       "status": "PASS",
+       "detail": "A re-KYC link is needed: DRUG_LICENSE is EXPIRED (expired 10 Nov 2026) and KYC hold HLD-1006-01 has been active since 11 Nov 2026."
+      },
+      {
+       "id": "limits",
+       "label": "Within auto-approval limits",
+       "status": "SKIP",
+       "detail": "SEND_KYC_LINK moves no money."
+      },
+      {
+       "id": "injection",
+       "label": "Prompt-injection guard",
+       "status": "PASS",
+       "detail": "No manipulation signals in the complaint (injection score 0.03)."
+      },
+      {
+       "id": "confidence",
+       "label": "Verdict confidence",
+       "status": "SKIP",
+       "detail": "SEND_KYC_LINK moves no money, so verdict confidence does not gate it."
+      }
+     ],
+     "idempotency_key": "e426d377b1247667"
+    }
+   ]
+  }
+ },
+ {
+  "seq": 106,
+  "case_id": "CASE-0006",
+  "type": "node",
+  "at": "2026-11-14T01:21:40.102",
+  "data": {
+   "node": "firewall",
+   "agent": "Action Firewall",
+   "status": "end",
+   "ms": 4,
+   "summary": "ALLOW: SEND_KYC_LINK→ALLOW"
+  }
+ },
+ {
+  "seq": 107,
+  "case_id": "CASE-0006",
+  "type": "node",
+  "at": "2026-11-14T01:21:40.106",
+  "data": {
+   "node": "execute",
+   "agent": "Executor",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 108,
+  "case_id": "CASE-0006",
+  "type": "execution",
+  "at": "2026-11-14T01:21:40.106",
+  "data": {
+   "results": [
+    {
+     "action_id": 98,
+     "action_type": "SEND_KYC_LINK",
+     "status": "EXECUTED",
+     "amount_paise": 0,
+     "detail": "Sent a re-KYC link (https://paytm.example/kyc/M1006) by SMS to update the drug licence.",
+     "ledger_entry_ids": []
+    }
+   ]
+  }
+ },
+ {
+  "seq": 109,
+  "case_id": "CASE-0006",
+  "type": "node",
+  "at": "2026-11-14T01:21:40.106",
+  "data": {
+   "node": "execute",
+   "agent": "Executor",
+   "status": "end",
+   "ms": 3,
+   "summary": "1 executed"
+  }
+ },
+ {
+  "seq": 110,
+  "case_id": "CASE-0006",
+  "type": "node",
+  "at": "2026-11-14T01:21:40.106",
+  "data": {
+   "node": "respond",
+   "agent": "Communicator Agent",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 111,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.106",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "reasoning",
+   "delta": "Writing to the merchant in Telugu: facts from the case file only; executed vs pending kept apart."
+  }
+ },
+ {
+  "seq": 112,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.159",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "నమస్కారం "
+  }
+ },
+ {
+  "seq": 113,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.174",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "వెంకట "
+  }
+ },
+ {
+  "seq": 114,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.190",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "రావు "
+  }
+ },
+ {
+  "seq": 115,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.208",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "గారు, "
+  }
+ },
+ {
+  "seq": 116,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.223",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "మీ "
+  }
+ },
+ {
+  "seq": 117,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.238",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "డ్రగ్ "
+  }
+ },
+ {
+  "seq": 118,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.255",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "లైసెన్స్ "
+  }
+ },
+ {
+  "seq": 119,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.270",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "గడువు "
+  }
+ },
+ {
+  "seq": 120,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.285",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "నవంబర్ "
+  }
+ },
+ {
+  "seq": 121,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.301",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "10న "
+  }
+ },
+ {
+  "seq": 122,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.316",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ముగిసింది. "
+  }
+ },
+ {
+  "seq": 123,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.332",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "అందుకే "
+  }
+ },
+ {
+  "seq": 124,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.347",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "మీ "
+  }
+ },
+ {
+  "seq": 125,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.363",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "3 సెటిల్‌మెంట్లు "
+  }
+ },
+ {
+  "seq": 126,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.379",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "(మొత్తం "
+  }
+ },
+ {
+  "seq": 127,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.394",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "₹31,640) "
+  }
+ },
+ {
+  "seq": 128,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.410",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "హోల్డ్‌లో "
+  }
+ },
+ {
+  "seq": 129,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.425",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ఉన్నాయి. "
+  }
+ },
+ {
+  "seq": 130,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.441",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "డ్రగ్ "
+  }
+ },
+ {
+  "seq": 131,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.456",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "లైసెన్స్ "
+  }
+ },
+ {
+  "seq": 132,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.472",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "అప్‌డేట్ "
+  }
+ },
+ {
+  "seq": 133,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.487",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "చేయడానికి "
+  }
+ },
+ {
+  "seq": 134,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.502",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "మీకు "
+  }
+ },
+ {
+  "seq": 135,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.518",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "KYC "
+  }
+ },
+ {
+  "seq": 136,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.534",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "లింక్ "
+  }
+ },
+ {
+  "seq": 137,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.549",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "పంపాం. "
+  }
+ },
+ {
+  "seq": 138,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.564",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "కొత్త "
+  }
+ },
+ {
+  "seq": 139,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.580",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "డాక్యుమెంట్ "
+  }
+ },
+ {
+  "seq": 140,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.596",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "అప్‌లోడ్ "
+  }
+ },
+ {
+  "seq": 141,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.612",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "చేయండి; "
+  }
+ },
+ {
+  "seq": 142,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.628",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ధృవీకరణ "
+  }
+ },
+ {
+  "seq": 143,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.644",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "పూర్తయ్యాక "
+  }
+ },
+ {
+  "seq": 144,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.659",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "హోల్డ్ "
+  }
+ },
+ {
+  "seq": 145,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.676",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "విడుదల "
+  }
+ },
+ {
+  "seq": 146,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.690",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ప్రక్రియ "
+  }
+ },
+ {
+  "seq": 147,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.705",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "మొదలవుతుంది. "
+  }
+ },
+ {
+  "seq": 148,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.720",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "కేస్ "
+  }
+ },
+ {
+  "seq": 149,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.736",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "నంబర్: "
+  }
+ },
+ {
+  "seq": 150,
+  "case_id": "CASE-0006",
+  "type": "llm",
+  "at": "2026-11-14T01:21:40.752",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "CASE-0006"
+  }
+ },
+ {
+  "seq": 151,
+  "case_id": "CASE-0006",
+  "type": "llm_done",
+  "at": "2026-11-14T01:21:40.770",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "ms": 661,
+   "text": "నమస్కారం వెంకట రావు గారు, మీ డ్రగ్ లైసెన్స్ గడువు నవంబర్ 10న ముగిసింది. అందుకే మీ 3 సెటిల్‌మెంట్లు (మొత్తం ₹31,640) హోల్డ్‌లో ఉన్నాయి. డ్రగ్ లైసెన్స్ అప్‌డేట్ చేయడానికి మీకు KYC లింక్ పంపాం. కొత్త డాక్యుమెంట్ అప్‌లోడ్ చేయండి; ధృవీకరణ పూర్తయ్యాక హోల్డ్ విడుదల ప్రక్రియ మొదలవుతుంది. కేస్ నంబర్: CASE-0006",
+   "usage": null,
+   "live": false,
+   "fallback": null
+  }
+ },
+ {
+  "seq": 152,
+  "case_id": "CASE-0006",
+  "type": "message",
+  "at": "2026-11-14T01:21:40.770",
+  "data": {
+   "role": "munim",
+   "text": "నమస్కారం వెంకట రావు గారు, మీ డ్రగ్ లైసెన్స్ గడువు నవంబర్ 10న ముగిసింది. అందుకే మీ 3 సెటిల్‌మెంట్లు (మొత్తం ₹31,640) హోల్డ్‌లో ఉన్నాయి. డ్రగ్ లైసెన్స్ అప్‌డేట్ చేయడానికి మీకు KYC లింక్ పంపాం. కొత్త డాక్యుమెంట్ అప్‌లోడ్ చేయండి; ధృవీకరణ పూర్తయ్యాక హోల్డ్ విడుదల ప్రక్రియ మొదలవుతుంది. కేస్ నంబర్: CASE-0006",
+   "en": "Hello P. Venkata Rao ji. Your drug licence expired on 10 Nov. Because of this, 3 settlements (total ₹31,640) are on hold. We have sent you a KYC link to update your drug licence. Please upload the renewed document; after verification, the hold release process begins. Case ref: CASE-0006",
+   "language": "te",
+   "final": true
+  }
+ },
+ {
+  "seq": 153,
+  "case_id": "CASE-0006",
+  "type": "node",
+  "at": "2026-11-14T01:21:40.770",
+  "data": {
+   "node": "sweep",
+   "agent": "Detective",
+   "status": "skip",
+   "summary": "no fleet-wide fault to sweep for"
+  }
+ },
+ {
+  "seq": 154,
+  "case_id": "CASE-0006",
+  "type": "node",
+  "at": "2026-11-14T01:21:40.770",
+  "data": {
+   "node": "respond",
+   "agent": "Communicator Agent",
+   "status": "end",
+   "ms": 662,
+   "summary": "40 words · te · mock"
+  }
+ },
+ {
+  "seq": 155,
+  "case_id": "CASE-0006",
+  "type": "done",
+  "at": "2026-11-14T01:21:40.783",
+  "data": {
+   "case_id": "CASE-0006",
+   "status": "RESOLVED",
+   "outcome": "HOLD_EXPLAINED",
+   "decision": "ALLOW",
+   "ms": 2807
+  }
+ },
+ {
+  "seq": 156,
+  "case_id": "CASE-0006",
+  "type": "message",
+  "at": "2026-11-14T01:21:40.793",
+  "data": {
+   "role": "team",
+   "text": "What does the merchant need to do?",
+   "en": "What does the merchant need to do?",
+   "language": "en",
+   "final": true,
+   "kind": "chat"
+  }
+ },
+ {
+  "seq": 157,
+  "case_id": "CASE-0006",
+  "type": "llm_done",
+  "at": "2026-11-14T01:21:40.793",
+  "data": {
+   "node": "chat",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "ms": 1,
+   "text": "{\"question_en\": \"What does the merchant need to do?\", \"answer\": \"Payout held for KYC: hold HLD-1006-01 is keeping back 3 settlements (₹31,640) until the expired drug licence is updated. Re-KYC link sent by SMS.\", \"reply\": \"\", \"sources\": [\"KYC hold HLD-1006-01\", \"Drug licence\"], \"new_case\": false}",
+   "usage": null,
+   "live": false,
+   "fallback": null
+  }
+ },
+ {
+  "seq": 158,
+  "case_id": "CASE-0006",
+  "type": "message",
+  "at": "2026-11-14T01:21:40.793",
+  "data": {
+   "role": "munim",
+   "text": "Payout held for KYC: hold HLD-1006-01 is keeping back 3 settlements (₹31,640) until the expired drug licence is updated. Re-KYC link sent by SMS.",
+   "en": "Payout held for KYC: hold HLD-1006-01 is keeping back 3 settlements (₹31,640) until the expired drug licence is updated. Re-KYC link sent by SMS.",
+   "language": "en",
+   "final": true,
+   "kind": "chat",
+   "sources": [
+    "KYC hold HLD-1006-01",
+    "Drug licence"
+   ],
+   "new_case": false
+  }
+ }
+]

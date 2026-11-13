@@ -1,0 +1,3733 @@
+[
+ {
+  "seq": 1,
+  "case_id": "CASE-0001",
+  "type": "case",
+  "at": "2026-11-13T22:40:18.470",
+  "data": {
+   "case_id": "CASE-0001",
+   "merchant": {
+    "id": "M1001",
+    "business_name": "Sharma Kirana Store",
+    "owner_name": "Ramesh Sharma",
+    "city": "Lucknow",
+    "language": "hi",
+    "category": "kirana"
+   },
+   "complaint_text": "मैंने सितंबर में साउंडबॉक्स वापस कर दिया था, फिर भी हर महीने ₹499 कट रहा है। तीन महीने से पैसा कट रहा है, मेरा पैसा वापस करो।",
+   "channel": "chat",
+   "scenario_id": "zombie_rent"
+  }
+ },
+ {
+  "seq": 2,
+  "case_id": "CASE-0001",
+  "type": "message",
+  "at": "2026-11-13T22:40:18.470",
+  "data": {
+   "role": "merchant",
+   "text": "मैंने सितंबर में साउंडबॉक्स वापस कर दिया था, फिर भी हर महीने ₹499 कट रहा है। तीन महीने से पैसा कट रहा है, मेरा पैसा वापस करो।",
+   "language": "hi",
+   "final": true
+  }
+ },
+ {
+  "seq": 3,
+  "case_id": "CASE-0001",
+  "type": "node",
+  "at": "2026-11-13T22:40:18.581",
+  "data": {
+   "node": "hunch",
+   "agent": "Detective",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 4,
+  "case_id": "CASE-0001",
+  "type": "node",
+  "at": "2026-11-13T22:40:18.581",
+  "data": {
+   "node": "intake",
+   "agent": "Intake Agent",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 5,
+  "case_id": "CASE-0001",
+  "type": "hunch",
+  "at": "2026-11-13T22:40:18.842",
+  "data": {
+   "source": "sarvam-prism",
+   "probabilities": {
+    "ZOMBIE_BILLING": 0.9519,
+    "DUPLICATE_SUBSCRIPTION": 0.0105,
+    "DUPLICATE_EDI": 0.0067,
+    "PICKUP_NOT_COMPLETED": 0.0092,
+    "ALREADY_REFUNDED": 0.0073,
+    "RISK_HOLD": 0.0069,
+    "KYC_HOLD": 0.0075
+   },
+   "top": "ZOMBIE_BILLING",
+   "injection_score": 0.0401,
+   "ms": 349
+  }
+ },
+ {
+  "seq": 6,
+  "case_id": "CASE-0001",
+  "type": "node",
+  "at": "2026-11-13T22:40:18.842",
+  "data": {
+   "node": "hunch",
+   "agent": "Detective",
+   "status": "end",
+   "ms": 355,
+   "summary": "ZOMBIE_BILLING 95% · injection 4% · sarvam-prism"
+  }
+ },
+ {
+  "seq": 7,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:21.374",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "gemini",
+   "model": "gemini-flash-latest",
+   "kind": "content",
+   "delta": "{\"language\":\"hi\",\"intent\":\"RENT_DEDUCTION\",\"summary_en\":\"Merchant"
+  }
+ },
+ {
+  "seq": 8,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:21.602",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "gemini",
+   "model": "gemini-flash-latest",
+   "kind": "content",
+   "delta": " returned Soundbox in September 2026, but ₹499 has been debited for three months; demands a refund."
+  }
+ },
+ {
+  "seq": 9,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:21.738",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "gemini",
+   "model": "gemini-flash-latest",
+   "kind": "content",
+   "delta": "\",\"claims\":[{\"kind\":\"DEVICE_RETURNED\",\"text\":\"सितंबर में साउंडबॉक्स वापस कर दिया था\",\"date\":\""
+  }
+ },
+ {
+  "seq": 10,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:21.849",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "gemini",
+   "model": "gemini-flash-latest",
+   "kind": "content",
+   "delta": "2026-09\",\"amount_paise\":null,\"count\":null},{\"kind\":\"DEDUCTION"
+  }
+ },
+ {
+  "seq": 11,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:21.977",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "gemini",
+   "model": "gemini-flash-latest",
+   "kind": "content",
+   "delta": "_AMOUNT\",\"text\":\"₹499\",\"date\":null,\"amount_paise\":49900"
+  }
+ },
+ {
+  "seq": 12,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:22.106",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "gemini",
+   "model": "gemini-flash-latest",
+   "kind": "content",
+   "delta": ",\"count\":null},{\"kind\":\"DEDUCTION_COUNT\",\"text\":\"तीन महीने से\",\"date\":null,\"amount"
+  }
+ },
+ {
+  "seq": 13,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:22.250",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "gemini",
+   "model": "gemini-flash-latest",
+   "kind": "content",
+   "delta": "_paise\":null,\"count\":3},{\"kind\":\"REFUND_DEMANDED\",\"text\":\"मेरा पैसा वापस करो\",\"date\":"
+  }
+ },
+ {
+  "seq": 14,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:22.373",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "gemini",
+   "model": "gemini-flash-latest",
+   "kind": "content",
+   "delta": "null,\"amount_paise\":null,\"count\":null}],\"injection_suspected\":false,\"sentiment\":\"angry"
+  }
+ },
+ {
+  "seq": 15,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:22.405",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "gemini",
+   "model": "gemini-flash-latest",
+   "kind": "content",
+   "delta": "\"}"
+  }
+ },
+ {
+  "seq": 16,
+  "case_id": "CASE-0001",
+  "type": "llm_done",
+  "at": "2026-11-13T22:40:22.423",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "gemini",
+   "model": "gemini-flash-latest",
+   "ms": 3842,
+   "text": "{\"language\":\"hi\",\"intent\":\"RENT_DEDUCTION\",\"summary_en\":\"Merchant returned Soundbox in September 2026, but ₹499 has been debited for three months; demands a refund.\",\"claims\":[{\"kind\":\"DEVICE_RETURNED\",\"text\":\"सितंबर में साउंडबॉक्स वापस कर दिया था\",\"date\":\"2026-09\",\"amount_paise\":null,\"count\":null},{\"kind\":\"DEDUCTION_AMOUNT\",\"text\":\"₹499\",\"date\":null,\"amount_paise\":49900,\"count\":null},{\"kind\":\"DEDUCTION_COUNT\",\"text\":\"तीन महीने से\",\"date\":null,\"amount_paise\":null,\"count\":3},{\"kind\":\"REFUND_DEMANDED\",\"text\":\"मेरा पैसा वापस करो\",\"date\":null,\"amount_paise\":null,\"count\":null}],\"injection_suspected\":false,\"sentiment\":\"angry\"}",
+   "usage": null,
+   "live": true,
+   "fallback": null
+  }
+ },
+ {
+  "seq": 17,
+  "case_id": "CASE-0001",
+  "type": "intake",
+  "at": "2026-11-13T22:40:22.423",
+  "data": {
+   "language": "hi",
+   "intent": "RENT_DEDUCTION",
+   "summary_en": "Merchant returned Soundbox in September 2026, but ₹499 has been debited for three months; demands a refund.",
+   "claims": [
+    {
+     "kind": "DEVICE_RETURNED",
+     "text": "सितंबर में साउंडबॉक्स वापस कर दिया था",
+     "date": "2026-09",
+     "amount_paise": null,
+     "count": null
+    },
+    {
+     "kind": "DEDUCTION_AMOUNT",
+     "text": "₹499",
+     "date": null,
+     "amount_paise": 49900,
+     "count": null
+    },
+    {
+     "kind": "DEDUCTION_COUNT",
+     "text": "तीन महीने से",
+     "date": null,
+     "amount_paise": null,
+     "count": 3
+    },
+    {
+     "kind": "REFUND_DEMANDED",
+     "text": "मेरा पैसा वापस करो",
+     "date": null,
+     "amount_paise": null,
+     "count": null
+    }
+   ],
+   "injection_suspected": false,
+   "sentiment": "angry",
+   "text_en": "I returned the Soundbox in September, but ₹499 is still cut every month. It's been three months. Give my money back."
+  }
+ },
+ {
+  "seq": 18,
+  "case_id": "CASE-0001",
+  "type": "node",
+  "at": "2026-11-13T22:40:22.423",
+  "data": {
+   "node": "intake",
+   "agent": "Intake Agent",
+   "status": "end",
+   "ms": 3850,
+   "summary": "RENT_DEDUCTION · 4 claims · hi"
+  }
+ },
+ {
+  "seq": 19,
+  "case_id": "CASE-0001",
+  "type": "node",
+  "at": "2026-11-13T22:40:22.429",
+  "data": {
+   "node": "trail",
+   "agent": "Detective",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 20,
+  "case_id": "CASE-0001",
+  "type": "trail",
+  "at": "2026-11-13T22:40:22.429",
+  "data": {
+   "merchant_id": "M1001",
+   "window_start": "2025-11-20",
+   "window_end": "2026-11-14",
+   "disputed": [
+    "ledger_entries:10",
+    "ledger_entries:11",
+    "ledger_entries:12"
+   ],
+   "nodes": [
+    {
+     "id": "merchants:M1001",
+     "table": "merchants",
+     "row_id": "M1001",
+     "kind": "merchant",
+     "label": "M1001 · Sharma Kirana Store · Ramesh Sharma · Lucknow",
+     "at": "2025-11-18",
+     "amount_paise": null,
+     "flags": [],
+     "data": {
+      "id": "M1001",
+      "business_name": "Sharma Kirana Store",
+      "owner_name": "Ramesh Sharma",
+      "city": "Lucknow",
+      "category": "kirana",
+      "status": "ACTIVE"
+     }
+    },
+    {
+     "id": "subscriptions:SUB-1001-A",
+     "table": "subscriptions",
+     "row_id": "SUB-1001-A",
+     "kind": "subscription",
+     "label": "SUB-1001-A · Soundbox 4G Rental ₹499/month · since 20 Nov 2025 · ACTIVE",
+     "at": "2025-11-20",
+     "amount_paise": null,
+     "flags": [
+      "ACTIVE_AFTER_RETURN"
+     ],
+     "data": {
+      "id": "SUB-1001-A",
+      "merchant_id": "M1001",
+      "device_id": "D50001",
+      "plan_id": "PLAN_SB499",
+      "status": "ACTIVE",
+      "started_at": "2025-11-20",
+      "ended_at": null,
+      "end_reason": null
+     }
+    },
+    {
+     "id": "mandates:MDT-1001-A",
+     "table": "mandates",
+     "row_id": "MDT-1001-A",
+     "kind": "mandate",
+     "label": "Mandate MDT-1001-A · UMRN PYTM25112000000001 · up to ₹998 · ACTIVE",
+     "at": "2025-11-20",
+     "amount_paise": null,
+     "flags": [],
+     "data": {
+      "id": "MDT-1001-A",
+      "merchant_id": "M1001",
+      "purpose": "SUBSCRIPTION",
+      "subscription_id": "SUB-1001-A",
+      "loan_id": null,
+      "umrn": "PYTM25112000000001",
+      "max_amount_paise": 99800,
+      "status": "ACTIVE",
+      "created_at": "2025-11-20"
+     }
+    },
+    {
+     "id": "devices:D50001",
+     "table": "devices",
+     "row_id": "D50001",
+     "kind": "device",
+     "label": "Soundbox D50001 · SB4G-7Q2K91 · Soundbox 4G · RETURNED · unmapped",
+     "at": "2025-11-20",
+     "amount_paise": null,
+     "flags": [],
+     "data": {
+      "id": "D50001",
+      "serial_no": "SB4G-7Q2K91",
+      "model": "Soundbox 4G",
+      "merchant_id": null,
+      "status": "RETURNED",
+      "installed_at": "2025-11-20"
+     }
+    },
+    {
+     "id": "ledger_entries:10",
+     "table": "ledger_entries",
+     "row_id": "10",
+     "kind": "money",
+     "label": "₹499 rent debit · 01 Sep 2026 · NACH2609010000010",
+     "at": "2026-09-01T06:07:13",
+     "amount_paise": 49900,
+     "flags": [
+      "DISPUTED"
+     ],
+     "data": {
+      "id": 10,
+      "merchant_id": "M1001",
+      "txn_ref": "NACH2609010000010",
+      "entry_type": "RENT_DEBIT",
+      "direction": "DEBIT",
+      "amount_paise": 49900,
+      "status": "SUCCESS",
+      "source_type": "subscription",
+      "source_id": "SUB-1001-A",
+      "mandate_id": "MDT-1001-A",
+      "value_date": "2026-09-01",
+      "posted_at": "2026-09-01T06:07:13",
+      "narration": "Soundbox 4G Rental rent Sep 2026 · SUB-1001-A",
+      "refund_of": null
+     }
+    },
+    {
+     "id": "ledger_entries:11",
+     "table": "ledger_entries",
+     "row_id": "11",
+     "kind": "money",
+     "label": "₹499 rent debit · 01 Oct 2026 · NACH2610010000011",
+     "at": "2026-10-01T06:16:32",
+     "amount_paise": 49900,
+     "flags": [
+      "AFTER_PICKUP",
+      "DISPUTED"
+     ],
+     "data": {
+      "id": 11,
+      "merchant_id": "M1001",
+      "txn_ref": "NACH2610010000011",
+      "entry_type": "RENT_DEBIT",
+      "direction": "DEBIT",
+      "amount_paise": 49900,
+      "status": "SUCCESS",
+      "source_type": "subscription",
+      "source_id": "SUB-1001-A",
+      "mandate_id": "MDT-1001-A",
+      "value_date": "2026-10-01",
+      "posted_at": "2026-10-01T06:16:32",
+      "narration": "Soundbox 4G Rental rent Oct 2026 · SUB-1001-A",
+      "refund_of": null
+     }
+    },
+    {
+     "id": "ledger_entries:12",
+     "table": "ledger_entries",
+     "row_id": "12",
+     "kind": "money",
+     "label": "₹499 rent debit · 01 Nov 2026 · NACH2611010000012",
+     "at": "2026-11-01T06:40:01",
+     "amount_paise": 49900,
+     "flags": [
+      "AFTER_PICKUP",
+      "DISPUTED"
+     ],
+     "data": {
+      "id": 12,
+      "merchant_id": "M1001",
+      "txn_ref": "NACH2611010000012",
+      "entry_type": "RENT_DEBIT",
+      "direction": "DEBIT",
+      "amount_paise": 49900,
+      "status": "SUCCESS",
+      "source_type": "subscription",
+      "source_id": "SUB-1001-A",
+      "mandate_id": "MDT-1001-A",
+      "value_date": "2026-11-01",
+      "posted_at": "2026-11-01T06:40:01",
+      "narration": "Soundbox 4G Rental rent Nov 2026 · SUB-1001-A",
+      "refund_of": null
+     }
+    },
+    {
+     "id": "ledger_entries:1..9",
+     "table": "ledger_entries",
+     "row_id": "1..9",
+     "kind": "money",
+     "label": "9 other rent debits on SUB-1001-A (01 Dec 2025 – 01 Aug 2026), ₹499 each, all before the pickup",
+     "at": "2026-08-01T06:04:01",
+     "amount_paise": 449100,
+     "flags": [
+      "SUMMARY"
+     ],
+     "data": {
+      "count": 9,
+      "ledger_ids": [
+       1,
+       2,
+       3,
+       4,
+       5,
+       6,
+       7,
+       8,
+       9
+      ]
+     }
+    },
+    {
+     "id": "device_events:1",
+     "table": "device_events",
+     "row_id": "1",
+     "kind": "device_event",
+     "label": "Installed · 20 Nov 2025 12:30 · INS-251120-1001",
+     "at": "2025-11-20T12:30:00",
+     "amount_paise": null,
+     "flags": [],
+     "data": {
+      "id": 1,
+      "device_id": "D50001",
+      "event_type": "INSTALLED",
+      "at": "2025-11-20T12:30:00",
+      "ref": "INS-251120-1001",
+      "note": "Installed at Sharma Kirana Store"
+     }
+    },
+    {
+     "id": "device_events:2",
+     "table": "device_events",
+     "row_id": "2",
+     "kind": "device_event",
+     "label": "Return requested · 02 Sep 2026 11:24 · PK-260902-1001",
+     "at": "2026-09-02T11:24:00",
+     "amount_paise": null,
+     "flags": [],
+     "data": {
+      "id": 2,
+      "device_id": "D50001",
+      "event_type": "RETURN_REQUESTED",
+      "at": "2026-09-02T11:24:00",
+      "ref": "PK-260902-1001",
+      "note": "Merchant requested return in app"
+     }
+    },
+    {
+     "id": "device_events:3",
+     "table": "device_events",
+     "row_id": "3",
+     "kind": "device_event",
+     "label": "Pickup scheduled · 05 Sep 2026 10:02 · PK-260902-1001",
+     "at": "2026-09-05T10:02:00",
+     "amount_paise": null,
+     "flags": [],
+     "data": {
+      "id": 3,
+      "device_id": "D50001",
+      "event_type": "PICKUP_SCHEDULED",
+      "at": "2026-09-05T10:02:00",
+      "ref": "PK-260902-1001",
+      "note": "Pickup slot 12 Sep 2026"
+     }
+    },
+    {
+     "id": "device_events:4",
+     "table": "device_events",
+     "row_id": "4",
+     "kind": "device_event",
+     "label": "Picked up · 12 Sep 2026 15:40 · AWB DLV88123401",
+     "at": "2026-09-12T15:40:00",
+     "amount_paise": null,
+     "flags": [],
+     "data": {
+      "id": 4,
+      "device_id": "D50001",
+      "event_type": "PICKED_UP",
+      "at": "2026-09-12T15:40:00",
+      "ref": "DLV88123401",
+      "note": "Collected by courier from the shop"
+     }
+    },
+    {
+     "id": "device_events:5",
+     "table": "device_events",
+     "row_id": "5",
+     "kind": "device_event",
+     "label": "Received at warehouse · 16 Sep 2026 12:10 · AWB DLV88123401",
+     "at": "2026-09-16T12:10:00",
+     "amount_paise": null,
+     "flags": [],
+     "data": {
+      "id": 5,
+      "device_id": "D50001",
+      "event_type": "RECEIVED_AT_WAREHOUSE",
+      "at": "2026-09-16T12:10:00",
+      "ref": "DLV88123401",
+      "note": "Received at Lucknow warehouse; QC passed"
+     }
+    },
+    {
+     "id": "pickup_tickets:PK-260902-1001",
+     "table": "pickup_tickets",
+     "row_id": "PK-260902-1001",
+     "kind": "pickup",
+     "label": "Pickup PK-260902-1001 · COMPLETED · 1 attempt · AWB DLV88123401",
+     "at": "2026-09-12T15:40:00",
+     "amount_paise": null,
+     "flags": [],
+     "data": {
+      "id": "PK-260902-1001",
+      "device_id": "D50001",
+      "merchant_id": "M1001",
+      "status": "COMPLETED",
+      "requested_at": "2026-09-02T11:24:00",
+      "scheduled_for": "2026-09-12",
+      "completed_at": "2026-09-12T15:40:00",
+      "courier_awb": "DLV88123401",
+      "attempts": 1,
+      "failure_reason": null
+     }
+    },
+    {
+     "id": "payments:97",
+     "table": "payments",
+     "row_id": "97",
+     "kind": "payments_summary",
+     "label": "94 payments via D50001 (16 Aug – 11 Sep 2026), last 11 Sep 2026 14:54; none after the 12 Sep pickup",
+     "at": "2026-09-11T14:54:57",
+     "amount_paise": 2898600,
+     "flags": [
+      "SUMMARY"
+     ],
+     "data": {
+      "count": 94,
+      "first": "2026-08-16T13:54:22",
+      "last": "2026-09-11T14:54:57",
+      "total_paise": 2898600
+     }
+    }
+   ],
+   "edges": [
+    {
+     "source": "merchants:M1001",
+     "target": "subscriptions:SUB-1001-A",
+     "label": "subscribed"
+    },
+    {
+     "source": "mandates:MDT-1001-A",
+     "target": "subscriptions:SUB-1001-A",
+     "label": "authorised for"
+    },
+    {
+     "source": "subscriptions:SUB-1001-A",
+     "target": "devices:D50001",
+     "label": "rents"
+    },
+    {
+     "source": "ledger_entries:10",
+     "target": "mandates:MDT-1001-A",
+     "label": "collected via"
+    },
+    {
+     "source": "ledger_entries:11",
+     "target": "mandates:MDT-1001-A",
+     "label": "collected via"
+    },
+    {
+     "source": "ledger_entries:12",
+     "target": "mandates:MDT-1001-A",
+     "label": "collected via"
+    },
+    {
+     "source": "ledger_entries:1..9",
+     "target": "mandates:MDT-1001-A",
+     "label": "collected via"
+    },
+    {
+     "source": "devices:D50001",
+     "target": "device_events:1",
+     "label": "logged"
+    },
+    {
+     "source": "device_events:1",
+     "target": "device_events:2",
+     "label": "then"
+    },
+    {
+     "source": "device_events:2",
+     "target": "device_events:3",
+     "label": "then"
+    },
+    {
+     "source": "device_events:3",
+     "target": "device_events:4",
+     "label": "then"
+    },
+    {
+     "source": "device_events:4",
+     "target": "device_events:5",
+     "label": "then"
+    },
+    {
+     "source": "device_events:2",
+     "target": "pickup_tickets:PK-260902-1001",
+     "label": "raised"
+    },
+    {
+     "source": "devices:D50001",
+     "target": "payments:97",
+     "label": "processed"
+    }
+   ]
+  }
+ },
+ {
+  "seq": 21,
+  "case_id": "CASE-0001",
+  "type": "node",
+  "at": "2026-11-13T22:40:22.429",
+  "data": {
+   "node": "trail",
+   "agent": "Detective",
+   "status": "end",
+   "ms": 4,
+   "summary": "15 linked records · 3 disputed movements"
+  }
+ },
+ {
+  "seq": 22,
+  "case_id": "CASE-0001",
+  "type": "node",
+  "at": "2026-11-13T22:40:22.434",
+  "data": {
+   "node": "statements",
+   "agent": "Detective",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 23,
+  "case_id": "CASE-0001",
+  "type": "statements",
+  "at": "2026-11-13T22:40:22.434",
+  "data": {
+   "checks": [
+    {
+     "claim": {
+      "kind": "DEVICE_RETURNED",
+      "text": "सितंबर में साउंडबॉक्स वापस कर दिया था",
+      "date": "2026-09",
+      "amount_paise": null,
+      "count": null
+     },
+     "status": "VERIFIED",
+     "finding": "D50001 was picked up on 12 Sep 2026 (AWB DLV88123401), received at warehouse 16 Sep 2026.",
+     "evidence": [
+      {
+       "table": "device_events",
+       "row_id": "4",
+       "label": "D50001 Picked up · 12 Sep 2026 15:40 · AWB DLV88123401",
+       "at": "2026-09-12T15:40:00",
+       "amount_paise": null
+      },
+      {
+       "table": "pickup_tickets",
+       "row_id": "PK-260902-1001",
+       "label": "Pickup PK-260902-1001 · COMPLETED · 1 attempt · AWB DLV88123401",
+       "at": "2026-09-12T15:40:00",
+       "amount_paise": null
+      },
+      {
+       "table": "device_events",
+       "row_id": "5",
+       "label": "D50001 Received at warehouse · 16 Sep 2026 12:10 · AWB DLV88123401",
+       "at": "2026-09-16T12:10:00",
+       "amount_paise": null
+      }
+     ]
+    },
+    {
+     "claim": {
+      "kind": "DEDUCTION_AMOUNT",
+      "text": "₹499",
+      "date": null,
+      "amount_paise": 49900,
+      "count": null
+     },
+     "status": "VERIFIED",
+     "finding": "All 3 disputed rent debits were ₹499 (01 Sep, 01 Oct, 01 Nov 2026).",
+     "evidence": [
+      {
+       "table": "ledger_entries",
+       "row_id": "10",
+       "label": "₹499 rent debit · 01 Sep 2026 · NACH2609010000010",
+       "at": "2026-09-01T06:07:13",
+       "amount_paise": 49900
+      },
+      {
+       "table": "ledger_entries",
+       "row_id": "11",
+       "label": "₹499 rent debit · 01 Oct 2026 · NACH2610010000011",
+       "at": "2026-10-01T06:16:32",
+       "amount_paise": 49900
+      },
+      {
+       "table": "ledger_entries",
+       "row_id": "12",
+       "label": "₹499 rent debit · 01 Nov 2026 · NACH2611010000012",
+       "at": "2026-11-01T06:40:01",
+       "amount_paise": 49900
+      }
+     ]
+    },
+    {
+     "claim": {
+      "kind": "DEDUCTION_COUNT",
+      "text": "तीन महीने से",
+      "date": null,
+      "amount_paise": null,
+      "count": 3
+     },
+     "status": "PARTLY_TRUE",
+     "finding": "3 rent debits since September (01 Sep, 01 Oct, 01 Nov 2026), but 01 Sep 2026 was before the 12 Sep pickup; only 2 (₹998) came after.",
+     "evidence": [
+      {
+       "table": "ledger_entries",
+       "row_id": "10",
+       "label": "₹499 rent debit · 01 Sep 2026 · NACH2609010000010",
+       "at": "2026-09-01T06:07:13",
+       "amount_paise": 49900
+      },
+      {
+       "table": "ledger_entries",
+       "row_id": "11",
+       "label": "₹499 rent debit · 01 Oct 2026 · NACH2610010000011",
+       "at": "2026-10-01T06:16:32",
+       "amount_paise": 49900
+      },
+      {
+       "table": "ledger_entries",
+       "row_id": "12",
+       "label": "₹499 rent debit · 01 Nov 2026 · NACH2611010000012",
+       "at": "2026-11-01T06:40:01",
+       "amount_paise": 49900
+      }
+     ]
+    },
+    {
+     "claim": {
+      "kind": "REFUND_DEMANDED",
+      "text": "मेरा पैसा वापस करो",
+      "date": null,
+      "amount_paise": null,
+      "count": null
+     },
+     "status": "UNVERIFIABLE",
+     "finding": "No amount was stated; the ledger shows 2 wrongful rent debits not yet refunded (01 Oct, 01 Nov 2026, ₹998).",
+     "evidence": [
+      {
+       "table": "ledger_entries",
+       "row_id": "11",
+       "label": "₹499 rent debit · 01 Oct 2026 · NACH2610010000011",
+       "at": "2026-10-01T06:16:32",
+       "amount_paise": 49900
+      },
+      {
+       "table": "ledger_entries",
+       "row_id": "12",
+       "label": "₹499 rent debit · 01 Nov 2026 · NACH2611010000012",
+       "at": "2026-11-01T06:40:01",
+       "amount_paise": 49900
+      }
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "seq": 24,
+  "case_id": "CASE-0001",
+  "type": "node",
+  "at": "2026-11-13T22:40:22.434",
+  "data": {
+   "node": "statements",
+   "agent": "Detective",
+   "status": "end",
+   "ms": 3,
+   "summary": "2 verified · 1 partly true · 1 unverifiable"
+  }
+ },
+ {
+  "seq": 25,
+  "case_id": "CASE-0001",
+  "type": "node",
+  "at": "2026-11-13T22:40:22.438",
+  "data": {
+   "node": "lineup",
+   "agent": "Detective",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 26,
+  "case_id": "CASE-0001",
+  "type": "suspect",
+  "at": "2026-11-13T22:40:22.545",
+  "data": {
+   "suspect_id": "ZOMBIE_BILLING",
+   "title": "Billing continued after device return",
+   "kind": "FAULT",
+   "status": "MATCH",
+   "summary": "Soundbox D50001 was picked up on 12 Sep 2026 (AWB DLV88123401), but SUB-1001-A is still ACTIVE and took 2 rent debits of ₹499 after that (01 Oct, 01 Nov 2026): ₹998 never refunded.",
+   "evidence": [
+    {
+     "table": "device_events",
+     "row_id": "4",
+     "label": "D50001 Picked up · 12 Sep 2026 15:40 · AWB DLV88123401",
+     "at": "2026-09-12T15:40:00",
+     "amount_paise": null
+    },
+    {
+     "table": "pickup_tickets",
+     "row_id": "PK-260902-1001",
+     "label": "Pickup PK-260902-1001 · COMPLETED · 1 attempt · AWB DLV88123401",
+     "at": "2026-09-12T15:40:00",
+     "amount_paise": null
+    },
+    {
+     "table": "device_events",
+     "row_id": "5",
+     "label": "D50001 Received at warehouse · 16 Sep 2026 12:10 · AWB DLV88123401",
+     "at": "2026-09-16T12:10:00",
+     "amount_paise": null
+    },
+    {
+     "table": "subscriptions",
+     "row_id": "SUB-1001-A",
+     "label": "SUB-1001-A · Soundbox 4G Rental ₹499/month · since 20 Nov 2025 · ACTIVE",
+     "at": "2025-11-20",
+     "amount_paise": null
+    },
+    {
+     "table": "ledger_entries",
+     "row_id": "11",
+     "label": "₹499 rent debit · 01 Oct 2026 · NACH2610010000011",
+     "at": "2026-10-01T06:16:32",
+     "amount_paise": 49900
+    },
+    {
+     "table": "ledger_entries",
+     "row_id": "12",
+     "label": "₹499 rent debit · 01 Nov 2026 · NACH2611010000012",
+     "at": "2026-11-01T06:40:01",
+     "amount_paise": 49900
+    },
+    {
+     "table": "payments",
+     "row_id": "97",
+     "label": "Last payment through D50001: 11 Sep 2026 14:54",
+     "at": "2026-09-11T14:54:57",
+     "amount_paise": 2920800
+    }
+   ],
+   "damages_ledger_ids": [
+    11,
+    12
+   ],
+   "damages_paise": 99800,
+   "targets": {
+    "subscription_id": "SUB-1001-A",
+    "device_id": "D50001"
+   },
+   "remedies": [
+    "REFUND_DEBITS",
+    "CANCEL_SUBSCRIPTION"
+   ],
+   "sweepable": true,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 27,
+  "case_id": "CASE-0001",
+  "type": "suspect",
+  "at": "2026-11-13T22:40:22.655",
+  "data": {
+   "suspect_id": "DUPLICATE_SUBSCRIPTION",
+   "title": "Two subscriptions on one device",
+   "kind": "FAULT",
+   "status": "ELIMINATED",
+   "summary": "Soundbox D50001 has a single subscription, SUB-1001-A, so nothing is billed twice.",
+   "evidence": [
+    {
+     "table": "subscriptions",
+     "row_id": "SUB-1001-A",
+     "label": "SUB-1001-A · Soundbox 4G Rental ₹499/month · since 20 Nov 2025 · ACTIVE",
+     "at": "2025-11-20",
+     "amount_paise": null
+    }
+   ],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {},
+   "remedies": [],
+   "sweepable": true,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 28,
+  "case_id": "CASE-0001",
+  "type": "suspect",
+  "at": "2026-11-13T22:40:22.764",
+  "data": {
+   "suspect_id": "PICKUP_NOT_COMPLETED",
+   "title": "Return requested but never collected",
+   "kind": "INNOCENT",
+   "status": "ELIMINATED",
+   "summary": "The pickup of D50001 was completed on 12 Sep 2026 (AWB DLV88123401), so the return is not stuck.",
+   "evidence": [
+    {
+     "table": "device_events",
+     "row_id": "4",
+     "label": "D50001 Picked up · 12 Sep 2026 15:40 · AWB DLV88123401",
+     "at": "2026-09-12T15:40:00",
+     "amount_paise": null
+    },
+    {
+     "table": "pickup_tickets",
+     "row_id": "PK-260902-1001",
+     "label": "Pickup PK-260902-1001 · COMPLETED · 1 attempt · AWB DLV88123401",
+     "at": "2026-09-12T15:40:00",
+     "amount_paise": null
+    }
+   ],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {},
+   "remedies": [],
+   "sweepable": false,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 29,
+  "case_id": "CASE-0001",
+  "type": "suspect",
+  "at": "2026-11-13T22:40:22.873",
+  "data": {
+   "suspect_id": "ALREADY_REFUNDED",
+   "title": "Already refunded",
+   "kind": "INNOCENT",
+   "status": "ELIMINATED",
+   "summary": "None of the 3 debits at issue (01 Sep, 01 Oct, 01 Nov 2026, ₹1,497) has been refunded yet.",
+   "evidence": [
+    {
+     "table": "ledger_entries",
+     "row_id": "10",
+     "label": "₹499 rent debit · 01 Sep 2026 · NACH2609010000010",
+     "at": "2026-09-01T06:07:13",
+     "amount_paise": 49900
+    },
+    {
+     "table": "ledger_entries",
+     "row_id": "11",
+     "label": "₹499 rent debit · 01 Oct 2026 · NACH2610010000011",
+     "at": "2026-10-01T06:16:32",
+     "amount_paise": 49900
+    },
+    {
+     "table": "ledger_entries",
+     "row_id": "12",
+     "label": "₹499 rent debit · 01 Nov 2026 · NACH2611010000012",
+     "at": "2026-11-01T06:40:01",
+     "amount_paise": 49900
+    }
+   ],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {},
+   "remedies": [],
+   "sweepable": false,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 30,
+  "case_id": "CASE-0001",
+  "type": "suspect",
+  "at": "2026-11-13T22:40:22.982",
+  "data": {
+   "suspect_id": "DUPLICATE_EDI",
+   "title": "Loan instalment debited twice",
+   "kind": "FAULT",
+   "status": "NOT_APPLICABLE",
+   "summary": "Not tested: the complaint is about Soundbox rent, not loan EDI.",
+   "evidence": [],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {},
+   "remedies": [],
+   "sweepable": true,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 31,
+  "case_id": "CASE-0001",
+  "type": "suspect",
+  "at": "2026-11-13T22:40:23.094",
+  "data": {
+   "suspect_id": "RISK_HOLD",
+   "title": "Settlement held by risk",
+   "kind": "HOLD",
+   "status": "NOT_APPLICABLE",
+   "summary": "Not tested: the complaint is about Soundbox rent, not settlements.",
+   "evidence": [],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {},
+   "remedies": [],
+   "sweepable": false,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 32,
+  "case_id": "CASE-0001",
+  "type": "suspect",
+  "at": "2026-11-13T22:40:23.205",
+  "data": {
+   "suspect_id": "KYC_HOLD",
+   "title": "Settlement held for KYC",
+   "kind": "HOLD",
+   "status": "NOT_APPLICABLE",
+   "summary": "Not tested: the complaint is about Soundbox rent, not settlements.",
+   "evidence": [],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {},
+   "remedies": [],
+   "sweepable": false,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 33,
+  "case_id": "CASE-0001",
+  "type": "node",
+  "at": "2026-11-13T22:40:23.205",
+  "data": {
+   "node": "lineup",
+   "agent": "Detective",
+   "status": "end",
+   "ms": 769,
+   "summary": "MATCH: ZOMBIE_BILLING · 3 eliminated"
+  }
+ },
+ {
+  "seq": 34,
+  "case_id": "CASE-0001",
+  "type": "node",
+  "at": "2026-11-13T22:40:23.218",
+  "data": {
+   "node": "verdict",
+   "agent": "Detective",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 35,
+  "case_id": "CASE-0001",
+  "type": "node",
+  "at": "2026-11-13T22:40:23.218",
+  "data": {
+   "node": "improvise",
+   "agent": "Detective",
+   "status": "skip",
+   "summary": "a known suspect matched; no probes needed"
+  }
+ },
+ {
+  "seq": 36,
+  "case_id": "CASE-0001",
+  "type": "verdict",
+  "at": "2026-11-13T22:40:23.218",
+  "data": {
+   "outcome": "REFUND_DUE",
+   "culprits": [
+    "ZOMBIE_BILLING"
+   ],
+   "headline": "Refund due: ₹998 for 2 rent debits taken after the Soundbox D50001 was picked up (01 Oct, 01 Nov 2026).",
+   "smoking_gun": [
+    {
+     "table": "device_events",
+     "row_id": "4",
+     "label": "D50001 Picked up · 12 Sep 2026 15:40 · AWB DLV88123401",
+     "at": "2026-09-12T15:40:00",
+     "amount_paise": null
+    },
+    {
+     "table": "pickup_tickets",
+     "row_id": "PK-260902-1001",
+     "label": "Pickup PK-260902-1001 · COMPLETED · 1 attempt · AWB DLV88123401",
+     "at": "2026-09-12T15:40:00",
+     "amount_paise": null
+    },
+    {
+     "table": "device_events",
+     "row_id": "5",
+     "label": "D50001 Received at warehouse · 16 Sep 2026 12:10 · AWB DLV88123401",
+     "at": "2026-09-16T12:10:00",
+     "amount_paise": null
+    },
+    {
+     "table": "subscriptions",
+     "row_id": "SUB-1001-A",
+     "label": "SUB-1001-A · Soundbox 4G Rental ₹499/month · since 20 Nov 2025 · ACTIVE",
+     "at": "2025-11-20",
+     "amount_paise": null
+    },
+    {
+     "table": "ledger_entries",
+     "row_id": "11",
+     "label": "₹499 rent debit · 01 Oct 2026 · NACH2610010000011",
+     "at": "2026-10-01T06:16:32",
+     "amount_paise": 49900
+    },
+    {
+     "table": "ledger_entries",
+     "row_id": "12",
+     "label": "₹499 rent debit · 01 Nov 2026 · NACH2611010000012",
+     "at": "2026-11-01T06:40:01",
+     "amount_paise": 49900
+    },
+    {
+     "table": "payments",
+     "row_id": "97",
+     "label": "Last payment through D50001: 11 Sep 2026 14:54",
+     "at": "2026-09-11T14:54:57",
+     "amount_paise": 2920800
+    }
+   ],
+   "damages_ledger_ids": [
+    11,
+    12
+   ],
+   "damages_paise": 99800,
+   "targets": {
+    "subscription_id": "SUB-1001-A",
+    "device_id": "D50001"
+   },
+   "remedies": [
+    "REFUND_DEBITS",
+    "CANCEL_SUBSCRIPTION"
+   ],
+   "confidence": "HIGH",
+   "sweepable_suspect": "ZOMBIE_BILLING"
+  }
+ },
+ {
+  "seq": 37,
+  "case_id": "CASE-0001",
+  "type": "node",
+  "at": "2026-11-13T22:40:23.218",
+  "data": {
+   "node": "verdict",
+   "agent": "Detective",
+   "status": "end",
+   "ms": 10,
+   "summary": "REFUND_DUE (HIGH) · damages ₹998"
+  }
+ },
+ {
+  "seq": 38,
+  "case_id": "CASE-0001",
+  "type": "node",
+  "at": "2026-11-13T22:40:23.231",
+  "data": {
+   "node": "propose",
+   "agent": "Resolver Agent",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 39,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:25.337",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "gemini",
+   "model": "gemini-flash-latest",
+   "kind": "content",
+   "delta": "{\"actions"
+  }
+ },
+ {
+  "seq": 40,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:25.411",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "gemini",
+   "model": "gemini-flash-latest",
+   "kind": "content",
+   "delta": "\":[{\"action_type\":\"REFUND_DEBITS\",\"amount_paise\":99"
+  }
+ },
+ {
+  "seq": 41,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:25.567",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "gemini",
+   "model": "gemini-flash-latest",
+   "kind": "content",
+   "delta": "800,\"ledger_entry_ids\":[11,12],\"reason\":\"Refund ₹998 for 2 rent debits"
+  }
+ },
+ {
+  "seq": 42,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:25.741",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "gemini",
+   "model": "gemini-flash-latest",
+   "kind": "content",
+   "delta": " (entries 11 and 12) deducted after device return.\",\"target_id\":null,\"team\":null},{\""
+  }
+ },
+ {
+  "seq": 43,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:25.867",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "gemini",
+   "model": "gemini-flash-latest",
+   "kind": "content",
+   "delta": "action_type\":\"CANCEL_SUBSCRIPTION\",\"amount_paise\":0,\"ledger_entry_ids\":[],\"reason"
+  }
+ },
+ {
+  "seq": 44,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:26.107",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "gemini",
+   "model": "gemini-flash-latest",
+   "kind": "content",
+   "delta": "\":\"Cancel subscription SUB-1001-A following the verified return of device D50001.\",\"target_"
+  }
+ },
+ {
+  "seq": 45,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:26.233",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "gemini",
+   "model": "gemini-flash-latest",
+   "kind": "content",
+   "delta": "id\":\"SUB-1001-A\",\"team\":null}],\"rationale\":\"Two rent deductions occurred after"
+  }
+ },
+ {
+  "seq": 46,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:26.444",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "gemini",
+   "model": "gemini-flash-latest",
+   "kind": "content",
+   "delta": " device D50001 was collected on 12 Sep 2026. Refunding debits 11 and "
+  }
+ },
+ {
+  "seq": 47,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:26.633",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "gemini",
+   "model": "gemini-flash-latest",
+   "kind": "content",
+   "delta": "12 totaling ₹998 and cancelling subscription SUB-1001-A to prevent further charges.\"}"
+  }
+ },
+ {
+  "seq": 48,
+  "case_id": "CASE-0001",
+  "type": "llm_done",
+  "at": "2026-11-13T22:40:26.655",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "gemini",
+   "model": "gemini-flash-latest",
+   "ms": 3424,
+   "text": "{\"actions\":[{\"action_type\":\"REFUND_DEBITS\",\"amount_paise\":99800,\"ledger_entry_ids\":[11,12],\"reason\":\"Refund ₹998 for 2 rent debits (entries 11 and 12) deducted after device return.\",\"target_id\":null,\"team\":null},{\"action_type\":\"CANCEL_SUBSCRIPTION\",\"amount_paise\":0,\"ledger_entry_ids\":[],\"reason\":\"Cancel subscription SUB-1001-A following the verified return of device D50001.\",\"target_id\":\"SUB-1001-A\",\"team\":null}],\"rationale\":\"Two rent deductions occurred after device D50001 was collected on 12 Sep 2026. Refunding debits 11 and 12 totaling ₹998 and cancelling subscription SUB-1001-A to prevent further charges.\"}",
+   "usage": null,
+   "live": true,
+   "fallback": null
+  }
+ },
+ {
+  "seq": 49,
+  "case_id": "CASE-0001",
+  "type": "proposal",
+  "at": "2026-11-13T22:40:26.655",
+  "data": {
+   "actions": [
+    {
+     "action_type": "REFUND_DEBITS",
+     "amount_paise": 99800,
+     "ledger_entry_ids": [
+      11,
+      12
+     ],
+     "target_id": null,
+     "team": null,
+     "reason": "Refund ₹998 for 2 rent debits (entries 11 and 12) deducted after device return."
+    },
+    {
+     "action_type": "CANCEL_SUBSCRIPTION",
+     "amount_paise": 0,
+     "ledger_entry_ids": [],
+     "target_id": "SUB-1001-A",
+     "team": null,
+     "reason": "Cancel subscription SUB-1001-A following the verified return of device D50001."
+    }
+   ],
+   "rationale": "Two rent deductions occurred after device D50001 was collected on 12 Sep 2026. Refunding debits 11 and 12 totaling ₹998 and cancelling subscription SUB-1001-A to prevent further charges."
+  }
+ },
+ {
+  "seq": 50,
+  "case_id": "CASE-0001",
+  "type": "node",
+  "at": "2026-11-13T22:40:26.655",
+  "data": {
+   "node": "propose",
+   "agent": "Resolver Agent",
+   "status": "end",
+   "ms": 3435,
+   "summary": "REFUND_DEBITS ₹998 + CANCEL_SUBSCRIPTION"
+  }
+ },
+ {
+  "seq": 51,
+  "case_id": "CASE-0001",
+  "type": "node",
+  "at": "2026-11-13T22:40:26.665",
+  "data": {
+   "node": "firewall",
+   "agent": "Action Firewall",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 52,
+  "case_id": "CASE-0001",
+  "type": "firewall",
+  "at": "2026-11-13T22:40:26.665",
+  "data": {
+   "decision": "ALLOW",
+   "actions": [
+    {
+     "proposed": {
+      "action_type": "REFUND_DEBITS",
+      "amount_paise": 99800,
+      "ledger_entry_ids": [
+       11,
+       12
+      ],
+      "target_id": null,
+      "team": null,
+      "reason": "Refund ₹998 for 2 rent debits (entries 11 and 12) deducted after device return."
+     },
+     "final": {
+      "action_type": "REFUND_DEBITS",
+      "amount_paise": 99800,
+      "ledger_entry_ids": [
+       11,
+       12
+      ],
+      "target_id": null,
+      "team": null,
+      "reason": "Refund ₹998 for 2 rent debits (entries 11 and 12) deducted after device return."
+     },
+     "decision": "ALLOW",
+     "checks": [
+      {
+       "id": "allowlist",
+       "label": "Known action type",
+       "status": "PASS",
+       "detail": "REFUND_DEBITS is on Munim's list of allowed actions."
+      },
+      {
+       "id": "remedy_match",
+       "label": "Permitted remedy for the verdict",
+       "status": "PASS",
+       "detail": "REFUND_DEBITS is a permitted remedy for ZOMBIE_BILLING."
+      },
+      {
+       "id": "hard_deny",
+       "label": "Hard-deny rules",
+       "status": "PASS",
+       "detail": "The verdict is REFUND_DUE, so a refund is not hard-denied."
+      },
+      {
+       "id": "ownership",
+       "label": "Belongs to this merchant",
+       "status": "PASS",
+       "detail": "Ledger entries 11 and 12 belong to Sharma Kirana Store (M1001)."
+      },
+      {
+       "id": "evidence_binding",
+       "label": "Bound to verdict evidence",
+       "status": "PASS",
+       "detail": "Every proposed ledger id is a damage named by the verdict: rent debits on 01 Oct 2026 and 01 Nov 2026."
+      },
+      {
+       "id": "amount_recompute",
+       "label": "Amount recomputed from ledger",
+       "status": "PASS",
+       "detail": "₹998 matches the ledger: rent debits on 01 Oct 2026 and 01 Nov 2026."
+      },
+      {
+       "id": "idempotency",
+       "label": "Not already done",
+       "status": "PASS",
+       "detail": "None of these debits has been refunded before and no identical refund exists."
+      },
+      {
+       "id": "preconditions",
+       "label": "Preconditions hold",
+       "status": "PASS",
+       "detail": "All 2 entries are successful debits that can be refunded."
+      },
+      {
+       "id": "limits",
+       "label": "Within auto-approval limits",
+       "status": "PASS",
+       "detail": "₹998 is within the ₹2,000 per-action limit, and the merchant's 30-day automatic total would be ₹998 of ₹5,000."
+      },
+      {
+       "id": "injection",
+       "label": "Prompt-injection guard",
+       "status": "PASS",
+       "detail": "No manipulation signals in the complaint (injection score 0.04)."
+      },
+      {
+       "id": "confidence",
+       "label": "Verdict confidence",
+       "status": "PASS",
+       "detail": "The verdict is HIGH confidence, computed from ledger rows."
+      }
+     ],
+     "idempotency_key": "fc21bce1178f0f7e"
+    },
+    {
+     "proposed": {
+      "action_type": "CANCEL_SUBSCRIPTION",
+      "amount_paise": 0,
+      "ledger_entry_ids": [],
+      "target_id": "SUB-1001-A",
+      "team": null,
+      "reason": "Cancel subscription SUB-1001-A following the verified return of device D50001."
+     },
+     "final": {
+      "action_type": "CANCEL_SUBSCRIPTION",
+      "amount_paise": 0,
+      "ledger_entry_ids": [],
+      "target_id": "SUB-1001-A",
+      "team": null,
+      "reason": "Cancel subscription SUB-1001-A following the verified return of device D50001."
+     },
+     "decision": "ALLOW",
+     "checks": [
+      {
+       "id": "allowlist",
+       "label": "Known action type",
+       "status": "PASS",
+       "detail": "CANCEL_SUBSCRIPTION is on Munim's list of allowed actions."
+      },
+      {
+       "id": "remedy_match",
+       "label": "Permitted remedy for the verdict",
+       "status": "PASS",
+       "detail": "CANCEL_SUBSCRIPTION is a permitted remedy for ZOMBIE_BILLING."
+      },
+      {
+       "id": "hard_deny",
+       "label": "Hard-deny rules",
+       "status": "SKIP",
+       "detail": "No hard-deny rule covers CANCEL_SUBSCRIPTION."
+      },
+      {
+       "id": "ownership",
+       "label": "Belongs to this merchant",
+       "status": "PASS",
+       "detail": "Subscription SUB-1001-A belongs to Sharma Kirana Store (M1001)."
+      },
+      {
+       "id": "evidence_binding",
+       "label": "Bound to verdict evidence",
+       "status": "SKIP",
+       "detail": "CANCEL_SUBSCRIPTION is not a refund, so it is not bound to ledger damages."
+      },
+      {
+       "id": "amount_recompute",
+       "label": "Amount recomputed from ledger",
+       "status": "SKIP",
+       "detail": "CANCEL_SUBSCRIPTION moves no money."
+      },
+      {
+       "id": "idempotency",
+       "label": "Not already done",
+       "status": "PASS",
+       "detail": "No identical CANCEL_SUBSCRIPTION has been executed before."
+      },
+      {
+       "id": "preconditions",
+       "label": "Preconditions hold",
+       "status": "PASS",
+       "detail": "Subscription SUB-1001-A is ACTIVE (since 20 Nov 2025) and is the one the verdict blames."
+      },
+      {
+       "id": "limits",
+       "label": "Within auto-approval limits",
+       "status": "SKIP",
+       "detail": "CANCEL_SUBSCRIPTION moves no money."
+      },
+      {
+       "id": "injection",
+       "label": "Prompt-injection guard",
+       "status": "PASS",
+       "detail": "No manipulation signals in the complaint (injection score 0.04)."
+      },
+      {
+       "id": "confidence",
+       "label": "Verdict confidence",
+       "status": "SKIP",
+       "detail": "CANCEL_SUBSCRIPTION moves no money, so verdict confidence does not gate it."
+      }
+     ],
+     "idempotency_key": "9bbe9b2113565489"
+    }
+   ]
+  }
+ },
+ {
+  "seq": 53,
+  "case_id": "CASE-0001",
+  "type": "node",
+  "at": "2026-11-13T22:40:26.665",
+  "data": {
+   "node": "firewall",
+   "agent": "Action Firewall",
+   "status": "end",
+   "ms": 8,
+   "summary": "ALLOW: REFUND_DEBITS→ALLOW · CANCEL_SUBSCRIPTION→ALLOW"
+  }
+ },
+ {
+  "seq": 54,
+  "case_id": "CASE-0001",
+  "type": "node",
+  "at": "2026-11-13T22:40:26.672",
+  "data": {
+   "node": "execute",
+   "agent": "Executor",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 55,
+  "case_id": "CASE-0001",
+  "type": "execution",
+  "at": "2026-11-13T22:40:26.672",
+  "data": {
+   "results": [
+    {
+     "action_id": 1,
+     "action_type": "REFUND_DEBITS",
+     "status": "EXECUTED",
+     "amount_paise": 99800,
+     "detail": "Refunded ₹998 to Sharma Kirana Store as 2 credits for the rent debits on 01 Oct 2026 and 01 Nov 2026.",
+     "ledger_entry_ids": [
+      8371,
+      8372
+     ]
+    },
+    {
+     "action_id": 2,
+     "action_type": "CANCEL_SUBSCRIPTION",
+     "status": "EXECUTED",
+     "amount_paise": 0,
+     "detail": "Cancelled subscription SUB-1001-A from 14 Nov 2026 and revoked mandate MDT-1001-A, so no further rent will be charged.",
+     "ledger_entry_ids": []
+    }
+   ]
+  }
+ },
+ {
+  "seq": 56,
+  "case_id": "CASE-0001",
+  "type": "node",
+  "at": "2026-11-13T22:40:26.672",
+  "data": {
+   "node": "execute",
+   "agent": "Executor",
+   "status": "end",
+   "ms": 5,
+   "summary": "2 executed"
+  }
+ },
+ {
+  "seq": 57,
+  "case_id": "CASE-0001",
+  "type": "node",
+  "at": "2026-11-13T22:40:26.679",
+  "data": {
+   "node": "respond",
+   "agent": "Communicator Agent",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 58,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:26.938",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": "नमस्ते"
+  }
+ },
+ {
+  "seq": 59,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:26.938",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " रमेश"
+  }
+ },
+ {
+  "seq": 60,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:26.938",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " जी"
+  }
+ },
+ {
+  "seq": 61,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:26.938",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": ","
+  }
+ },
+ {
+  "seq": 62,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:26.938",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " आपका"
+  }
+ },
+ {
+  "seq": 63,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:26.940",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " साउंड"
+  }
+ },
+ {
+  "seq": 64,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:26.949",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": "बॉक्स"
+  }
+ },
+ {
+  "seq": 65,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:26.958",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " "
+  }
+ },
+ {
+  "seq": 66,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:26.966",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": "1"
+  }
+ },
+ {
+  "seq": 67,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:26.975",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": "2"
+  }
+ },
+ {
+  "seq": 68,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:26.985",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " Sep"
+  }
+ },
+ {
+  "seq": 69,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:26.992",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " को"
+  }
+ },
+ {
+  "seq": 70,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.001",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " पिक"
+  }
+ },
+ {
+  "seq": 71,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.009",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": "अप"
+  }
+ },
+ {
+  "seq": 72,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.019",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " हो"
+  }
+ },
+ {
+  "seq": 73,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.027",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " गया"
+  }
+ },
+ {
+  "seq": 74,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.037",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " था"
+  }
+ },
+ {
+  "seq": 75,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.047",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": "।"
+  }
+ },
+ {
+  "seq": 76,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.054",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " हमारे"
+  }
+ },
+ {
+  "seq": 77,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.063",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " रिकॉर्ड"
+  }
+ },
+ {
+  "seq": 78,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.071",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " के"
+  }
+ },
+ {
+  "seq": 79,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.081",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " अनुसार"
+  }
+ },
+ {
+  "seq": 80,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.089",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": ","
+  }
+ },
+ {
+  "seq": 81,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.099",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " "
+  }
+ },
+ {
+  "seq": 82,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.107",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": "0"
+  }
+ },
+ {
+  "seq": 83,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.117",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": "1"
+  }
+ },
+ {
+  "seq": 84,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.124",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " Oct"
+  }
+ },
+ {
+  "seq": 85,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.134",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " और"
+  }
+ },
+ {
+  "seq": 86,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.142",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " "
+  }
+ },
+ {
+  "seq": 87,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.152",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": "0"
+  }
+ },
+ {
+  "seq": 88,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.160",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": "1"
+  }
+ },
+ {
+  "seq": 89,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.169",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " Nov"
+  }
+ },
+ {
+  "seq": 90,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.178",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " को"
+  }
+ },
+ {
+  "seq": 91,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.186",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " आपके"
+  }
+ },
+ {
+  "seq": 92,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.195",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " ₹"
+  }
+ },
+ {
+  "seq": 93,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.205",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": "9"
+  }
+ },
+ {
+  "seq": 94,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.214",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": "9"
+  }
+ },
+ {
+  "seq": 95,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.223",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": "8"
+  }
+ },
+ {
+  "seq": 96,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.230",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " कट"
+  }
+ },
+ {
+  "seq": 97,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.239",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " गए"
+  }
+ },
+ {
+  "seq": 98,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.345",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " थे"
+  }
+ },
+ {
+  "seq": 99,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.345",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": "।"
+  }
+ },
+ {
+  "seq": 100,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.345",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " हमने"
+  }
+ },
+ {
+  "seq": 101,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.345",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " ये"
+  }
+ },
+ {
+  "seq": 102,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.345",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " ₹"
+  }
+ },
+ {
+  "seq": 103,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.422",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": "9"
+  }
+ },
+ {
+  "seq": 104,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.422",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": "9"
+  }
+ },
+ {
+  "seq": 105,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.422",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": "8"
+  }
+ },
+ {
+  "seq": 106,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.422",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " आपके"
+  }
+ },
+ {
+  "seq": 107,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.422",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " अकाउंट"
+  }
+ },
+ {
+  "seq": 108,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.422",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " में"
+  }
+ },
+ {
+  "seq": 109,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.422",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " रि"
+  }
+ },
+ {
+  "seq": 110,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.422",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": "फ"
+  }
+ },
+ {
+  "seq": 111,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.422",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": "ंड"
+  }
+ },
+ {
+  "seq": 112,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.430",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " कर"
+  }
+ },
+ {
+  "seq": 113,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.439",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " दिए"
+  }
+ },
+ {
+  "seq": 114,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.448",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " हैं"
+  }
+ },
+ {
+  "seq": 115,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.456",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": "।"
+  }
+ },
+ {
+  "seq": 116,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.465",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " इसके"
+  }
+ },
+ {
+  "seq": 117,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.553",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " अलावा"
+  }
+ },
+ {
+  "seq": 118,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.553",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": ","
+  }
+ },
+ {
+  "seq": 119,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.553",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " आपका"
+  }
+ },
+ {
+  "seq": 120,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.553",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " साउंड"
+  }
+ },
+ {
+  "seq": 121,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.553",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": "बॉक्स"
+  }
+ },
+ {
+  "seq": 122,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.553",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " र"
+  }
+ },
+ {
+  "seq": 123,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.553",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": "ेंटल"
+  }
+ },
+ {
+  "seq": 124,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.554",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " सब्स"
+  }
+ },
+ {
+  "seq": 125,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.554",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": "क्रिप्शन"
+  }
+ },
+ {
+  "seq": 126,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.558",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " भी"
+  }
+ },
+ {
+  "seq": 127,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.566",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " कैंसिल"
+  }
+ },
+ {
+  "seq": 128,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.575",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " कर"
+  }
+ },
+ {
+  "seq": 129,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.583",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " दिया"
+  }
+ },
+ {
+  "seq": 130,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.591",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " गया"
+  }
+ },
+ {
+  "seq": 131,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.600",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " है"
+  }
+ },
+ {
+  "seq": 132,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.609",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": ","
+  }
+ },
+ {
+  "seq": 133,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.617",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " जिससे"
+  }
+ },
+ {
+  "seq": 134,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.628",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " आगे"
+  }
+ },
+ {
+  "seq": 135,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.634",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " कोई"
+  }
+ },
+ {
+  "seq": 136,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.643",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " चार्ज"
+  }
+ },
+ {
+  "seq": 137,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.651",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " नहीं"
+  }
+ },
+ {
+  "seq": 138,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.660",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " लगेगा"
+  }
+ },
+ {
+  "seq": 139,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.668",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": "।"
+  }
+ },
+ {
+  "seq": 140,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.678",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " आपका"
+  }
+ },
+ {
+  "seq": 141,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.687",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " केस"
+  }
+ },
+ {
+  "seq": 142,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.743",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " ID"
+  }
+ },
+ {
+  "seq": 143,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.743",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " CASE"
+  }
+ },
+ {
+  "seq": 144,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.743",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": "-"
+  }
+ },
+ {
+  "seq": 145,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.743",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": "0"
+  }
+ },
+ {
+  "seq": 146,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.743",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": "0"
+  }
+ },
+ {
+  "seq": 147,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.743",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": "0"
+  }
+ },
+ {
+  "seq": 148,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.746",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": "1"
+  }
+ },
+ {
+  "seq": 149,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.755",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": " है"
+  }
+ },
+ {
+  "seq": 150,
+  "case_id": "CASE-0001",
+  "type": "llm",
+  "at": "2026-11-13T22:40:27.763",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "kind": "content",
+   "delta": "।"
+  }
+ },
+ {
+  "seq": 151,
+  "case_id": "CASE-0001",
+  "type": "llm_done",
+  "at": "2026-11-13T22:40:27.783",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "sarvam",
+   "model": "sarvam-105b",
+   "ms": 1109,
+   "text": "नमस्ते रमेश जी, आपका साउंडबॉक्स 12 Sep को पिकअप हो गया था। हमारे रिकॉर्ड के अनुसार, 01 Oct और 01 Nov को आपके ₹998 कट गए थे। हमने ये ₹998 आपके अकाउंट में रिफंड कर दिए हैं। इसके अलावा, आपका साउंडबॉक्स रेंटल सब्सक्रिप्शन भी कैंसिल कर दिया गया है, जिससे आगे कोई चार्ज नहीं लगेगा। आपका केस ID CASE-0001 है।",
+   "usage": {
+    "completion_tokens": 94,
+    "prompt_tokens": 1885,
+    "total_tokens": 1979,
+    "completion_tokens_details": {
+     "reasoning_tokens": 0
+    },
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "created_cache_tokens": 1856
+    }
+   },
+   "live": true,
+   "fallback": null
+  }
+ },
+ {
+  "seq": 152,
+  "case_id": "CASE-0001",
+  "type": "message",
+  "at": "2026-11-13T22:40:27.783",
+  "data": {
+   "role": "munim",
+   "text": "नमस्ते रमेश जी, आपका साउंडबॉक्स 12 Sep को पिकअप हो गया था। हमारे रिकॉर्ड के अनुसार, 01 Oct और 01 Nov को आपके ₹998 कट गए थे। हमने ये ₹998 आपके अकाउंट में रिफंड कर दिए हैं। इसके अलावा, आपका साउंडबॉक्स रेंटल सब्सक्रिप्शन भी कैंसिल कर दिया गया है, जिससे आगे कोई चार्ज नहीं लगेगा। आपका केस ID CASE-0001 है।",
+   "language": "hi",
+   "final": true,
+   "en": "Hello Ramesh ji, your Soundbox was picked up on 12 Sep. According to our records, ₹998 was deducted from you on 01 Oct and 01 Nov. We have refunded this ₹998 to your account. Your Soundbox rental subscription has also been cancelled, so there will be no further charges. Your case ID is CASE-0001."
+  }
+ },
+ {
+  "seq": 153,
+  "case_id": "CASE-0001",
+  "type": "node",
+  "at": "2026-11-13T22:40:27.783",
+  "data": {
+   "node": "respond",
+   "agent": "Communicator Agent",
+   "status": "end",
+   "ms": 1109,
+   "summary": "60 words · hi · sarvam"
+  }
+ },
+ {
+  "seq": 154,
+  "case_id": "CASE-0001",
+  "type": "node",
+  "at": "2026-11-13T22:40:27.842",
+  "data": {
+   "node": "sweep",
+   "agent": "Detective",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 155,
+  "case_id": "CASE-0001",
+  "type": "sweep",
+  "at": "2026-11-13T22:40:27.842",
+  "data": {
+   "sweep_id": "SWP-0001",
+   "suspect_id": "ZOMBIE_BILLING",
+   "merchant_count": 36,
+   "total_paise": 3202900,
+   "victims": [
+    {
+     "merchant_id": "M2002",
+     "business_name": "Sri Ganesh Fresh Fruits",
+     "city": "Agra",
+     "damages_paise": 99800,
+     "ledger_entry_ids": [
+      601,
+      602
+     ],
+     "targets": {
+      "subscription_id": "SUB-2002-A",
+      "device_id": "D52002"
+     }
+    },
+    {
+     "merchant_id": "M2003",
+     "business_name": "Super Departmental Store",
+     "city": "Kochi",
+     "damages_paise": 99800,
+     "ledger_entry_ids": [
+      632,
+      633
+     ],
+     "targets": {
+      "subscription_id": "SUB-2003-A",
+      "device_id": "D52003"
+     }
+    },
+    {
+     "merchant_id": "M2010",
+     "business_name": "Famous Sabzi Bhandar",
+     "city": "Hubballi",
+     "damages_paise": 59800,
+     "ledger_entry_ids": [
+      968,
+      969
+     ],
+     "targets": {
+      "subscription_id": "SUB-2010-A",
+      "device_id": "D52010"
+     }
+    },
+    {
+     "merchant_id": "M2011",
+     "business_name": "Lucky Provision Store",
+     "city": "Rajkot",
+     "damages_paise": 99800,
+     "ledger_entry_ids": [
+      1010,
+      1011
+     ],
+     "targets": {
+      "subscription_id": "SUB-2011-A",
+      "device_id": "D52011"
+     }
+    },
+    {
+     "merchant_id": "M2023",
+     "business_name": "Sri Venkateswara Bakers",
+     "city": "Vadodara",
+     "damages_paise": 149700,
+     "ledger_entry_ids": [
+      1514,
+      1515,
+      1516
+     ],
+     "targets": {
+      "subscription_id": "SUB-2023-A",
+      "device_id": "D52023"
+     }
+    },
+    {
+     "merchant_id": "M2027",
+     "business_name": "Annapurna Fruits & Vegetables",
+     "city": "Mysuru",
+     "damages_paise": 59800,
+     "ledger_entry_ids": [
+      1680,
+      1681
+     ],
+     "targets": {
+      "subscription_id": "SUB-2027-A",
+      "device_id": "D52027"
+     }
+    },
+    {
+     "merchant_id": "M2040",
+     "business_name": "Trivedi Chemists",
+     "city": "Vadodara",
+     "damages_paise": 149700,
+     "ledger_entry_ids": [
+      2291,
+      2292,
+      2293
+     ],
+     "targets": {
+      "subscription_id": "SUB-2040-A",
+      "device_id": "D52040"
+     }
+    },
+    {
+     "merchant_id": "M2041",
+     "business_name": "Varma Saree Centre",
+     "city": "Nellore",
+     "damages_paise": 99800,
+     "ledger_entry_ids": [
+      2336,
+      2337
+     ],
+     "targets": {
+      "subscription_id": "SUB-2041-A",
+      "device_id": "D52041"
+     }
+    },
+    {
+     "merchant_id": "M2045",
+     "business_name": "Sastry Hair Salon",
+     "city": "Tirupati",
+     "damages_paise": 49900,
+     "ledger_entry_ids": [
+      2531
+     ],
+     "targets": {
+      "subscription_id": "SUB-2045-A",
+      "device_id": "D52045"
+     }
+    },
+    {
+     "merchant_id": "M2046",
+     "business_name": "Annapurna Hair Salon",
+     "city": "Patna",
+     "damages_paise": 29900,
+     "ledger_entry_ids": [
+      2564
+     ],
+     "targets": {
+      "subscription_id": "SUB-2046-A",
+      "device_id": "D52046"
+     }
+    },
+    {
+     "merchant_id": "M2047",
+     "business_name": "Jai Mata Di Kirana Store",
+     "city": "Guntur",
+     "damages_paise": 49900,
+     "ledger_entry_ids": [
+      2629
+     ],
+     "targets": {
+      "subscription_id": "SUB-2047-A",
+      "device_id": "D52047"
+     }
+    },
+    {
+     "merchant_id": "M2051",
+     "business_name": "Jai Hanuman Traders",
+     "city": "Rajkot",
+     "damages_paise": 99800,
+     "ledger_entry_ids": [
+      2818,
+      2819
+     ],
+     "targets": {
+      "subscription_id": "SUB-2051-A",
+      "device_id": "D52051"
+     }
+    },
+    {
+     "merchant_id": "M2057",
+     "business_name": "Sri Krishna Stationers",
+     "city": "Jaipur",
+     "damages_paise": 149700,
+     "ledger_entry_ids": [
+      3123,
+      3124,
+      3125
+     ],
+     "targets": {
+      "subscription_id": "SUB-2057-A",
+      "device_id": "D52057"
+     }
+    },
+    {
+     "merchant_id": "M2078",
+     "business_name": "Sri Krishna Medicals",
+     "city": "Varanasi",
+     "damages_paise": 149700,
+     "ledger_entry_ids": [
+      3996,
+      3997,
+      3998
+     ],
+     "targets": {
+      "subscription_id": "SUB-2078-A",
+      "device_id": "D52078"
+     }
+    },
+    {
+     "merchant_id": "M2080",
+     "business_name": "Gayatri Fresh Fruits",
+     "city": "Guntur",
+     "damages_paise": 99800,
+     "ledger_entry_ids": [
+      4100,
+      4101
+     ],
+     "targets": {
+      "subscription_id": "SUB-2080-A",
+      "device_id": "D52080"
+     }
+    },
+    {
+     "merchant_id": "M2082",
+     "business_name": "Jai Mata Di Super Bazaar",
+     "city": "Bhopal",
+     "damages_paise": 149700,
+     "ledger_entry_ids": [
+      4172,
+      4173,
+      4174
+     ],
+     "targets": {
+      "subscription_id": "SUB-2082-A",
+      "device_id": "D52082"
+     }
+    },
+    {
+     "merchant_id": "M2089",
+     "business_name": "Shree Ram General Store",
+     "city": "Hubballi",
+     "damages_paise": 99800,
+     "ledger_entry_ids": [
+      4473,
+      4474
+     ],
+     "targets": {
+      "subscription_id": "SUB-2089-A",
+      "device_id": "D52089"
+     }
+    },
+    {
+     "merchant_id": "M2096",
+     "business_name": "Jai Mata Di Bhojanalaya",
+     "city": "Pune",
+     "damages_paise": 99800,
+     "ledger_entry_ids": [
+      4771,
+      4772
+     ],
+     "targets": {
+      "subscription_id": "SUB-2096-A",
+      "device_id": "D52096"
+     }
+    },
+    {
+     "merchant_id": "M2100",
+     "business_name": "Goud Stationers",
+     "city": "Tirupati",
+     "damages_paise": 49900,
+     "ledger_entry_ids": [
+      4926
+     ],
+     "targets": {
+      "subscription_id": "SUB-2100-A",
+      "device_id": "D52100"
+     }
+    },
+    {
+     "merchant_id": "M2104",
+     "business_name": "Verma Traders",
+     "city": "Gurugram",
+     "damages_paise": 29900,
+     "ledger_entry_ids": [
+      5089
+     ],
+     "targets": {
+      "subscription_id": "SUB-2104-A",
+      "device_id": "D52104"
+     }
+    },
+    {
+     "merchant_id": "M2118",
+     "business_name": "Maa Durga Hardware",
+     "city": "Tirupati",
+     "damages_paise": 59800,
+     "ledger_entry_ids": [
+      5633,
+      5634
+     ],
+     "targets": {
+      "subscription_id": "SUB-2118-A",
+      "device_id": "D52118"
+     }
+    },
+    {
+     "merchant_id": "M2120",
+     "business_name": "City Biryani House",
+     "city": "Kolhapur",
+     "damages_paise": 99800,
+     "ledger_entry_ids": [
+      5729,
+      5730
+     ],
+     "targets": {
+      "subscription_id": "SUB-2120-A",
+      "device_id": "D52120"
+     }
+    },
+    {
+     "merchant_id": "M2121",
+     "business_name": "Shiv Shakti Pharmacy",
+     "city": "Ahmedabad",
+     "damages_paise": 49900,
+     "ledger_entry_ids": [
+      5767
+     ],
+     "targets": {
+      "subscription_id": "SUB-2121-A",
+      "device_id": "D52121"
+     }
+    },
+    {
+     "merchant_id": "M2126",
+     "business_name": "Lucky Traders",
+     "city": "Dehradun",
+     "damages_paise": 99800,
+     "ledger_entry_ids": [
+      6058,
+      6059
+     ],
+     "targets": {
+      "subscription_id": "SUB-2126-A",
+      "device_id": "D52126"
+     }
+    },
+    {
+     "merchant_id": "M2129",
+     "business_name": "Mishra Fruits & Vegetables",
+     "city": "Dehradun",
+     "damages_paise": 49900,
+     "ledger_entry_ids": [
+      6168
+     ],
+     "targets": {
+      "subscription_id": "SUB-2129-A",
+      "device_id": "D52129"
+     }
+    },
+    {
+     "merchant_id": "M2131",
+     "business_name": "Royal Garments",
+     "city": "Kanpur",
+     "damages_paise": 59800,
+     "ledger_entry_ids": [
+      6222,
+      6223
+     ],
+     "targets": {
+      "subscription_id": "SUB-2131-A",
+      "device_id": "D52131"
+     }
+    },
+    {
+     "merchant_id": "M2137",
+     "business_name": "Deshmukh Hair Salon",
+     "city": "Pune",
+     "damages_paise": 29900,
+     "ledger_entry_ids": [
+      6471
+     ],
+     "targets": {
+      "subscription_id": "SUB-2137-A",
+      "device_id": "D52137"
+     }
+    },
+    {
+     "merchant_id": "M2139",
+     "business_name": "Sri Ganesh Paints & Hardware",
+     "city": "Indore",
+     "damages_paise": 49900,
+     "ledger_entry_ids": [
+      6535
+     ],
+     "targets": {
+      "subscription_id": "SUB-2139-A",
+      "device_id": "D52139"
+     }
+    },
+    {
+     "merchant_id": "M2142",
+     "business_name": "Parmar Mobile Centre",
+     "city": "Ahmedabad",
+     "damages_paise": 59800,
+     "ledger_entry_ids": [
+      6679,
+      6680
+     ],
+     "targets": {
+      "subscription_id": "SUB-2142-A",
+      "device_id": "D52142"
+     }
+    },
+    {
+     "merchant_id": "M2144",
+     "business_name": "Mahalaxmi Fresh Fruits",
+     "city": "Dehradun",
+     "damages_paise": 149700,
+     "ledger_entry_ids": [
+      6779,
+      6780,
+      6781
+     ],
+     "targets": {
+      "subscription_id": "SUB-2144-A",
+      "device_id": "D52144"
+     }
+    },
+    {
+     "merchant_id": "M2150",
+     "business_name": "Naik Super Bazaar",
+     "city": "Mysuru",
+     "damages_paise": 59800,
+     "ledger_entry_ids": [
+      7053,
+      7054
+     ],
+     "targets": {
+      "subscription_id": "SUB-2150-A",
+      "device_id": "D52150"
+     }
+    },
+    {
+     "merchant_id": "M2153",
+     "business_name": "Sunrise Mobile Centre",
+     "city": "Mumbai",
+     "damages_paise": 59800,
+     "ledger_entry_ids": [
+      7157,
+      7158
+     ],
+     "targets": {
+      "subscription_id": "SUB-2153-A",
+      "device_id": "D52153"
+     }
+    },
+    {
+     "merchant_id": "M2160",
+     "business_name": "Yadav Mobile Point",
+     "city": "Gurugram",
+     "damages_paise": 149700,
+     "ledger_entry_ids": [
+      7416,
+      7417,
+      7418
+     ],
+     "targets": {
+      "subscription_id": "SUB-2160-A",
+      "device_id": "D52160"
+     }
+    },
+    {
+     "merchant_id": "M2166",
+     "business_name": "Mukherjee Kirana Store",
+     "city": "Howrah",
+     "damages_paise": 99800,
+     "ledger_entry_ids": [
+      7719,
+      7720
+     ],
+     "targets": {
+      "subscription_id": "SUB-2166-A",
+      "device_id": "D52166"
+     }
+    },
+    {
+     "merchant_id": "M2171",
+     "business_name": "Jai Ambe Xerox & Stationery",
+     "city": "Madurai",
+     "damages_paise": 149700,
+     "ledger_entry_ids": [
+      7946,
+      7947,
+      7948
+     ],
+     "targets": {
+      "subscription_id": "SUB-2171-A",
+      "device_id": "D52171"
+     }
+    },
+    {
+     "merchant_id": "M2172",
+     "business_name": "Sri Venkateswara Mobile Centre",
+     "city": "Vadodara",
+     "damages_paise": 99800,
+     "ledger_entry_ids": [
+      8009,
+      8010
+     ],
+     "targets": {
+      "subscription_id": "SUB-2172-A",
+      "device_id": "D52172"
+     }
+    }
+   ],
+   "action_ids": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74
+   ]
+  }
+ },
+ {
+  "seq": 156,
+  "case_id": "CASE-0001",
+  "type": "node",
+  "at": "2026-11-13T22:40:27.842",
+  "data": {
+   "node": "sweep",
+   "agent": "Detective",
+   "status": "end",
+   "ms": 55,
+   "summary": "ZOMBIE_BILLING in 36 more merchants · ₹32,029 queued for sign-off"
+  }
+ },
+ {
+  "seq": 157,
+  "case_id": "CASE-0001",
+  "type": "done",
+  "at": "2026-11-13T22:40:27.846",
+  "data": {
+   "case_id": "CASE-0001",
+   "status": "RESOLVED",
+   "outcome": "REFUND_DUE",
+   "decision": "ALLOW",
+   "ms": 9376
+  }
+ }
+]

@@ -1,0 +1,3470 @@
+[
+ {
+  "seq": 1,
+  "case_id": "CASE-0004",
+  "type": "case",
+  "at": "2026-11-14T01:21:31.454",
+  "data": {
+   "case_id": "CASE-0004",
+   "merchant": {
+    "id": "M1004",
+    "business_name": "Gupta General Store",
+    "owner_name": "Suresh Gupta",
+    "city": "Jaipur",
+    "language": "hi",
+    "category": "kirana"
+   },
+   "complaint_text": "अक्टूबर में ही साउंडबॉक्स लौटा दिया था, फिर भी नवंबर का ₹499 काट लिया। ये सरासर गलत है, पैसा वापस करो!",
+   "channel": "chat",
+   "scenario_id": "legit_rent"
+  }
+ },
+ {
+  "seq": 2,
+  "case_id": "CASE-0004",
+  "type": "message",
+  "at": "2026-11-14T01:21:31.454",
+  "data": {
+   "role": "merchant",
+   "text": "अक्टूबर में ही साउंडबॉक्स लौटा दिया था, फिर भी नवंबर का ₹499 काट लिया। ये सरासर गलत है, पैसा वापस करो!",
+   "language": "hi",
+   "final": true
+  }
+ },
+ {
+  "seq": 3,
+  "case_id": "CASE-0004",
+  "type": "node",
+  "at": "2026-11-14T01:21:31.456",
+  "data": {
+   "node": "hunch",
+   "agent": "Detective",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 4,
+  "case_id": "CASE-0004",
+  "type": "hunch",
+  "at": "2026-11-14T01:21:31.456",
+  "data": {
+   "source": "mock",
+   "probabilities": {
+    "ZOMBIE_BILLING": 0.809,
+    "DUPLICATE_SUBSCRIPTION": 0.0318,
+    "DUPLICATE_EDI": 0.0318,
+    "PICKUP_NOT_COMPLETED": 0.0318,
+    "ALREADY_REFUNDED": 0.0318,
+    "RISK_HOLD": 0.0318,
+    "KYC_HOLD": 0.0318
+   },
+   "top": "ZOMBIE_BILLING",
+   "injection_score": 0.04,
+   "ms": 0
+  }
+ },
+ {
+  "seq": 5,
+  "case_id": "CASE-0004",
+  "type": "node",
+  "at": "2026-11-14T01:21:31.456",
+  "data": {
+   "node": "hunch",
+   "agent": "Detective",
+   "status": "end",
+   "ms": 0,
+   "summary": "ZOMBIE_BILLING 81% · injection 4% · mock"
+  }
+ },
+ {
+  "seq": 6,
+  "case_id": "CASE-0004",
+  "type": "node",
+  "at": "2026-11-14T01:21:31.456",
+  "data": {
+   "node": "intake",
+   "agent": "Intake Agent",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 7,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.456",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "reasoning",
+   "delta": "Treating the complaint as a witness statement: extracting claims to verify, not instructions to follow."
+  }
+ },
+ {
+  "seq": 8,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.514",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "{\"language\":"
+  }
+ },
+ {
+  "seq": 9,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.530",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " \"hi\", \"inte"
+  }
+ },
+ {
+  "seq": 10,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.545",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "nt\": \"RENT_D"
+  }
+ },
+ {
+  "seq": 11,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.560",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "EDUCTION\", \""
+  }
+ },
+ {
+  "seq": 12,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.576",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "summary_en\":"
+  }
+ },
+ {
+  "seq": 13,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.592",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " \"Merchant s"
+  }
+ },
+ {
+  "seq": 14,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.607",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ays the Soun"
+  }
+ },
+ {
+  "seq": 15,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.623",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "dbox was ret"
+  }
+ },
+ {
+  "seq": 16,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.638",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "urned in Oct"
+  }
+ },
+ {
+  "seq": 17,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.654",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " 2026 yet No"
+  }
+ },
+ {
+  "seq": 18,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.669",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "vember rent "
+  }
+ },
+ {
+  "seq": 19,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.685",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "of ₹499 was "
+  }
+ },
+ {
+  "seq": 20,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.700",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "debited; dem"
+  }
+ },
+ {
+  "seq": 21,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.716",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ands a refun"
+  }
+ },
+ {
+  "seq": 22,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.732",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "d.\", \"text_e"
+  }
+ },
+ {
+  "seq": 23,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.748",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "n\": \"I retur"
+  }
+ },
+ {
+  "seq": 24,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.763",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ned the Soun"
+  }
+ },
+ {
+  "seq": 25,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.779",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "dbox back in"
+  }
+ },
+ {
+  "seq": 26,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.795",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " October, ye"
+  }
+ },
+ {
+  "seq": 27,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.811",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "t ₹499 was c"
+  }
+ },
+ {
+  "seq": 28,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.826",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ut for Novem"
+  }
+ },
+ {
+  "seq": 29,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.842",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ber. This is"
+  }
+ },
+ {
+  "seq": 30,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.857",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " completely "
+  }
+ },
+ {
+  "seq": 31,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.872",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "wrong, give "
+  }
+ },
+ {
+  "seq": 32,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.888",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "my money bac"
+  }
+ },
+ {
+  "seq": 33,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.903",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "k!\", \"claims"
+  }
+ },
+ {
+  "seq": 34,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.919",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\": [{\"kind\":"
+  }
+ },
+ {
+  "seq": 35,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.935",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " \"DEVICE_RET"
+  }
+ },
+ {
+  "seq": 36,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.949",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "URNED\", \"tex"
+  }
+ },
+ {
+  "seq": 37,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.966",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "t\": \"अक्टूबर"
+  }
+ },
+ {
+  "seq": 38,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.980",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " में ही साउं"
+  }
+ },
+ {
+  "seq": 39,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:31.996",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "डबॉक्स लौटा "
+  }
+ },
+ {
+  "seq": 40,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:32.012",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "दिया था\", \"d"
+  }
+ },
+ {
+  "seq": 41,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:32.028",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ate\": \"2026-"
+  }
+ },
+ {
+  "seq": 42,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:32.043",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "10\", \"amount"
+  }
+ },
+ {
+  "seq": 43,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:32.058",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "_paise\": nul"
+  }
+ },
+ {
+  "seq": 44,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:32.074",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "l, \"count\": "
+  }
+ },
+ {
+  "seq": 45,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:32.090",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "null}, {\"kin"
+  }
+ },
+ {
+  "seq": 46,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:32.105",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "d\": \"DEDUCTI"
+  }
+ },
+ {
+  "seq": 47,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:32.120",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ON_AMOUNT\", "
+  }
+ },
+ {
+  "seq": 48,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:32.136",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\"text\": \"नवं"
+  }
+ },
+ {
+  "seq": 49,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:32.152",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "बर का ₹499 क"
+  }
+ },
+ {
+  "seq": 50,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:32.168",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ाट लिया\", \"d"
+  }
+ },
+ {
+  "seq": 51,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:32.184",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ate\": null, "
+  }
+ },
+ {
+  "seq": 52,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:32.199",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\"amount_pais"
+  }
+ },
+ {
+  "seq": 53,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:32.215",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "e\": 49900, \""
+  }
+ },
+ {
+  "seq": 54,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:32.231",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "count\": null"
+  }
+ },
+ {
+  "seq": 55,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:32.246",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "}, {\"kind\": "
+  }
+ },
+ {
+  "seq": 56,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:32.262",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\"REFUND_DEMA"
+  }
+ },
+ {
+  "seq": 57,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:32.278",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "NDED\", \"text"
+  }
+ },
+ {
+  "seq": 58,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:32.294",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\": \"पैसा वाप"
+  }
+ },
+ {
+  "seq": 59,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:32.310",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "स करो!\", \"da"
+  }
+ },
+ {
+  "seq": 60,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:32.326",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "te\": null, \""
+  }
+ },
+ {
+  "seq": 61,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:32.341",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "amount_paise"
+  }
+ },
+ {
+  "seq": 62,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:32.356",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\": null, \"co"
+  }
+ },
+ {
+  "seq": 63,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:32.372",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "unt\": null}]"
+  }
+ },
+ {
+  "seq": 64,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:32.387",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": ", \"injection"
+  }
+ },
+ {
+  "seq": 65,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:32.402",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "_suspected\":"
+  }
+ },
+ {
+  "seq": 66,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:32.418",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " false, \"sen"
+  }
+ },
+ {
+  "seq": 67,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:32.434",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "timent\": \"an"
+  }
+ },
+ {
+  "seq": 68,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:32.450",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "gry\"}"
+  }
+ },
+ {
+  "seq": 69,
+  "case_id": "CASE-0004",
+  "type": "llm_done",
+  "at": "2026-11-14T01:21:32.476",
+  "data": {
+   "node": "intake",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "ms": 1009,
+   "text": "{\"language\": \"hi\", \"intent\": \"RENT_DEDUCTION\", \"summary_en\": \"Merchant says the Soundbox was returned in Oct 2026 yet November rent of ₹499 was debited; demands a refund.\", \"text_en\": \"I returned the Soundbox back in October, yet ₹499 was cut for November. This is completely wrong, give my money back!\", \"claims\": [{\"kind\": \"DEVICE_RETURNED\", \"text\": \"अक्टूबर में ही साउंडबॉक्स लौटा दिया था\", \"date\": \"2026-10\", \"amount_paise\": null, \"count\": null}, {\"kind\": \"DEDUCTION_AMOUNT\", \"text\": \"नवंबर का ₹499 काट लिया\", \"date\": null, \"amount_paise\": 49900, \"count\": null}, {\"kind\": \"REFUND_DEMANDED\", \"text\": \"पैसा वापस करो!\", \"date\": null, \"amount_paise\": null, \"count\": null}], \"injection_suspected\": false, \"sentiment\": \"angry\"}",
+   "usage": null,
+   "live": false,
+   "fallback": null
+  }
+ },
+ {
+  "seq": 70,
+  "case_id": "CASE-0004",
+  "type": "intake",
+  "at": "2026-11-14T01:21:32.476",
+  "data": {
+   "language": "hi",
+   "intent": "RENT_DEDUCTION",
+   "summary_en": "Merchant says the Soundbox was returned in Oct 2026 yet November rent of ₹499 was debited; demands a refund.",
+   "text_en": "I returned the Soundbox back in October, yet ₹499 was cut for November. This is completely wrong, give my money back!",
+   "claims": [
+    {
+     "kind": "DEVICE_RETURNED",
+     "text": "अक्टूबर में ही साउंडबॉक्स लौटा दिया था",
+     "date": "2026-10",
+     "amount_paise": null,
+     "count": null
+    },
+    {
+     "kind": "DEDUCTION_AMOUNT",
+     "text": "नवंबर का ₹499 काट लिया",
+     "date": null,
+     "amount_paise": 49900,
+     "count": null
+    },
+    {
+     "kind": "REFUND_DEMANDED",
+     "text": "पैसा वापस करो!",
+     "date": null,
+     "amount_paise": null,
+     "count": null
+    }
+   ],
+   "injection_suspected": false,
+   "sentiment": "angry"
+  }
+ },
+ {
+  "seq": 71,
+  "case_id": "CASE-0004",
+  "type": "node",
+  "at": "2026-11-14T01:21:32.476",
+  "data": {
+   "node": "intake",
+   "agent": "Intake Agent",
+   "status": "end",
+   "ms": 1020,
+   "summary": "RENT_DEDUCTION · 3 claims · hi"
+  }
+ },
+ {
+  "seq": 72,
+  "case_id": "CASE-0004",
+  "type": "node",
+  "at": "2026-11-14T01:21:32.482",
+  "data": {
+   "node": "trail",
+   "agent": "Detective",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 73,
+  "case_id": "CASE-0004",
+  "type": "trail",
+  "at": "2026-11-14T01:21:32.482",
+  "data": {
+   "merchant_id": "M1004",
+   "window_start": "2025-08-10",
+   "window_end": "2026-11-14",
+   "disputed": [
+    "ledger_entries:281",
+    "ledger_entries:282"
+   ],
+   "nodes": [
+    {
+     "id": "merchants:M1004",
+     "table": "merchants",
+     "row_id": "M1004",
+     "kind": "merchant",
+     "label": "M1004 · Gupta General Store · Suresh Gupta · Jaipur",
+     "at": "2025-08-08",
+     "amount_paise": null,
+     "flags": [],
+     "data": {
+      "id": "M1004",
+      "business_name": "Gupta General Store",
+      "owner_name": "Suresh Gupta",
+      "city": "Jaipur",
+      "category": "kirana",
+      "status": "ACTIVE"
+     }
+    },
+    {
+     "id": "subscriptions:SUB-1004-A",
+     "table": "subscriptions",
+     "row_id": "SUB-1004-A",
+     "kind": "subscription",
+     "label": "SUB-1004-A · Soundbox 4G Rental ₹499/month · since 10 Aug 2025 · ACTIVE",
+     "at": "2025-08-10",
+     "amount_paise": null,
+     "flags": [],
+     "data": {
+      "id": "SUB-1004-A",
+      "merchant_id": "M1004",
+      "device_id": "D50004",
+      "plan_id": "PLAN_SB499",
+      "status": "ACTIVE",
+      "started_at": "2025-08-10",
+      "ended_at": null,
+      "end_reason": null
+     }
+    },
+    {
+     "id": "mandates:MDT-1004-A",
+     "table": "mandates",
+     "row_id": "MDT-1004-A",
+     "kind": "mandate",
+     "label": "Mandate MDT-1004-A · UMRN PYTM25081000000006 · up to ₹998 · ACTIVE",
+     "at": "2025-08-10",
+     "amount_paise": null,
+     "flags": [],
+     "data": {
+      "id": "MDT-1004-A",
+      "merchant_id": "M1004",
+      "purpose": "SUBSCRIPTION",
+      "subscription_id": "SUB-1004-A",
+      "loan_id": null,
+      "umrn": "PYTM25081000000006",
+      "max_amount_paise": 99800,
+      "status": "ACTIVE",
+      "created_at": "2025-08-10"
+     }
+    },
+    {
+     "id": "devices:D50004",
+     "table": "devices",
+     "row_id": "D50004",
+     "kind": "device",
+     "label": "Soundbox D50004 · SB4G-9P4D20 · Soundbox 4G · RETURN_REQUESTED",
+     "at": "2025-08-10",
+     "amount_paise": null,
+     "flags": [],
+     "data": {
+      "id": "D50004",
+      "serial_no": "SB4G-9P4D20",
+      "model": "Soundbox 4G",
+      "merchant_id": "M1004",
+      "status": "RETURN_REQUESTED",
+      "installed_at": "2025-08-10"
+     }
+    },
+    {
+     "id": "ledger_entries:281",
+     "table": "ledger_entries",
+     "row_id": "281",
+     "kind": "money",
+     "label": "₹499 rent debit · 01 Oct 2026 · NACH2610010000281",
+     "at": "2026-10-01T06:43:31",
+     "amount_paise": 49900,
+     "flags": [
+      "DISPUTED"
+     ],
+     "data": {
+      "id": 281,
+      "merchant_id": "M1004",
+      "txn_ref": "NACH2610010000281",
+      "entry_type": "RENT_DEBIT",
+      "direction": "DEBIT",
+      "amount_paise": 49900,
+      "status": "SUCCESS",
+      "source_type": "subscription",
+      "source_id": "SUB-1004-A",
+      "mandate_id": "MDT-1004-A",
+      "value_date": "2026-10-01",
+      "posted_at": "2026-10-01T06:43:31",
+      "narration": "Soundbox 4G Rental rent Oct 2026 · SUB-1004-A",
+      "refund_of": null
+     }
+    },
+    {
+     "id": "ledger_entries:282",
+     "table": "ledger_entries",
+     "row_id": "282",
+     "kind": "money",
+     "label": "₹499 rent debit · 01 Nov 2026 · NACH2611010000282",
+     "at": "2026-11-01T06:38:38",
+     "amount_paise": 49900,
+     "flags": [
+      "DISPUTED"
+     ],
+     "data": {
+      "id": 282,
+      "merchant_id": "M1004",
+      "txn_ref": "NACH2611010000282",
+      "entry_type": "RENT_DEBIT",
+      "direction": "DEBIT",
+      "amount_paise": 49900,
+      "status": "SUCCESS",
+      "source_type": "subscription",
+      "source_id": "SUB-1004-A",
+      "mandate_id": "MDT-1004-A",
+      "value_date": "2026-11-01",
+      "posted_at": "2026-11-01T06:38:38",
+      "narration": "Soundbox 4G Rental rent Nov 2026 · SUB-1004-A",
+      "refund_of": null
+     }
+    },
+    {
+     "id": "ledger_entries:268..280",
+     "table": "ledger_entries",
+     "row_id": "268..280",
+     "kind": "money",
+     "label": "13 other rent debits on SUB-1004-A (01 Sep 2025 – 01 Sep 2026), ₹499 each, all before the disputed period",
+     "at": "2026-09-01T06:18:24",
+     "amount_paise": 648700,
+     "flags": [
+      "SUMMARY"
+     ],
+     "data": {
+      "count": 13,
+      "ledger_ids": [
+       268,
+       269,
+       270,
+       271,
+       272,
+       273,
+       274,
+       275,
+       276,
+       277,
+       278,
+       279,
+       280
+      ]
+     }
+    },
+    {
+     "id": "device_events:8",
+     "table": "device_events",
+     "row_id": "8",
+     "kind": "device_event",
+     "label": "Installed · 10 Aug 2025 12:30 · INS-250810-1004",
+     "at": "2025-08-10T12:30:00",
+     "amount_paise": null,
+     "flags": [],
+     "data": {
+      "id": 8,
+      "device_id": "D50004",
+      "event_type": "INSTALLED",
+      "at": "2025-08-10T12:30:00",
+      "ref": "INS-250810-1004",
+      "note": "Installed at Gupta General Store"
+     }
+    },
+    {
+     "id": "device_events:9",
+     "table": "device_events",
+     "row_id": "9",
+     "kind": "device_event",
+     "label": "Return requested · 03 Oct 2026 10:15 · PK-261003-1004",
+     "at": "2026-10-03T10:15:00",
+     "amount_paise": null,
+     "flags": [],
+     "data": {
+      "id": 9,
+      "device_id": "D50004",
+      "event_type": "RETURN_REQUESTED",
+      "at": "2026-10-03T10:15:00",
+      "ref": "PK-261003-1004",
+      "note": "Merchant requested return in app"
+     }
+    },
+    {
+     "id": "device_events:10",
+     "table": "device_events",
+     "row_id": "10",
+     "kind": "device_event",
+     "label": "Pickup scheduled · 04 Oct 2026 09:30 · PK-261003-1004",
+     "at": "2026-10-04T09:30:00",
+     "amount_paise": null,
+     "flags": [],
+     "data": {
+      "id": 10,
+      "device_id": "D50004",
+      "event_type": "PICKUP_SCHEDULED",
+      "at": "2026-10-04T09:30:00",
+      "ref": "PK-261003-1004",
+      "note": "Pickup slot 06 Oct 2026"
+     }
+    },
+    {
+     "id": "device_events:11",
+     "table": "device_events",
+     "row_id": "11",
+     "kind": "device_event",
+     "label": "Pickup failed · 06 Oct 2026 13:20 · shop closed",
+     "at": "2026-10-06T13:20:00",
+     "amount_paise": null,
+     "flags": [
+      "FAILED"
+     ],
+     "data": {
+      "id": 11,
+      "device_id": "D50004",
+      "event_type": "PICKUP_FAILED",
+      "at": "2026-10-06T13:20:00",
+      "ref": "PK-261003-1004",
+      "note": "SHOP_CLOSED"
+     }
+    },
+    {
+     "id": "device_events:12",
+     "table": "device_events",
+     "row_id": "12",
+     "kind": "device_event",
+     "label": "Pickup failed · 09 Oct 2026 16:45 · merchant unavailable",
+     "at": "2026-10-09T16:45:00",
+     "amount_paise": null,
+     "flags": [
+      "FAILED"
+     ],
+     "data": {
+      "id": 12,
+      "device_id": "D50004",
+      "event_type": "PICKUP_FAILED",
+      "at": "2026-10-09T16:45:00",
+      "ref": "PK-261003-1004",
+      "note": "MERCHANT_UNAVAILABLE"
+     }
+    },
+    {
+     "id": "pickup_tickets:PK-261003-1004",
+     "table": "pickup_tickets",
+     "row_id": "PK-261003-1004",
+     "kind": "pickup",
+     "label": "Pickup PK-261003-1004 · FAILED · 2 attempts · merchant unavailable · AWB DLV88456702",
+     "at": "2026-10-03T10:15:00",
+     "amount_paise": null,
+     "flags": [
+      "FAILED"
+     ],
+     "data": {
+      "id": "PK-261003-1004",
+      "device_id": "D50004",
+      "merchant_id": "M1004",
+      "status": "FAILED",
+      "requested_at": "2026-10-03T10:15:00",
+      "scheduled_for": "2026-10-09",
+      "completed_at": null,
+      "courier_awb": "DLV88456702",
+      "attempts": 2,
+      "failure_reason": "MERCHANT_UNAVAILABLE"
+     }
+    },
+    {
+     "id": "payments:731",
+     "table": "payments",
+     "row_id": "731",
+     "kind": "payments_summary",
+     "label": "41 payments via D50004 since the 03 Oct return request (10 Oct – 13 Nov 2026), last 13 Nov 2026 09:18",
+     "at": "2026-11-13T09:18:42",
+     "amount_paise": 1256200,
+     "flags": [
+      "SUMMARY",
+      "USED_AFTER_RETURN_REQUEST"
+     ],
+     "data": {
+      "count": 41,
+      "first": "2026-10-10T17:55:43",
+      "last": "2026-11-13T09:18:42",
+      "total_paise": 1256200
+     }
+    }
+   ],
+   "edges": [
+    {
+     "source": "merchants:M1004",
+     "target": "subscriptions:SUB-1004-A",
+     "label": "subscribed"
+    },
+    {
+     "source": "mandates:MDT-1004-A",
+     "target": "subscriptions:SUB-1004-A",
+     "label": "authorised for"
+    },
+    {
+     "source": "subscriptions:SUB-1004-A",
+     "target": "devices:D50004",
+     "label": "rents"
+    },
+    {
+     "source": "ledger_entries:281",
+     "target": "mandates:MDT-1004-A",
+     "label": "collected via"
+    },
+    {
+     "source": "ledger_entries:282",
+     "target": "mandates:MDT-1004-A",
+     "label": "collected via"
+    },
+    {
+     "source": "ledger_entries:268..280",
+     "target": "mandates:MDT-1004-A",
+     "label": "collected via"
+    },
+    {
+     "source": "devices:D50004",
+     "target": "device_events:8",
+     "label": "logged"
+    },
+    {
+     "source": "device_events:8",
+     "target": "device_events:9",
+     "label": "then"
+    },
+    {
+     "source": "device_events:9",
+     "target": "device_events:10",
+     "label": "then"
+    },
+    {
+     "source": "device_events:10",
+     "target": "device_events:11",
+     "label": "then"
+    },
+    {
+     "source": "device_events:11",
+     "target": "device_events:12",
+     "label": "then"
+    },
+    {
+     "source": "device_events:9",
+     "target": "pickup_tickets:PK-261003-1004",
+     "label": "raised"
+    },
+    {
+     "source": "devices:D50004",
+     "target": "payments:731",
+     "label": "processed"
+    }
+   ]
+  }
+ },
+ {
+  "seq": 74,
+  "case_id": "CASE-0004",
+  "type": "node",
+  "at": "2026-11-14T01:21:32.482",
+  "data": {
+   "node": "trail",
+   "agent": "Detective",
+   "status": "end",
+   "ms": 5,
+   "summary": "14 linked records · 2 disputed movements"
+  }
+ },
+ {
+  "seq": 75,
+  "case_id": "CASE-0004",
+  "type": "node",
+  "at": "2026-11-14T01:21:32.485",
+  "data": {
+   "node": "statements",
+   "agent": "Detective",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 76,
+  "case_id": "CASE-0004",
+  "type": "statements",
+  "at": "2026-11-14T01:21:32.485",
+  "data": {
+   "checks": [
+    {
+     "claim": {
+      "kind": "DEVICE_RETURNED",
+      "text": "अक्टूबर में ही साउंडबॉक्स लौटा दिया था",
+      "date": "2026-10",
+      "amount_paise": null,
+      "count": null
+     },
+     "status": "CONTRADICTED",
+     "finding": "Return of D50004 requested 03 Oct 2026 but never collected: pickups failed 06 Oct (shop closed) and 09 Oct (merchant unavailable); 41 payments since, the last on 13 Nov 2026.",
+     "evidence": [
+      {
+       "table": "device_events",
+       "row_id": "9",
+       "label": "D50004 Return requested · 03 Oct 2026 10:15 · PK-261003-1004",
+       "at": "2026-10-03T10:15:00",
+       "amount_paise": null
+      },
+      {
+       "table": "device_events",
+       "row_id": "11",
+       "label": "D50004 Pickup failed · 06 Oct 2026 13:20 · shop closed",
+       "at": "2026-10-06T13:20:00",
+       "amount_paise": null
+      },
+      {
+       "table": "device_events",
+       "row_id": "12",
+       "label": "D50004 Pickup failed · 09 Oct 2026 16:45 · merchant unavailable",
+       "at": "2026-10-09T16:45:00",
+       "amount_paise": null
+      },
+      {
+       "table": "pickup_tickets",
+       "row_id": "PK-261003-1004",
+       "label": "Pickup PK-261003-1004 · FAILED · 2 attempts · merchant unavailable · AWB DLV88456702",
+       "at": "2026-10-03T10:15:00",
+       "amount_paise": null
+      },
+      {
+       "table": "payments",
+       "row_id": "731",
+       "label": "41 payments via D50004 since the return request, last 13 Nov 2026 09:18",
+       "at": "2026-11-13T09:18:42",
+       "amount_paise": 1256200
+      }
+     ]
+    },
+    {
+     "claim": {
+      "kind": "DEDUCTION_AMOUNT",
+      "text": "नवंबर का ₹499 काट लिया",
+      "date": null,
+      "amount_paise": 49900,
+      "count": null
+     },
+     "status": "VERIFIED",
+     "finding": "Both disputed rent debits were ₹499 (01 Oct, 01 Nov 2026).",
+     "evidence": [
+      {
+       "table": "ledger_entries",
+       "row_id": "281",
+       "label": "₹499 rent debit · 01 Oct 2026 · NACH2610010000281",
+       "at": "2026-10-01T06:43:31",
+       "amount_paise": 49900
+      },
+      {
+       "table": "ledger_entries",
+       "row_id": "282",
+       "label": "₹499 rent debit · 01 Nov 2026 · NACH2611010000282",
+       "at": "2026-11-01T06:38:38",
+       "amount_paise": 49900
+      }
+     ]
+    },
+    {
+     "claim": {
+      "kind": "REFUND_DEMANDED",
+      "text": "पैसा वापस करो!",
+      "date": null,
+      "amount_paise": null,
+      "count": null
+     },
+     "status": "UNVERIFIABLE",
+     "finding": "No amount was stated; the ledger shows no wrongful debit to refund.",
+     "evidence": []
+    }
+   ]
+  }
+ },
+ {
+  "seq": 77,
+  "case_id": "CASE-0004",
+  "type": "node",
+  "at": "2026-11-14T01:21:32.485",
+  "data": {
+   "node": "statements",
+   "agent": "Detective",
+   "status": "end",
+   "ms": 2,
+   "summary": "1 contradicted · 1 verified · 1 unverifiable"
+  }
+ },
+ {
+  "seq": 78,
+  "case_id": "CASE-0004",
+  "type": "node",
+  "at": "2026-11-14T01:21:32.488",
+  "data": {
+   "node": "lineup",
+   "agent": "Detective",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 79,
+  "case_id": "CASE-0004",
+  "type": "suspect",
+  "at": "2026-11-14T01:21:32.590",
+  "data": {
+   "suspect_id": "PICKUP_NOT_COMPLETED",
+   "title": "Return requested but never collected",
+   "kind": "INNOCENT",
+   "status": "MATCH",
+   "summary": "The return of D50004 was requested on 03 Oct 2026 but 2 pickup attempts failed (06 Oct shop closed, 09 Oct merchant unavailable), and the Soundbox has taken 41 payments since (10 Oct – 13 Nov 2026), so it is still in the shop and the rent is legitimate.",
+   "evidence": [
+    {
+     "table": "device_events",
+     "row_id": "9",
+     "label": "D50004 Return requested · 03 Oct 2026 10:15 · PK-261003-1004",
+     "at": "2026-10-03T10:15:00",
+     "amount_paise": null
+    },
+    {
+     "table": "device_events",
+     "row_id": "11",
+     "label": "D50004 Pickup failed · 06 Oct 2026 13:20 · shop closed",
+     "at": "2026-10-06T13:20:00",
+     "amount_paise": null
+    },
+    {
+     "table": "device_events",
+     "row_id": "12",
+     "label": "D50004 Pickup failed · 09 Oct 2026 16:45 · merchant unavailable",
+     "at": "2026-10-09T16:45:00",
+     "amount_paise": null
+    },
+    {
+     "table": "pickup_tickets",
+     "row_id": "PK-261003-1004",
+     "label": "Pickup PK-261003-1004 · FAILED · 2 attempts · merchant unavailable · AWB DLV88456702",
+     "at": "2026-10-03T10:15:00",
+     "amount_paise": null
+    },
+    {
+     "table": "payments",
+     "row_id": "731",
+     "label": "41 payments via D50004 since the return request (10 Oct – 13 Nov 2026), last 13 Nov 2026 09:18",
+     "at": "2026-11-13T09:18:42",
+     "amount_paise": 1256200
+    },
+    {
+     "table": "subscriptions",
+     "row_id": "SUB-1004-A",
+     "label": "SUB-1004-A · Soundbox 4G Rental ₹499/month · since 10 Aug 2025 · ACTIVE",
+     "at": "2025-08-10",
+     "amount_paise": null
+    }
+   ],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {
+    "device_id": "D50004",
+    "subscription_id": "SUB-1004-A"
+   },
+   "remedies": [
+    "SCHEDULE_PICKUP"
+   ],
+   "sweepable": false,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 80,
+  "case_id": "CASE-0004",
+  "type": "suspect",
+  "at": "2026-11-14T01:21:32.700",
+  "data": {
+   "suspect_id": "ZOMBIE_BILLING",
+   "title": "Billing continued after device return",
+   "kind": "FAULT",
+   "status": "ELIMINATED",
+   "summary": "Never picked up: the return of D50004 was requested on 03 Oct 2026 but 2 pickup attempts failed (06 Oct shop closed, 09 Oct merchant unavailable), and the Soundbox has taken 41 payments since, the last on 13 Nov 2026, so the rent is not after a return.",
+   "evidence": [
+    {
+     "table": "device_events",
+     "row_id": "9",
+     "label": "D50004 Return requested · 03 Oct 2026 10:15 · PK-261003-1004",
+     "at": "2026-10-03T10:15:00",
+     "amount_paise": null
+    },
+    {
+     "table": "device_events",
+     "row_id": "11",
+     "label": "D50004 Pickup failed · 06 Oct 2026 13:20 · shop closed",
+     "at": "2026-10-06T13:20:00",
+     "amount_paise": null
+    },
+    {
+     "table": "device_events",
+     "row_id": "12",
+     "label": "D50004 Pickup failed · 09 Oct 2026 16:45 · merchant unavailable",
+     "at": "2026-10-09T16:45:00",
+     "amount_paise": null
+    },
+    {
+     "table": "pickup_tickets",
+     "row_id": "PK-261003-1004",
+     "label": "Pickup PK-261003-1004 · FAILED · 2 attempts · merchant unavailable · AWB DLV88456702",
+     "at": "2026-10-03T10:15:00",
+     "amount_paise": null
+    },
+    {
+     "table": "payments",
+     "row_id": "731",
+     "label": "41 payments via D50004 since the return request, last 13 Nov 2026 09:18",
+     "at": "2026-11-13T09:18:42",
+     "amount_paise": 1256200
+    }
+   ],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {},
+   "remedies": [],
+   "sweepable": true,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 81,
+  "case_id": "CASE-0004",
+  "type": "suspect",
+  "at": "2026-11-14T01:21:32.808",
+  "data": {
+   "suspect_id": "DUPLICATE_SUBSCRIPTION",
+   "title": "Two subscriptions on one device",
+   "kind": "FAULT",
+   "status": "ELIMINATED",
+   "summary": "Soundbox D50004 has a single subscription, SUB-1004-A, so nothing is billed twice.",
+   "evidence": [
+    {
+     "table": "subscriptions",
+     "row_id": "SUB-1004-A",
+     "label": "SUB-1004-A · Soundbox 4G Rental ₹499/month · since 10 Aug 2025 · ACTIVE",
+     "at": "2025-08-10",
+     "amount_paise": null
+    }
+   ],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {},
+   "remedies": [],
+   "sweepable": true,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 82,
+  "case_id": "CASE-0004",
+  "type": "suspect",
+  "at": "2026-11-14T01:21:32.916",
+  "data": {
+   "suspect_id": "ALREADY_REFUNDED",
+   "title": "Already refunded",
+   "kind": "INNOCENT",
+   "status": "ELIMINATED",
+   "summary": "None of the 2 debits at issue (01 Oct, 01 Nov 2026, ₹998) has been refunded yet.",
+   "evidence": [
+    {
+     "table": "ledger_entries",
+     "row_id": "281",
+     "label": "₹499 rent debit · 01 Oct 2026 · NACH2610010000281",
+     "at": "2026-10-01T06:43:31",
+     "amount_paise": 49900
+    },
+    {
+     "table": "ledger_entries",
+     "row_id": "282",
+     "label": "₹499 rent debit · 01 Nov 2026 · NACH2611010000282",
+     "at": "2026-11-01T06:38:38",
+     "amount_paise": 49900
+    }
+   ],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {},
+   "remedies": [],
+   "sweepable": false,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 83,
+  "case_id": "CASE-0004",
+  "type": "suspect",
+  "at": "2026-11-14T01:21:33.024",
+  "data": {
+   "suspect_id": "DUPLICATE_EDI",
+   "title": "Loan instalment debited twice",
+   "kind": "FAULT",
+   "status": "NOT_APPLICABLE",
+   "summary": "Not tested: the complaint is about Soundbox rent, not loan EDI.",
+   "evidence": [],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {},
+   "remedies": [],
+   "sweepable": true,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 84,
+  "case_id": "CASE-0004",
+  "type": "suspect",
+  "at": "2026-11-14T01:21:33.121",
+  "data": {
+   "suspect_id": "RISK_HOLD",
+   "title": "Settlement held by risk",
+   "kind": "HOLD",
+   "status": "NOT_APPLICABLE",
+   "summary": "Not tested: the complaint is about Soundbox rent, not settlements.",
+   "evidence": [],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {},
+   "remedies": [],
+   "sweepable": false,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 85,
+  "case_id": "CASE-0004",
+  "type": "suspect",
+  "at": "2026-11-14T01:21:33.230",
+  "data": {
+   "suspect_id": "KYC_HOLD",
+   "title": "Settlement held for KYC",
+   "kind": "HOLD",
+   "status": "NOT_APPLICABLE",
+   "summary": "Not tested: the complaint is about Soundbox rent, not settlements.",
+   "evidence": [],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {},
+   "remedies": [],
+   "sweepable": false,
+   "merchant_id": null
+  }
+ },
+ {
+  "seq": 86,
+  "case_id": "CASE-0004",
+  "type": "node",
+  "at": "2026-11-14T01:21:33.230",
+  "data": {
+   "node": "lineup",
+   "agent": "Detective",
+   "status": "end",
+   "ms": 743,
+   "summary": "MATCH: PICKUP_NOT_COMPLETED · 3 eliminated"
+  }
+ },
+ {
+  "seq": 87,
+  "case_id": "CASE-0004",
+  "type": "node",
+  "at": "2026-11-14T01:21:33.238",
+  "data": {
+   "node": "verdict",
+   "agent": "Detective",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 88,
+  "case_id": "CASE-0004",
+  "type": "node",
+  "at": "2026-11-14T01:21:33.238",
+  "data": {
+   "node": "improvise",
+   "agent": "Detective",
+   "status": "skip",
+   "summary": "a known suspect matched; no probes needed"
+  }
+ },
+ {
+  "seq": 89,
+  "case_id": "CASE-0004",
+  "type": "verdict",
+  "at": "2026-11-14T01:21:33.239",
+  "data": {
+   "outcome": "NO_FAULT",
+   "culprits": [
+    "PICKUP_NOT_COMPLETED"
+   ],
+   "headline": "No refund due: D50004 was never picked up and has taken 41 payments since the 03 Oct 2026 return request, so the rent is legitimate; a new pickup can be booked.",
+   "smoking_gun": [
+    {
+     "table": "device_events",
+     "row_id": "9",
+     "label": "D50004 Return requested · 03 Oct 2026 10:15 · PK-261003-1004",
+     "at": "2026-10-03T10:15:00",
+     "amount_paise": null
+    },
+    {
+     "table": "device_events",
+     "row_id": "11",
+     "label": "D50004 Pickup failed · 06 Oct 2026 13:20 · shop closed",
+     "at": "2026-10-06T13:20:00",
+     "amount_paise": null
+    },
+    {
+     "table": "device_events",
+     "row_id": "12",
+     "label": "D50004 Pickup failed · 09 Oct 2026 16:45 · merchant unavailable",
+     "at": "2026-10-09T16:45:00",
+     "amount_paise": null
+    },
+    {
+     "table": "pickup_tickets",
+     "row_id": "PK-261003-1004",
+     "label": "Pickup PK-261003-1004 · FAILED · 2 attempts · merchant unavailable · AWB DLV88456702",
+     "at": "2026-10-03T10:15:00",
+     "amount_paise": null
+    },
+    {
+     "table": "payments",
+     "row_id": "731",
+     "label": "41 payments via D50004 since the return request (10 Oct – 13 Nov 2026), last 13 Nov 2026 09:18",
+     "at": "2026-11-13T09:18:42",
+     "amount_paise": 1256200
+    },
+    {
+     "table": "subscriptions",
+     "row_id": "SUB-1004-A",
+     "label": "SUB-1004-A · Soundbox 4G Rental ₹499/month · since 10 Aug 2025 · ACTIVE",
+     "at": "2025-08-10",
+     "amount_paise": null
+    }
+   ],
+   "damages_ledger_ids": [],
+   "damages_paise": 0,
+   "targets": {
+    "device_id": "D50004",
+    "subscription_id": "SUB-1004-A"
+   },
+   "remedies": [
+    "SCHEDULE_PICKUP"
+   ],
+   "confidence": "HIGH",
+   "sweepable_suspect": null
+  }
+ },
+ {
+  "seq": 90,
+  "case_id": "CASE-0004",
+  "type": "node",
+  "at": "2026-11-14T01:21:33.239",
+  "data": {
+   "node": "verdict",
+   "agent": "Detective",
+   "status": "end",
+   "ms": 7,
+   "summary": "NO_FAULT (HIGH)"
+  }
+ },
+ {
+  "seq": 91,
+  "case_id": "CASE-0004",
+  "type": "node",
+  "at": "2026-11-14T01:21:33.239",
+  "data": {
+   "node": "propose",
+   "agent": "Resolver Agent",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 92,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.239",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "reasoning",
+   "delta": "Drafting remedies from the verdict. I have no authority; the Action Firewall re-checks every rupee."
+  }
+ },
+ {
+  "seq": 93,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.291",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "{\"actions\": "
+  }
+ },
+ {
+  "seq": 94,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.307",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "[{\"action_ty"
+  }
+ },
+ {
+  "seq": 95,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.322",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "pe\": \"SCHEDU"
+  }
+ },
+ {
+  "seq": 96,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.338",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "LE_PICKUP\", "
+  }
+ },
+ {
+  "seq": 97,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.354",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\"amount_pais"
+  }
+ },
+ {
+  "seq": 98,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.369",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "e\": 0, \"ledg"
+  }
+ },
+ {
+  "seq": 99,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.384",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "er_entry_ids"
+  }
+ },
+ {
+  "seq": 100,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.399",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\": [], \"targ"
+  }
+ },
+ {
+  "seq": 101,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.415",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "et_id\": \"D50"
+  }
+ },
+ {
+  "seq": 102,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.430",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "004\", \"team\""
+  }
+ },
+ {
+  "seq": 103,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.446",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": ": null, \"rea"
+  }
+ },
+ {
+  "seq": 104,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.462",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "son\": \"Picku"
+  }
+ },
+ {
+  "seq": 105,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.478",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "p of D50004 "
+  }
+ },
+ {
+  "seq": 106,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.492",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "never comple"
+  }
+ },
+ {
+  "seq": 107,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.509",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ted; book a "
+  }
+ },
+ {
+  "seq": 108,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.524",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "fresh pickup"
+  }
+ },
+ {
+  "seq": 109,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.539",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": " so billing "
+  }
+ },
+ {
+  "seq": 110,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.554",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "can stop.\"}]"
+  }
+ },
+ {
+  "seq": 111,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.570",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": ", \"rationale"
+  }
+ },
+ {
+  "seq": 112,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.586",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "\": \"Rent is "
+  }
+ },
+ {
+  "seq": 113,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.602",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "legitimate b"
+  }
+ },
+ {
+  "seq": 114,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.618",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ecause the d"
+  }
+ },
+ {
+  "seq": 115,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.633",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "evice was ne"
+  }
+ },
+ {
+  "seq": 116,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.649",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ver collecte"
+  }
+ },
+ {
+  "seq": 117,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.665",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "d; schedule "
+  }
+ },
+ {
+  "seq": 118,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.680",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "a new pickup"
+  }
+ },
+ {
+  "seq": 119,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.696",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": ".\"}"
+  }
+ },
+ {
+  "seq": 120,
+  "case_id": "CASE-0004",
+  "type": "llm_done",
+  "at": "2026-11-14T01:21:33.723",
+  "data": {
+   "node": "propose",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "ms": 471,
+   "text": "{\"actions\": [{\"action_type\": \"SCHEDULE_PICKUP\", \"amount_paise\": 0, \"ledger_entry_ids\": [], \"target_id\": \"D50004\", \"team\": null, \"reason\": \"Pickup of D50004 never completed; book a fresh pickup so billing can stop.\"}], \"rationale\": \"Rent is legitimate because the device was never collected; schedule a new pickup.\"}",
+   "usage": null,
+   "live": false,
+   "fallback": null
+  }
+ },
+ {
+  "seq": 121,
+  "case_id": "CASE-0004",
+  "type": "proposal",
+  "at": "2026-11-14T01:21:33.723",
+  "data": {
+   "actions": [
+    {
+     "action_type": "SCHEDULE_PICKUP",
+     "amount_paise": 0,
+     "ledger_entry_ids": [],
+     "target_id": "D50004",
+     "team": null,
+     "reason": "Pickup of D50004 never completed; book a fresh pickup so billing can stop."
+    }
+   ],
+   "rationale": "Rent is legitimate because the device was never collected; schedule a new pickup."
+  }
+ },
+ {
+  "seq": 122,
+  "case_id": "CASE-0004",
+  "type": "node",
+  "at": "2026-11-14T01:21:33.723",
+  "data": {
+   "node": "propose",
+   "agent": "Resolver Agent",
+   "status": "end",
+   "ms": 483,
+   "summary": "SCHEDULE_PICKUP"
+  }
+ },
+ {
+  "seq": 123,
+  "case_id": "CASE-0004",
+  "type": "node",
+  "at": "2026-11-14T01:21:33.730",
+  "data": {
+   "node": "firewall",
+   "agent": "Action Firewall",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 124,
+  "case_id": "CASE-0004",
+  "type": "firewall",
+  "at": "2026-11-14T01:21:33.730",
+  "data": {
+   "decision": "ALLOW",
+   "actions": [
+    {
+     "proposed": {
+      "action_type": "SCHEDULE_PICKUP",
+      "amount_paise": 0,
+      "ledger_entry_ids": [],
+      "target_id": "D50004",
+      "team": null,
+      "reason": "Pickup of D50004 never completed; book a fresh pickup so billing can stop."
+     },
+     "final": {
+      "action_type": "SCHEDULE_PICKUP",
+      "amount_paise": 0,
+      "ledger_entry_ids": [],
+      "target_id": "D50004",
+      "team": null,
+      "reason": "Pickup of D50004 never completed; book a fresh pickup so billing can stop."
+     },
+     "decision": "ALLOW",
+     "checks": [
+      {
+       "id": "allowlist",
+       "label": "Known action type",
+       "status": "PASS",
+       "detail": "SCHEDULE_PICKUP is on Munim's list of allowed actions."
+      },
+      {
+       "id": "remedy_match",
+       "label": "Permitted remedy for the verdict",
+       "status": "PASS",
+       "detail": "SCHEDULE_PICKUP is a permitted remedy for PICKUP_NOT_COMPLETED."
+      },
+      {
+       "id": "hard_deny",
+       "label": "Hard-deny rules",
+       "status": "SKIP",
+       "detail": "No hard-deny rule covers SCHEDULE_PICKUP."
+      },
+      {
+       "id": "ownership",
+       "label": "Belongs to this merchant",
+       "status": "PASS",
+       "detail": "Device D50004 belongs to Gupta General Store (M1004)."
+      },
+      {
+       "id": "evidence_binding",
+       "label": "Bound to verdict evidence",
+       "status": "SKIP",
+       "detail": "SCHEDULE_PICKUP is not a refund, so it is not bound to ledger damages."
+      },
+      {
+       "id": "amount_recompute",
+       "label": "Amount recomputed from ledger",
+       "status": "SKIP",
+       "detail": "SCHEDULE_PICKUP moves no money."
+      },
+      {
+       "id": "idempotency",
+       "label": "Not already done",
+       "status": "PASS",
+       "detail": "No identical SCHEDULE_PICKUP has been executed before."
+      },
+      {
+       "id": "preconditions",
+       "label": "Preconditions hold",
+       "status": "PASS",
+       "detail": "Device D50004 is RETURN_REQUESTED and has no open pickup, so a pickup can be booked."
+      },
+      {
+       "id": "limits",
+       "label": "Within auto-approval limits",
+       "status": "SKIP",
+       "detail": "SCHEDULE_PICKUP moves no money."
+      },
+      {
+       "id": "injection",
+       "label": "Prompt-injection guard",
+       "status": "PASS",
+       "detail": "No manipulation signals in the complaint (injection score 0.04)."
+      },
+      {
+       "id": "confidence",
+       "label": "Verdict confidence",
+       "status": "SKIP",
+       "detail": "SCHEDULE_PICKUP moves no money, so verdict confidence does not gate it."
+      }
+     ],
+     "idempotency_key": "a18ebd29739a0092"
+    }
+   ]
+  }
+ },
+ {
+  "seq": 125,
+  "case_id": "CASE-0004",
+  "type": "node",
+  "at": "2026-11-14T01:21:33.730",
+  "data": {
+   "node": "firewall",
+   "agent": "Action Firewall",
+   "status": "end",
+   "ms": 5,
+   "summary": "ALLOW: SCHEDULE_PICKUP→ALLOW"
+  }
+ },
+ {
+  "seq": 126,
+  "case_id": "CASE-0004",
+  "type": "node",
+  "at": "2026-11-14T01:21:33.740",
+  "data": {
+   "node": "execute",
+   "agent": "Executor",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 127,
+  "case_id": "CASE-0004",
+  "type": "execution",
+  "at": "2026-11-14T01:21:33.741",
+  "data": {
+   "results": [
+    {
+     "action_id": 95,
+     "action_type": "SCHEDULE_PICKUP",
+     "status": "EXECUTED",
+     "amount_paise": 0,
+     "detail": "Booked pickup PK-261114-M0095 for device D50004 on 16 Nov 2026 and sent the merchant an SMS.",
+     "ledger_entry_ids": []
+    }
+   ]
+  }
+ },
+ {
+  "seq": 128,
+  "case_id": "CASE-0004",
+  "type": "node",
+  "at": "2026-11-14T01:21:33.741",
+  "data": {
+   "node": "execute",
+   "agent": "Executor",
+   "status": "end",
+   "ms": 9,
+   "summary": "1 executed"
+  }
+ },
+ {
+  "seq": 129,
+  "case_id": "CASE-0004",
+  "type": "node",
+  "at": "2026-11-14T01:21:33.742",
+  "data": {
+   "node": "respond",
+   "agent": "Communicator Agent",
+   "status": "start"
+  }
+ },
+ {
+  "seq": 130,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.742",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "reasoning",
+   "delta": "Writing to the merchant in Hindi: facts from the case file only; executed vs pending kept apart."
+  }
+ },
+ {
+  "seq": 131,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.805",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "नमस्ते "
+  }
+ },
+ {
+  "seq": 132,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.820",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "सुरेश "
+  }
+ },
+ {
+  "seq": 133,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.835",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "गुप्ता "
+  }
+ },
+ {
+  "seq": 134,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.850",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "जी, "
+  }
+ },
+ {
+  "seq": 135,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.866",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "हमने "
+  }
+ },
+ {
+  "seq": 136,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.882",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "जाँच "
+  }
+ },
+ {
+  "seq": 137,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.897",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "की। "
+  }
+ },
+ {
+  "seq": 138,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.913",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "आपके "
+  }
+ },
+ {
+  "seq": 139,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.928",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "साउंडबॉक्स "
+  }
+ },
+ {
+  "seq": 140,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.944",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "का "
+  }
+ },
+ {
+  "seq": 141,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.960",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "पिकअप "
+  }
+ },
+ {
+  "seq": 142,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.975",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "2 बार "
+  }
+ },
+ {
+  "seq": 143,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:33.991",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "नहीं "
+  }
+ },
+ {
+  "seq": 144,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.007",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "हो "
+  }
+ },
+ {
+  "seq": 145,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.022",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "पाया "
+  }
+ },
+ {
+  "seq": 146,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.038",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "(6 "
+  }
+ },
+ {
+  "seq": 147,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.053",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "अक्टूबर, "
+  }
+ },
+ {
+  "seq": 148,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.069",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "9 अक्टूबर)। "
+  }
+ },
+ {
+  "seq": 149,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.085",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "उसके "
+  }
+ },
+ {
+  "seq": 150,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.101",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "बाद "
+  }
+ },
+ {
+  "seq": 151,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.116",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "भी "
+  }
+ },
+ {
+  "seq": 152,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.131",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "इस "
+  }
+ },
+ {
+  "seq": 153,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.147",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "डिवाइस "
+  }
+ },
+ {
+  "seq": 154,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.162",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "से "
+  }
+ },
+ {
+  "seq": 155,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.178",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "41 "
+  }
+ },
+ {
+  "seq": 156,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.194",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "पेमेंट "
+  }
+ },
+ {
+  "seq": 157,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.210",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "आए, "
+  }
+ },
+ {
+  "seq": 158,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.226",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "आख़िरी "
+  }
+ },
+ {
+  "seq": 159,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.241",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "13 "
+  }
+ },
+ {
+  "seq": 160,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.258",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "नवंबर "
+  }
+ },
+ {
+  "seq": 161,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.274",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "को। "
+  }
+ },
+ {
+  "seq": 162,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.288",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "डिवाइस "
+  }
+ },
+ {
+  "seq": 163,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.304",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "अभी "
+  }
+ },
+ {
+  "seq": 164,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.319",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "आपके "
+  }
+ },
+ {
+  "seq": 165,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.335",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "पास "
+  }
+ },
+ {
+  "seq": 166,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.351",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "ही "
+  }
+ },
+ {
+  "seq": 167,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.367",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "है, "
+  }
+ },
+ {
+  "seq": 168,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.383",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "इसलिए "
+  }
+ },
+ {
+  "seq": 169,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.398",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "किराया "
+  }
+ },
+ {
+  "seq": 170,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.414",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "सही "
+  }
+ },
+ {
+  "seq": 171,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.430",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "कटा "
+  }
+ },
+ {
+  "seq": 172,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.446",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "है। "
+  }
+ },
+ {
+  "seq": 173,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.461",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "हमने "
+  }
+ },
+ {
+  "seq": 174,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.476",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "नया "
+  }
+ },
+ {
+  "seq": 175,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.492",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "पिकअप "
+  }
+ },
+ {
+  "seq": 176,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.508",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "16 "
+  }
+ },
+ {
+  "seq": 177,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.523",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "नवंबर "
+  }
+ },
+ {
+  "seq": 178,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.539",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "के "
+  }
+ },
+ {
+  "seq": 179,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.554",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "लिए "
+  }
+ },
+ {
+  "seq": 180,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.569",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "बुक "
+  }
+ },
+ {
+  "seq": 181,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.585",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "कर "
+  }
+ },
+ {
+  "seq": 182,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.600",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "दिया "
+  }
+ },
+ {
+  "seq": 183,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.616",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "है। "
+  }
+ },
+ {
+  "seq": 184,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.631",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "केस "
+  }
+ },
+ {
+  "seq": 185,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.647",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "नंबर: "
+  }
+ },
+ {
+  "seq": 186,
+  "case_id": "CASE-0004",
+  "type": "llm",
+  "at": "2026-11-14T01:21:34.662",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "kind": "content",
+   "delta": "CASE-0004"
+  }
+ },
+ {
+  "seq": 187,
+  "case_id": "CASE-0004",
+  "type": "llm_done",
+  "at": "2026-11-14T01:21:34.678",
+  "data": {
+   "node": "respond",
+   "role": "writer",
+   "provider": "mock",
+   "model": "scripted",
+   "ms": 935,
+   "text": "नमस्ते सुरेश गुप्ता जी, हमने जाँच की। आपके साउंडबॉक्स का पिकअप 2 बार नहीं हो पाया (6 अक्टूबर, 9 अक्टूबर)। उसके बाद भी इस डिवाइस से 41 पेमेंट आए, आख़िरी 13 नवंबर को। डिवाइस अभी आपके पास ही है, इसलिए किराया सही कटा है। हमने नया पिकअप 16 नवंबर के लिए बुक कर दिया है। केस नंबर: CASE-0004",
+   "usage": null,
+   "live": false,
+   "fallback": null
+  }
+ },
+ {
+  "seq": 188,
+  "case_id": "CASE-0004",
+  "type": "message",
+  "at": "2026-11-14T01:21:34.678",
+  "data": {
+   "role": "munim",
+   "text": "नमस्ते सुरेश गुप्ता जी, हमने जाँच की। आपके साउंडबॉक्स का पिकअप 2 बार नहीं हो पाया (6 अक्टूबर, 9 अक्टूबर)। उसके बाद भी इस डिवाइस से 41 पेमेंट आए, आख़िरी 13 नवंबर को। डिवाइस अभी आपके पास ही है, इसलिए किराया सही कटा है। हमने नया पिकअप 16 नवंबर के लिए बुक कर दिया है। केस नंबर: CASE-0004",
+   "en": "Hello Suresh Gupta ji. We have checked your records. The pickup of your Soundbox failed 2 times (6 Oct, 9 Oct). Since then the device has taken 41 payments, the last on 13 Nov. As the device is still with you, the rent is correct. We have booked a new pickup for 16 Nov. Case ref: CASE-0004",
+   "language": "hi",
+   "final": true
+  }
+ },
+ {
+  "seq": 189,
+  "case_id": "CASE-0004",
+  "type": "node",
+  "at": "2026-11-14T01:21:34.678",
+  "data": {
+   "node": "sweep",
+   "agent": "Detective",
+   "status": "skip",
+   "summary": "no fleet-wide fault to sweep for"
+  }
+ },
+ {
+  "seq": 190,
+  "case_id": "CASE-0004",
+  "type": "node",
+  "at": "2026-11-14T01:21:34.678",
+  "data": {
+   "node": "respond",
+   "agent": "Communicator Agent",
+   "status": "end",
+   "ms": 936,
+   "summary": "58 words · hi · mock"
+  }
+ },
+ {
+  "seq": 191,
+  "case_id": "CASE-0004",
+  "type": "done",
+  "at": "2026-11-14T01:21:34.690",
+  "data": {
+   "case_id": "CASE-0004",
+   "status": "RESOLVED",
+   "outcome": "NO_FAULT",
+   "decision": "ALLOW",
+   "ms": 3235
+  }
+ },
+ {
+  "seq": 192,
+  "case_id": "CASE-0004",
+  "type": "message",
+  "at": "2026-11-14T01:21:34.699",
+  "data": {
+   "role": "team",
+   "text": "Can we refund them anyway?",
+   "en": "Can we refund them anyway?",
+   "language": "en",
+   "final": true,
+   "kind": "chat"
+  }
+ },
+ {
+  "seq": 193,
+  "case_id": "CASE-0004",
+  "type": "llm_done",
+  "at": "2026-11-14T01:21:34.699",
+  "data": {
+   "node": "chat",
+   "role": "reasoner",
+   "provider": "mock",
+   "model": "scripted",
+   "ms": 0,
+   "text": "{\"question_en\": \"Can we refund them anyway?\", \"answer\": \"Chat can't refund or change anything. The decision stands: No refund due: D50004 was never picked up and has taken 41 payments since the 03 Oct 2026 return request, so the rent is legitimate; a new pickup can be booked.\", \"reply\": \"\", \"sources\": [], \"new_case\": false}",
+   "usage": null,
+   "live": false,
+   "fallback": null
+  }
+ },
+ {
+  "seq": 194,
+  "case_id": "CASE-0004",
+  "type": "message",
+  "at": "2026-11-14T01:21:34.699",
+  "data": {
+   "role": "munim",
+   "text": "Chat can't refund or change anything. The decision stands: No refund due: D50004 was never picked up and has taken 41 payments since the 03 Oct 2026 return request, so the rent is legitimate; a new pickup can be booked.",
+   "en": "Chat can't refund or change anything. The decision stands: No refund due: D50004 was never picked up and has taken 41 payments since the 03 Oct 2026 return request, so the rent is legitimate; a new pickup can be booked.",
+   "language": "en",
+   "final": true,
+   "kind": "chat",
+   "sources": [],
+   "new_case": false
+  }
+ }
+]
