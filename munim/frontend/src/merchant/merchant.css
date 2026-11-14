@@ -9,7 +9,7 @@
 .ph-head { display: flex; align-items: center; gap: 10px; padding: 16px 14px 12px; border-bottom: 1px solid var(--line); background: #fff; }
 .ph-head .who { min-width: 0; flex: 1; }
 .ph-head b { display: block; font-size: 15px; color: var(--brand); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.ph-head span { display: block; font-size: 12px; color: var(--ink2); }
+.ph-head .who span { display: block; font-size: 12px; color: var(--ink2); }
 .ph-icon { border: 1px solid var(--line); background: #fff; border-radius: 10px; padding: 8px; display: grid; place-items: center; color: var(--ink2); }
 .ph-icon:hover:not(:disabled) { color: var(--ink); border-color: var(--line2); }
 .ph-icon.rec { background: var(--badbg); border-color: var(--badline); color: var(--bad); }

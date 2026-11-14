@@ -284,7 +284,9 @@ function HomeScreen({ home, onAsk, onTab }: { home: Home | null; onAsk: (t: stri
       <section className="hero">
         <span>Payments · {home.payments.label}</span>
         <b>{home.payments.total}</b>
-        <small>{home.payments.count} payments</small>
+        <small>
+          {home.payments.count} payment{home.payments.count === 1 ? "" : "s"}
+        </small>
       </section>
 
       {home.holds.map((h) => (
@@ -326,7 +328,7 @@ function HomeScreen({ home, onAsk, onTab }: { home: Home | null; onAsk: (t: stri
           </div>
           <p>
             {dev.status}
-            {dev.events.length ? ` · ${dev.events[dev.events.length - 1].what} ${dev.events[dev.events.length - 1].date}` : ""}
+            {dev.events.length ? ` · ${dev.events[0].what} ${dev.events[0].date}` : ""}
           </p>
           {pickup && (
             <p className="muted">
@@ -434,7 +436,9 @@ function Chat({ shop, home, items, cards, voice, onAsk }: { shop: Shop; home: Ho
   };
   const mic = useVoiceInput((t) => setText(t));
   useEffect(() => {
-    endRef.current?.scrollIntoView({ block: "end" });
+    // scroll the phone body (not the window) so the sticky composer never covers the newest message
+    const body = endRef.current?.closest(".ph-body");
+    if (body) body.scrollTop = body.scrollHeight;
   }, [items, cards, busy]);
 
   return (
