@@ -6,7 +6,7 @@ About 5 minutes for the main track, plus optional extras. Read *Live vs scripted
 
 ```powershell
 cd munim\backend
-.venv\Scripts\python.exe -m pytest -q                      # 244 tests, offline, no credits
+.venv\Scripts\python.exe -m pytest -q                      # 252 tests, offline, no credits
 .venv\Scripts\python.exe scripts\check_providers.py --ping # one tiny call per live role
 cd ..
 .\run.ps1 -Reset -Build                                    # fresh DB + fresh UI, http://127.0.0.1:8000
@@ -20,12 +20,13 @@ cd ..
 
 This screen is for the **support team**. The teammate reads English; the merchant's language appears only in their words and in replies going to them. The shop owner has a separate view: see [Merchant app](#merchant-app-about-2-min).
 
-1. **Start:** "What did Ramesh say?" The teammate pastes or speaks the merchant's complaint, in any Indian language, or clicks a **Try** chip.
-2. **Munim works:** the complaint shows with an English translation underneath. The right panel shows **Munim is working · Step N of 12**.
-3. **Munim reports (English):** the verdict in one line, then a result card, for example "₹998 refunded · Rental stopped". The reply already sent to the merchant is folded under **Sent to Ramesh · Hindi** (**Read** shows English and Hindi; **Listen** plays it).
-4. **How Munim decided:** opens the panel with **Steps** (12 steps), **Proof** (money trail, the merchant's claims, the cause) and **Decision** (AI proposed → rules said → result, plus 11 safety checks).
-5. **Chat on:** the teammate asks in English, or pastes the merchant's own words. Munim answers in English. If the words are the merchant's, it also drafts **Reply for Ramesh · Hindi** (**Copy**, **Listen**).
-6. **Needs you** (sidebar): fixes over the auto-limit, the fleet-wide batch fix, and cases handed to other teams.
+1. **Inbox** (the landing page): every complaint with its source (call, ticket, email, app), language, time and status (**New**, **Needs approval**, **Reply ready**, **Sent**, **Resolved**…). Click a row. A new one shows what the merchant said, plus **Continue with Munim**. One already worked on opens its chat.
+2. **Start without the Inbox:** **New chat**. The teammate pastes or speaks the complaint in any Indian language, or clicks a **Try** chip.
+3. **Munim works:** the complaint shows with an English translation underneath. The right panel shows **Munim is working · Step N of 12**.
+4. **Munim reports (English):** the verdict in one line, then a result card, for example "₹998 refunded · Rental stopped". Under it is the reply as a **draft**: **Reply to Ramesh · Hindi · Not sent**, with English and Hindi. **Nothing reaches the merchant until a teammate presses Send.** **Edit** changes the text first. After Send it folds to **Sent to Ramesh · Hindi · by ops.lead**.
+5. **How Munim decided:** opens the panel with **Steps** (12 steps), **Proof** (money trail, the merchant's claims, the cause) and **Decision** (AI proposed → rules said → result, plus 11 safety checks). **Click any step** to see what it did: sources and tables read, rows linked, the SQL it ran, the causes tested, the checks, and which API or model was used.
+6. **Chat on:** the teammate asks in English, or pastes the merchant's own words. Munim answers in English. If the words are the merchant's, it also drafts **Reply for Ramesh · Hindi** (**Copy**, **Listen**).
+7. **Needs you** (sidebar): fixes over the auto-limit, the batch fix for other merchants with the same bug, and cases handed to other teams. A batch fix is **reviewed per merchant**: **Review N merchants**, then **Proof** on any shop (same cause, its subscriptions, the ledger rows being refunded). Untick any shop; only the ticked ones get the fix.
 
 The purple sparkle icon means AI, which can't move money. The grey code icon means plain code.
 
@@ -49,11 +50,11 @@ With real keys, Gemini usually proposes the *right* action, so the safety rules 
 > "AI that answers is everywhere. Munim is AI that's allowed to fix money, because code has the final say."
 
 ### 1. S1: Hindi, rent after return (90 s, live)
-Click the chip **Returned the Soundbox, still charged**. While the panel fills:
+On the **Inbox**, click **Sharma Kirana Store** (Call, Hindi, New), then **Continue with Munim**. (Or **New chat** → chip **Returned the Soundbox, still charged**.) While the panel fills:
 - "The complaint is in Hindi. Underneath is what Munim understood."
 - Steps 3–7 (**Investigate**, plain code): "It follows the money: ledger, mandate, subscription, device, pickup. It checks what the merchant said. He said three months; that's *partly* true."
-- Munim reports in English. Click **Read** on **Sent to Ramesh · Hindi** to show the Hindi reply with its English; **Listen** plays it (Sarvam TTS).
-- Open **How Munim decided → Proof**: pickup completed 12 Sep, two debits after it are flagged WRONG. **Decision**: 11 safety checks, ₹998 recomputed from the ledger.
+- Munim reports in English. The Hindi reply waits as a draft, **Not sent**. "The AI never talks to the merchant on its own." Press **Send to Ramesh**; **Listen** plays it (Sarvam TTS).
+- Open **How Munim decided → Steps** and click **Followed the money**: the sources read, the tables, the 15 rows linked and the 3 disputed cuts. **Proof**: pickup completed 12 Sep, two debits after it are flagged WRONG. **Decision**: 11 safety checks, ₹998 recomputed from the ledger.
 - Leave the line **"Same bug found in 36 more merchants · ₹32,029"** for the close.
 
 ### 2. "What if the model is wrong?" (40 s, replay)
@@ -65,7 +66,7 @@ Open `http://127.0.0.1:8000/?replay=s1_zombie_rent`. It plays in about 4 s (Spac
 ### 3. S2: Telugu, billed twice, human in the loop (60 s, live)
 Click **New chat**, then the chip **Charged for 2 devices**.
 - Two rental plans on one Soundbox, ₹2,495 over 5 months. Status: **Waiting for approval**, because ₹2,495 is over the ₹2,000 auto-limit.
-- Sidebar → **Needs you** → **Approve**. It executes and Munim sends Lakshmi a Telugu update (**Update sent to Lakshmi · Telugu**).
+- Sidebar → **Needs you** → **Approve**. It executes and Munim drafts a Telugu update (**Update for Lakshmi · Telugu · Not sent**). Open the chat and press **Send to Lakshmi**.
 - Optional: click **Merchant: when's my money?** (Lakshmi's words, in Telugu). Munim answers the teammate in English and drafts **Reply for Lakshmi · Telugu** to copy.
 - "Approving twice is impossible: there's a unique idempotency key on the action and a unique `refund_of` on every ledger row."
 
@@ -80,7 +81,7 @@ Click **New chat**, then the chip **Charged for 2 devices**.
 - If asked "what if it had fallen for it?", open `?replay=s7_prompt_injection`: the scripted model proposes ₹50,000 and **Decision** shows it **blocked**.
 
 ### 6. Close: fleet sweep (20 s)
-Go back to the S1 chat, click **Review** on the sweep line (or open **Needs you**), then **Approve all**: 72 actions for 36 merchants, each still passing the safety rules.
+Go back to the S1 chat, click **Review** on the sweep line (or open **Needs you**), then **Review 36 merchants**. Open **Proof** on one shop: same cause, its subscriptions, the ledger rows being paid back. "A person checks before anything moves." Then **Approve 36 merchants · ₹32,029**: 72 actions, each still passing the safety rules. (Untick a shop and only the rest are fixed; the unticked ones stay in **Needs you**.)
 > "One merchant's complaint fixed 37 merchants. AI proposes. Code decides."
 
 ## Merchant app (about 2 min)
@@ -126,7 +127,7 @@ Replays work offline, with no backend. Add `&speed=2` (or `0.5`) to change the p
 `s5_risk_hold`, `s6_kyc_hold`, `s7_prompt_injection`, `s8_cold_case` (all scripted), and **`s1_live_gemini_sarvam`**, a real recorded
 run with Gemini, Sarvam-105b and Prism. With no backend running, the start-screen chips play these recordings. In a replay:
 - Chat is limited to the recorded follow-ups.
-- **Approve all** on the sweep is simulated.
+- **Send** on a reply and the batch-fix approval are simulated (marked "simulated"). The batch review lists the shops, but full ledger rows need the live backend.
 - Single approvals need the live backend.
 
 ## Credits per live case
@@ -141,5 +142,6 @@ run with Gemini, Sarvam-105b and Prism. With no backend running, the start-scree
 - **"Isn't this just text-to-SQL?"** No. SQL is the *last* resort (S8). Most cases use a deterministic money trail, claim checks and known causes. The verdict and the rupee amount are computed from rows. The LLM reads, explains and proposes, and it has no write tools.
 - **"What stops a bad refund?"** The safety rules recompute the amount, bind it to the verdict's ledger rows, and check ownership, preconditions, limits and hard denies (RISK holds). On top of that, the DB has UNIQUE `refund_of` and an idempotency key.
 - **"Why Sarvam?"** Replies and voice in Indian languages. Prism also gives calibrated probabilities over the causes plus an injection score in about 300 ms.
+- **"Can the AI message the merchant on its own?"** Not from the team side. Every reply and update is a draft on the case until a teammate presses **Send** (who sent it and whether it was edited are recorded). The merchant app is the exception: the shop owner is chatting with Munim directly, and those replies are checked in code before they are shown.
 - **"Can a merchant see another shop, or move money?"** No. The shop comes from the signed login token, never from the chat. The merchant view reads only that shop's rows and allowed fields (risk reasons become "routine safety review"). Any money action from an app case waits for a teammate. Every reply is checked in code before it is shown. Tests cover a forged token, another shop's case, risk words and refunds.
 - **"Is the data real?"** No. All merchants, phones and amounts are fictional seed data: 8 scenarios plus 180 background merchants.

@@ -133,10 +133,10 @@
         <li><b>Find the cause</b><span><em class="code">Code</em> tests known causes; <em class="ai">AI</em> writes read-only SQL</span></li>
         <li><b>Propose, check</b><span><em class="ai">AI</em> proposes a fix; <em class="code">code</em> checks it against 11 rules</span></li>
         <li><b>Act</b><span><em class="code">Code</em> runs fixes; a <em class="hum">teammate</em> approves refunds over ₹2,000</span></li>
-        <li><b>Reply, sweep</b><span><em class="ai">AI</em> replies in their language; <em class="code">code</em> finds others hit</span></li>
+        <li><b>Reply, sweep</b><span><em class="ai">AI</em> drafts the reply, a <em class="hum">teammate</em> sends it; <em class="code">code</em> finds others hit</span></li>
       </ol>
       <div class="example"><b>Example (fictional):</b> Lakshmi Tiffins writes in Telugu. Two rent plans bill one Soundbox: 5 extra debits, ₹2,495. The extra plan is cancelled, the refund waits for a teammate, and the sweep finds 6 more merchants (₹8,681). Live models: 11 s.</div>
-      <p class="rule"><em class="ai">AI</em> proposes, <em class="code">code</em> decides, a <em class="hum">teammate</em> approves larger amounts.</p>
+      <p class="rule"><em class="ai">AI</em> proposes, <em class="code">code</em> decides, a <em class="hum">teammate</em> approves larger amounts and sends every reply.</p>
     </section>
   </div>
 
@@ -196,16 +196,16 @@
     </section>
     <section class="card">
       <h2>Tested</h2>
-      <div class="big">244 <span>automated tests, no live AI calls</span></div>
+      <div class="big">252 <span>automated tests, no live AI calls</span></div>
       <p>Merchant side: forged token, another shop's case, risk words never shown, refunds never run alone, pickup self-serves, rate limit.</p>
     </section>
     <section class="card">
       <h2>What's next</h2>
       <ul>
         <li>Connect real APIs via sources folder</li>
-        <li>One inbox: calls, emails, tickets</li>
-        <li>Draft replies to send or edit</li>
+        <li>Live intake from calls, email, tickets</li>
         <li>Real OTP and team roles</li>
+        <li>Pilot with one support queue</li>
       </ul>
     </section>
   </div>
