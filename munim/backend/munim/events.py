@@ -20,6 +20,7 @@ class EventType(StrEnum):
     INTAKE = "intake"            # IntakeResult
     HUNCH = "hunch"              # Hunch
     TRAIL = "trail"              # Trail
+    SOURCES = "sources"          # SourcesReport {sources:[SourceHit], problems:[str]} (after trail; backend/sources/)
     STATEMENTS = "statements"    # {checks: [StatementCheck]}
     SUSPECT = "suspect"          # SuspectResult (one event per suspect, in test order)
     PROBE = "probe"              # Probe (improvise only)

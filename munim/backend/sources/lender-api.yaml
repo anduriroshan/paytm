@@ -1,0 +1,17 @@
+# Example outside source: a partner lender's REST API. Turned off: there is no real lender behind this demo.
+# To use it: set the real URL, put LENDER_API_KEY in backend/.env (never in this file), and set enabled: true.
+id: lender-api
+name: Partner lender API (example)
+kind: api
+enabled: false
+holds: Loan accounts and instalment status as the lending partner sees them.
+when:
+  topics: [loan]
+  words: [loan, edi, instalment, emi]
+api:
+  url: https://lender.example.com/v1/merchants/{merchant_id}/loans
+  headers:
+    Authorization: Bearer ${LENDER_API_KEY}
+  rows_at: loans
+  merchant_column: merchant_id
+max_rows: 20

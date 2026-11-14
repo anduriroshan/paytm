@@ -68,6 +68,7 @@ START ─┬─ intake (LLM) ──┐
   - `ledger_entries.refund_of UNIQUE` means no row can ever be refunded twice.
   - `actions.idempotency_key UNIQUE` stops the same action executing twice.
   - Probes run on a read-only connection with an authorizer allowlist, are scoped to the merchant, and have time and row caps.
+- **Where Munim looks:** `backend/sources/*.yaml`. Each file names a system, what it holds, when to reach it (topic, claim or words), and the fixes it carries out. Add a file to connect a new system, or set `enabled: false` to disconnect one: no restart needed. The app's **Sources** page lists them.
 - **No MCP servers needed.** Everything runs locally, and the LLM providers use plain HTTPS.
 
 | path | what |
@@ -78,6 +79,8 @@ START ─┬─ intake (LLM) ──┐
 | `backend/munim/firewall/` | Action Firewall policy (11 checks) |
 | `backend/munim/actions/` | executor, approvals, fleet sweep |
 | `backend/munim/db/` | schema, demo seed (8 scenarios + 180 background merchants) |
+| `backend/sources/` | **connected sources**: one YAML file per system Munim can reach (database, CSV/JSON file, API), and when. See its README |
+| `backend/munim/sources/` | loads that folder, routes a complaint to sources, reads files and APIs |
 | `frontend/` | the live investigation UI |
 | `docs/CONTRACTS.md` | the module contracts · `docs/DEMO.md`: the stage script |
 
@@ -86,6 +89,6 @@ START ─┬─ intake (LLM) ──┐
 cd backend
 .venv\Scripts\python.exe -m pytest -q
 ```
-The tests make no network calls and spend no credits. They cover every scenario end to end through the real graph, the firewall rules (correction, double refund, RISK-hold hard deny, injection), the probe sandbox, and the LLM fallbacks.
+The tests make no network calls and spend no credits. They cover every scenario end to end through the real graph, the firewall rules (correction, double refund, RISK-hold hard deny, injection), the probe sandbox, connected sources (routing, broken files, API keys, a turned-off source), and the LLM fallbacks.
 
 All demo data is fictional.

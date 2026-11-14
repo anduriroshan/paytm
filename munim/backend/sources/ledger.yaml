@@ -1,0 +1,23 @@
+# Built-in: the money ledger in Munim's demo database. Munim always reads it.
+id: ledger
+name: Money ledger
+kind: database
+holds: Every rupee in or out of the merchant's account (rent, loan instalments, payouts, refunds, chargebacks), the merchant profile and auto-debit mandates.
+when:
+  always: true
+actions: [REFUND_DEBITS]
+tables:
+  - name: merchants
+    about: |
+      merchants(id 'M1008', business_name, owner_name, phone(masked), city, language, category, onboarded_at, status)
+  - name: mandates
+    about: |
+      mandates(id, merchant_id, purpose SUBSCRIPTION|LOAN_EDI, subscription_id, loan_id, umrn, max_amount_paise,
+               status ACTIVE|REVOKED, created_at)
+  - name: ledger_entries
+    about: |
+      ledger_entries(id, merchant_id, txn_ref, entry_type, direction DEBIT|CREDIT, amount_paise (always > 0),
+                     status SUCCESS|FAILED|REVERSED, source_type, source_id, mandate_id, value_date, posted_at, narration,
+                     refund_of -> ledger_entries.id)           -- every rupee in or out; narration = passbook text
+          entry_type: RENT_DEBIT | EDI_DEBIT | SETTLEMENT_CREDIT | REFUND_CREDIT | CHARGEBACK_DEBIT
+          source_type/source_id: subscription/SUB-..., loan/LN-..., settlement/STL-..., chargeback/CB-..., action/<id>

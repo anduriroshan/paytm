@@ -18,6 +18,7 @@ import {
   type Probe,
   type Proposal,
   type ReplyDraft,
+  type SourcesReport,
   type StatementCheck,
   type SuspectResult,
   type SweepResult,
@@ -96,6 +97,8 @@ export interface CaseView {
   intake: IntakeResult | null;
   hunch: Hunch | null;
   trail: Trail | null;
+  /** Connected sources: where Munim looked for this case (older recordings have none). */
+  sources: SourcesReport | null;
   statements: StatementCheck[] | null;
   suspects: SuspectResult[];
   probes: Probe[];
@@ -135,6 +138,7 @@ export function initialCaseView(): CaseView {
     intake: null,
     hunch: null,
     trail: null,
+    sources: null,
     statements: null,
     suspects: [],
     probes: [],
@@ -483,6 +487,8 @@ export function applyEvent(state: CaseView, ev: MunimEvent | null | undefined): 
       return { ...s, hunch: { ...(data as unknown as Hunch), probabilities: isObj(data.probabilities) ? (data.probabilities as Record<string, number>) : {} } };
     case "trail":
       return { ...s, trail: data as unknown as Trail };
+    case "sources":
+      return { ...s, sources: { sources: Array.isArray(data.sources) ? (data.sources as SourcesReport["sources"]).filter(isObj) : [], problems: Array.isArray(data.problems) ? (data.problems as string[]) : [] } };
     case "statements":
       return { ...s, statements: Array.isArray(data.checks) ? (data.checks as StatementCheck[]) : [] };
     case "suspect": {

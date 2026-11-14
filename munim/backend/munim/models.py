@@ -173,8 +173,29 @@ class ProbePlan(BaseModel):
     evidence_ledger_ids: list[int] = []
 
 
+class SourceHit(BaseModel):
+    """One connected source (a file in backend/sources/) and what Munim did with it for this case."""
+    id: str                                      # 'devices', 'courier-scans'
+    name: str                                    # 'Devices and rent'
+    kind: Literal["database", "file", "api"]
+    reached: bool                                # its `when` matched this complaint
+    why: list[str] = []                          # 'always', 'rent complaint', 'claim: device returned', 'word: pickup'
+    status: Literal["ok", "error", "not_needed"] = "ok"
+    records: int = 0                             # database: records of its tables on the money trail; file/api: rows read
+    tables: list[str] = []                       # database sources
+    columns: list[str] = []                      # file/api: columns of `rows`
+    rows: list[list[Any]] = []                   # file/api: the merchant's rows (capped by max_rows)
+    error: str | None = None
+    ms: int | None = None
+
+
+class SourcesReport(BaseModel):
+    sources: list[SourceHit] = []                # enabled sources, reached first
+    problems: list[str] = []                     # source files that could not be loaded
+
+
 class Outcome(StrEnum):
-    REFUND_DUE = "REFUND_DUE"                    # FAULT suspect matched, money owed back
+    REFUND_DUE = "REFUND_DUE"                   # FAULT suspect matched, money owed back
     NO_FAULT = "NO_FAULT"                        # INNOCENT suspect matched: charges are legitimate
     HOLD_EXPLAINED = "HOLD_EXPLAINED"            # HOLD suspect matched
     IMPROVISED = "IMPROVISED"                    # no catalogued suspect; probes found an explanation → human confirms

@@ -1,0 +1,22 @@
+# Built-in: customer payments, daily payouts (settlements) and chargebacks in Munim's demo database.
+id: payouts
+name: Payments and payouts
+kind: database
+holds: Customer payments with their fees, the daily payout (settlement) they were paid out in, and chargebacks.
+when:
+  topics: [settlement]
+  claims: [settlement_short, settlement_not_received]
+  words: [settlement, payout, chargeback]
+tables:
+  - name: settlements
+    about: |
+      settlements(id 'STL-1008-20261113', merchant_id, batch_date, gross_paise, deductions_paise, net_paise,
+                  status SETTLED|HELD|RELEASED, utr, settled_at)   -- daily payout; net = gross - deductions
+  - name: payments
+    about: |
+      payments(id, merchant_id, device_id, mode UPI|CARD, amount_paise, mdr_paise, status SUCCESS|FAILED, paid_at,
+               settlement_id -> settlements)                   -- customer payments; prove a device is still in use
+  - name: chargebacks
+    about: |
+      chargebacks(id 'CB-...', merchant_id, payment_id -> payments, amount_paise, reason, status OPEN|DEBITED|WON|LOST,
+                  raised_at, debited_at)

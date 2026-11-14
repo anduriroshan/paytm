@@ -1,0 +1,17 @@
+# Built-in: merchant loans and their daily instalment (EDI) attempts in Munim's demo database.
+id: loans
+name: Loans and instalments
+kind: database
+holds: Merchant loans from partner lenders and every daily instalment (EDI) attempt, including timeouts.
+when:
+  topics: [loan]
+  words: [loan, edi, instalment, installment, emi]
+tables:
+  - name: loans
+    about: |
+      loans(id 'LN-1003', merchant_id, lender, principal_paise, edi_amount_paise (daily instalment), tenure_days,
+            status ACTIVE|CLOSED, disbursed_at)
+  - name: edi_attempts
+    about: |
+      edi_attempts(id, loan_id -> loans, due_date, attempt_no, gateway_ref, status SUCCESS|FAILED|TIMEOUT, responded_at,
+                   ledger_entry_id -> ledger_entries)          -- no merchant_id; a TIMEOUT can still have debited

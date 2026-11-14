@@ -709,6 +709,22 @@ def _confidence(ctx: _Ctx, w: _Work) -> FirewallCheck:
 
 # ───────────────────────────── orchestration ─────────────────────────────
 
+def _source_off(action: ActionType) -> str | None:
+    """Why this action can't be carried out because its system is turned off in backend/sources/; None = available.
+    Fail-closed: if the sources can't be read, every action except ESCALATE / NO_ACTION is refused."""
+    if action in (ActionType.ESCALATE, ActionType.NO_ACTION):
+        return None
+    try:
+        from munim.sources import current
+        reg = current()
+        owner = reg.owner(action)
+    except Exception:  # noqa: BLE001
+        return "the connected sources (backend/sources/) could not be read"
+    if owner is None or owner.enabled:
+        return None
+    return f"the system that carries it out, {owner.name} ({reg.files.get(owner.id, owner.id)}), is turned off"
+
+
 def _evaluate_one(ctx: _Ctx, idx: int, pa: Any) -> ActionVerdict:
     w = _Work.from_proposed(pa)
     checks: list[FirewallCheck] = []
@@ -724,6 +740,9 @@ def _evaluate_one(ctx: _Ctx, idx: int, pa: Any) -> ActionVerdict:
     elif w.type is None:
         checks.append(make_check("allowlist", "FAIL", f"'{w.raw_type[:40]}' is not an action Munim knows how to take."))
         skip_rest("Not evaluated because the action type is unknown.")
+    elif off := _source_off(w.type):
+        checks.append(make_check("allowlist", "FAIL", f"{w.type.value} is refused: {off}."))
+        skip_rest("Not evaluated because the system that carries out this action is turned off.")
     else:
         _fill_target(ctx, w)
         if w.type == ActionType.RELEASE_HOLD and w.target:

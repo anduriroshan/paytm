@@ -241,7 +241,7 @@ def case_context(run: CaseRun) -> dict[str, Any]:
         t, d = str(ev.type), ev.data if isinstance(ev.data, dict) else {}
         if t == "case":
             ctx.update(merchant=d.get("merchant") or {}, complaint_text=d.get("complaint_text"), scenario_id=d.get("scenario_id"))
-        elif t in ("intake", "trail", "verdict", "firewall", "sweep"):
+        elif t in ("intake", "trail", "sources", "verdict", "firewall", "sweep"):
             ctx[t] = d
         elif t == "proposal":
             ctx["proposal"] = d

@@ -1,0 +1,6 @@
+merchant_id,device_id,awb,scan_time,status,place,note
+M1001,D50001,DLV88123401,2026-09-12T15:40:00,PICKED_UP,Lucknow,Collected from the shop; signed by merchant
+M1001,D50001,DLV88123401,2026-09-13T21:05:00,IN_TRANSIT,Lucknow hub,
+M1001,D50001,DLV88123401,2026-09-16T12:10:00,DELIVERED,Lucknow warehouse,Received at warehouse
+M1004,D50004,DLV88456702,2026-10-06T13:20:00,ATTEMPT_FAILED,Jaipur,Shop closed
+M1004,D50004,DLV88456702,2026-10-09T16:45:00,ATTEMPT_FAILED,Jaipur,Merchant unavailable

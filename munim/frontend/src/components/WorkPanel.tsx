@@ -1,5 +1,5 @@
 // Right-hand panel. While Munim works: the 12 steps, live. Afterwards: "How Munim decided" (Steps / Proof / Decision).
-import { ArrowRight, Ban, Check, Code, Coins, Flag, Hourglass, LoaderCircle, Search, Shield, Sparkles, Users, X } from "lucide-react";
+import { ArrowRight, Ban, Check, Code, Coins, Database, FileText, Flag, Globe, Hourglass, LoaderCircle, Search, Shield, Sparkles, TriangleExclamationPoint, Users, X } from "lucide-react";
 import type { ReactNode } from "react";
 import {
   deriveCause,
@@ -14,7 +14,7 @@ import {
   type StepRow,
 } from "../lib/explain";
 import type { CaseView } from "../state/caseReducer";
-import type { ProviderSet } from "../types";
+import type { ProviderSet, SourceHit, SourcesReport } from "../types";
 
 export type HowTab = "steps" | "proof" | "decision";
 
@@ -98,12 +98,80 @@ function ClaimMark({ status }: { status: ClaimRow["status"] }) {
   }
 }
 
+export const KIND_ICON: Record<string, typeof Database> = { database: Database, file: FileText, api: Globe };
+const MAX_PREVIEW_ROWS = 5;
+const MAX_PREVIEW_COLS = 6;
+
+function cell(v: unknown): string {
+  if (v === null || v === undefined) return "";
+  return typeof v === "object" ? JSON.stringify(v) : String(v);
+}
+
+function SourceRow({ h }: { h: SourceHit }) {
+  const Icon = KIND_ICON[h.kind] ?? Database;
+  const outside = h.kind !== "database";
+  const n = h.records ?? 0;
+  const rows = (h.rows ?? []).slice(0, MAX_PREVIEW_ROWS);
+  const cols = (h.columns ?? []).slice(0, MAX_PREVIEW_COLS);
+  return (
+    <div className="looked" title={h.tables?.length ? `Tables: ${h.tables.join(", ")}` : undefined}>
+      <span className={`ic code${h.status === "error" ? " bad" : ""}`}>
+        <Icon className="ico" aria-hidden />
+      </span>
+      <div>
+        <b>{h.name}</b>
+        <span className="why">{(h.why ?? []).join(" · ")}</span>
+        {h.status === "error" && h.error && <span className="err">{h.error}</span>}
+      </div>
+      <span className="cnt">
+        {h.status === "error" ? <span className="flag bad">error</span> : outside ? `${n} row${n === 1 ? "" : "s"}` : n ? `${n} record${n === 1 ? "" : "s"}` : ""}
+      </span>
+      {outside && rows.length > 0 && cols.length > 0 && (
+        <details className="rows">
+          <summary>Show rows</summary>
+          <div className="tw">
+            <table>
+              <thead>
+                <tr>{cols.map((c) => <th key={c}>{c}</th>)}</tr>
+              </thead>
+              <tbody>
+                {rows.map((r, i) => (
+                  <tr key={i}>{cols.map((_, j) => <td key={j}>{cell(r[j])}</td>)}</tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </details>
+      )}
+    </div>
+  );
+}
+
+function WhereItLooked({ report }: { report: SourcesReport }) {
+  const reached = report.sources.filter((h) => h.reached);
+  const skipped = report.sources.filter((h) => !h.reached);
+  return (
+    <>
+      <div className="sec">Where it looked</div>
+      {reached.length ? reached.map((h) => <SourceRow key={h.id} h={h} />) : <p className="muted">No source matched this complaint.</p>}
+      {skipped.length > 0 && <div className="out">Not needed: {skipped.map((h) => h.name).join(" · ")}</div>}
+      {(report.problems ?? []).map((p) => (
+        <div className="out warn" key={p}>
+          <TriangleExclamationPoint className="ico" aria-hidden />
+          {p}
+        </div>
+      ))}
+    </>
+  );
+}
+
 function Proof({ view }: { view: CaseView }) {
   const trail = deriveTrail(view);
   const claims = deriveClaims(view);
   const cause = deriveCause(view);
   return (
     <>
+      {view.sources && <WhereItLooked report={view.sources} />}
       <div className="sec">Money trail</div>
       {trail.length ? (
         <div className="tl">

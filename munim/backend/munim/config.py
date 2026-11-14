@@ -43,4 +43,8 @@ INJECTION_THRESHOLD = float(_env("MUNIM_INJECTION_THRESHOLD", "0.8"))
 MAX_PROBES = int(_env("MUNIM_MAX_PROBES", "3"))                              # improvise: max SQL probes per case
 PROBE_ROW_LIMIT = 50
 
+# ── connected sources: one YAML file per system in backend/sources/ (see backend/sources/README.md) ──
+SOURCES_DIR = Path(_env("MUNIM_SOURCES_DIR", str(BACKEND_DIR / "sources")))
+SOURCE_TIMEOUT_S = float(_env("MUNIM_SOURCE_TIMEOUT_S", "5"))                # per outside source (file / API) per case
+
 FRONTEND_DIST = BACKEND_DIR.parent / "frontend" / "dist"

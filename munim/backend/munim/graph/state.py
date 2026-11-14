@@ -17,6 +17,7 @@ class CaseState(TypedDict, total=False):
     intake: dict[str, Any]            # IntakeResult
     hunch: dict[str, Any]             # Hunch
     trail: dict[str, Any]             # Trail
+    sources: dict[str, Any]           # SourcesReport (backend/sources/: what was reached, and why)
     statements: list[dict[str, Any]]  # [StatementCheck]
     suspects: list[dict[str, Any]]    # [SuspectResult]
     probes: list[dict[str, Any]]      # [Probe]

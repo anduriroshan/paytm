@@ -1,0 +1,13 @@
+# Example outside source: a CSV export from a courier partner (fictional demo data).
+# Munim reads it only when a complaint is about a device return or pickup, and only the rows of that merchant.
+id: courier-scans
+name: Courier scans (example file)
+kind: file
+holds: Courier scans for device pickups (picked up, in transit, delivered to the warehouse, failed attempts).
+when:
+  claims: [device_returned]
+  words: [pickup, courier, returned, awb]
+file:
+  path: files/courier_scans.csv
+  merchant_column: merchant_id
+max_rows: 20

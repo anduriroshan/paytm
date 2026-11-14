@@ -1,0 +1,31 @@
+# Built-in: devices, rental plans and pickups in Munim's demo database.
+id: devices
+name: Devices and rent
+kind: database
+holds: Soundbox devices, rental plans and subscriptions, device events (installed, pickup, returned) and pickup tickets.
+when:
+  topics: [rent]
+  claims: [device_returned, single_device, duplicate_charge]
+  words: [soundbox, device, machine, pickup, rent, rental, subscription]
+actions: [CANCEL_SUBSCRIPTION, SCHEDULE_PICKUP]
+tables:
+  - name: plans
+    about: |
+      plans(id 'PLAN_SB499', name, device_model, monthly_fee_paise)                                   -- no merchant_id
+  - name: devices
+    about: |
+      devices(id 'D50001', serial_no, model, merchant_id -> merchants NULL once returned, status, installed_at)
+          status: ACTIVE | RETURN_REQUESTED | RETURNED | REPLACED | LOST
+  - name: device_events
+    about: |
+      device_events(id, device_id -> devices, event_type, at, ref, note)                               -- no merchant_id
+          event_type: INSTALLED | RETURN_REQUESTED | PICKUP_SCHEDULED | PICKUP_FAILED | PICKED_UP | RECEIVED_AT_WAREHOUSE
+                      | DEACTIVATED | SWAPPED_OUT | SWAPPED_IN;  ref = pickup ticket id or courier AWB
+  - name: pickup_tickets
+    about: |
+      pickup_tickets(id, device_id, merchant_id, status OPEN|SCHEDULED|COMPLETED|FAILED|CANCELLED, requested_at,
+                     scheduled_for, completed_at, courier_awb, attempts, failure_reason)
+  - name: subscriptions
+    about: |
+      subscriptions(id 'SUB-1001-A', merchant_id, device_id, plan_id -> plans, status ACTIVE|CANCELLED|PAUSED,
+                    started_at, ended_at, end_reason)                     -- Soundbox rental, billed monthly via a mandate

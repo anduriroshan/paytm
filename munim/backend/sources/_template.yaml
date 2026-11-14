@@ -1,0 +1,39 @@
+# Template: copy this file to <your-source>.yaml (no leading underscore) and fill it in.
+# Files starting with "_" are skipped. Munim re-reads this folder before every case: no restart needed.
+
+id: my-source                  # lowercase letters, digits and dashes; unique
+name: My source                # shown in the app
+kind: file                     # database | file | api
+enabled: true                  # false = Munim never reads it
+holds: What this source contains, in one sentence. The AI reads this.
+
+when:                          # when Munim should reach it. Any match is enough.
+  always: false                # true = every case
+  topics: [rent]               # rent | loan | settlement  (from the complaint's topic)
+  claims: [device_returned]    # device_returned | single_device | duplicate_charge | deduction_amount | deduction_count
+                               # | settlement_short | settlement_not_received | refund_demanded
+  words: [pickup, courier]     # any of these words in the complaint (or its English translation)
+
+max_rows: 20                   # most rows read per case (file and api)
+
+# kind: file  -> a CSV or JSON file inside this folder
+file:
+  path: files/my_data.csv      # relative to this folder
+  merchant_column: merchant_id # only rows for the case's merchant are read
+
+# kind: api  -> a GET request that returns JSON
+# api:
+#   url: https://partner.example.com/v1/merchants/{merchant_id}/records
+#   headers:
+#     Authorization: Bearer ${PARTNER_API_KEY}   # the key goes in backend/.env, never here
+#   rows_at: records            # where the list sits in the JSON (dots for nesting); empty = the whole reply
+#   merchant_column: merchant_id
+
+# kind: database  -> tables in Munim's own database (the built-in sources use this)
+# tables:
+#   - name: loans
+#     about: |
+#       loans(id, merchant_id, ...)    -- what the AI sees about this table
+
+# actions: [SCHEDULE_PICKUP]   # fixes this system carries out (from Munim's fixed list).
+#                              # Turn the source off and the safety rules refuse those fixes.

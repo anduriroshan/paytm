@@ -43,6 +43,7 @@ npm-debug.log*
 Thumbs.db
 desktop.ini
 
-# Office lock files, and the superseded deck (Munim-v3.pptx is the current one)
+# Office lock files, and the superseded deck (Munim-v4.pptx is the current one;
+# v3 is already committed, so ignoring it here would not remove it)
 ~$*
 docs/Munim-v2.pptx

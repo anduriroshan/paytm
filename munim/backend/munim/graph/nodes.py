@@ -18,7 +18,7 @@ from munim.db.conn import audit, tx
 from munim.events import NODES
 from munim.models import (
     ActionType, ExecutionResult, FirewallResult, Hunch, IntakeResult, Probe, ProbePlan, Proposal,
-    StatementCheck, SuspectResult, Trail, Verdict, rupees,
+    SourcesReport, StatementCheck, SuspectResult, Trail, Verdict, rupees,
 )
 
 from .state import CaseState
@@ -173,8 +173,38 @@ async def trail(state: CaseState, w: Writer):
     with tx() as conn:
         t: Trail = build_trail(conn, state["merchant"]["id"], intake_, state["today"])
     emit(w, "trail", t)
-    return ({"trail": t.model_dump(mode="json")},
-            f"{len(t.nodes)} linked records · {len(t.disputed)} disputed movements")
+    update: dict[str, Any] = {"trail": t.model_dump(mode="json")}
+    summary = f"{len(t.nodes)} linked records · {len(t.disputed)} disputed movements"
+    report = await _reach_sources(state, intake_, t)
+    if report is not None:
+        emit(w, "sources", report)
+        update["sources"] = report.model_dump(mode="json")
+        for h in report.sources:
+            if h.reached and h.kind != "database" and (h.records or h.status != "ok"):
+                summary += f" · {h.name}: " + (f"{h.records} rows" if h.status == "ok" else "could not be read")
+    return (update, summary)
+
+
+async def _reach_sources(state: CaseState, intake_: IntakeResult, t: Trail) -> SourcesReport | None:
+    """Which connected sources matter for this complaint (backend/sources/), reading the outside ones that match.
+    Never breaks the trail: any failure here just means no 'sources' event."""
+    try:
+        from munim import sources
+        report = await sources.reach(sources.current(), intake_, state["complaint_text"], state["merchant"]["id"])
+        return sources.count_records(report, (n.table for n in t.nodes))
+    except Exception:  # noqa: BLE001
+        return None
+
+
+def allowed_catalogue() -> list[dict[str, str]]:
+    """The fix list offered to the Resolver: fixes owned by a turned-off source are left out (the firewall refuses them too)."""
+    try:
+        from munim.sources import current
+        reg = current()
+        ok = reg.action_allowed
+    except Exception:  # noqa: BLE001 - registry unreadable: the firewall still decides
+        ok = lambda _a: True  # noqa: E731
+    return [{"type": str(a["type"]), "description": a["description"]} for a in ACTION_CATALOGUE if ok(a["type"])]
 
 
 @graph_node("statements")
@@ -213,7 +243,10 @@ async def improvise(state: CaseState, w: Writer):
     from munim.forensics.probe import run_probe
     from munim.forensics.schema_card import schema_card
     from munim.llm import router
-    card = schema_card()
+    from munim.sources import current
+    report = SourcesReport.model_validate(state["sources"]) if state.get("sources") else None
+    card = schema_card(report.sources if report else None)
+    tables = current().enabled_tables()
     probes: list[Probe] = []
     plan: ProbePlan | None = None
     max_steps = config.MAX_PROBES
@@ -223,6 +256,7 @@ async def improvise(state: CaseState, w: Writer):
             "complaint_text": state["complaint_text"], "intake": state["intake"], "merchant_id": state["merchant"]["id"],
             "today": state["today"], "schema_card": card, "probes": [p.model_dump(mode="json") for p in probes],
             "step": step, "max_steps": max_steps, "scenario_id": state.get("scenario_id"),
+            "sources": state.get("sources"),
         }
         plan, res = await router.generate_json("reasoner", "improvise", ctx, ProbePlan, on_delta=on_delta)
         llm_done(w, "improvise", "reasoner", res)
@@ -231,7 +265,7 @@ async def improvise(state: CaseState, w: Writer):
         if len(probes) >= max_steps:   # budget exhausted: stop here, whatever the model wanted
             plan = ProbePlan(done=True, finding=plan.finding, evidence_ledger_ids=plan.evidence_ledger_ids)
             break
-        probe = run_probe(plan.sql, state["merchant"]["id"], step, plan.purpose or f"probe {step}")
+        probe = run_probe(plan.sql, state["merchant"]["id"], step, plan.purpose or f"probe {step}", tables=tables)
         probes.append(probe)
         emit(w, "probe", probe)
         _case_audit(state["case_id"], "detective", "probe", probe.model_dump(mode="json"))
@@ -266,7 +300,7 @@ async def propose(state: CaseState, w: Writer):
     ctx = {
         "complaint_text": state["complaint_text"], "intake": state["intake"], "verdict": state["verdict"],
         "statements": state.get("statements", []), "merchant": state["merchant"], "today": state["today"],
-        "action_catalogue": [{"type": str(a["type"]), "description": a["description"]} for a in ACTION_CATALOGUE],
+        "action_catalogue": allowed_catalogue(),
         "scenario_id": state.get("scenario_id"),
     }
     p, res = await router.generate_json("reasoner", "propose", ctx, Proposal, on_delta=llm_streamer(w, "propose", "reasoner"))

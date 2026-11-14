@@ -3,7 +3,7 @@
   "seq": 1,
   "case_id": "CASE-0001",
   "type": "case",
-  "at": "2026-11-14T01:21:20.453",
+  "at": "2026-11-14T08:46:23.948",
   "data": {
    "case_id": "CASE-0001",
    "merchant": {
@@ -23,7 +23,7 @@
   "seq": 2,
   "case_id": "CASE-0001",
   "type": "message",
-  "at": "2026-11-14T01:21:20.453",
+  "at": "2026-11-14T08:46:23.948",
   "data": {
    "role": "merchant",
    "text": "मैंने सितंबर में साउंडबॉक्स वापस कर दिया था, फिर भी हर महीने ₹499 कट रहा है। तीन महीने से पैसा कट रहा है, मेरा पैसा वापस करो।",
@@ -35,7 +35,7 @@
   "seq": 3,
   "case_id": "CASE-0001",
   "type": "node",
-  "at": "2026-11-14T01:21:20.508",
+  "at": "2026-11-14T08:46:23.992",
   "data": {
    "node": "hunch",
    "agent": "Detective",
@@ -46,7 +46,7 @@
   "seq": 4,
   "case_id": "CASE-0001",
   "type": "hunch",
-  "at": "2026-11-14T01:21:20.508",
+  "at": "2026-11-14T08:46:23.992",
   "data": {
    "source": "mock",
    "probabilities": {
@@ -67,7 +67,7 @@
   "seq": 5,
   "case_id": "CASE-0001",
   "type": "node",
-  "at": "2026-11-14T01:21:20.508",
+  "at": "2026-11-14T08:46:23.992",
   "data": {
    "node": "hunch",
    "agent": "Detective",
@@ -80,7 +80,7 @@
   "seq": 6,
   "case_id": "CASE-0001",
   "type": "node",
-  "at": "2026-11-14T01:21:20.508",
+  "at": "2026-11-14T08:46:23.992",
   "data": {
    "node": "intake",
    "agent": "Intake Agent",
@@ -91,7 +91,7 @@
   "seq": 7,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:20.508",
+  "at": "2026-11-14T08:46:23.992",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -105,7 +105,7 @@
   "seq": 8,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:20.562",
+  "at": "2026-11-14T08:46:24.049",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -119,7 +119,7 @@
   "seq": 9,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:20.578",
+  "at": "2026-11-14T08:46:24.066",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -133,7 +133,7 @@
   "seq": 10,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:20.594",
+  "at": "2026-11-14T08:46:24.081",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -147,7 +147,7 @@
   "seq": 11,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:20.609",
+  "at": "2026-11-14T08:46:24.097",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -161,7 +161,7 @@
   "seq": 12,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:20.624",
+  "at": "2026-11-14T08:46:24.112",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -175,7 +175,7 @@
   "seq": 13,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:20.641",
+  "at": "2026-11-14T08:46:24.128",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -189,7 +189,7 @@
   "seq": 14,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:20.656",
+  "at": "2026-11-14T08:46:24.144",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -203,7 +203,7 @@
   "seq": 15,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:20.671",
+  "at": "2026-11-14T08:46:24.159",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -217,7 +217,7 @@
   "seq": 16,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:20.687",
+  "at": "2026-11-14T08:46:24.175",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -231,7 +231,7 @@
   "seq": 17,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:20.702",
+  "at": "2026-11-14T08:46:24.191",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -245,7 +245,7 @@
   "seq": 18,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:20.718",
+  "at": "2026-11-14T08:46:24.206",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -259,7 +259,7 @@
   "seq": 19,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:20.734",
+  "at": "2026-11-14T08:46:24.221",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -273,7 +273,7 @@
   "seq": 20,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:20.750",
+  "at": "2026-11-14T08:46:24.237",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -287,7 +287,7 @@
   "seq": 21,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:20.765",
+  "at": "2026-11-14T08:46:24.252",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -301,7 +301,7 @@
   "seq": 22,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:20.781",
+  "at": "2026-11-14T08:46:24.268",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -315,7 +315,7 @@
   "seq": 23,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:20.796",
+  "at": "2026-11-14T08:46:24.284",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -329,7 +329,7 @@
   "seq": 24,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:20.812",
+  "at": "2026-11-14T08:46:24.299",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -343,7 +343,7 @@
   "seq": 25,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:20.827",
+  "at": "2026-11-14T08:46:24.314",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -357,7 +357,7 @@
   "seq": 26,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:20.842",
+  "at": "2026-11-14T08:46:24.329",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -371,7 +371,7 @@
   "seq": 27,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:20.859",
+  "at": "2026-11-14T08:46:24.345",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -385,7 +385,7 @@
   "seq": 28,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:20.875",
+  "at": "2026-11-14T08:46:24.360",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -399,7 +399,7 @@
   "seq": 29,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:20.890",
+  "at": "2026-11-14T08:46:24.375",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -413,7 +413,7 @@
   "seq": 30,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:20.906",
+  "at": "2026-11-14T08:46:24.391",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -427,7 +427,7 @@
   "seq": 31,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:20.923",
+  "at": "2026-11-14T08:46:24.407",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -441,7 +441,7 @@
   "seq": 32,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:20.938",
+  "at": "2026-11-14T08:46:24.422",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -455,7 +455,7 @@
   "seq": 33,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:20.954",
+  "at": "2026-11-14T08:46:24.437",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -469,7 +469,7 @@
   "seq": 34,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:20.970",
+  "at": "2026-11-14T08:46:24.454",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -483,7 +483,7 @@
   "seq": 35,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:20.985",
+  "at": "2026-11-14T08:46:24.469",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -497,7 +497,7 @@
   "seq": 36,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.001",
+  "at": "2026-11-14T08:46:24.484",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -511,7 +511,7 @@
   "seq": 37,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.016",
+  "at": "2026-11-14T08:46:24.500",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -525,7 +525,7 @@
   "seq": 38,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.032",
+  "at": "2026-11-14T08:46:24.516",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -539,7 +539,7 @@
   "seq": 39,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.048",
+  "at": "2026-11-14T08:46:24.531",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -553,7 +553,7 @@
   "seq": 40,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.062",
+  "at": "2026-11-14T08:46:24.547",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -567,7 +567,7 @@
   "seq": 41,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.078",
+  "at": "2026-11-14T08:46:24.563",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -581,7 +581,7 @@
   "seq": 42,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.094",
+  "at": "2026-11-14T08:46:24.578",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -595,7 +595,7 @@
   "seq": 43,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.111",
+  "at": "2026-11-14T08:46:24.593",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -609,7 +609,7 @@
   "seq": 44,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.125",
+  "at": "2026-11-14T08:46:24.608",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -623,7 +623,7 @@
   "seq": 45,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.141",
+  "at": "2026-11-14T08:46:24.624",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -637,7 +637,7 @@
   "seq": 46,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.157",
+  "at": "2026-11-14T08:46:24.640",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -651,7 +651,7 @@
   "seq": 47,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.172",
+  "at": "2026-11-14T08:46:24.656",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -665,7 +665,7 @@
   "seq": 48,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.188",
+  "at": "2026-11-14T08:46:24.671",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -679,7 +679,7 @@
   "seq": 49,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.204",
+  "at": "2026-11-14T08:46:24.686",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -693,7 +693,7 @@
   "seq": 50,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.220",
+  "at": "2026-11-14T08:46:24.702",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -707,7 +707,7 @@
   "seq": 51,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.235",
+  "at": "2026-11-14T08:46:24.718",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -721,7 +721,7 @@
   "seq": 52,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.251",
+  "at": "2026-11-14T08:46:24.738",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -735,7 +735,7 @@
   "seq": 53,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.267",
+  "at": "2026-11-14T08:46:24.765",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -749,7 +749,7 @@
   "seq": 54,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.282",
+  "at": "2026-11-14T08:46:24.781",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -763,7 +763,7 @@
   "seq": 55,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.298",
+  "at": "2026-11-14T08:46:24.796",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -777,7 +777,7 @@
   "seq": 56,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.314",
+  "at": "2026-11-14T08:46:24.811",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -791,7 +791,7 @@
   "seq": 57,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.330",
+  "at": "2026-11-14T08:46:24.827",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -805,7 +805,7 @@
   "seq": 58,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.345",
+  "at": "2026-11-14T08:46:24.844",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -819,7 +819,7 @@
   "seq": 59,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.361",
+  "at": "2026-11-14T08:46:24.858",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -833,7 +833,7 @@
   "seq": 60,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.376",
+  "at": "2026-11-14T08:46:24.874",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -847,7 +847,7 @@
   "seq": 61,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.392",
+  "at": "2026-11-14T08:46:24.890",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -861,7 +861,7 @@
   "seq": 62,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.407",
+  "at": "2026-11-14T08:46:24.906",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -875,7 +875,7 @@
   "seq": 63,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.422",
+  "at": "2026-11-14T08:46:24.920",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -889,7 +889,7 @@
   "seq": 64,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.438",
+  "at": "2026-11-14T08:46:24.937",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -903,7 +903,7 @@
   "seq": 65,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.453",
+  "at": "2026-11-14T08:46:24.952",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -917,7 +917,7 @@
   "seq": 66,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.468",
+  "at": "2026-11-14T08:46:24.967",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -931,7 +931,7 @@
   "seq": 67,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.484",
+  "at": "2026-11-14T08:46:24.983",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -945,7 +945,7 @@
   "seq": 68,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.499",
+  "at": "2026-11-14T08:46:24.998",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -959,7 +959,7 @@
   "seq": 69,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.515",
+  "at": "2026-11-14T08:46:25.014",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -973,7 +973,7 @@
   "seq": 70,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.531",
+  "at": "2026-11-14T08:46:25.030",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -987,7 +987,7 @@
   "seq": 71,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.546",
+  "at": "2026-11-14T08:46:25.045",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -1001,7 +1001,7 @@
   "seq": 72,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.561",
+  "at": "2026-11-14T08:46:25.060",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -1015,7 +1015,7 @@
   "seq": 73,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.577",
+  "at": "2026-11-14T08:46:25.076",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -1029,7 +1029,7 @@
   "seq": 74,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.593",
+  "at": "2026-11-14T08:46:25.092",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -1043,7 +1043,7 @@
   "seq": 75,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.609",
+  "at": "2026-11-14T08:46:25.107",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -1057,7 +1057,7 @@
   "seq": 76,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.625",
+  "at": "2026-11-14T08:46:25.121",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -1071,7 +1071,7 @@
   "seq": 77,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.640",
+  "at": "2026-11-14T08:46:25.137",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -1085,7 +1085,7 @@
   "seq": 78,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.655",
+  "at": "2026-11-14T08:46:25.152",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -1099,7 +1099,7 @@
   "seq": 79,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.671",
+  "at": "2026-11-14T08:46:25.168",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -1113,7 +1113,7 @@
   "seq": 80,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:21.688",
+  "at": "2026-11-14T08:46:25.184",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -1127,7 +1127,7 @@
   "seq": 81,
   "case_id": "CASE-0001",
   "type": "llm_done",
-  "at": "2026-11-14T01:21:21.712",
+  "at": "2026-11-14T08:46:25.206",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -1144,7 +1144,7 @@
   "seq": 82,
   "case_id": "CASE-0001",
   "type": "intake",
-  "at": "2026-11-14T01:21:21.712",
+  "at": "2026-11-14T08:46:25.206",
   "data": {
    "language": "hi",
    "intent": "RENT_DEDUCTION",
@@ -1188,12 +1188,12 @@
   "seq": 83,
   "case_id": "CASE-0001",
   "type": "node",
-  "at": "2026-11-14T01:21:21.712",
+  "at": "2026-11-14T08:46:25.206",
   "data": {
    "node": "intake",
    "agent": "Intake Agent",
    "status": "end",
-   "ms": 1232,
+   "ms": 1231,
    "summary": "RENT_DEDUCTION · 4 claims · hi"
   }
  },
@@ -1201,7 +1201,7 @@
   "seq": 84,
   "case_id": "CASE-0001",
   "type": "node",
-  "at": "2026-11-14T01:21:21.719",
+  "at": "2026-11-14T08:46:25.239",
   "data": {
    "node": "trail",
    "agent": "Detective",
@@ -1212,7 +1212,7 @@
   "seq": 85,
   "case_id": "CASE-0001",
   "type": "trail",
-  "at": "2026-11-14T01:21:21.719",
+  "at": "2026-11-14T08:46:25.239",
   "data": {
    "merchant_id": "M1001",
    "window_start": "2025-11-20",
@@ -1622,21 +1622,184 @@
  {
   "seq": 86,
   "case_id": "CASE-0001",
-  "type": "node",
-  "at": "2026-11-14T01:21:21.720",
+  "type": "sources",
+  "at": "2026-11-14T08:46:25.241",
   "data": {
-   "node": "trail",
-   "agent": "Detective",
-   "status": "end",
-   "ms": 6,
-   "summary": "15 linked records · 3 disputed movements"
+   "sources": [
+    {
+     "id": "ledger",
+     "name": "Money ledger",
+     "kind": "database",
+     "reached": true,
+     "why": [
+      "always"
+     ],
+     "status": "ok",
+     "records": 6,
+     "tables": [
+      "merchants",
+      "mandates",
+      "ledger_entries"
+     ],
+     "columns": [],
+     "rows": [],
+     "error": null,
+     "ms": null
+    },
+    {
+     "id": "devices",
+     "name": "Devices and rent",
+     "kind": "database",
+     "reached": true,
+     "why": [
+      "rent complaint",
+      "claim: device returned",
+      "word: soundbox",
+      "word: rent"
+     ],
+     "status": "ok",
+     "records": 8,
+     "tables": [
+      "plans",
+      "devices",
+      "device_events",
+      "pickup_tickets",
+      "subscriptions"
+     ],
+     "columns": [],
+     "rows": [],
+     "error": null,
+     "ms": null
+    },
+    {
+     "id": "courier-scans",
+     "name": "Courier scans (example file)",
+     "kind": "file",
+     "reached": true,
+     "why": [
+      "claim: device returned",
+      "word: returned"
+     ],
+     "status": "ok",
+     "records": 3,
+     "tables": [],
+     "columns": [
+      "merchant_id",
+      "device_id",
+      "awb",
+      "scan_time",
+      "status",
+      "place",
+      "note"
+     ],
+     "rows": [
+      [
+       "M1001",
+       "D50001",
+       "DLV88123401",
+       "2026-09-12T15:40:00",
+       "PICKED_UP",
+       "Lucknow",
+       "Collected from the shop; signed by merchant"
+      ],
+      [
+       "M1001",
+       "D50001",
+       "DLV88123401",
+       "2026-09-13T21:05:00",
+       "IN_TRANSIT",
+       "Lucknow hub",
+       ""
+      ],
+      [
+       "M1001",
+       "D50001",
+       "DLV88123401",
+       "2026-09-16T12:10:00",
+       "DELIVERED",
+       "Lucknow warehouse",
+       "Received at warehouse"
+      ]
+     ],
+     "error": null,
+     "ms": 2
+    },
+    {
+     "id": "payouts",
+     "name": "Payments and payouts",
+     "kind": "database",
+     "reached": true,
+     "why": [
+      "linked from the money trail"
+     ],
+     "status": "ok",
+     "records": 1,
+     "tables": [
+      "settlements",
+      "payments",
+      "chargebacks"
+     ],
+     "columns": [],
+     "rows": [],
+     "error": null,
+     "ms": null
+    },
+    {
+     "id": "holds-kyc",
+     "name": "Holds and KYC",
+     "kind": "database",
+     "reached": false,
+     "why": [],
+     "status": "not_needed",
+     "records": 0,
+     "tables": [
+      "holds",
+      "kyc_documents"
+     ],
+     "columns": [],
+     "rows": [],
+     "error": null,
+     "ms": null
+    },
+    {
+     "id": "loans",
+     "name": "Loans and instalments",
+     "kind": "database",
+     "reached": false,
+     "why": [],
+     "status": "not_needed",
+     "records": 0,
+     "tables": [
+      "loans",
+      "edi_attempts"
+     ],
+     "columns": [],
+     "rows": [],
+     "error": null,
+     "ms": null
+    }
+   ],
+   "problems": []
   }
  },
  {
   "seq": 87,
   "case_id": "CASE-0001",
   "type": "node",
-  "at": "2026-11-14T01:21:21.724",
+  "at": "2026-11-14T08:46:25.241",
+  "data": {
+   "node": "trail",
+   "agent": "Detective",
+   "status": "end",
+   "ms": 33,
+   "summary": "15 linked records · 3 disputed movements · Courier scans (example file): 3 rows"
+  }
+ },
+ {
+  "seq": 88,
+  "case_id": "CASE-0001",
+  "type": "node",
+  "at": "2026-11-14T08:46:25.245",
   "data": {
    "node": "statements",
    "agent": "Detective",
@@ -1644,10 +1807,10 @@
   }
  },
  {
-  "seq": 88,
+  "seq": 89,
   "case_id": "CASE-0001",
   "type": "statements",
-  "at": "2026-11-14T01:21:21.724",
+  "at": "2026-11-14T08:46:25.245",
   "data": {
    "checks": [
     {
@@ -1783,10 +1946,10 @@
   }
  },
  {
-  "seq": 89,
+  "seq": 90,
   "case_id": "CASE-0001",
   "type": "node",
-  "at": "2026-11-14T01:21:21.724",
+  "at": "2026-11-14T08:46:25.245",
   "data": {
    "node": "statements",
    "agent": "Detective",
@@ -1796,10 +1959,10 @@
   }
  },
  {
-  "seq": 90,
+  "seq": 91,
   "case_id": "CASE-0001",
   "type": "node",
-  "at": "2026-11-14T01:21:21.728",
+  "at": "2026-11-14T08:46:25.248",
   "data": {
    "node": "lineup",
    "agent": "Detective",
@@ -1807,10 +1970,10 @@
   }
  },
  {
-  "seq": 91,
+  "seq": 92,
   "case_id": "CASE-0001",
   "type": "suspect",
-  "at": "2026-11-14T01:21:21.827",
+  "at": "2026-11-14T08:46:25.355",
   "data": {
    "suspect_id": "ZOMBIE_BILLING",
    "title": "Billing continued after device return",
@@ -1886,10 +2049,10 @@
   }
  },
  {
-  "seq": 92,
+  "seq": 93,
   "case_id": "CASE-0001",
   "type": "suspect",
-  "at": "2026-11-14T01:21:21.936",
+  "at": "2026-11-14T08:46:25.466",
   "data": {
    "suspect_id": "DUPLICATE_SUBSCRIPTION",
    "title": "Two subscriptions on one device",
@@ -1914,10 +2077,10 @@
   }
  },
  {
-  "seq": 93,
+  "seq": 94,
   "case_id": "CASE-0001",
   "type": "suspect",
-  "at": "2026-11-14T01:21:22.045",
+  "at": "2026-11-14T08:46:25.574",
   "data": {
    "suspect_id": "PICKUP_NOT_COMPLETED",
    "title": "Return requested but never collected",
@@ -1949,10 +2112,10 @@
   }
  },
  {
-  "seq": 94,
+  "seq": 95,
   "case_id": "CASE-0001",
   "type": "suspect",
-  "at": "2026-11-14T01:21:22.152",
+  "at": "2026-11-14T08:46:25.683",
   "data": {
    "suspect_id": "ALREADY_REFUNDED",
    "title": "Already refunded",
@@ -1991,10 +2154,10 @@
   }
  },
  {
-  "seq": 95,
+  "seq": 96,
   "case_id": "CASE-0001",
   "type": "suspect",
-  "at": "2026-11-14T01:21:22.262",
+  "at": "2026-11-14T08:46:25.792",
   "data": {
    "suspect_id": "DUPLICATE_EDI",
    "title": "Loan instalment debited twice",
@@ -2011,10 +2174,10 @@
   }
  },
  {
-  "seq": 96,
+  "seq": 97,
   "case_id": "CASE-0001",
   "type": "suspect",
-  "at": "2026-11-14T01:21:22.372",
+  "at": "2026-11-14T08:46:25.899",
   "data": {
    "suspect_id": "RISK_HOLD",
    "title": "Settlement held by risk",
@@ -2031,10 +2194,10 @@
   }
  },
  {
-  "seq": 97,
+  "seq": 98,
   "case_id": "CASE-0001",
   "type": "suspect",
-  "at": "2026-11-14T01:21:22.482",
+  "at": "2026-11-14T08:46:26.010",
   "data": {
    "suspect_id": "KYC_HOLD",
    "title": "Settlement held for KYC",
@@ -2051,23 +2214,23 @@
   }
  },
  {
-  "seq": 98,
+  "seq": 99,
   "case_id": "CASE-0001",
   "type": "node",
-  "at": "2026-11-14T01:21:22.482",
+  "at": "2026-11-14T08:46:26.010",
   "data": {
    "node": "lineup",
    "agent": "Detective",
    "status": "end",
-   "ms": 754,
+   "ms": 762,
    "summary": "MATCH: ZOMBIE_BILLING · 3 eliminated"
   }
  },
  {
-  "seq": 99,
+  "seq": 100,
   "case_id": "CASE-0001",
   "type": "node",
-  "at": "2026-11-14T01:21:22.494",
+  "at": "2026-11-14T08:46:26.022",
   "data": {
    "node": "verdict",
    "agent": "Detective",
@@ -2075,10 +2238,10 @@
   }
  },
  {
-  "seq": 100,
+  "seq": 101,
   "case_id": "CASE-0001",
   "type": "node",
-  "at": "2026-11-14T01:21:22.494",
+  "at": "2026-11-14T08:46:26.022",
   "data": {
    "node": "improvise",
    "agent": "Detective",
@@ -2087,10 +2250,10 @@
   }
  },
  {
-  "seq": 101,
+  "seq": 102,
   "case_id": "CASE-0001",
   "type": "verdict",
-  "at": "2026-11-14T01:21:22.494",
+  "at": "2026-11-14T08:46:26.022",
   "data": {
    "outcome": "REFUND_DUE",
    "culprits": [
@@ -2166,23 +2329,23 @@
   }
  },
  {
-  "seq": 102,
+  "seq": 103,
   "case_id": "CASE-0001",
   "type": "node",
-  "at": "2026-11-14T01:21:22.494",
+  "at": "2026-11-14T08:46:26.022",
   "data": {
    "node": "verdict",
    "agent": "Detective",
    "status": "end",
-   "ms": 10,
+   "ms": 9,
    "summary": "REFUND_DUE (HIGH) · damages ₹998"
   }
  },
  {
-  "seq": 103,
+  "seq": 104,
   "case_id": "CASE-0001",
   "type": "node",
-  "at": "2026-11-14T01:21:22.495",
+  "at": "2026-11-14T08:46:26.023",
   "data": {
    "node": "propose",
    "agent": "Resolver Agent",
@@ -2190,10 +2353,10 @@
   }
  },
  {
-  "seq": 104,
+  "seq": 105,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:22.495",
+  "at": "2026-11-14T08:46:26.024",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2204,10 +2367,10 @@
   }
  },
  {
-  "seq": 105,
+  "seq": 106,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:22.557",
+  "at": "2026-11-14T08:46:26.086",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2218,10 +2381,10 @@
   }
  },
  {
-  "seq": 106,
+  "seq": 107,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:22.572",
+  "at": "2026-11-14T08:46:26.102",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2232,10 +2395,10 @@
   }
  },
  {
-  "seq": 107,
+  "seq": 108,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:22.588",
+  "at": "2026-11-14T08:46:26.118",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2246,10 +2409,10 @@
   }
  },
  {
-  "seq": 108,
+  "seq": 109,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:22.605",
+  "at": "2026-11-14T08:46:26.134",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2260,10 +2423,10 @@
   }
  },
  {
-  "seq": 109,
+  "seq": 110,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:22.619",
+  "at": "2026-11-14T08:46:26.150",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2274,10 +2437,10 @@
   }
  },
  {
-  "seq": 110,
+  "seq": 111,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:22.634",
+  "at": "2026-11-14T08:46:26.164",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2288,10 +2451,10 @@
   }
  },
  {
-  "seq": 111,
+  "seq": 112,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:22.650",
+  "at": "2026-11-14T08:46:26.180",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2302,10 +2465,10 @@
   }
  },
  {
-  "seq": 112,
+  "seq": 113,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:22.666",
+  "at": "2026-11-14T08:46:26.195",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2316,10 +2479,10 @@
   }
  },
  {
-  "seq": 113,
+  "seq": 114,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:22.682",
+  "at": "2026-11-14T08:46:26.211",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2330,10 +2493,10 @@
   }
  },
  {
-  "seq": 114,
+  "seq": 115,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:22.697",
+  "at": "2026-11-14T08:46:26.226",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2344,10 +2507,10 @@
   }
  },
  {
-  "seq": 115,
+  "seq": 116,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:22.713",
+  "at": "2026-11-14T08:46:26.242",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2358,10 +2521,10 @@
   }
  },
  {
-  "seq": 116,
+  "seq": 117,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:22.729",
+  "at": "2026-11-14T08:46:26.259",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2372,10 +2535,10 @@
   }
  },
  {
-  "seq": 117,
+  "seq": 118,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:22.744",
+  "at": "2026-11-14T08:46:26.274",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2386,10 +2549,10 @@
   }
  },
  {
-  "seq": 118,
+  "seq": 119,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:22.758",
+  "at": "2026-11-14T08:46:26.289",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2400,10 +2563,10 @@
   }
  },
  {
-  "seq": 119,
+  "seq": 120,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:22.775",
+  "at": "2026-11-14T08:46:26.305",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2414,10 +2577,10 @@
   }
  },
  {
-  "seq": 120,
+  "seq": 121,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:22.790",
+  "at": "2026-11-14T08:46:26.321",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2428,10 +2591,10 @@
   }
  },
  {
-  "seq": 121,
+  "seq": 122,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:22.806",
+  "at": "2026-11-14T08:46:26.337",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2442,10 +2605,10 @@
   }
  },
  {
-  "seq": 122,
+  "seq": 123,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:22.822",
+  "at": "2026-11-14T08:46:26.352",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2456,10 +2619,10 @@
   }
  },
  {
-  "seq": 123,
+  "seq": 124,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:22.837",
+  "at": "2026-11-14T08:46:26.366",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2470,10 +2633,10 @@
   }
  },
  {
-  "seq": 124,
+  "seq": 125,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:22.853",
+  "at": "2026-11-14T08:46:26.382",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2484,10 +2647,10 @@
   }
  },
  {
-  "seq": 125,
+  "seq": 126,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:22.868",
+  "at": "2026-11-14T08:46:26.397",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2498,10 +2661,10 @@
   }
  },
  {
-  "seq": 126,
+  "seq": 127,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:22.884",
+  "at": "2026-11-14T08:46:26.413",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2512,10 +2675,10 @@
   }
  },
  {
-  "seq": 127,
+  "seq": 128,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:22.900",
+  "at": "2026-11-14T08:46:26.429",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2526,10 +2689,10 @@
   }
  },
  {
-  "seq": 128,
+  "seq": 129,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:22.916",
+  "at": "2026-11-14T08:46:26.444",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2540,10 +2703,10 @@
   }
  },
  {
-  "seq": 129,
+  "seq": 130,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:22.932",
+  "at": "2026-11-14T08:46:26.460",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2554,10 +2717,10 @@
   }
  },
  {
-  "seq": 130,
+  "seq": 131,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:22.947",
+  "at": "2026-11-14T08:46:26.476",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2568,10 +2731,10 @@
   }
  },
  {
-  "seq": 131,
+  "seq": 132,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:22.963",
+  "at": "2026-11-14T08:46:26.491",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2582,10 +2745,10 @@
   }
  },
  {
-  "seq": 132,
+  "seq": 133,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:22.978",
+  "at": "2026-11-14T08:46:26.507",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2596,10 +2759,10 @@
   }
  },
  {
-  "seq": 133,
+  "seq": 134,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:22.994",
+  "at": "2026-11-14T08:46:26.523",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2610,10 +2773,10 @@
   }
  },
  {
-  "seq": 134,
+  "seq": 135,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.010",
+  "at": "2026-11-14T08:46:26.537",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2624,10 +2787,10 @@
   }
  },
  {
-  "seq": 135,
+  "seq": 136,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.026",
+  "at": "2026-11-14T08:46:26.553",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2638,10 +2801,10 @@
   }
  },
  {
-  "seq": 136,
+  "seq": 137,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.042",
+  "at": "2026-11-14T08:46:26.568",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2652,10 +2815,10 @@
   }
  },
  {
-  "seq": 137,
+  "seq": 138,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.057",
+  "at": "2026-11-14T08:46:26.584",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2666,10 +2829,10 @@
   }
  },
  {
-  "seq": 138,
+  "seq": 139,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.073",
+  "at": "2026-11-14T08:46:26.599",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2680,10 +2843,10 @@
   }
  },
  {
-  "seq": 139,
+  "seq": 140,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.089",
+  "at": "2026-11-14T08:46:26.615",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2694,10 +2857,10 @@
   }
  },
  {
-  "seq": 140,
+  "seq": 141,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.104",
+  "at": "2026-11-14T08:46:26.631",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2708,10 +2871,10 @@
   }
  },
  {
-  "seq": 141,
+  "seq": 142,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.119",
+  "at": "2026-11-14T08:46:26.646",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2722,10 +2885,10 @@
   }
  },
  {
-  "seq": 142,
+  "seq": 143,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.135",
+  "at": "2026-11-14T08:46:26.662",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2736,10 +2899,10 @@
   }
  },
  {
-  "seq": 143,
+  "seq": 144,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.151",
+  "at": "2026-11-14T08:46:26.677",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2750,10 +2913,10 @@
   }
  },
  {
-  "seq": 144,
+  "seq": 145,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.166",
+  "at": "2026-11-14T08:46:26.692",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2764,10 +2927,10 @@
   }
  },
  {
-  "seq": 145,
+  "seq": 146,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.182",
+  "at": "2026-11-14T08:46:26.708",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2778,10 +2941,10 @@
   }
  },
  {
-  "seq": 146,
+  "seq": 147,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.198",
+  "at": "2026-11-14T08:46:26.723",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2792,10 +2955,10 @@
   }
  },
  {
-  "seq": 147,
+  "seq": 148,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.213",
+  "at": "2026-11-14T08:46:26.739",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2806,10 +2969,10 @@
   }
  },
  {
-  "seq": 148,
+  "seq": 149,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.229",
+  "at": "2026-11-14T08:46:26.755",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2820,10 +2983,10 @@
   }
  },
  {
-  "seq": 149,
+  "seq": 150,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.244",
+  "at": "2026-11-14T08:46:26.771",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2834,10 +2997,10 @@
   }
  },
  {
-  "seq": 150,
+  "seq": 151,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.260",
+  "at": "2026-11-14T08:46:26.787",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2848,10 +3011,10 @@
   }
  },
  {
-  "seq": 151,
+  "seq": 152,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.275",
+  "at": "2026-11-14T08:46:26.803",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2862,10 +3025,10 @@
   }
  },
  {
-  "seq": 152,
+  "seq": 153,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.291",
+  "at": "2026-11-14T08:46:26.817",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2876,10 +3039,10 @@
   }
  },
  {
-  "seq": 153,
+  "seq": 154,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.308",
+  "at": "2026-11-14T08:46:26.832",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2890,10 +3053,10 @@
   }
  },
  {
-  "seq": 154,
+  "seq": 155,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.321",
+  "at": "2026-11-14T08:46:26.848",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2904,10 +3067,10 @@
   }
  },
  {
-  "seq": 155,
+  "seq": 156,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.337",
+  "at": "2026-11-14T08:46:26.863",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -2918,16 +3081,16 @@
   }
  },
  {
-  "seq": 156,
+  "seq": 157,
   "case_id": "CASE-0001",
   "type": "llm_done",
-  "at": "2026-11-14T01:21:23.362",
+  "at": "2026-11-14T08:46:26.901",
   "data": {
    "node": "propose",
    "role": "reasoner",
    "provider": "mock",
    "model": "scripted",
-   "ms": 856,
+   "ms": 855,
    "text": "{\"actions\": [{\"action_type\": \"REFUND_DEBITS\", \"amount_paise\": 149700, \"ledger_entry_ids\": [11, 12], \"target_id\": null, \"team\": null, \"reason\": \"Merchant reports 3 deductions of ₹499; refunding ₹1,497 as claimed.\"}, {\"action_type\": \"CANCEL_SUBSCRIPTION\", \"amount_paise\": 0, \"ledger_entry_ids\": [], \"target_id\": \"SUB-1001-A\", \"team\": null, \"reason\": \"Stop further billing on SUB-1001-A.\"}], \"rationale\": \"Refund due: ₹998 for 2 rent debits taken after the Soundbox D50001 was picked up (01 Oct, 01 Nov 2026). The merchant's account of events is credible, so refund what they lost and stop the subscription.\"}",
    "usage": null,
    "live": false,
@@ -2935,10 +3098,10 @@
   }
  },
  {
-  "seq": 157,
+  "seq": 158,
   "case_id": "CASE-0001",
   "type": "proposal",
-  "at": "2026-11-14T01:21:23.362",
+  "at": "2026-11-14T08:46:26.901",
   "data": {
    "actions": [
     {
@@ -2965,23 +3128,23 @@
   }
  },
  {
-  "seq": 158,
+  "seq": 159,
   "case_id": "CASE-0001",
   "type": "node",
-  "at": "2026-11-14T01:21:23.362",
+  "at": "2026-11-14T08:46:26.901",
   "data": {
    "node": "propose",
    "agent": "Resolver Agent",
    "status": "end",
-   "ms": 866,
+   "ms": 877,
    "summary": "REFUND_DEBITS ₹1,497 + CANCEL_SUBSCRIPTION"
   }
  },
  {
-  "seq": 159,
+  "seq": 160,
   "case_id": "CASE-0001",
   "type": "node",
-  "at": "2026-11-14T01:21:23.370",
+  "at": "2026-11-14T08:46:26.915",
   "data": {
    "node": "firewall",
    "agent": "Action Firewall",
@@ -2989,10 +3152,10 @@
   }
  },
  {
-  "seq": 160,
+  "seq": 161,
   "case_id": "CASE-0001",
   "type": "firewall",
-  "at": "2026-11-14T01:21:23.370",
+  "at": "2026-11-14T08:46:26.915",
   "data": {
    "decision": "CORRECTED",
    "actions": [
@@ -3182,23 +3345,23 @@
   }
  },
  {
-  "seq": 161,
+  "seq": 162,
   "case_id": "CASE-0001",
   "type": "node",
-  "at": "2026-11-14T01:21:23.370",
+  "at": "2026-11-14T08:46:26.915",
   "data": {
    "node": "firewall",
    "agent": "Action Firewall",
    "status": "end",
-   "ms": 7,
+   "ms": 12,
    "summary": "CORRECTED: REFUND_DEBITS→CORRECTED · CANCEL_SUBSCRIPTION→ALLOW"
   }
  },
  {
-  "seq": 162,
+  "seq": 163,
   "case_id": "CASE-0001",
   "type": "node",
-  "at": "2026-11-14T01:21:23.377",
+  "at": "2026-11-14T08:46:26.923",
   "data": {
    "node": "execute",
    "agent": "Executor",
@@ -3206,10 +3369,10 @@
   }
  },
  {
-  "seq": 163,
+  "seq": 164,
   "case_id": "CASE-0001",
   "type": "execution",
-  "at": "2026-11-14T01:21:23.377",
+  "at": "2026-11-14T08:46:26.923",
   "data": {
    "results": [
     {
@@ -3235,23 +3398,23 @@
   }
  },
  {
-  "seq": 164,
+  "seq": 165,
   "case_id": "CASE-0001",
   "type": "node",
-  "at": "2026-11-14T01:21:23.377",
+  "at": "2026-11-14T08:46:26.923",
   "data": {
    "node": "execute",
    "agent": "Executor",
    "status": "end",
-   "ms": 6,
+   "ms": 7,
    "summary": "2 executed"
   }
  },
  {
-  "seq": 165,
+  "seq": 166,
   "case_id": "CASE-0001",
   "type": "node",
-  "at": "2026-11-14T01:21:23.379",
+  "at": "2026-11-14T08:46:26.925",
   "data": {
    "node": "respond",
    "agent": "Communicator Agent",
@@ -3259,10 +3422,10 @@
   }
  },
  {
-  "seq": 166,
+  "seq": 167,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.379",
+  "at": "2026-11-14T08:46:26.925",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3273,10 +3436,10 @@
   }
  },
  {
-  "seq": 167,
+  "seq": 168,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.431",
+  "at": "2026-11-14T08:46:26.987",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3287,10 +3450,10 @@
   }
  },
  {
-  "seq": 168,
+  "seq": 169,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.445",
+  "at": "2026-11-14T08:46:27.003",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3301,10 +3464,10 @@
   }
  },
  {
-  "seq": 169,
+  "seq": 170,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.461",
+  "at": "2026-11-14T08:46:27.018",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3315,10 +3478,10 @@
   }
  },
  {
-  "seq": 170,
+  "seq": 171,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.477",
+  "at": "2026-11-14T08:46:27.033",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3329,10 +3492,10 @@
   }
  },
  {
-  "seq": 171,
+  "seq": 172,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.492",
+  "at": "2026-11-14T08:46:27.049",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3343,10 +3506,10 @@
   }
  },
  {
-  "seq": 172,
+  "seq": 173,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.508",
+  "at": "2026-11-14T08:46:27.065",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3357,10 +3520,10 @@
   }
  },
  {
-  "seq": 173,
+  "seq": 174,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.524",
+  "at": "2026-11-14T08:46:27.079",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3371,10 +3534,10 @@
   }
  },
  {
-  "seq": 174,
+  "seq": 175,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.539",
+  "at": "2026-11-14T08:46:27.094",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3385,10 +3548,10 @@
   }
  },
  {
-  "seq": 175,
+  "seq": 176,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.554",
+  "at": "2026-11-14T08:46:27.111",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3399,10 +3562,10 @@
   }
  },
  {
-  "seq": 176,
+  "seq": 177,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.570",
+  "at": "2026-11-14T08:46:27.126",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3413,10 +3576,10 @@
   }
  },
  {
-  "seq": 177,
+  "seq": 178,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.585",
+  "at": "2026-11-14T08:46:27.142",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3427,10 +3590,10 @@
   }
  },
  {
-  "seq": 178,
+  "seq": 179,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.601",
+  "at": "2026-11-14T08:46:27.157",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3441,10 +3604,10 @@
   }
  },
  {
-  "seq": 179,
+  "seq": 180,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.617",
+  "at": "2026-11-14T08:46:27.172",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3455,10 +3618,10 @@
   }
  },
  {
-  "seq": 180,
+  "seq": 181,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.633",
+  "at": "2026-11-14T08:46:27.189",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3469,10 +3632,10 @@
   }
  },
  {
-  "seq": 181,
+  "seq": 182,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.648",
+  "at": "2026-11-14T08:46:27.203",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3483,10 +3646,10 @@
   }
  },
  {
-  "seq": 182,
+  "seq": 183,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.663",
+  "at": "2026-11-14T08:46:27.219",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3497,10 +3660,10 @@
   }
  },
  {
-  "seq": 183,
+  "seq": 184,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.679",
+  "at": "2026-11-14T08:46:27.235",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3511,10 +3674,10 @@
   }
  },
  {
-  "seq": 184,
+  "seq": 185,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.695",
+  "at": "2026-11-14T08:46:27.251",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3525,10 +3688,10 @@
   }
  },
  {
-  "seq": 185,
+  "seq": 186,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.710",
+  "at": "2026-11-14T08:46:27.267",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3539,10 +3702,10 @@
   }
  },
  {
-  "seq": 186,
+  "seq": 187,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.726",
+  "at": "2026-11-14T08:46:27.283",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3553,10 +3716,10 @@
   }
  },
  {
-  "seq": 187,
+  "seq": 188,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.742",
+  "at": "2026-11-14T08:46:27.297",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3567,10 +3730,10 @@
   }
  },
  {
-  "seq": 188,
+  "seq": 189,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.757",
+  "at": "2026-11-14T08:46:27.312",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3581,10 +3744,10 @@
   }
  },
  {
-  "seq": 189,
+  "seq": 190,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.772",
+  "at": "2026-11-14T08:46:27.328",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3595,10 +3758,10 @@
   }
  },
  {
-  "seq": 190,
+  "seq": 191,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.788",
+  "at": "2026-11-14T08:46:27.344",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3609,10 +3772,10 @@
   }
  },
  {
-  "seq": 191,
+  "seq": 192,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.803",
+  "at": "2026-11-14T08:46:27.360",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3623,10 +3786,10 @@
   }
  },
  {
-  "seq": 192,
+  "seq": 193,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.819",
+  "at": "2026-11-14T08:46:27.376",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3637,10 +3800,10 @@
   }
  },
  {
-  "seq": 193,
+  "seq": 194,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.833",
+  "at": "2026-11-14T08:46:27.391",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3651,10 +3814,10 @@
   }
  },
  {
-  "seq": 194,
+  "seq": 195,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.849",
+  "at": "2026-11-14T08:46:27.407",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3665,10 +3828,10 @@
   }
  },
  {
-  "seq": 195,
+  "seq": 196,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.864",
+  "at": "2026-11-14T08:46:27.423",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3679,10 +3842,10 @@
   }
  },
  {
-  "seq": 196,
+  "seq": 197,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.880",
+  "at": "2026-11-14T08:46:27.438",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3693,10 +3856,10 @@
   }
  },
  {
-  "seq": 197,
+  "seq": 198,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.895",
+  "at": "2026-11-14T08:46:27.454",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3707,10 +3870,10 @@
   }
  },
  {
-  "seq": 198,
+  "seq": 199,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.911",
+  "at": "2026-11-14T08:46:27.469",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3721,10 +3884,10 @@
   }
  },
  {
-  "seq": 199,
+  "seq": 200,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.927",
+  "at": "2026-11-14T08:46:27.485",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3735,10 +3898,10 @@
   }
  },
  {
-  "seq": 200,
+  "seq": 201,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.943",
+  "at": "2026-11-14T08:46:27.501",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3749,10 +3912,10 @@
   }
  },
  {
-  "seq": 201,
+  "seq": 202,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.958",
+  "at": "2026-11-14T08:46:27.516",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3763,10 +3926,10 @@
   }
  },
  {
-  "seq": 202,
+  "seq": 203,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.974",
+  "at": "2026-11-14T08:46:27.532",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3777,10 +3940,10 @@
   }
  },
  {
-  "seq": 203,
+  "seq": 204,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:23.989",
+  "at": "2026-11-14T08:46:27.547",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3791,10 +3954,10 @@
   }
  },
  {
-  "seq": 204,
+  "seq": 205,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:24.005",
+  "at": "2026-11-14T08:46:27.561",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3805,10 +3968,10 @@
   }
  },
  {
-  "seq": 205,
+  "seq": 206,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:24.020",
+  "at": "2026-11-14T08:46:27.579",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3819,10 +3982,10 @@
   }
  },
  {
-  "seq": 206,
+  "seq": 207,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:24.036",
+  "at": "2026-11-14T08:46:27.593",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3833,10 +3996,10 @@
   }
  },
  {
-  "seq": 207,
+  "seq": 208,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:24.051",
+  "at": "2026-11-14T08:46:27.608",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3847,10 +4010,10 @@
   }
  },
  {
-  "seq": 208,
+  "seq": 209,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:24.067",
+  "at": "2026-11-14T08:46:27.623",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3861,10 +4024,10 @@
   }
  },
  {
-  "seq": 209,
+  "seq": 210,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:24.083",
+  "at": "2026-11-14T08:46:27.639",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3875,10 +4038,10 @@
   }
  },
  {
-  "seq": 210,
+  "seq": 211,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:24.097",
+  "at": "2026-11-14T08:46:27.655",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3889,10 +4052,10 @@
   }
  },
  {
-  "seq": 211,
+  "seq": 212,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:24.113",
+  "at": "2026-11-14T08:46:27.671",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3903,10 +4066,10 @@
   }
  },
  {
-  "seq": 212,
+  "seq": 213,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:24.129",
+  "at": "2026-11-14T08:46:27.686",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3917,10 +4080,10 @@
   }
  },
  {
-  "seq": 213,
+  "seq": 214,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:24.144",
+  "at": "2026-11-14T08:46:27.702",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3931,10 +4094,10 @@
   }
  },
  {
-  "seq": 214,
+  "seq": 215,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:24.160",
+  "at": "2026-11-14T08:46:27.718",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3945,10 +4108,10 @@
   }
  },
  {
-  "seq": 215,
+  "seq": 216,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:24.176",
+  "at": "2026-11-14T08:46:27.734",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3959,10 +4122,10 @@
   }
  },
  {
-  "seq": 216,
+  "seq": 217,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:24.190",
+  "at": "2026-11-14T08:46:27.749",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3973,10 +4136,10 @@
   }
  },
  {
-  "seq": 217,
+  "seq": 218,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:24.207",
+  "at": "2026-11-14T08:46:27.765",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -3987,10 +4150,10 @@
   }
  },
  {
-  "seq": 218,
+  "seq": 219,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:24.223",
+  "at": "2026-11-14T08:46:27.780",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -4001,10 +4164,10 @@
   }
  },
  {
-  "seq": 219,
+  "seq": 220,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:24.238",
+  "at": "2026-11-14T08:46:27.796",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -4015,10 +4178,10 @@
   }
  },
  {
-  "seq": 220,
+  "seq": 221,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:24.253",
+  "at": "2026-11-14T08:46:27.812",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -4029,10 +4192,10 @@
   }
  },
  {
-  "seq": 221,
+  "seq": 222,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:24.268",
+  "at": "2026-11-14T08:46:27.827",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -4043,10 +4206,10 @@
   }
  },
  {
-  "seq": 222,
+  "seq": 223,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:24.283",
+  "at": "2026-11-14T08:46:27.844",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -4057,10 +4220,10 @@
   }
  },
  {
-  "seq": 223,
+  "seq": 224,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:24.299",
+  "at": "2026-11-14T08:46:27.857",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -4071,10 +4234,10 @@
   }
  },
  {
-  "seq": 224,
+  "seq": 225,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:24.314",
+  "at": "2026-11-14T08:46:27.873",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -4085,10 +4248,10 @@
   }
  },
  {
-  "seq": 225,
+  "seq": 226,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:24.330",
+  "at": "2026-11-14T08:46:27.889",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -4099,10 +4262,10 @@
   }
  },
  {
-  "seq": 226,
+  "seq": 227,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:24.345",
+  "at": "2026-11-14T08:46:27.904",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -4113,10 +4276,10 @@
   }
  },
  {
-  "seq": 227,
+  "seq": 228,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:24.361",
+  "at": "2026-11-14T08:46:27.920",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -4127,10 +4290,10 @@
   }
  },
  {
-  "seq": 228,
+  "seq": 229,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:24.377",
+  "at": "2026-11-14T08:46:27.937",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -4141,10 +4304,10 @@
   }
  },
  {
-  "seq": 229,
+  "seq": 230,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:24.393",
+  "at": "2026-11-14T08:46:27.951",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -4155,10 +4318,10 @@
   }
  },
  {
-  "seq": 230,
+  "seq": 231,
   "case_id": "CASE-0001",
   "type": "llm",
-  "at": "2026-11-14T01:21:24.409",
+  "at": "2026-11-14T08:46:27.967",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -4169,16 +4332,16 @@
   }
  },
  {
-  "seq": 231,
+  "seq": 232,
   "case_id": "CASE-0001",
   "type": "llm_done",
-  "at": "2026-11-14T01:21:24.429",
+  "at": "2026-11-14T08:46:27.985",
   "data": {
    "node": "respond",
    "role": "writer",
    "provider": "mock",
    "model": "scripted",
-   "ms": 1046,
+   "ms": 1057,
    "text": "नमस्ते रमेश शर्मा जी, आपकी शिकायत सही है। आपका साउंडबॉक्स 12 सितंबर को वापस ले लिया गया था, फिर भी 1 अक्टूबर और 1 नवंबर को किराया कटा — यह हमारी गलती थी। ₹998 आपके खाते में वापस भेज दिए गए हैं। आपका रेंटल प्लान (SUB-1001-A) भी बंद कर दिया गया है। पिकअप से पहले की 1 कटौती सही थी। असुविधा के लिए खेद है। केस नंबर: CASE-0001",
    "usage": null,
    "live": false,
@@ -4186,10 +4349,10 @@
   }
  },
  {
-  "seq": 232,
+  "seq": 233,
   "case_id": "CASE-0001",
   "type": "message",
-  "at": "2026-11-14T01:21:24.429",
+  "at": "2026-11-14T08:46:27.985",
   "data": {
    "role": "munim",
    "text": "नमस्ते रमेश शर्मा जी, आपकी शिकायत सही है। आपका साउंडबॉक्स 12 सितंबर को वापस ले लिया गया था, फिर भी 1 अक्टूबर और 1 नवंबर को किराया कटा — यह हमारी गलती थी। ₹998 आपके खाते में वापस भेज दिए गए हैं। आपका रेंटल प्लान (SUB-1001-A) भी बंद कर दिया गया है। पिकअप से पहले की 1 कटौती सही थी। असुविधा के लिए खेद है। केस नंबर: CASE-0001",
@@ -4199,23 +4362,23 @@
   }
  },
  {
-  "seq": 233,
+  "seq": 234,
   "case_id": "CASE-0001",
   "type": "node",
-  "at": "2026-11-14T01:21:24.429",
+  "at": "2026-11-14T08:46:27.985",
   "data": {
    "node": "respond",
    "agent": "Communicator Agent",
    "status": "end",
-   "ms": 1048,
+   "ms": 1059,
    "summary": "68 words · hi · mock"
   }
  },
  {
-  "seq": 234,
+  "seq": 235,
   "case_id": "CASE-0001",
   "type": "node",
-  "at": "2026-11-14T01:21:24.482",
+  "at": "2026-11-14T08:46:28.084",
   "data": {
    "node": "sweep",
    "agent": "Detective",
@@ -4223,10 +4386,10 @@
   }
  },
  {
-  "seq": 235,
+  "seq": 236,
   "case_id": "CASE-0001",
   "type": "sweep",
-  "at": "2026-11-14T01:21:24.482",
+  "at": "2026-11-14T08:46:28.084",
   "data": {
    "sweep_id": "SWP-0001",
    "suspect_id": "ZOMBIE_BILLING",
@@ -4814,36 +4977,36 @@
   }
  },
  {
-  "seq": 236,
+  "seq": 237,
   "case_id": "CASE-0001",
   "type": "node",
-  "at": "2026-11-14T01:21:24.482",
+  "at": "2026-11-14T08:46:28.084",
   "data": {
    "node": "sweep",
    "agent": "Detective",
    "status": "end",
-   "ms": 51,
+   "ms": 97,
    "summary": "ZOMBIE_BILLING in 36 more merchants · ₹32,029 queued for sign-off"
-  }
- },
- {
-  "seq": 237,
-  "case_id": "CASE-0001",
-  "type": "done",
-  "at": "2026-11-14T01:21:24.488",
-  "data": {
-   "case_id": "CASE-0001",
-   "status": "RESOLVED",
-   "outcome": "REFUND_DUE",
-   "decision": "CORRECTED",
-   "ms": 4035
   }
  },
  {
   "seq": 238,
   "case_id": "CASE-0001",
+  "type": "done",
+  "at": "2026-11-14T08:46:28.090",
+  "data": {
+   "case_id": "CASE-0001",
+   "status": "RESOLVED",
+   "outcome": "REFUND_DUE",
+   "decision": "CORRECTED",
+   "ms": 4141
+  }
+ },
+ {
+  "seq": 239,
+  "case_id": "CASE-0001",
   "type": "message",
-  "at": "2026-11-14T01:21:24.497",
+  "at": "2026-11-14T08:46:28.099",
   "data": {
    "role": "team",
    "text": "Why wasn't the 1 Sep ₹499 refunded?",
@@ -4854,10 +5017,10 @@
   }
  },
  {
-  "seq": 239,
+  "seq": 240,
   "case_id": "CASE-0001",
   "type": "llm_done",
-  "at": "2026-11-14T01:21:24.497",
+  "at": "2026-11-14T08:46:28.099",
   "data": {
    "node": "chat",
    "role": "reasoner",
@@ -4871,10 +5034,10 @@
   }
  },
  {
-  "seq": 240,
+  "seq": 241,
   "case_id": "CASE-0001",
   "type": "message",
-  "at": "2026-11-14T01:21:24.497",
+  "at": "2026-11-14T08:46:28.099",
   "data": {
    "role": "munim",
    "text": "Ramesh's Soundbox was picked up on 12 Sep. Rent before that was valid; only the rent debited after it (1 Oct, 1 Nov) was refunded.",

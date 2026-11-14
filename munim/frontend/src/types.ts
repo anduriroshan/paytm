@@ -11,6 +11,7 @@ export const EVENT_TYPES = [
   "intake",
   "hunch",
   "trail",
+  "sources",
   "statements",
   "suspect",
   "probe",
@@ -281,6 +282,50 @@ export interface Probe {
   rows?: unknown[][];
   error?: string | null;
   ms?: number;
+}
+
+/** One connected source (backend/sources/*.yaml) and what Munim did with it for this case. */
+export interface SourceHit {
+  id: string;
+  name: string;
+  kind: "database" | "file" | "api" | string;
+  reached: boolean;
+  why?: string[];
+  status?: "ok" | "error" | "not_needed" | string;
+  records?: number;
+  tables?: string[];
+  columns?: string[];
+  rows?: unknown[][];
+  error?: string | null;
+  ms?: number | null;
+}
+
+export interface SourcesReport {
+  sources: SourceHit[];
+  problems?: string[];
+}
+
+/** GET /api/sources: one row per source file. Never contains header values or API keys. */
+export interface SourceListing {
+  id: string;
+  name: string;
+  kind: "database" | "file" | "api" | string;
+  enabled: boolean;
+  file: string;
+  holds: string;
+  when: { always: boolean; topics: string[]; claims: string[]; words: string[] };
+  tables: string[];
+  actions: string[];
+  blocked_actions: string[];
+  max_rows: number;
+  detail: { path?: string; url?: string; headers?: string[]; rows_at?: string; merchant_column?: string };
+  warnings: string[];
+}
+
+export interface SourcesList {
+  dir: string;
+  sources: SourceListing[];
+  problems: string[];
 }
 
 export type Outcome = "REFUND_DUE" | "NO_FAULT" | "HOLD_EXPLAINED" | "IMPROVISED" | "NO_EVIDENCE" | "UNSOLVED";

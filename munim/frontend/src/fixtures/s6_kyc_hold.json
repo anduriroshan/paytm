@@ -3,7 +3,7 @@
   "seq": 1,
   "case_id": "CASE-0006",
   "type": "case",
-  "at": "2026-11-14T01:21:37.975",
+  "at": "2026-11-14T08:46:41.645",
   "data": {
    "case_id": "CASE-0006",
    "merchant": {
@@ -23,7 +23,7 @@
   "seq": 2,
   "case_id": "CASE-0006",
   "type": "message",
-  "at": "2026-11-14T01:21:37.975",
+  "at": "2026-11-14T08:46:41.645",
   "data": {
    "role": "merchant",
    "text": "గత మూడు రోజులుగా నా సెటిల్‌మెంట్ డబ్బులు బ్యాంక్‌కి రాలేదు. ఏం జరిగింది? త్వరగా చెప్పండి.",
@@ -35,7 +35,7 @@
   "seq": 3,
   "case_id": "CASE-0006",
   "type": "node",
-  "at": "2026-11-14T01:21:37.977",
+  "at": "2026-11-14T08:46:41.647",
   "data": {
    "node": "hunch",
    "agent": "Detective",
@@ -46,7 +46,7 @@
   "seq": 4,
   "case_id": "CASE-0006",
   "type": "hunch",
-  "at": "2026-11-14T01:21:37.977",
+  "at": "2026-11-14T08:46:41.647",
   "data": {
    "source": "mock",
    "probabilities": {
@@ -67,7 +67,7 @@
   "seq": 5,
   "case_id": "CASE-0006",
   "type": "node",
-  "at": "2026-11-14T01:21:37.977",
+  "at": "2026-11-14T08:46:41.647",
   "data": {
    "node": "hunch",
    "agent": "Detective",
@@ -80,7 +80,7 @@
   "seq": 6,
   "case_id": "CASE-0006",
   "type": "node",
-  "at": "2026-11-14T01:21:37.977",
+  "at": "2026-11-14T08:46:41.647",
   "data": {
    "node": "intake",
    "agent": "Intake Agent",
@@ -91,7 +91,7 @@
   "seq": 7,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:37.977",
+  "at": "2026-11-14T08:46:41.647",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -105,7 +105,7 @@
   "seq": 8,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.028",
+  "at": "2026-11-14T08:46:41.696",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -119,7 +119,7 @@
   "seq": 9,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.044",
+  "at": "2026-11-14T08:46:41.711",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -133,7 +133,7 @@
   "seq": 10,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.059",
+  "at": "2026-11-14T08:46:41.725",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -147,7 +147,7 @@
   "seq": 11,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.076",
+  "at": "2026-11-14T08:46:41.741",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -161,7 +161,7 @@
   "seq": 12,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.091",
+  "at": "2026-11-14T08:46:41.756",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -175,7 +175,7 @@
   "seq": 13,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.106",
+  "at": "2026-11-14T08:46:41.771",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -189,7 +189,7 @@
   "seq": 14,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.122",
+  "at": "2026-11-14T08:46:41.787",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -203,7 +203,7 @@
   "seq": 15,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.137",
+  "at": "2026-11-14T08:46:41.803",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -217,7 +217,7 @@
   "seq": 16,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.153",
+  "at": "2026-11-14T08:46:41.818",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -231,7 +231,7 @@
   "seq": 17,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.168",
+  "at": "2026-11-14T08:46:41.834",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -245,7 +245,7 @@
   "seq": 18,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.184",
+  "at": "2026-11-14T08:46:41.850",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -259,7 +259,7 @@
   "seq": 19,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.199",
+  "at": "2026-11-14T08:46:41.865",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -273,7 +273,7 @@
   "seq": 20,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.215",
+  "at": "2026-11-14T08:46:41.881",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -287,7 +287,7 @@
   "seq": 21,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.231",
+  "at": "2026-11-14T08:46:41.897",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -301,7 +301,7 @@
   "seq": 22,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.246",
+  "at": "2026-11-14T08:46:41.912",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -315,7 +315,7 @@
   "seq": 23,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.262",
+  "at": "2026-11-14T08:46:41.927",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -329,7 +329,7 @@
   "seq": 24,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.278",
+  "at": "2026-11-14T08:46:41.942",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -343,7 +343,7 @@
   "seq": 25,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.294",
+  "at": "2026-11-14T08:46:41.958",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -357,7 +357,7 @@
   "seq": 26,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.310",
+  "at": "2026-11-14T08:46:41.974",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -371,7 +371,7 @@
   "seq": 27,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.326",
+  "at": "2026-11-14T08:46:41.990",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -385,7 +385,7 @@
   "seq": 28,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.341",
+  "at": "2026-11-14T08:46:42.004",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -399,7 +399,7 @@
   "seq": 29,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.355",
+  "at": "2026-11-14T08:46:42.020",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -413,7 +413,7 @@
   "seq": 30,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.371",
+  "at": "2026-11-14T08:46:42.035",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -427,7 +427,7 @@
   "seq": 31,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.386",
+  "at": "2026-11-14T08:46:42.051",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -441,7 +441,7 @@
   "seq": 32,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.402",
+  "at": "2026-11-14T08:46:42.067",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -455,7 +455,7 @@
   "seq": 33,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.417",
+  "at": "2026-11-14T08:46:42.082",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -469,7 +469,7 @@
   "seq": 34,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.433",
+  "at": "2026-11-14T08:46:42.097",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -483,7 +483,7 @@
   "seq": 35,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.449",
+  "at": "2026-11-14T08:46:42.113",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -497,7 +497,7 @@
   "seq": 36,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.465",
+  "at": "2026-11-14T08:46:42.128",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -511,7 +511,7 @@
   "seq": 37,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.481",
+  "at": "2026-11-14T08:46:42.144",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -525,7 +525,7 @@
   "seq": 38,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.496",
+  "at": "2026-11-14T08:46:42.159",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -539,7 +539,7 @@
   "seq": 39,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.512",
+  "at": "2026-11-14T08:46:42.176",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -553,7 +553,7 @@
   "seq": 40,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.528",
+  "at": "2026-11-14T08:46:42.191",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -567,7 +567,7 @@
   "seq": 41,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.545",
+  "at": "2026-11-14T08:46:42.206",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -581,7 +581,7 @@
   "seq": 42,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.559",
+  "at": "2026-11-14T08:46:42.223",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -595,7 +595,7 @@
   "seq": 43,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.575",
+  "at": "2026-11-14T08:46:42.238",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -609,7 +609,7 @@
   "seq": 44,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.590",
+  "at": "2026-11-14T08:46:42.254",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -623,7 +623,7 @@
   "seq": 45,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.606",
+  "at": "2026-11-14T08:46:42.271",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -637,7 +637,7 @@
   "seq": 46,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.620",
+  "at": "2026-11-14T08:46:42.285",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -651,7 +651,7 @@
   "seq": 47,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.636",
+  "at": "2026-11-14T08:46:42.300",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -665,7 +665,7 @@
   "seq": 48,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.652",
+  "at": "2026-11-14T08:46:42.316",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -679,7 +679,7 @@
   "seq": 49,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:38.667",
+  "at": "2026-11-14T08:46:42.331",
   "data": {
    "node": "intake",
    "role": "reasoner",
@@ -693,13 +693,13 @@
   "seq": 50,
   "case_id": "CASE-0006",
   "type": "llm_done",
-  "at": "2026-11-14T01:21:38.695",
+  "at": "2026-11-14T08:46:42.361",
   "data": {
    "node": "intake",
    "role": "reasoner",
    "provider": "mock",
    "model": "scripted",
-   "ms": 705,
+   "ms": 699,
    "text": "{\"language\": \"te\", \"intent\": \"SETTLEMENT_ISSUE\", \"summary_en\": \"Merchant's settlements have not reached the bank for the last 3 days; asks what happened.\", \"text_en\": \"For the last three days my settlement money hasn't reached the bank. What happened? Please tell me quickly.\", \"claims\": [{\"kind\": \"SETTLEMENT_NOT_RECEIVED\", \"text\": \"గత మూడు రోజులుగా నా సెటిల్‌మెంట్ డబ్బులు బ్యాంక్‌కి రాలేదు\", \"date\": null, \"amount_paise\": null, \"count\": 3}], \"injection_suspected\": false, \"sentiment\": \"frustrated\"}",
    "usage": null,
    "live": false,
@@ -710,7 +710,7 @@
   "seq": 51,
   "case_id": "CASE-0006",
   "type": "intake",
-  "at": "2026-11-14T01:21:38.695",
+  "at": "2026-11-14T08:46:42.361",
   "data": {
    "language": "te",
    "intent": "SETTLEMENT_ISSUE",
@@ -733,12 +733,12 @@
   "seq": 52,
   "case_id": "CASE-0006",
   "type": "node",
-  "at": "2026-11-14T01:21:38.695",
+  "at": "2026-11-14T08:46:42.361",
   "data": {
    "node": "intake",
    "agent": "Intake Agent",
    "status": "end",
-   "ms": 717,
+   "ms": 714,
    "summary": "SETTLEMENT_ISSUE · 1 claims · te"
   }
  },
@@ -746,7 +746,7 @@
   "seq": 53,
   "case_id": "CASE-0006",
   "type": "node",
-  "at": "2026-11-14T01:21:38.737",
+  "at": "2026-11-14T08:46:42.408",
   "data": {
    "node": "trail",
    "agent": "Detective",
@@ -757,7 +757,7 @@
   "seq": 54,
   "case_id": "CASE-0006",
   "type": "trail",
-  "at": "2026-11-14T01:21:38.737",
+  "at": "2026-11-14T08:46:42.408",
   "data": {
    "merchant_id": "M1006",
    "window_start": "2026-11-10",
@@ -1074,21 +1074,145 @@
  {
   "seq": 55,
   "case_id": "CASE-0006",
-  "type": "node",
-  "at": "2026-11-14T01:21:38.737",
+  "type": "sources",
+  "at": "2026-11-14T08:46:42.409",
   "data": {
-   "node": "trail",
-   "agent": "Detective",
-   "status": "end",
-   "ms": 41,
-   "summary": "10 linked records · 3 disputed movements"
+   "sources": [
+    {
+     "id": "ledger",
+     "name": "Money ledger",
+     "kind": "database",
+     "reached": true,
+     "why": [
+      "always"
+     ],
+     "status": "ok",
+     "records": 1,
+     "tables": [
+      "merchants",
+      "mandates",
+      "ledger_entries"
+     ],
+     "columns": [],
+     "rows": [],
+     "error": null,
+     "ms": null
+    },
+    {
+     "id": "holds-kyc",
+     "name": "Holds and KYC",
+     "kind": "database",
+     "reached": true,
+     "why": [
+      "settlement complaint",
+      "claim: settlement not received"
+     ],
+     "status": "ok",
+     "records": 2,
+     "tables": [
+      "holds",
+      "kyc_documents"
+     ],
+     "columns": [],
+     "rows": [],
+     "error": null,
+     "ms": null
+    },
+    {
+     "id": "payouts",
+     "name": "Payments and payouts",
+     "kind": "database",
+     "reached": true,
+     "why": [
+      "settlement complaint",
+      "claim: settlement not received",
+      "word: settlement"
+     ],
+     "status": "ok",
+     "records": 7,
+     "tables": [
+      "settlements",
+      "payments",
+      "chargebacks"
+     ],
+     "columns": [],
+     "rows": [],
+     "error": null,
+     "ms": null
+    },
+    {
+     "id": "devices",
+     "name": "Devices and rent",
+     "kind": "database",
+     "reached": false,
+     "why": [],
+     "status": "not_needed",
+     "records": 0,
+     "tables": [
+      "plans",
+      "devices",
+      "device_events",
+      "pickup_tickets",
+      "subscriptions"
+     ],
+     "columns": [],
+     "rows": [],
+     "error": null,
+     "ms": null
+    },
+    {
+     "id": "loans",
+     "name": "Loans and instalments",
+     "kind": "database",
+     "reached": false,
+     "why": [],
+     "status": "not_needed",
+     "records": 0,
+     "tables": [
+      "loans",
+      "edi_attempts"
+     ],
+     "columns": [],
+     "rows": [],
+     "error": null,
+     "ms": null
+    },
+    {
+     "id": "courier-scans",
+     "name": "Courier scans (example file)",
+     "kind": "file",
+     "reached": false,
+     "why": [],
+     "status": "not_needed",
+     "records": 0,
+     "tables": [],
+     "columns": [],
+     "rows": [],
+     "error": null,
+     "ms": null
+    }
+   ],
+   "problems": []
   }
  },
  {
   "seq": 56,
   "case_id": "CASE-0006",
   "type": "node",
-  "at": "2026-11-14T01:21:38.771",
+  "at": "2026-11-14T08:46:42.409",
+  "data": {
+   "node": "trail",
+   "agent": "Detective",
+   "status": "end",
+   "ms": 46,
+   "summary": "10 linked records · 3 disputed movements"
+  }
+ },
+ {
+  "seq": 57,
+  "case_id": "CASE-0006",
+  "type": "node",
+  "at": "2026-11-14T08:46:42.444",
   "data": {
    "node": "statements",
    "agent": "Detective",
@@ -1096,10 +1220,10 @@
   }
  },
  {
-  "seq": 57,
+  "seq": 58,
   "case_id": "CASE-0006",
   "type": "statements",
-  "at": "2026-11-14T01:21:38.771",
+  "at": "2026-11-14T08:46:42.444",
   "data": {
    "checks": [
     {
@@ -1147,23 +1271,23 @@
   }
  },
  {
-  "seq": 58,
+  "seq": 59,
   "case_id": "CASE-0006",
   "type": "node",
-  "at": "2026-11-14T01:21:38.771",
+  "at": "2026-11-14T08:46:42.444",
   "data": {
    "node": "statements",
    "agent": "Detective",
    "status": "end",
-   "ms": 33,
+   "ms": 34,
    "summary": "1 verified"
   }
  },
  {
-  "seq": 59,
+  "seq": 60,
   "case_id": "CASE-0006",
   "type": "node",
-  "at": "2026-11-14T01:21:38.819",
+  "at": "2026-11-14T08:46:42.494",
   "data": {
    "node": "lineup",
    "agent": "Detective",
@@ -1171,10 +1295,10 @@
   }
  },
  {
-  "seq": 60,
+  "seq": 61,
   "case_id": "CASE-0006",
   "type": "suspect",
-  "at": "2026-11-14T01:21:38.931",
+  "at": "2026-11-14T08:46:42.598",
   "data": {
    "suspect_id": "KYC_HOLD",
    "title": "Settlement held for KYC",
@@ -1232,10 +1356,10 @@
   }
  },
  {
-  "seq": 61,
+  "seq": 62,
   "case_id": "CASE-0006",
   "type": "suspect",
-  "at": "2026-11-14T01:21:39.040",
+  "at": "2026-11-14T08:46:42.707",
   "data": {
    "suspect_id": "RISK_HOLD",
    "title": "Settlement held by risk",
@@ -1260,10 +1384,10 @@
   }
  },
  {
-  "seq": 62,
+  "seq": 63,
   "case_id": "CASE-0006",
   "type": "suspect",
-  "at": "2026-11-14T01:21:39.149",
+  "at": "2026-11-14T08:46:42.816",
   "data": {
    "suspect_id": "ZOMBIE_BILLING",
    "title": "Billing continued after device return",
@@ -1280,10 +1404,10 @@
   }
  },
  {
-  "seq": 63,
+  "seq": 64,
   "case_id": "CASE-0006",
   "type": "suspect",
-  "at": "2026-11-14T01:21:39.259",
+  "at": "2026-11-14T08:46:42.926",
   "data": {
    "suspect_id": "DUPLICATE_SUBSCRIPTION",
    "title": "Two subscriptions on one device",
@@ -1300,10 +1424,10 @@
   }
  },
  {
-  "seq": 64,
+  "seq": 65,
   "case_id": "CASE-0006",
   "type": "suspect",
-  "at": "2026-11-14T01:21:39.368",
+  "at": "2026-11-14T08:46:43.034",
   "data": {
    "suspect_id": "DUPLICATE_EDI",
    "title": "Loan instalment debited twice",
@@ -1320,10 +1444,10 @@
   }
  },
  {
-  "seq": 65,
+  "seq": 66,
   "case_id": "CASE-0006",
   "type": "suspect",
-  "at": "2026-11-14T01:21:39.477",
+  "at": "2026-11-14T08:46:43.145",
   "data": {
    "suspect_id": "PICKUP_NOT_COMPLETED",
    "title": "Return requested but never collected",
@@ -1340,10 +1464,10 @@
   }
  },
  {
-  "seq": 66,
+  "seq": 67,
   "case_id": "CASE-0006",
   "type": "suspect",
-  "at": "2026-11-14T01:21:39.586",
+  "at": "2026-11-14T08:46:43.254",
   "data": {
    "suspect_id": "ALREADY_REFUNDED",
    "title": "Already refunded",
@@ -1360,23 +1484,23 @@
   }
  },
  {
-  "seq": 67,
+  "seq": 68,
   "case_id": "CASE-0006",
   "type": "node",
-  "at": "2026-11-14T01:21:39.587",
+  "at": "2026-11-14T08:46:43.254",
   "data": {
    "node": "lineup",
    "agent": "Detective",
    "status": "end",
-   "ms": 813,
+   "ms": 808,
    "summary": "MATCH: KYC_HOLD · 1 eliminated"
   }
  },
  {
-  "seq": 68,
+  "seq": 69,
   "case_id": "CASE-0006",
   "type": "node",
-  "at": "2026-11-14T01:21:39.600",
+  "at": "2026-11-14T08:46:43.268",
   "data": {
    "node": "verdict",
    "agent": "Detective",
@@ -1384,10 +1508,10 @@
   }
  },
  {
-  "seq": 69,
+  "seq": 70,
   "case_id": "CASE-0006",
   "type": "node",
-  "at": "2026-11-14T01:21:39.600",
+  "at": "2026-11-14T08:46:43.268",
   "data": {
    "node": "improvise",
    "agent": "Detective",
@@ -1396,10 +1520,10 @@
   }
  },
  {
-  "seq": 70,
+  "seq": 71,
   "case_id": "CASE-0006",
   "type": "verdict",
-  "at": "2026-11-14T01:21:39.600",
+  "at": "2026-11-14T08:46:43.268",
   "data": {
    "outcome": "HOLD_EXPLAINED",
    "culprits": [
@@ -1457,23 +1581,23 @@
   }
  },
  {
-  "seq": 71,
+  "seq": 72,
   "case_id": "CASE-0006",
   "type": "node",
-  "at": "2026-11-14T01:21:39.600",
+  "at": "2026-11-14T08:46:43.268",
   "data": {
    "node": "verdict",
    "agent": "Detective",
    "status": "end",
-   "ms": 11,
+   "ms": 10,
    "summary": "HOLD_EXPLAINED (HIGH)"
   }
  },
  {
-  "seq": 72,
+  "seq": 73,
   "case_id": "CASE-0006",
   "type": "node",
-  "at": "2026-11-14T01:21:39.601",
+  "at": "2026-11-14T08:46:43.272",
   "data": {
    "node": "propose",
    "agent": "Resolver Agent",
@@ -1481,10 +1605,10 @@
   }
  },
  {
-  "seq": 73,
+  "seq": 74,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:39.601",
+  "at": "2026-11-14T08:46:43.272",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -1495,10 +1619,10 @@
   }
  },
  {
-  "seq": 74,
+  "seq": 75,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:39.662",
+  "at": "2026-11-14T08:46:43.331",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -1509,10 +1633,10 @@
   }
  },
  {
-  "seq": 75,
+  "seq": 76,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:39.678",
+  "at": "2026-11-14T08:46:43.347",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -1523,10 +1647,10 @@
   }
  },
  {
-  "seq": 76,
+  "seq": 77,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:39.694",
+  "at": "2026-11-14T08:46:43.362",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -1537,10 +1661,10 @@
   }
  },
  {
-  "seq": 77,
+  "seq": 78,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:39.710",
+  "at": "2026-11-14T08:46:43.378",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -1551,10 +1675,10 @@
   }
  },
  {
-  "seq": 78,
+  "seq": 79,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:39.726",
+  "at": "2026-11-14T08:46:43.394",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -1565,10 +1689,10 @@
   }
  },
  {
-  "seq": 79,
+  "seq": 80,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:39.742",
+  "at": "2026-11-14T08:46:43.409",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -1579,10 +1703,10 @@
   }
  },
  {
-  "seq": 80,
+  "seq": 81,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:39.758",
+  "at": "2026-11-14T08:46:43.425",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -1593,10 +1717,10 @@
   }
  },
  {
-  "seq": 81,
+  "seq": 82,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:39.772",
+  "at": "2026-11-14T08:46:43.440",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -1607,10 +1731,10 @@
   }
  },
  {
-  "seq": 82,
+  "seq": 83,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:39.788",
+  "at": "2026-11-14T08:46:43.455",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -1621,10 +1745,10 @@
   }
  },
  {
-  "seq": 83,
+  "seq": 84,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:39.803",
+  "at": "2026-11-14T08:46:43.472",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -1635,10 +1759,10 @@
   }
  },
  {
-  "seq": 84,
+  "seq": 85,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:39.819",
+  "at": "2026-11-14T08:46:43.487",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -1649,10 +1773,10 @@
   }
  },
  {
-  "seq": 85,
+  "seq": 86,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:39.834",
+  "at": "2026-11-14T08:46:43.503",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -1663,10 +1787,10 @@
   }
  },
  {
-  "seq": 86,
+  "seq": 87,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:39.849",
+  "at": "2026-11-14T08:46:43.518",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -1677,10 +1801,10 @@
   }
  },
  {
-  "seq": 87,
+  "seq": 88,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:39.865",
+  "at": "2026-11-14T08:46:43.534",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -1691,10 +1815,10 @@
   }
  },
  {
-  "seq": 88,
+  "seq": 89,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:39.881",
+  "at": "2026-11-14T08:46:43.550",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -1705,10 +1829,10 @@
   }
  },
  {
-  "seq": 89,
+  "seq": 90,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:39.896",
+  "at": "2026-11-14T08:46:43.565",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -1719,10 +1843,10 @@
   }
  },
  {
-  "seq": 90,
+  "seq": 91,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:39.912",
+  "at": "2026-11-14T08:46:43.581",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -1733,10 +1857,10 @@
   }
  },
  {
-  "seq": 91,
+  "seq": 92,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:39.928",
+  "at": "2026-11-14T08:46:43.596",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -1747,10 +1871,10 @@
   }
  },
  {
-  "seq": 92,
+  "seq": 93,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:39.943",
+  "at": "2026-11-14T08:46:43.612",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -1761,10 +1885,10 @@
   }
  },
  {
-  "seq": 93,
+  "seq": 94,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:39.958",
+  "at": "2026-11-14T08:46:43.626",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -1775,10 +1899,10 @@
   }
  },
  {
-  "seq": 94,
+  "seq": 95,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:39.973",
+  "at": "2026-11-14T08:46:43.643",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -1789,10 +1913,10 @@
   }
  },
  {
-  "seq": 95,
+  "seq": 96,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:39.989",
+  "at": "2026-11-14T08:46:43.658",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -1803,10 +1927,10 @@
   }
  },
  {
-  "seq": 96,
+  "seq": 97,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.004",
+  "at": "2026-11-14T08:46:43.673",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -1817,10 +1941,10 @@
   }
  },
  {
-  "seq": 97,
+  "seq": 98,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.020",
+  "at": "2026-11-14T08:46:43.689",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -1831,10 +1955,10 @@
   }
  },
  {
-  "seq": 98,
+  "seq": 99,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.035",
+  "at": "2026-11-14T08:46:43.705",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -1845,10 +1969,10 @@
   }
  },
  {
-  "seq": 99,
+  "seq": 100,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.051",
+  "at": "2026-11-14T08:46:43.720",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -1859,10 +1983,10 @@
   }
  },
  {
-  "seq": 100,
+  "seq": 101,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.067",
+  "at": "2026-11-14T08:46:43.736",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -1873,10 +1997,10 @@
   }
  },
  {
-  "seq": 101,
+  "seq": 102,
   "case_id": "CASE-0006",
   "type": "llm_done",
-  "at": "2026-11-14T01:21:40.096",
+  "at": "2026-11-14T08:46:43.764",
   "data": {
    "node": "propose",
    "role": "reasoner",
@@ -1890,10 +2014,10 @@
   }
  },
  {
-  "seq": 102,
+  "seq": 103,
   "case_id": "CASE-0006",
   "type": "proposal",
-  "at": "2026-11-14T01:21:40.096",
+  "at": "2026-11-14T08:46:43.764",
   "data": {
    "actions": [
     {
@@ -1909,23 +2033,23 @@
   }
  },
  {
-  "seq": 103,
+  "seq": 104,
   "case_id": "CASE-0006",
   "type": "node",
-  "at": "2026-11-14T01:21:40.096",
+  "at": "2026-11-14T08:46:43.764",
   "data": {
    "node": "propose",
    "agent": "Resolver Agent",
    "status": "end",
-   "ms": 494,
+   "ms": 493,
    "summary": "SEND_KYC_LINK"
   }
  },
  {
-  "seq": 104,
+  "seq": 105,
   "case_id": "CASE-0006",
   "type": "node",
-  "at": "2026-11-14T01:21:40.102",
+  "at": "2026-11-14T08:46:43.773",
   "data": {
    "node": "firewall",
    "agent": "Action Firewall",
@@ -1933,10 +2057,10 @@
   }
  },
  {
-  "seq": 105,
+  "seq": 106,
   "case_id": "CASE-0006",
   "type": "firewall",
-  "at": "2026-11-14T01:21:40.102",
+  "at": "2026-11-14T08:46:43.773",
   "data": {
    "decision": "ALLOW",
    "actions": [
@@ -2032,23 +2156,23 @@
   }
  },
  {
-  "seq": 106,
+  "seq": 107,
   "case_id": "CASE-0006",
   "type": "node",
-  "at": "2026-11-14T01:21:40.102",
+  "at": "2026-11-14T08:46:43.773",
   "data": {
    "node": "firewall",
    "agent": "Action Firewall",
    "status": "end",
-   "ms": 4,
+   "ms": 7,
    "summary": "ALLOW: SEND_KYC_LINK→ALLOW"
   }
  },
  {
-  "seq": 107,
+  "seq": 108,
   "case_id": "CASE-0006",
   "type": "node",
-  "at": "2026-11-14T01:21:40.106",
+  "at": "2026-11-14T08:46:43.780",
   "data": {
    "node": "execute",
    "agent": "Executor",
@@ -2056,10 +2180,10 @@
   }
  },
  {
-  "seq": 108,
+  "seq": 109,
   "case_id": "CASE-0006",
   "type": "execution",
-  "at": "2026-11-14T01:21:40.106",
+  "at": "2026-11-14T08:46:43.780",
   "data": {
    "results": [
     {
@@ -2074,23 +2198,23 @@
   }
  },
  {
-  "seq": 109,
+  "seq": 110,
   "case_id": "CASE-0006",
   "type": "node",
-  "at": "2026-11-14T01:21:40.106",
+  "at": "2026-11-14T08:46:43.780",
   "data": {
    "node": "execute",
    "agent": "Executor",
    "status": "end",
-   "ms": 3,
+   "ms": 5,
    "summary": "1 executed"
   }
  },
  {
-  "seq": 110,
+  "seq": 111,
   "case_id": "CASE-0006",
   "type": "node",
-  "at": "2026-11-14T01:21:40.106",
+  "at": "2026-11-14T08:46:43.781",
   "data": {
    "node": "respond",
    "agent": "Communicator Agent",
@@ -2098,10 +2222,10 @@
   }
  },
  {
-  "seq": 111,
+  "seq": 112,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.106",
+  "at": "2026-11-14T08:46:43.781",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2112,10 +2236,10 @@
   }
  },
  {
-  "seq": 112,
+  "seq": 113,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.159",
+  "at": "2026-11-14T08:46:43.845",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2126,10 +2250,10 @@
   }
  },
  {
-  "seq": 113,
+  "seq": 114,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.174",
+  "at": "2026-11-14T08:46:43.859",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2140,10 +2264,10 @@
   }
  },
  {
-  "seq": 114,
+  "seq": 115,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.190",
+  "at": "2026-11-14T08:46:43.875",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2154,10 +2278,10 @@
   }
  },
  {
-  "seq": 115,
+  "seq": 116,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.208",
+  "at": "2026-11-14T08:46:43.890",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2168,10 +2292,10 @@
   }
  },
  {
-  "seq": 116,
+  "seq": 117,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.223",
+  "at": "2026-11-14T08:46:43.906",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2182,10 +2306,10 @@
   }
  },
  {
-  "seq": 117,
+  "seq": 118,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.238",
+  "at": "2026-11-14T08:46:43.921",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2196,10 +2320,10 @@
   }
  },
  {
-  "seq": 118,
+  "seq": 119,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.255",
+  "at": "2026-11-14T08:46:43.938",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2210,10 +2334,10 @@
   }
  },
  {
-  "seq": 119,
+  "seq": 120,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.270",
+  "at": "2026-11-14T08:46:43.951",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2224,10 +2348,10 @@
   }
  },
  {
-  "seq": 120,
+  "seq": 121,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.285",
+  "at": "2026-11-14T08:46:43.967",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2238,10 +2362,10 @@
   }
  },
  {
-  "seq": 121,
+  "seq": 122,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.301",
+  "at": "2026-11-14T08:46:43.983",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2252,10 +2376,10 @@
   }
  },
  {
-  "seq": 122,
+  "seq": 123,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.316",
+  "at": "2026-11-14T08:46:43.998",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2266,10 +2390,10 @@
   }
  },
  {
-  "seq": 123,
+  "seq": 124,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.332",
+  "at": "2026-11-14T08:46:44.013",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2280,10 +2404,10 @@
   }
  },
  {
-  "seq": 124,
+  "seq": 125,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.347",
+  "at": "2026-11-14T08:46:44.029",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2294,10 +2418,10 @@
   }
  },
  {
-  "seq": 125,
+  "seq": 126,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.363",
+  "at": "2026-11-14T08:46:44.044",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2308,10 +2432,10 @@
   }
  },
  {
-  "seq": 126,
+  "seq": 127,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.379",
+  "at": "2026-11-14T08:46:44.059",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2322,10 +2446,10 @@
   }
  },
  {
-  "seq": 127,
+  "seq": 128,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.394",
+  "at": "2026-11-14T08:46:44.075",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2336,10 +2460,10 @@
   }
  },
  {
-  "seq": 128,
+  "seq": 129,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.410",
+  "at": "2026-11-14T08:46:44.091",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2350,10 +2474,10 @@
   }
  },
  {
-  "seq": 129,
+  "seq": 130,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.425",
+  "at": "2026-11-14T08:46:44.106",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2364,10 +2488,10 @@
   }
  },
  {
-  "seq": 130,
+  "seq": 131,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.441",
+  "at": "2026-11-14T08:46:44.122",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2378,10 +2502,10 @@
   }
  },
  {
-  "seq": 131,
+  "seq": 132,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.456",
+  "at": "2026-11-14T08:46:44.138",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2392,10 +2516,10 @@
   }
  },
  {
-  "seq": 132,
+  "seq": 133,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.472",
+  "at": "2026-11-14T08:46:44.152",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2406,10 +2530,10 @@
   }
  },
  {
-  "seq": 133,
+  "seq": 134,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.487",
+  "at": "2026-11-14T08:46:44.168",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2420,10 +2544,10 @@
   }
  },
  {
-  "seq": 134,
+  "seq": 135,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.502",
+  "at": "2026-11-14T08:46:44.183",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2434,10 +2558,10 @@
   }
  },
  {
-  "seq": 135,
+  "seq": 136,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.518",
+  "at": "2026-11-14T08:46:44.199",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2448,10 +2572,10 @@
   }
  },
  {
-  "seq": 136,
+  "seq": 137,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.534",
+  "at": "2026-11-14T08:46:44.216",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2462,10 +2586,10 @@
   }
  },
  {
-  "seq": 137,
+  "seq": 138,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.549",
+  "at": "2026-11-14T08:46:44.230",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2476,10 +2600,10 @@
   }
  },
  {
-  "seq": 138,
+  "seq": 139,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.564",
+  "at": "2026-11-14T08:46:44.247",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2490,10 +2614,10 @@
   }
  },
  {
-  "seq": 139,
+  "seq": 140,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.580",
+  "at": "2026-11-14T08:46:44.262",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2504,10 +2628,10 @@
   }
  },
  {
-  "seq": 140,
+  "seq": 141,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.596",
+  "at": "2026-11-14T08:46:44.277",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2518,10 +2642,10 @@
   }
  },
  {
-  "seq": 141,
+  "seq": 142,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.612",
+  "at": "2026-11-14T08:46:44.293",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2532,10 +2656,10 @@
   }
  },
  {
-  "seq": 142,
+  "seq": 143,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.628",
+  "at": "2026-11-14T08:46:44.309",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2546,10 +2670,10 @@
   }
  },
  {
-  "seq": 143,
+  "seq": 144,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.644",
+  "at": "2026-11-14T08:46:44.323",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2560,10 +2684,10 @@
   }
  },
  {
-  "seq": 144,
+  "seq": 145,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.659",
+  "at": "2026-11-14T08:46:44.338",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2574,10 +2698,10 @@
   }
  },
  {
-  "seq": 145,
+  "seq": 146,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.676",
+  "at": "2026-11-14T08:46:44.353",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2588,10 +2712,10 @@
   }
  },
  {
-  "seq": 146,
+  "seq": 147,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.690",
+  "at": "2026-11-14T08:46:44.369",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2602,10 +2726,10 @@
   }
  },
  {
-  "seq": 147,
+  "seq": 148,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.705",
+  "at": "2026-11-14T08:46:44.385",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2616,10 +2740,10 @@
   }
  },
  {
-  "seq": 148,
+  "seq": 149,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.720",
+  "at": "2026-11-14T08:46:44.401",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2630,10 +2754,10 @@
   }
  },
  {
-  "seq": 149,
+  "seq": 150,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.736",
+  "at": "2026-11-14T08:46:44.417",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2644,10 +2768,10 @@
   }
  },
  {
-  "seq": 150,
+  "seq": 151,
   "case_id": "CASE-0006",
   "type": "llm",
-  "at": "2026-11-14T01:21:40.752",
+  "at": "2026-11-14T08:46:44.433",
   "data": {
    "node": "respond",
    "role": "writer",
@@ -2658,16 +2782,16 @@
   }
  },
  {
-  "seq": 151,
+  "seq": 152,
   "case_id": "CASE-0006",
   "type": "llm_done",
-  "at": "2026-11-14T01:21:40.770",
+  "at": "2026-11-14T08:46:44.450",
   "data": {
    "node": "respond",
    "role": "writer",
    "provider": "mock",
    "model": "scripted",
-   "ms": 661,
+   "ms": 667,
    "text": "నమస్కారం వెంకట రావు గారు, మీ డ్రగ్ లైసెన్స్ గడువు నవంబర్ 10న ముగిసింది. అందుకే మీ 3 సెటిల్‌మెంట్లు (మొత్తం ₹31,640) హోల్డ్‌లో ఉన్నాయి. డ్రగ్ లైసెన్స్ అప్‌డేట్ చేయడానికి మీకు KYC లింక్ పంపాం. కొత్త డాక్యుమెంట్ అప్‌లోడ్ చేయండి; ధృవీకరణ పూర్తయ్యాక హోల్డ్ విడుదల ప్రక్రియ మొదలవుతుంది. కేస్ నంబర్: CASE-0006",
    "usage": null,
    "live": false,
@@ -2675,10 +2799,10 @@
   }
  },
  {
-  "seq": 152,
+  "seq": 153,
   "case_id": "CASE-0006",
   "type": "message",
-  "at": "2026-11-14T01:21:40.770",
+  "at": "2026-11-14T08:46:44.450",
   "data": {
    "role": "munim",
    "text": "నమస్కారం వెంకట రావు గారు, మీ డ్రగ్ లైసెన్స్ గడువు నవంబర్ 10న ముగిసింది. అందుకే మీ 3 సెటిల్‌మెంట్లు (మొత్తం ₹31,640) హోల్డ్‌లో ఉన్నాయి. డ్రగ్ లైసెన్స్ అప్‌డేట్ చేయడానికి మీకు KYC లింక్ పంపాం. కొత్త డాక్యుమెంట్ అప్‌లోడ్ చేయండి; ధృవీకరణ పూర్తయ్యాక హోల్డ్ విడుదల ప్రక్రియ మొదలవుతుంది. కేస్ నంబర్: CASE-0006",
@@ -2688,10 +2812,10 @@
   }
  },
  {
-  "seq": 153,
+  "seq": 154,
   "case_id": "CASE-0006",
   "type": "node",
-  "at": "2026-11-14T01:21:40.770",
+  "at": "2026-11-14T08:46:44.450",
   "data": {
    "node": "sweep",
    "agent": "Detective",
@@ -2700,36 +2824,36 @@
   }
  },
  {
-  "seq": 154,
+  "seq": 155,
   "case_id": "CASE-0006",
   "type": "node",
-  "at": "2026-11-14T01:21:40.770",
+  "at": "2026-11-14T08:46:44.451",
   "data": {
    "node": "respond",
    "agent": "Communicator Agent",
    "status": "end",
-   "ms": 662,
+   "ms": 668,
    "summary": "40 words · te · mock"
-  }
- },
- {
-  "seq": 155,
-  "case_id": "CASE-0006",
-  "type": "done",
-  "at": "2026-11-14T01:21:40.783",
-  "data": {
-   "case_id": "CASE-0006",
-   "status": "RESOLVED",
-   "outcome": "HOLD_EXPLAINED",
-   "decision": "ALLOW",
-   "ms": 2807
   }
  },
  {
   "seq": 156,
   "case_id": "CASE-0006",
+  "type": "done",
+  "at": "2026-11-14T08:46:44.464",
+  "data": {
+   "case_id": "CASE-0006",
+   "status": "RESOLVED",
+   "outcome": "HOLD_EXPLAINED",
+   "decision": "ALLOW",
+   "ms": 2819
+  }
+ },
+ {
+  "seq": 157,
+  "case_id": "CASE-0006",
   "type": "message",
-  "at": "2026-11-14T01:21:40.793",
+  "at": "2026-11-14T08:46:44.474",
   "data": {
    "role": "team",
    "text": "What does the merchant need to do?",
@@ -2740,10 +2864,10 @@
   }
  },
  {
-  "seq": 157,
+  "seq": 158,
   "case_id": "CASE-0006",
   "type": "llm_done",
-  "at": "2026-11-14T01:21:40.793",
+  "at": "2026-11-14T08:46:44.474",
   "data": {
    "node": "chat",
    "role": "reasoner",
@@ -2757,10 +2881,10 @@
   }
  },
  {
-  "seq": 158,
+  "seq": 159,
   "case_id": "CASE-0006",
   "type": "message",
-  "at": "2026-11-14T01:21:40.793",
+  "at": "2026-11-14T08:46:44.474",
   "data": {
    "role": "munim",
    "text": "Payout held for KYC: hold HLD-1006-01 is keeping back 3 settlements (₹31,640) until the expired drug licence is updated. Re-KYC link sent by SMS.",

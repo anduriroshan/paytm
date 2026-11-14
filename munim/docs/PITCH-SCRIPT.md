@@ -1,6 +1,6 @@
 # Munim · presentation script
 
-Team localhost8000 · Anduri Roshan · deck: [Munim-v3.pptx](Munim-v3.pptx) · demo steps: [DEMO.md](DEMO.md)
+Team localhost8000 · Anduri Roshan · deck: [Munim-v4.pptx](Munim-v4.pptx) · demo steps: [DEMO.md](DEMO.md) · public facts: [Sources](#sources)
 
 - **Part 1** follows the slides (about 7 minutes).
 - **Part 2** explains each feature: how it works, why we need it, why it matters. Use it during the demo or when a judge asks about a feature.
@@ -16,23 +16,25 @@ Lines in *italics* are actions, not spoken.
 "I'm Anduri Roshan, team localhost8000. This is Munim, an AI teammate for the merchant support team. It looks into a merchant's money complaint, finds the cause in the ledger, and fixes it within rules written in code."
 
 ### Slide 2 · Problem (60 s)
-"When a merchant says their money is wrong, someone has to find out why, and someone has to fix it.
+"When a merchant says their money is wrong, support has to work out which deduction caused it, and get it reversed.
 
-Today, that is done by hand. The merchant reports the problem, often in their own language. A support agent opens several systems to piece it together. If something is wrong, a ticket goes to the back office, and it is fixed days or weeks later.
+Today, that is done by hand. The merchant reports the problem, often in their own language. Support works out which deduction is wrong. The correction is raised as a request, and it is fixed days or weeks later.
 
 It is slow for four reasons:
-- the data sits in separate systems;
+- one payout mixes sales, fees, device rent, refunds and loan instalments, so the wrong deduction is hard to spot;
 - complaints come in many languages;
 - support chatbots can answer questions, but they cannot fix money;
 - when one fault hits many merchants, it is still fixed one ticket at a time.
 
 Paytm alone has 1.64 crore merchant device subscriptions. A money complaint from any of them goes through this manual path."
 
+*We only state public facts about Paytm (see [Sources](#sources)). We do not name or describe Paytm's internal systems.*
+
 ### Slide 3 · Solution (75 s)
 "Munim does that whole path. The teammate pastes or speaks the complaint. Munim works through it in six stages and reports back in English.
 
 1. **Understand:** it reads the complaint in any Indian language.
-2. **Follow the money:** it pulls the ledger, plans, devices and payouts.
+2. **Follow the money:** it pulls the ledger, plans and payouts, plus any connected files and APIs. A small file per system tells it when to reach each one.
 3. **Find the cause:** it tests the known causes first. If none fit, the AI writes its own read-only database queries.
 4. **Propose and check:** the AI proposes a fix, and code checks it against eleven rules.
 5. **Act:** allowed fixes run straight away. Refunds over ₹2,000 wait for a teammate.
@@ -64,7 +66,7 @@ The AI models:
   - Sarvam Prism makes the first guess and flags fake instructions.
   - Bulbul and Saaras handle voice out and voice in.
 
-SQLite holds the ledger. The action firewall is plain Python. 213 tests run without any live AI calls."
+SQLite holds the ledger. A sources folder has one YAML file per system Munim can reach: what it holds and when to reach it. There is no vector database. The action firewall is plain Python. 233 tests run without any live AI calls."
 
 ### Slide 6 · USP (60 s)
 "The main design choice is this: AI reads and writes, and code decides and moves money.
@@ -86,7 +88,7 @@ Four other things are different:
 ### Slide 7 · Impact (45 s)
 "For the merchant: money back without chasing support, an answer in their own language, and proof of what went wrong.
 
-For the support teammate: one screen instead of several systems, with the cause, the proof and the fix ready to check. Larger refunds take one click.
+For the support teammate: one screen with the whole money trail, and the cause, the proof and the fix ready to check. Larger refunds take one click.
 
 For Paytm: one fix covers every affected merchant, every money action is checked and logged, and fewer complaints come back.
 
@@ -94,16 +96,19 @@ From our demo build:
 - 11 seconds from complaint to decision;
 - ₹8,681 found for six more merchants from one complaint;
 - eight case types, including a fake-admin attack;
-- 213 tests.
+- 233 tests.
 
 All of the data is fictional."
 
 ### Slide 8 · Business model (40 s)
-"First, Munim is for Paytm's own merchant support and back-office teams. The value is less time per ticket, fewer escalations, and one fix for every affected merchant. The cost is AI model calls per case, plus hosting.
+"First, Munim is for Paytm's own merchant support teams. The value is less time per ticket, fewer escalations, and one fix for every affected merchant. The cost is AI model calls per case, plus hosting.
 
 Next, other companies: lenders, NBFCs and fintechs that deduct rent or instalments from merchants. They would pay per resolved case, or a monthly fee per support seat.
 
-A company connects three things: read access to its ledger, an action API for refunds and cancellations, and its own rules and limits."
+A company connects three things:
+- one small file per system, saying what it holds and when to reach it;
+- an action API for refunds and cancellations;
+- its own rules and limits."
 
 ### Slide 9 · Close (10 s)
 "AI proposes, code decides, and a person approves what matters. Thank you. I'm happy to show the live demo or take questions."
@@ -133,17 +138,33 @@ Each feature is in three parts: **how it works**, **why we need it** and **why i
 
 ### 3. Follows the money
 - **How it works:** Code starts from the disputed money and follows every linked record: ledger entries, the payment mandate, the subscription, the device, the pickup ticket and the payouts.
-- **Why we need it:** Today an agent opens each of these systems separately.
+- **Why we need it:** One payout mixes sales, fees, device rent, refunds and loan instalments. Finding the one wrong deduction by hand is slow.
 - **Why it matters:** All the evidence for a case is in one place, in seconds.
 
-### 4. Checks what the merchant said
+### 4. Knows where to look: one file per system
+- **How it works:**
+  - A folder, `backend/sources/`, has one small YAML file per system: a database, a CSV or JSON file, or an API.
+  - Each file says what the system holds, when to reach it (every case, a topic such as rent, a claim such as "device returned", or keywords), and which fixes it carries out.
+  - For each case, Munim reaches only the systems whose rules match:
+    - a database: the AI sees its tables and may query them;
+    - a file or an API: Munim reads this merchant's rows only, and passes them to the AI as data, never as instructions.
+  - A new file is picked up on the next case. No restart.
+  - API keys stay in `.env`. The file only names them, like `${PARTNER_API_KEY}`.
+  - Turn a system off and its tables leave the AI's view, and the firewall refuses its fixes at check 1.
+- **Why we need it:** Munim has to know which system answers which question, without a vector database, and without the AI reading everything.
+- **Why it matters:**
+  - A company connects a new system by adding one file.
+  - The teammate sees what Munim reached, and why, under **Proof › Where it looked**.
+- *Demo: open **Sources** in the sidebar. In the demo, the courier scans are a fictional CSV file, and the lender API is an example that is turned off.*
+
+### 5. Checks what the merchant said
 - **How it works:**
   - Each claim is checked against the records and marked verified, contradicted, partly true or unverifiable.
   - For example, "charged for three months" is partly true when the ledger shows two wrong debits.
 - **Why we need it:** Merchants can be wrong, or only partly right. A claim is not evidence.
 - **Why it matters:** Munim pays on evidence, not on what someone says.
 
-### 5. Tests known causes
+### 6. Tests known causes
 - **How it works:**
   - Munim keeps a list of known faults, and each one has a fixed test in code:
     - rent charged after the device was returned;
@@ -158,12 +179,12 @@ Each feature is in three parts: **how it works**, **why we need it** and **why i
 - **Why we need it:** Most money faults repeat. A tested rule is faster and more reliable than asking an AI each time.
 - **Why it matters:** The same case gets the same answer every time, and every rupee traces back to a ledger row.
 
-### 6. Investigates unknown cases with read-only queries
+### 7. Investigates unknown cases with read-only queries
 - **How it works:**
   - This step runs only if no known cause fits. The AI then writes its own SQL queries, up to three.
   - Each query is checked before it runs:
     - it must be a single read-only SELECT;
-    - it can read business tables only;
+    - it can read business tables only, from systems that are switched on;
     - it can read this merchant's rows only;
     - it has a 2-second limit;
     - it returns 50 rows at most.
@@ -172,11 +193,11 @@ Each feature is in three parts: **how it works**, **why we need it** and **why i
 - **Why it matters:** Munim can still investigate something new, but it has no way to change data and never acts on a guess.
 - *Demo: "₹2,340 missing from settlement". It finds a chargeback and sends the case to the payments team.*
 
-### 7. AI proposes, code decides: the action firewall
+### 8. AI proposes, code decides: the action firewall
 - **How it works:**
   - The AI proposes a fix as structured data. It has no tools that move money.
   - Code then runs 11 checks in order:
-    1. Is the action a known type?
+    1. Is the action a known type, and is the system that carries it out switched on?
     2. Is it a permitted fix for this cause?
     3. Hard rules:
        - a risk hold is never released;
@@ -195,7 +216,7 @@ Each feature is in three parts: **how it works**, **why we need it** and **why i
   - This is what makes it safe to let an AI fix money.
   - In the demo, a model that proposes ₹1,497 is corrected to ₹998, the amount the ledger supports.
 
-### 8. Acts, and logs every step
+### 9. Acts, and logs every step
 - **How it works:**
   - Allowed fixes run straight away. Munim can:
     - refund the exact debits;
@@ -208,7 +229,7 @@ Each feature is in three parts: **how it works**, **why we need it** and **why i
 - **Why we need it:** Chatbots stop at an answer, and the merchant still waits for someone to act.
 - **Why it matters:** The problem is closed, not just explained, and there is a record of every action.
 
-### 9. A person approves larger amounts
+### 10. A person approves larger amounts
 - **How it works:**
   - Anything over the limit goes to **Needs you**, and one click approves it.
   - All 11 checks run again before it executes.
@@ -216,21 +237,21 @@ Each feature is in three parts: **how it works**, **why we need it** and **why i
 - **Why we need it:** Larger amounts need someone accountable.
 - **Why it matters:** People spend their time on the decisions that need them, not on routine fixes.
 
-### 10. Replies in the merchant's language, reports in English
+### 11. Replies in the merchant's language, reports in English
 - **How it works:**
   - Sarvam-105B writes the reply to the merchant in their language, and Bulbul can read it aloud.
   - The teammate gets the verdict in English, with a result card such as "₹998 refunded · Rental stopped".
 - **Why we need it:** The merchant needs to understand what happened, and the team works in English.
 - **Why it matters:** The merchant gets a clear answer with proof, so fewer of them call again.
 
-### 11. Says no, with proof
+### 12. Says no, with proof
 - **How it works:**
   - When a charge is correct, Munim shows the records that prove it.
   - In one demo case, the merchant says rent continued after they returned the device. The records show the pickup failed twice, so Munim explains that and books a new pickup.
 - **Why we need it:** Not every complaint is a fault. Refunding every complaint loses money, and refusing without a reason loses trust.
 - **Why it matters:** The merchant sees why, and Paytm does not pay out money it does not owe.
 
-### 12. Fleet sweep
+### 13. Fleet sweep
 - **How it works:**
   - When a fault is confirmed, Munim runs the same test across all merchants.
   - Each merchant it finds gets their own proposal, checked by the same 11 rules.
@@ -240,17 +261,17 @@ Each feature is in three parts: **how it works**, **why we need it** and **why i
   - One complaint fixes everyone affected, including merchants who never complained.
   - In the Lakshmi case, it found six more merchants and ₹8,681.
 
-### 13. Shows how it decided
+### 14. Shows how it decided
 - **How it works:**
   - Every step appears on screen as it runs.
   - **How Munim decided** opens three tabs:
     - **Steps:** all 12 steps.
-    - **Proof:** the money trail, the claims it checked, and the cause.
+    - **Proof:** where it looked, the money trail, the claims it checked, and the cause.
     - **Decision:** what the AI proposed, what the rules said, the result, and the 11 checks.
 - **Why we need it:** A teammate should not have to trust a black box with money.
 - **Why it matters:** Every decision can be checked and audited.
 
-### 14. Follow-up questions
+### 15. Follow-up questions
 - **How it works:**
   - After a case, the teammate can ask a question in English or paste the merchant's next message. Munim answers only from the case file.
   - If the words are the merchant's, it also drafts a reply in their language.
@@ -269,6 +290,10 @@ Each feature is in three parts: **how it works**, **why we need it** and **why i
 **"Isn't this just text-to-SQL?"**
 "No. SQL is the last resort, used only when no known cause fits, and it is read-only. Most cases are solved by following the money and running fixed tests in code."
 
+**"How does Munim know where to look? Is there a knowledge base or vector DB?"**
+"No vector DB. There is a folder with one small file per system: what it holds, when to reach it (topic, claim or keywords), and which fixes it carries out. A database, a CSV file or an API can be added this way without a restart. Turn a system off and the AI stops seeing its tables, and the safety checks refuse its fixes."
+*Open **Sources** in the sidebar, then a case's **How Munim decided → Proof → Where it looked**. In the demo, the courier scans are a fictional file.*
+
 **"What stops a bad refund?"**
 "The 11 checks: the amount is recounted, the refund is tied to the evidence rows, ownership and limits are checked, and risk holds are never released. On top of that, the database will not store a second refund for the same debit."
 
@@ -280,3 +305,15 @@ Each feature is in three parts: **how it works**, **why we need it** and **why i
 
 **"Is the data real?"**
 "No. All merchants, phone numbers and amounts are fictional: eight scenarios plus 180 background merchants."
+
+---
+
+## Sources
+
+Public facts used on slides 2 and 8. Everything else about Munim is our own build, on fictional data.
+
+- **1.64 crore merchant subscriptions (Q2 FY27):** [Doon United News, Paytm Q2 results](https://doonitednews.in/paytm-q2-results-revenue-jumps-24-profit-at-rs-211-crore-5-key-takeaways/)
+- **One payout mixes several deductions.** Paytm's settlement docs define the net settlement as payments accepted, minus commission and GST, minus other deductions such as rental, refund, chargeback, reversal and recovery. They also say a settlement can be on hold: [Paytm Payments, settlement processing](https://www.paytmpayments.com/docs/settlement-processing-in-paytm)
+- **Device rent and loan instalments.** Devices earn a monthly subscription rental. Merchant loans come from partner lenders and are repaid by daily instalment: [Paytm investor relations, our business](https://ir.paytm.com/our-business) · [Paytm blog, merchant loans](https://paytm.com/blog/loan/merchant-loan/when-to-take-merchant-loan-and-its-benefits-for-your-business)
+- **Instalments are auto-deducted from settlements** (third-party source): [Paisabazaar, Paytm business loan](https://paisabazaar.com/business-loan/paytm)
+- **Paytm plans to offer AI agents to banks and insurers (slide 8, "Fit"):** [Free Press Journal](https://www.freepressjournal.in/business/paytm-bets-big-on-ai-plans-to-offer-ai-agents-to-banks-and-insurers-in-india-and-uae)

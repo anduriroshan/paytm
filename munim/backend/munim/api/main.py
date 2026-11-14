@@ -84,6 +84,21 @@ def scenarios():
     return out
 
 
+@app.get("/api/sources")
+def sources_list():
+    """The connected sources (backend/sources/*.yaml): what Munim can reach, when, and which fixes each one carries out.
+    Re-read on every call. Header values and API query strings are never returned."""
+    from pathlib import Path
+
+    from munim.sources import current, listing
+    out = listing(current())
+    try:
+        out["dir"] = "backend/" + Path(out["dir"]).resolve().relative_to(config.BACKEND_DIR.resolve()).as_posix()
+    except ValueError:
+        pass
+    return out
+
+
 @app.get("/api/merchants")
 def merchants(q: str = Query("", max_length=80)):
     like = f"%{q.strip()}%"

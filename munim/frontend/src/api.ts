@@ -12,6 +12,7 @@ import {
   type MunimEvent,
   type PassbookRow,
   type Scenario,
+  type SourcesList,
   type SweepApproveResponse,
 } from "./types";
 
@@ -54,6 +55,8 @@ const post = <T>(path: string, body?: unknown) =>
 export const api = {
   health: () => request<Health>("/api/health", { timeoutMs: 4000 }),
   scenarios: () => request<Scenario[]>("/api/scenarios"),
+  /** The connected sources (backend/sources/): what Munim can reach, and when. */
+  sources: () => request<SourcesList>("/api/sources"),
   merchants: (q = "") => request<MerchantInfo[]>(`/api/merchants${q ? `?q=${encodeURIComponent(q)}` : ""}`),
   createCase: (body: { merchant_id: string; complaint_text: string; channel?: "chat" | "voice"; scenario_id?: string | null }) =>
     post<{ case_id: string }>("/api/cases", body),

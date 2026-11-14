@@ -5,6 +5,7 @@ import { api, ApiError } from "./api";
 import { ChatHeader, type StatusPill } from "./components/ChatHeader";
 import { ChatView, type FollowChip, type SweepLine } from "./components/ChatView";
 import { NeedsYou, type CaseApproval, type Decided, type HandedCase, type SweepGroup } from "./components/NeedsYou";
+import { Sources } from "./components/Sources";
 import { Sidebar, type SideItem } from "./components/Sidebar";
 import { StartScreen } from "./components/StartScreen";
 import { WorkPanel, type HowTab } from "./components/WorkPanel";
@@ -34,7 +35,7 @@ import { useCaseSession } from "./state/useCaseSession";
 import type { ApprovalRow, CaseRow, Health, MerchantInfo, ProviderInfo, ProviderSet, Scenario } from "./types";
 
 type Backend = "checking" | "online" | "offline" | "skipped";
-type Page = "chat" | "needs";
+type Page = "chat" | "needs" | "sources";
 interface SweepDone {
   executed: number;
   total: number;
@@ -591,6 +592,7 @@ export default function App() {
           setPage("needs");
           refreshSide();
         }}
+        onSources={() => setPage("sources")}
         needsCount={needsCount}
         brain={brain}
         onReset={live && !isReplay ? onReset : null}
@@ -599,7 +601,9 @@ export default function App() {
         onExitReplay={exitReplay}
       />
       <div className="page">
-        {page === "needs" ? (
+        {page === "sources" ? (
+          <Sources live={live && !isReplay} />
+        ) : page === "needs" ? (
           <NeedsYou
             approvals={needs.caseApprovals}
             sweeps={needs.sweeps}

@@ -1,5 +1,5 @@
 // Left sidebar: new chat, the chat list, "Needs you", and the footer (which brain is running, reset, replay controls).
-import { Pause, Play, Plus, RotateCcw, UserRound, X } from "lucide-react";
+import { Pause, Play, Plug, Plus, RotateCcw, UserRound, X } from "lucide-react";
 import type { Tone } from "../lib/explain";
 import { fixtureTitle } from "../replay";
 import type { ReplayControls } from "../state/useCaseSession";
@@ -16,8 +16,9 @@ interface Props {
   activeId: string | null;
   onOpen: (id: string) => void;
   onNewChat: () => void;
-  page: "chat" | "needs";
+  page: "chat" | "needs" | "sources";
   onNeeds: () => void;
+  onSources: () => void;
   needsCount: number;
   brain: { label: string; live: boolean };
   onReset: (() => void) | null;
@@ -28,7 +29,7 @@ interface Props {
 
 const SPEEDS = [1, 2, 4];
 
-export function Sidebar({ items, activeId, onOpen, onNewChat, page, onNeeds, needsCount, brain, onReset, replay, controls, onExitReplay }: Props) {
+export function Sidebar({ items, activeId, onOpen, onNewChat, page, onNeeds, onSources, needsCount, brain, onReset, replay, controls, onExitReplay }: Props) {
   return (
     <aside className="side" aria-label="Chats">
       <div className="logo">
@@ -60,6 +61,10 @@ export function Sidebar({ items, activeId, onOpen, onNewChat, page, onNeeds, nee
           <UserRound className="ico" aria-hidden />
           Needs you
           <span className={`badge${needsCount ? "" : " zero"}`}>{needsCount}</span>
+        </button>
+        <button type="button" className={`navi${page === "sources" ? " on" : ""}`} onClick={onSources} title="What Munim can reach, and when">
+          <Plug className="ico" aria-hidden />
+          Sources
         </button>
       </div>
 

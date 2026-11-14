@@ -1,0 +1,19 @@
+# Built-in: payout holds and KYC documents in Munim's demo database.
+id: holds-kyc
+name: Holds and KYC
+kind: database
+holds: Holds on payouts (risk, KYC, bank account) with their reasons, and the merchant's KYC documents.
+when:
+  topics: [settlement]
+  claims: [settlement_not_received]
+  words: [hold, held, kyc, blocked, frozen]
+actions: [SEND_KYC_LINK, RELEASE_HOLD]
+tables:
+  - name: holds
+    about: |
+      holds(id 'HLD-...', merchant_id, settlement_id, hold_type RISK|KYC|BANK_ACCOUNT, reason_code, reason_text,
+            status ACTIVE|RELEASED, placed_at, released_at)
+  - name: kyc_documents
+    about: |
+      kyc_documents(id, merchant_id, doc_type PAN|AADHAAR|GSTIN|DRUG_LICENSE|SHOP_LICENSE,
+                    status VALID|EXPIRED|PENDING|REJECTED, verified_at, expires_at)

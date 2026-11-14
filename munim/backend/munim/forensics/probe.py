@@ -141,7 +141,9 @@ def check_sql(sql: Any, merchant_id: str) -> str:
 
 # ───────────────────────────── layer 2: isolation ─────────────────────────────
 
-def _open_scoped(db_path: Path, merchant_id: str) -> sqlite3.Connection:
+def _open_scoped(db_path: Path, merchant_id: str, allowed: frozenset[str] | None = None) -> sqlite3.Connection:
+    """Copy the merchant's rows of the allowed business tables into TEMP tables; queries can read nothing else."""
+    allowed = _ALLOWED_TABLES if allowed is None else allowed
     if not db_path.exists():
         raise ProbeRejected("The database is not available.")
     conn = sqlite3.connect(db_path.resolve().as_uri() + "?mode=ro", uri=True, timeout=5, check_same_thread=False)
@@ -149,9 +151,12 @@ def _open_scoped(db_path: Path, merchant_id: str) -> sqlite3.Connection:
         conn.execute("PRAGMA temp_store = MEMORY")
         ddl = dict(conn.execute("SELECT name, sql FROM main.sqlite_master WHERE type = 'table'").fetchall())
         for t in BUSINESS_TABLES:
-            if t not in ddl:
+            if t not in ddl or t not in allowed:
                 continue
             where, nparams = _SCOPE.get(t, ("merchant_id = ?", 1))
+            if t == "device_events" and "devices" not in allowed:      # no temp.devices to scope by
+                dev_where, dev_n = _SCOPE["devices"]
+                where, nparams = f"device_id IN (SELECT id FROM main.devices WHERE {dev_where})", dev_n
             create = re.sub(r"^\s*CREATE\s+TABLE\s+", "CREATE TEMP TABLE ", ddl[t] or "", count=1, flags=re.I)
             try:
                 conn.execute(create)
@@ -162,7 +167,7 @@ def _open_scoped(db_path: Path, merchant_id: str) -> sqlite3.Connection:
         conn.setlimit(sqlite3.SQLITE_LIMIT_ATTACHED, 0)
         conn.setlimit(sqlite3.SQLITE_LIMIT_LENGTH, MAX_VALUE_BYTES)
         conn.setlimit(sqlite3.SQLITE_LIMIT_SQL_LENGTH, MAX_SQL_CHARS + 16)
-        conn.set_authorizer(_authorizer)
+        conn.set_authorizer(_authorizer if allowed is _ALLOWED_TABLES else _make_authorizer(allowed))
         return conn
     except Exception:
         conn.close()
@@ -174,18 +179,31 @@ def _open_scoped(db_path: Path, merchant_id: str) -> sqlite3.Connection:
 _ALLOWED_TABLES = frozenset(BUSINESS_TABLES)
 
 
-def _authorizer(action: int, arg1: str | None, arg2: str | None, dbname: str | None, source: str | None) -> int:
-    if action in (sqlite3.SQLITE_SELECT, getattr(sqlite3, "SQLITE_RECURSIVE", 33)):
-        return sqlite3.SQLITE_OK
-    if action == sqlite3.SQLITE_READ:
-        if dbname == "temp" and (arg1 or "").lower() in _ALLOWED_TABLES:
+def _make_authorizer(allowed: frozenset[str]):
+    def authorizer(action: int, arg1: str | None, arg2: str | None, dbname: str | None, source: str | None) -> int:
+        if action in (sqlite3.SQLITE_SELECT, getattr(sqlite3, "SQLITE_RECURSIVE", 33)):
             return sqlite3.SQLITE_OK
-        if dbname is None:      # a CTE / subquery result; the reads inside its body are authorised separately
-            return sqlite3.SQLITE_OK
+        if action == sqlite3.SQLITE_READ:
+            if dbname == "temp" and (arg1 or "").lower() in allowed:
+                return sqlite3.SQLITE_OK
+            if dbname is None:      # a CTE / subquery result; the reads inside its body are authorised separately
+                return sqlite3.SQLITE_OK
+            return sqlite3.SQLITE_DENY
+        if action == sqlite3.SQLITE_FUNCTION:
+            return sqlite3.SQLITE_DENY if (arg2 or "").lower() in _BAD_FUNCS else sqlite3.SQLITE_OK
         return sqlite3.SQLITE_DENY
-    if action == sqlite3.SQLITE_FUNCTION:
-        return sqlite3.SQLITE_DENY if (arg2 or "").lower() in _BAD_FUNCS else sqlite3.SQLITE_OK
-    return sqlite3.SQLITE_DENY
+    return authorizer
+
+
+_authorizer = _make_authorizer(_ALLOWED_TABLES)
+
+
+def _check_connected(body: str, allowed: frozenset[str]) -> None:
+    """Friendly lexical refusal for a business table whose source is turned off (the engine would deny it anyway)."""
+    code, _ = _scan(body)
+    for t in BUSINESS_TABLES:
+        if t not in allowed and re.search(rf"(?<![\w.]){t}(?!\w)", code, re.I):
+            raise ProbeRejected(f"Table '{t}' is not connected: its source is turned off in backend/sources/.")
 
 
 def _cell(v: Any) -> Any:
@@ -209,8 +227,10 @@ def _friendly(e: Exception) -> str:
     return f"SQL error: {msg}"
 
 
-def run_probe(sql: str, merchant_id: str, step: int, purpose: str, db_path=None) -> Probe:
-    """Run one guarded, read-only, merchant-scoped SELECT. Never raises: failures come back as Probe(ok=False, error=...)."""
+def run_probe(sql: str, merchant_id: str, step: int, purpose: str, db_path=None,
+              tables: frozenset[str] | set[str] | None = None) -> Probe:
+    """Run one guarded, read-only, merchant-scoped SELECT. Never raises: failures come back as Probe(ok=False, error=...).
+    tables: the business tables this probe may read (the connected database sources); None = all of them."""
     t0 = time.perf_counter()
     text = sql if isinstance(sql, str) else ("" if sql is None else str(sql))
     try:
@@ -226,7 +246,10 @@ def run_probe(sql: str, merchant_id: str, step: int, purpose: str, db_path=None)
     try:
         from munim import config
         body = check_sql(text, str(merchant_id or ""))
-        conn = _open_scoped(Path(db_path or config.DB_PATH), str(merchant_id))
+        allowed = _ALLOWED_TABLES if tables is None else frozenset(tables) & _ALLOWED_TABLES
+        if allowed is not _ALLOWED_TABLES:
+            _check_connected(body, allowed)
+        conn = _open_scoped(Path(db_path or config.DB_PATH), str(merchant_id), allowed)
         deadline = time.perf_counter() + float(TIME_LIMIT_S)
         conn.set_progress_handler(lambda: 1 if time.perf_counter() > deadline else 0, 2000)
         cur = conn.execute(body)

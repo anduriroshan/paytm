@@ -203,13 +203,30 @@ def decide_verdict(suspects: list[SuspectResult], intake: IntakeResult, plan: Pr
 #   elif plan.finding and plan.evidence_ledger_ids → IMPROVISED (LOW, remedies [ESCALATE, NO_ACTION], no damages)
 #   elif nothing disputed / plan found nothing → NO_EVIDENCE (remedies [NO_ACTION, ESCALATE]);  else UNSOLVED ([ESCALATE])
 # munim/forensics/probe.py   (guarded read-only SQL for the improvise step)
-def run_probe(sql: str, merchant_id: str, step: int, purpose: str, db_path=None) -> Probe
+def run_probe(sql: str, merchant_id: str, step: int, purpose: str, db_path=None, tables: set[str] | None = None) -> Probe
 #   Single SELECT/WITH only; read-only URI connection (mode=ro) + PRAGMA query_only; sqlite3 authorizer allowing only
 #   SELECT/READ/FUNCTION on business tables (never cases/actions/audit_log/notifications/sweeps); must reference the merchant id
 #   literal and no other merchant id; progress-handler time cap; at most config.PROBE_ROW_LIMIT rows. Never raises: errors go in Probe.error.
+#   `tables` = the tables of turned-on database sources (current().enabled_tables()); others are refused as "not connected".
 # munim/forensics/schema_card.py
-def schema_card() -> str   # compact LLM-facing description of business tables, columns, joins, enums, paise, scoping rule, 2 example queries
+def schema_card(hits: list[SourceHit] | None = None) -> str
+#   compact LLM-facing description of the connected tables, joins, enums, paise, scoping rule, 2 example queries.
+#   Built from the turned-on database sources. With `hits`, adds "MOST RELEVANT TO THIS COMPLAINT: <reached tables>".
 ```
+
+### Connected sources: `munim.sources` (folder `backend/sources/*.yaml`, see its README)
+```python
+def current() -> Registry          # the folder, re-read when a file changes (name, mtime, size). Never raises.
+def route(reg, intake, complaint_text) -> list[Routed]   # which sources this complaint reaches, and why
+async def reach(reg, intake, complaint_text, merchant_id, timeout_s=None) -> SourcesReport
+#   database: listed with its tables; file/api: reads this merchant's rows (max_rows). A failing source → status "error". Never raises.
+def count_records(report, trail_tables) -> SourcesReport  # database records on the money trail; a trail-linked source counts as reached
+def listing(reg) -> dict           # for GET /api/sources: no header values, no URL query strings
+# Registry: enabled_tables(), table_about(), owner(action), action_allowed(action)
+```
+- Called by the `trail` node, which emits `sources`. `improvise` uses the reached tables in the schema card and passes file/API rows as untrusted data.
+- `propose` offers only actions whose source is on. The firewall's allowlist refuses an action whose source is off. If the folder can't be read, it refuses everything except ESCALATE / NO_ACTION.
+- The 7 suspects, the trail and the statement checks are code. They read the tables directly and don't depend on this folder.
 
 ### B: `munim.llm.*`, `munim.voice.*`
 ```python
@@ -333,6 +350,7 @@ Base `/api`. JSON throughout. In dev, Vite proxies `/api` to `http://127.0.0.1:8
 |---|---|---|
 | GET `/api/health` | | `{ok, today, providers: describe(), counts: {merchants, cases}}` |
 | GET `/api/scenarios` | | `[{...Scenario, merchant: {id,business_name,owner_name,city,language,category}}]` |
+| GET `/api/sources` | | `{dir, sources: [{id, name, kind, enabled, file, holds, when, tables, actions, blocked_actions, max_rows, detail, warnings}], problems}` (re-read per call; no secrets) |
 | GET `/api/merchants?q=` | | `[{id,business_name,owner_name,city,language,category}]` (scenario merchants first, max 50) |
 | POST `/api/cases` | `{merchant_id, complaint_text, channel?: "chat"\|"voice", scenario_id?}` | `{case_id}` (the run starts immediately) |
 | GET `/api/cases` | | `[{id, merchant_id, business_name, status, outcome, language, complaint_text, created_at}]` newest first |
@@ -349,6 +367,7 @@ Base `/api`. JSON throughout. In dev, Vite proxies `/api` to `http://127.0.0.1:8
 | POST `/api/voice/tts` | `{text, language}` | `{audio_base64, mime, provider}` |
 
 Event envelope and payloads: see `backend/munim/events.py`. Event types, in typical order:
-`case` → `node`(intake start) → `llm`… → `llm_done` → `intake` → `node`(hunch) → `hunch` → `trail` → `statements` → `suspect` ×7
+`case` → `node`(intake start) → `llm`… → `llm_done` → `intake` → `node`(hunch) → `hunch` → `trail` → `sources` → `statements` → `suspect` ×7
 → [`probe` ×N] → `verdict` → `llm`… → `proposal` → `firewall` → `execution` → `llm`… (writer) → `message` → [`sweep`] → `done`.
 Each node emits `node` start and end (`ms`, one-line `summary`). Skipped nodes emit `status: "skip"`.
+`sources` carries a `SourcesReport` (`models.py`): every turned-on source, the reached ones first, with `why`, `records`, and the file/API rows.
