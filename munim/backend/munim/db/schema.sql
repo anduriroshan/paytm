@@ -180,7 +180,7 @@ CREATE TABLE edi_attempts (                    -- every attempt to collect a loa
 CREATE TABLE cases (
   id             TEXT PRIMARY KEY,             -- 'CASE-0001'
   merchant_id    TEXT NOT NULL REFERENCES merchants(id),
-  channel        TEXT NOT NULL,                -- chat | voice
+  channel        TEXT NOT NULL,                -- chat | voice (team) | app (merchant app; money waits for a human)
   language       TEXT,                         -- detected language code
   complaint_text TEXT NOT NULL,
   scenario_id    TEXT,                         -- demo scenario key, NULL for free-typed complaints

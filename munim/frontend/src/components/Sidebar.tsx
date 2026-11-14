@@ -1,5 +1,5 @@
 // Left sidebar: new chat, the chat list, "Needs you", and the footer (which brain is running, reset, replay controls).
-import { Pause, Play, Plug, Plus, RotateCcw, UserRound, X } from "lucide-react";
+import { Pause, Play, Plug, Plus, RotateCcw, Smartphone, UserRound, X } from "lucide-react";
 import type { Tone } from "../lib/explain";
 import { fixtureTitle } from "../replay";
 import type { ReplayControls } from "../state/useCaseSession";
@@ -9,6 +9,8 @@ export interface SideItem {
   name: string;
   sub: string;
   tone: Tone;
+  /** opened by the merchant in the merchant app */
+  app?: boolean;
 }
 
 interface Props {
@@ -48,7 +50,14 @@ export function Sidebar({ items, activeId, onOpen, onNewChat, page, onNeeds, onS
             <button key={c.id} type="button" className={`casei${page === "chat" && c.id === activeId ? " on" : ""}`} onClick={() => onOpen(c.id)}>
               <i className={`dot ${c.tone}`} aria-hidden />
               <div>
-                <b>{c.name}</b>
+                <b>
+                  {c.name}
+                  {c.app && (
+                    <span className="flag key apptag" title="Opened by the merchant in the merchant app">
+                      App
+                    </span>
+                  )}
+                </b>
                 <span>{c.sub}</span>
               </div>
             </button>
@@ -66,6 +75,10 @@ export function Sidebar({ items, activeId, onOpen, onNewChat, page, onNeeds, onS
           <Plug className="ico" aria-hidden />
           Sources
         </button>
+        <a className="navi" href="?view=merchant" target="_blank" rel="noreferrer" title="The shop owner's side of Munim (opens in a new tab)">
+          <Smartphone className="ico" aria-hidden />
+          Merchant app
+        </a>
       </div>
 
       <div className="sidefoot">

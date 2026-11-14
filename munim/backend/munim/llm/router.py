@@ -29,7 +29,7 @@ OnDelta = Callable[[str, str], None]          # (kind: 'content' | 'reasoning', 
 T = TypeVar("T", bound=BaseModel)
 
 MAX_TOKENS = {"intake": 2500, "propose": 2500, "improvise": 2500, "hunch": 1500, "respond": 2000, "followup": 1500,
-              "chat": 1500, "translate": 800}
+              "chat": 1500, "translate": 800, "merchant": 1200}
 JSON_TEMPERATURE = 0.2
 WRITER_TEMPERATURE = 0.5
 MOCK_MODEL = "scripted"

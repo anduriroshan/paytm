@@ -37,6 +37,10 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="Munim", version="0.1", lifespan=lifespan)
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
+from munim.api.merchant import router as merchant_router  # noqa: E402  (merchant app: /api/me/*)
+
+app.include_router(merchant_router)
+
 
 # ───────────────────────────── bodies ─────────────────────────────
 
@@ -147,7 +151,7 @@ async def new_case(body: NewCase):
 def list_cases():
     with tx() as conn:
         return rows(conn, """SELECT c.id, c.merchant_id, m.business_name, c.status, c.outcome, c.language,
-                                    c.complaint_text, c.created_at, c.scenario_id
+                                    c.complaint_text, c.created_at, c.scenario_id, c.channel
                              FROM cases c JOIN merchants m ON m.id = c.merchant_id
                              ORDER BY CAST(SUBSTR(c.id, 6) AS INTEGER) DESC LIMIT 100""")
 

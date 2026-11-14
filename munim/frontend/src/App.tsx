@@ -557,8 +557,8 @@ export default function App() {
   } else if (live) {
     items = cases.map((c) =>
       c.id === view.caseId
-        ? { id: c.id, name: c.business_name ?? c.merchant_id, sub: caseHeadline(view), tone: statusTone(effectiveStatus(view)) }
-        : { id: c.id, name: c.business_name ?? c.merchant_id, sub: rowSubtitle(c), tone: statusTone(c.status) },
+        ? { id: c.id, name: c.business_name ?? c.merchant_id, sub: caseHeadline(view), tone: statusTone(effectiveStatus(view)), app: c.channel === "app" }
+        : { id: c.id, name: c.business_name ?? c.merchant_id, sub: rowSubtitle(c), tone: statusTone(c.status), app: c.channel === "app" },
     );
     if (openId && !items.some((i) => i.id === openId)) {
       items.unshift({

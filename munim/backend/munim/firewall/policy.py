@@ -69,6 +69,8 @@ STATUS_DECISION: dict[str, Decision] = {
 
 MONEY_ACTIONS = frozenset({ActionType.REFUND_DEBITS, ActionType.RELEASE_HOLD})
 ALWAYS_PERMITTED = frozenset({ActionType.ESCALATE, ActionType.NO_ACTION})
+# what a case opened in the merchant app may complete without a teammate (nothing here moves money)
+MERCHANT_SELF_SERVE = frozenset({ActionType.SCHEDULE_PICKUP, ActionType.SEND_KYC_LINK, ActionType.ESCALATE, ActionType.NO_ACTION})
 ESCALATION_TEAMS: tuple[str, ...] = ("risk", "billing", "logistics", "payments", "lending")
 REFUNDABLE_ENTRY_TYPES = frozenset({"RENT_DEBIT", "EDI_DEBIT"})
 BAD_KYC_STATUSES = ("EXPIRED", "PENDING", "REJECTED")
@@ -198,6 +200,7 @@ class _Ctx:
     case_id: str | None
     human_approved: bool
     today: str
+    origin: str = "team"                                           # "merchant" = opened by the shop in the merchant app
     claimed_ids: dict[int, int] = field(default_factory=dict)      # ledger id -> action index (refunds in this proposal)
     claimed_keys: dict[str, int] = field(default_factory=dict)     # idempotency key -> action index
     batch_auto_paise: int = 0                                      # money already allowed earlier in this proposal
@@ -660,6 +663,9 @@ def _preconditions(ctx: _Ctx, w: _Work) -> FirewallCheck:
 
 def _limits(ctx: _Ctx, w: _Work) -> FirewallCheck:
     t = w.type
+    if ctx.origin == "merchant" and t not in MERCHANT_SELF_SERVE and t not in MONEY_ACTIONS and not ctx.human_approved:
+        return make_check("limits", "WARN", f"The merchant opened this case in the merchant app, which can only book pickups and "
+                                            f"send KYC links by itself, so a teammate signs off {t.value}.")
     if t not in MONEY_ACTIONS:
         return make_check("limits", "SKIP", f"{t.value} moves no money.")
     # a refund that lost its evidence is judged on what the LLM asked for (it is BLOCKed anyway)
@@ -669,6 +675,9 @@ def _limits(ctx: _Ctx, w: _Work) -> FirewallCheck:
     if ctx.human_approved:
         side = "over" if (amt > auto or total30 > cap) else "within"
         return make_check("limits", "PASS", f"{rupees(amt)} is {side} the automatic limits and was approved by a human reviewer.")
+    if ctx.origin == "merchant":
+        return make_check("limits", "WARN", f"The merchant opened this case in the merchant app, so a teammate signs off "
+                                            f"every payout from there, including this {rupees(amt)}.")
     if amt > auto:
         return make_check("limits", "WARN", f"{rupees(amt)} is over the {rupees(auto)} auto-approval limit, so a human must sign off.")
     if total30 > cap:
@@ -787,11 +796,12 @@ def _safe_proposed(pa: Any, w: _Work) -> ProposedAction:
 
 def evaluate(conn: sqlite3.Connection, *, merchant_id: str, proposal: Proposal, verdict: Verdict,
              intake: IntakeResult | None = None, hunch: Hunch | None = None, case_id: str | None = None,
-             human_approved: bool = False, today: str = config.DEMO_TODAY) -> FirewallResult:
-    """Judge every proposed action. Pure apart from DB reads."""
+             human_approved: bool = False, today: str = config.DEMO_TODAY, origin: str = "team") -> FirewallResult:
+    """Judge every proposed action. Pure apart from DB reads. origin="merchant": every money action waits for a human."""
     m = one(conn, "SELECT business_name FROM merchants WHERE id = ?", (merchant_id,))
     ctx = _Ctx(conn=conn, merchant_id=merchant_id, merchant_name=(m or {}).get("business_name") or "this merchant",
-               verdict=verdict, intake=intake, hunch=hunch, case_id=case_id, human_approved=human_approved, today=today)
+               verdict=verdict, intake=intake, hunch=hunch, case_id=case_id, human_approved=human_approved, today=today,
+               origin=origin)
     actions = list(getattr(proposal, "actions", None) or [])
     out = [_evaluate_one(ctx, i, pa) for i, pa in enumerate(actions)]
     return FirewallResult(decision=worst(a.decision for a in out), actions=out)

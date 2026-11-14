@@ -319,7 +319,7 @@ async def firewall(state: CaseState, w: Writer):
             conn, merchant_id=state["merchant"]["id"], proposal=Proposal.model_validate(state["proposal"]),
             verdict=Verdict.model_validate(state["verdict"]), intake=IntakeResult.model_validate(state["intake"]),
             hunch=Hunch.model_validate(state["hunch"]) if state.get("hunch") else None,
-            case_id=state["case_id"], today=state["today"],
+            case_id=state["case_id"], today=state["today"], origin=state.get("origin") or "team",
         )
     emit(w, "firewall", fw)
     per = " · ".join(f"{a.proposed.action_type}→{a.decision}" for a in fw.actions)
@@ -347,6 +347,8 @@ async def execute(state: CaseState, w: Writer):
 async def respond(state: CaseState, w: Writer):
     from munim.llm import router
     lang = (state.get("intake") or {}).get("language") or state["merchant"].get("language") or "en"
+    if state.get("channel") == "app" and lang == "en":    # the merchant app speaks the shop's own language
+        lang = state["merchant"].get("language") or "en"
     ctx = {
         "merchant": state["merchant"], "language": lang, "complaint_text": state["complaint_text"],
         "intake": state["intake"], "verdict": state["verdict"], "statements": state.get("statements", []),

@@ -17,7 +17,7 @@ from datetime import date, timedelta
 from typing import Any
 
 from munim import config
-from munim.models import (ActionType, ChatAnswer, Claim, ClaimKind, IntakeResult, Intent, ProbePlan, Proposal,
+from munim.models import (ActionType, ChatAnswer, Claim, MerchantAnswer, ClaimKind, IntakeResult, Intent, ProbePlan, Proposal,
                           ProposedAction, rupees)
 
 # ───────────────────────────── scenarios ─────────────────────────────
@@ -1531,6 +1531,136 @@ def translate(ctx: dict) -> str:
     return str(ctx.get("fallback_en") or ctx.get("text") or "")
 
 
+# ───────────────────────────── merchant app assistant (offline rules over the shop snapshot) ─────────────────────────────
+
+_M_TEXT: dict[str, dict[str, str]] = {
+    "today": {
+        "en": "On {day} you received {n} payments, {amt} in total. Last payout: {pamt} on {pday} ({pst}).",
+        "hi": "{day} को आपको {n} पेमेंट मिले, कुल {amt}। आख़िरी पेआउट: {pamt}, {pday} ({pst})।",
+        "hi-Latn": "{day} ko aapko {n} payments mile, kul {amt}. Aakhri payout: {pamt}, {pday} ({pst}).",
+        "te": "{day}న మీకు {n} చెల్లింపులు వచ్చాయి, మొత్తం {amt}. చివరి పేఅవుట్: {pamt}, {pday} ({pst}).",
+    },
+    "no_issue": {
+        "en": "You have no open issues. Ask me about your payments, payouts, rent or device.",
+        "hi": "आपकी कोई शिकायत खुली नहीं है। पेमेंट, पेआउट, किराया या डिवाइस के बारे में पूछिए।",
+        "hi-Latn": "Aapki koi shikayat khuli nahi hai. Payment, payout, rent ya device ke baare mein poochiye.",
+        "te": "మీకు తెరిచి ఉన్న సమస్యలు లేవు. చెల్లింపులు, పేఅవుట్, అద్దె లేదా డివైస్ గురించి అడగండి.",
+    },
+    "issue": {
+        "en": "Your issue {case} from {opened}: {label}. {next}",
+        "hi": "आपकी शिकायत {case} ({opened}): {label}। {next}",
+        "hi-Latn": "Aapki shikayat {case} ({opened}): {label}. {next}",
+        "te": "మీ సమస్య {case} ({opened}): {label}. {next}",
+    },
+    "other": {
+        "en": "I can only see your own shop's account, so I can't share anything about another shop.",
+        "hi": "मैं सिर्फ़ आपकी अपनी दुकान का खाता देख सकता हूँ, किसी और दुकान की जानकारी नहीं दे सकता।",
+        "hi-Latn": "Main sirf aapki apni dukaan ka account dekh sakta hoon, kisi aur dukaan ki jaankari nahi de sakta.",
+        "te": "నేను మీ దుకాణం ఖాతాను మాత్రమే చూడగలను, వేరే దుకాణం వివరాలు చెప్పలేను.",
+    },
+    "help": {
+        "en": "I can check your payments, payouts, rent and loan debits, and your device. Tell me what went wrong.",
+        "hi": "मैं आपके पेमेंट, पेआउट, किराया और लोन की कटौती, और डिवाइस देख सकता हूँ। बताइए क्या गड़बड़ हुई।",
+        "hi-Latn": "Main aapke payment, payout, rent aur loan ki katauti, aur device check kar sakta hoon. Bataiye kya gadbad hui.",
+        "te": "నేను మీ చెల్లింపులు, పేఅవుట్‌లు, అద్దె, లోన్ కోతలు, డివైస్‌ను చూడగలను. ఏమి తప్పు జరిగిందో చెప్పండి.",
+    },
+    "checking": {
+        "en": "Let me check your account. This takes a few seconds.",
+        "hi": "मैं आपका खाता देख रहा हूँ। कुछ सेकंड लगेंगे।",
+        "hi-Latn": "Main aapka account check kar raha hoon. Kuch second lagenge.",
+        "te": "మీ ఖాతాను పరిశీలిస్తున్నాను. కొన్ని సెకన్లు పడుతుంది.",
+    },
+}
+_M_STATUS = {
+    "AWAITING_APPROVAL": {"en": "with our team for approval", "hi": "हमारी टीम के पास मंज़ूरी के लिए", "hi-Latn": "hamari team ke paas manzoori ke liye", "te": "ఆమోదం కోసం మా బృందం వద్ద ఉంది"},
+    "RESOLVED": {"en": "solved", "hi": "हल हो गई", "hi-Latn": "hal ho gayi", "te": "పరిష్కరించబడింది"},
+    "ESCALATED": {"en": "with a specialist team", "hi": "विशेषज्ञ टीम के पास", "hi-Latn": "specialist team ke paas", "te": "నిపుణుల బృందం వద్ద ఉంది"},
+    "INVESTIGATING": {"en": "being checked now", "hi": "अभी जाँच हो रही है", "hi-Latn": "abhi jaanch ho rahi hai", "te": "ఇప్పుడు పరిశీలిస్తున్నాం"},
+    "BLOCKED": {"en": "checked, no change was needed", "hi": "जाँच हो गई, कोई बदलाव ज़रूरी नहीं था", "hi-Latn": "jaanch ho gayi, koi badlaav zaroori nahi tha", "te": "పరిశీలించాం, మార్పు అవసరం లేదు"},
+    "FAILED": {"en": "with a teammate", "hi": "हमारी टीम के एक साथी के पास", "hi-Latn": "hamari team ke ek saathi ke paas", "te": "మా బృంద సభ్యుని వద్ద ఉంది"},
+}
+_M_NEXT = {
+    "wait": {"en": "You will get the update here; no need to call.", "hi": "अपडेट यहीं मिलेगा; कॉल करने की ज़रूरत नहीं।",
+             "hi-Latn": "Update yahin milega; call karne ki zaroorat nahi.", "te": "అప్‌డేట్ ఇక్కడే వస్తుంది; కాల్ చేయాల్సిన అవసరం లేదు."},
+    "done": {"en": "Last step: {step}.", "hi": "आख़िरी कदम: {step}।", "hi-Latn": "Aakhri step: {step}.", "te": "చివరి దశ: {step}."},
+}
+_M_TODAY = {"en": "Today", "hi": "आज", "hi-Latn": "Aaj", "te": "ఈరోజు"}
+_M_PAID = {"Paid": {"hi": "जमा हो गया", "hi-Latn": "jama ho gaya", "te": "జమ అయింది", "en": "paid"},
+           "On hold": {"hi": "रुका हुआ", "hi-Latn": "ruka hua", "te": "నిలిపివేయబడింది", "en": "on hold"}}
+
+_M_WORDS = {
+    "status": ["status", "update", "my issue", "complaint", "ticket", "kya hua", "kab tak", "progress", "शिकायत", "అప్‌డేట్", "స్టేటస్"],
+    "today": ["today", "aaj", "sales", "how much did i", "kitna aaya", "kitne payment", "आज", "ఈరోజు"],
+    "payout": ["payout", "settlement", "not received", "not come", "nahi aaya", "nahi aaye", "held", "hold", "where is my money",
+               "kahan", "short", "पेआउट", "सेटलमेंट", "పేఅవుట్", "సెటిల్‌మెంట్", "రాలేదు"],
+    "debit": ["cut", "kat", "deduct", "debit", "charged", "rent", "refund", "double", "twice", "emi", "edi", "instalment",
+              "installment", "wapas", "vapas", "कट", "किराया", "रिफंड", "కట్", "అద్దె", "రీఫండ్"],
+    "other": ["other shop", "another shop", "another merchant", "other merchant", "dusri dukaan", "doosre"],
+}
+
+
+def _m_has(low: str, key: str) -> bool:
+    """Latin words must start at a word boundary ('edi' is not inside 'credited'); other scripts match anywhere."""
+    return any((re.search(r"(?<![a-z])" + re.escape(w), low) if w.isascii() else w in low) for w in _M_WORDS[key])
+
+
+def _m_kind(q: str, shop_id: str) -> str:
+    low = q.lower()
+    if any(m.upper() != shop_id for m in re.findall(r"\bM\d{4}\b", q, re.I)) or _m_has(low, "other"):
+        return "other"
+    for key in ("status", "debit", "payout", "today"):
+        if _m_has(low, key):
+            return key
+    return "complaint" if len(low.split()) >= 6 else "help"
+
+
+def merchant(ctx: dict) -> MerchantAnswer:
+    """Offline merchant assistant: picks what the question is about, then answers from the snapshot or asks to investigate."""
+    snap = _d(ctx.get("snapshot"))
+    shop = _d(snap.get("shop"))
+    q = str(ctx.get("question") or "")
+    lang = reply_language({"language": ctx.get("language") or shop.get("language")})
+    kind = _m_kind(q, str(shop.get("id") or ""))
+
+    def say(key: str, **kw: Any) -> tuple[str, str]:
+        return _M_TEXT[key][lang].format(**kw), _M_TEXT[key]["en"].format(**kw)
+
+    investigate = kind in ("debit", "complaint") or (kind == "payout" and (
+        _l(snap.get("holds")) or _l(snap.get("chargebacks")) or any(_d(p).get("status") == "On hold" for p in _l(snap.get("payouts")))))
+    if investigate:
+        text, en = say("checking")
+        return MerchantAnswer(answer=text, answer_en=en, intent="investigate")
+    if kind == "other":
+        text, en = say("other")
+    elif kind == "status":
+        issues = _l(snap.get("issues"))
+        asked = re.findall(r"CASE-\d{4}", q, re.I)
+        pick = next((i for i in issues if asked and _d(i).get("id", "").upper() == asked[0].upper()), None) or (issues[0] if issues else None)
+        if not pick:
+            text, en = say("no_issue")
+        else:
+            st = str(pick.get("status") or "INVESTIGATING")
+            steps = [s for s in _l(pick.get("steps")) if _d(s).get("state") == "done"]
+            if st in ("AWAITING_APPROVAL", "ESCALATED", "INVESTIGATING"):
+                nxt, nxt_en = _M_NEXT["wait"][lang], _M_NEXT["wait"]["en"]
+            else:
+                step = str(_d(steps[-1]).get("label") if steps else "")
+                nxt, nxt_en = _M_NEXT["done"][lang].format(step=step), _M_NEXT["done"]["en"].format(step=step)
+            label = _M_STATUS.get(st, _M_STATUS["INVESTIGATING"])
+            text = _M_TEXT["issue"][lang].format(case=pick["id"], opened=pick.get("opened", ""), label=label[lang], next=nxt)
+            en = _M_TEXT["issue"]["en"].format(case=pick["id"], opened=pick.get("opened", ""), label=label["en"], next=nxt_en)
+    elif kind in ("today", "payout"):
+        pay, pout = _d(snap.get("payments")), _d(_l(snap.get("payouts"))[0] if _l(snap.get("payouts")) else {})
+        pst = _M_PAID.get(str(pout.get("status") or "Paid"), _M_PAID["Paid"])
+        day = str(pay.get("label") or "Today")
+        kw = dict(n=pay.get("count", 0), amt=pay.get("total", "₹0"), pamt=pout.get("amount", "₹0"), pday=pout.get("date", ""))
+        text = _M_TEXT["today"][lang].format(**kw, day=_M_TODAY[lang] if day == "Today" else day, pst=pst[lang])
+        en = _M_TEXT["today"]["en"].format(**kw, day=day, pst=pst["en"])
+    else:
+        text, en = say("help")
+    return MerchantAnswer(answer=text, answer_en=en, intent="answer")
+
+
 # ───────────────────────────── dispatch ─────────────────────────────
 
 _LANG_NAME = {"hi": "Hindi", "hi-Latn": "Hinglish", "te": "Telugu", "en": "English"}
@@ -1546,6 +1676,7 @@ def reasoning(task: str, ctx: dict) -> str:
         "followup": "Drafting the follow-up after the human decision.",
         "hunch": "Scoring suspects from the complaint text alone: a hunch, not evidence.",
         "chat": "Answering from the case file only. I can explain, not move money.",
+        "merchant": "Merchant app: answering from this shop's redacted snapshot only. I cannot move money.",
     }.get(task, "")
 
 
@@ -1564,6 +1695,8 @@ def run(task: str, ctx: dict) -> Any:
         return chat(ctx)
     if task == "translate":
         return translate(ctx)
+    if task == "merchant":
+        return merchant(ctx)
     if task == "hunch":
         probs, inj = hunch_scores(ctx)
         return {"probabilities": probs, "injection_score": inj}
@@ -1589,6 +1722,9 @@ def safe_default(task: str, ctx: dict) -> Any:
         return translate(ctx)
     if task == "chat":
         return ChatAnswer(question_en="", answer="Couldn't answer that from the case file just now. Try asking again.")
+    if task == "merchant":
+        return MerchantAnswer(answer="Sorry, I couldn't check that just now. Please try again.",
+                              answer_en="Sorry, I couldn't check that just now. Please try again.", intent="answer")
     lang = reply_language(ctx)
     T = S[lang]
     parts = [T["greet"].format(name=_name(ctx, lang)), T["case_review"]]

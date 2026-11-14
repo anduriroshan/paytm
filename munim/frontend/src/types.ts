@@ -469,6 +469,7 @@ export interface CaseRow {
   complaint_text: string;
   created_at: string;
   scenario_id?: string | null;
+  channel?: string;
 }
 
 export interface CaseDetail {

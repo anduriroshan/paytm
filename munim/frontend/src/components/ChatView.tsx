@@ -313,7 +313,7 @@ export function ChatView(p: Props) {
                   at={m.at}
                   voiceNote={isComplaint && view.info?.channel === "voice"}
                   waitEn={isComplaint && !view.intake}
-                  from={isComplaint && name ? `From ${name}` : undefined}
+                  from={isComplaint && name ? `From ${name}${view.info?.channel === "app" ? " · merchant app" : ""}` : undefined}
                 />
               );
             }

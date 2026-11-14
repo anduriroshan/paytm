@@ -143,7 +143,7 @@ async def run_case(case_id: str, merchant: dict, complaint_text: str, channel: s
     run.emit(EventType.MESSAGE, {"role": "merchant", "text": complaint_text, "language": merchant.get("language"), "final": True})
 
     init = {"case_id": case_id, "merchant": merchant, "complaint_text": complaint_text, "channel": channel,
-            "scenario_id": scenario_id, "today": config.DEMO_TODAY}
+            "origin": "merchant" if channel == "app" else "team", "scenario_id": scenario_id, "today": config.DEMO_TODAY}
     state: dict[str, Any] = dict(init)
     status = "FAILED"
     try:

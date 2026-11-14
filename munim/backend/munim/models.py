@@ -70,6 +70,15 @@ class ChatAnswer(BaseModel):
     new_case: bool = Field(False, description="True if the question is about a different problem that needs a new case.")
 
 
+class MerchantAnswer(BaseModel):
+    """Answer inside the merchant app, written only from this shop's redacted snapshot. It cannot move money."""
+    answer: str = Field(description="Reply to the merchant in the reply language and script; short, plain, at most 60 words.")
+    answer_en: str = Field("", description="The same reply in simple English (the same text if the reply is already English).")
+    intent: Literal["answer", "investigate"] = Field("answer", description=(
+        "'investigate' when the merchant reports a problem with money (a debit, a missing, short or held payout, a refund) "
+        "that needs Munim to check the money trail and open an issue; 'answer' when the snapshot already answers it."))
+
+
 class Hunch(BaseModel):
     """Prior belief over suspects from the complaint text alone (before evidence)."""
     source: str                                  # 'sarvam-prism' | 'llm:<model>' | 'mock'
