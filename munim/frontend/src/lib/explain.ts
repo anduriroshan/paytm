@@ -51,6 +51,7 @@ export function initials(name: string | null | undefined): string {
 
 export const CAUSE_TITLES: Record<string, string> = {
   ZOMBIE_BILLING: "Rent kept running after the return",
+  RETURN_STUCK: "Return stuck on our side",
   DUPLICATE_SUBSCRIPTION: "Two rentals on one device",
   DUPLICATE_EDI: "Loan instalment taken twice",
   PICKUP_NOT_COMPLETED: "Device never collected",
@@ -251,7 +252,7 @@ export interface StepRow {
 
 const STEP_DEFS: ReadonlyArray<{ node: string; phase: string | null; kind: "ai" | "code"; icon: StepIcon; name: string; role?: "reasoner" | "writer" | "decider" }> = [
   { node: "intake", phase: "Understand", kind: "ai", icon: "spark", name: "Read the complaint", role: "reasoner" },
-  { node: "hunch", phase: null, kind: "ai", icon: "spark", name: "First hunch", role: "decider" },
+  { node: "hunch", phase: null, kind: "ai", icon: "spark", name: "Fake-instruction check", role: "decider" },
   { node: "trail", phase: "Investigate", kind: "code", icon: "search", name: "Followed the money" },
   { node: "statements", phase: null, kind: "code", icon: "search", name: "Checked the claims" },
   { node: "lineup", phase: null, kind: "code", icon: "search", name: "Tested causes" },
@@ -308,10 +309,9 @@ function stepResult(view: CaseView, node: string): string {
       return [langLabel(i.language), INTENT_SHORT[i.intent] ?? "other", plural(n, "claim"), i.injection_suspected ? "trick suspected" : ""].filter(Boolean).join(" · ");
     }
     case "hunch": {
-      const h = view.hunch;
-      if (!h?.top) return "";
-      const p = h.probabilities?.[h.top];
-      return `${causeTitle(h.top)}${typeof p === "number" ? ` · ${Math.round(p * 100)}%` : ""}`;
+      const s = view.hunch?.injection_score;
+      if (typeof s !== "number") return "";
+      return `${s >= 0.5 ? "Fake instructions likely" : "No fake instructions"} · ${Math.round(s * 100)}%`;
     }
     case "trail": {
       const disputed = asArray(view.trail?.nodes).filter((n) => asArray(n.flags).includes("DISPUTED"));

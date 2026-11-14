@@ -30,7 +30,7 @@ export type EventType = (typeof EVENT_TYPES)[number];
 /** Graph nodes in display order: (node, agent, label). Mirrors events.NODES. */
 export const NODES: ReadonlyArray<readonly [string, string, string]> = [
   ["intake", "Intake Agent", "Understand complaint"],
-  ["hunch", "Detective", "Hunch (Sarvam Prism)"],
+  ["hunch", "Detective", "Fake-instruction check (Sarvam Prism)"],
   ["trail", "Detective", "Follow the money trail"],
   ["statements", "Detective", "Check merchant's statements"],
   ["lineup", "Detective", "Suspect lineup"],

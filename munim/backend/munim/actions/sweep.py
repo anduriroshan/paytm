@@ -61,6 +61,10 @@ def _victim_plan(conn: sqlite3.Connection, suspect_id: str, v: SuspectResult) ->
             and one(conn, "SELECT 1 FROM subscriptions WHERE id = ? AND merchant_id = ? AND status = 'ACTIVE'", (sub_id, v.merchant_id))):
         actions.append(ProposedAction(action_type=ActionType.CANCEL_SUBSCRIPTION, target_id=sub_id,
                                       reason=f"Fleet sweep for {suspect_id}: stop the faulty billing."))
+    dev = targets.get("device_id", "")
+    if ActionType.SCHEDULE_PICKUP in remedies and dev and "," not in dev:
+        actions.append(ProposedAction(action_type=ActionType.SCHEDULE_PICKUP, target_id=dev,
+                                      reason=f"Fleet sweep for {suspect_id}: collect the Soundbox the merchant returned."))
     return verdict, Proposal(actions=actions, rationale=f"Deterministic fleet-sweep remedy for {suspect_id}.")
 
 

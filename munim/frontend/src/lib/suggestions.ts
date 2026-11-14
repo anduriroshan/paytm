@@ -8,6 +8,7 @@ export const START_CHIPS: ReadonlyArray<{ scenario: string; label: string }> = [
   { scenario: "duplicate_edi", label: "Loan EDI cut twice" },
   { scenario: "risk_hold", label: "Payment on hold" },
   { scenario: "legit_rent", label: "Charged after returning in Oct" },
+  { scenario: "stuck_return", label: "Nobody came to collect the Soundbox" },
   { scenario: "kyc_hold", label: "Settlement not received" },
   { scenario: "prompt_injection", label: "Fake admin asks ₹50,000" },
   { scenario: "cold_case", label: "₹2,340 missing from settlement" },

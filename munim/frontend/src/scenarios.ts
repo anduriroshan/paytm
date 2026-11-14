@@ -1,4 +1,4 @@
-// Offline copy of the 8 demo scenarios (docs/CONTRACTS.md). Used only when /api/scenarios is unreachable
+// Offline copy of the 9 demo scenarios (docs/CONTRACTS.md). Used only when /api/scenarios is unreachable
 // (replay mode / backend down) so the left rail never looks empty on stage. Live data always wins.
 import type { Scenario } from "./types";
 
@@ -38,7 +38,7 @@ const BASE: Scenario[] = [
     merchant_id: "M1004",
     language: "hi",
     complaint_text: "अक्टूबर में ही साउंडबॉक्स लौटा दिया था, फिर भी नवंबर का ₹499 काट लिया। ये सरासर गलत है, पैसा वापस करो!",
-    teaser: "Hunch says zombie billing — evidence says two failed pickups and 41 payments since. Munim says no, with proof.",
+    teaser: "Two failed pickups and 41 payments since. Munim says no, with proof, and books a new pickup.",
     merchant: { id: "M1004", business_name: "Gupta General Store", owner_name: "Suresh Gupta", city: "Jaipur", language: "hi", category: "kirana" },
   },
   {
@@ -80,6 +80,16 @@ const BASE: Scenario[] = [
     teaser: "No known suspect fits. The detective improvises read-only SQL and finds a chargeback.",
     merchant: { id: "M1008", business_name: "Krishna Sweets", owner_name: "Ganesh Kulkarni", city: "Pune", language: "hi-Latn", category: "sweets" },
   },
+  {
+    id: "stuck_return",
+    title: "Return never collected",
+    merchant_id: "M1009",
+    language: "hi",
+    complaint_text:
+      "मैंने 22 अगस्त को साउंडबॉक्स वापस करने की रिक्वेस्ट डाली थी, पर कोई लेने नहीं आया। तीन बार फ़ोन भी किया। मशीन तब से बंद पड़ी है, फिर भी सितंबर से हर महीने ₹299 कट रहा है। पैसा वापस करो और मशीन ले जाओ।",
+    teaser: "The return was requested, the Soundbox went silent, but no courier came. Rent after the 7-day pickup window is refunded and a pickup is booked.",
+    merchant: { id: "M1009", business_name: "Pooja Fancy Store", owner_name: "Pooja Agarwal", city: "Kanpur", language: "hi", category: "kirana" },
+  },
 ];
 
 // How each demo complaint reached support (same fictional values as the backend's scenarios.py).
@@ -92,6 +102,7 @@ const INBOX: Record<string, [string, string, string]> = {
   kyc_hold: ["call", "4 min 05 s", "10:48"],
   prompt_injection: ["email", "", "11:02"],
   cold_case: ["ticket", "TKT-48077", "11:20"],
+  stuck_return: ["call", "5 min 20 s", "11:34"],
 };
 
 export const FALLBACK_SCENARIOS: Scenario[] = BASE.map((s) => {

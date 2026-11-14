@@ -39,7 +39,7 @@ class EventType(StrEnum):
 NODES: list[tuple[str, str, str]] = [
     # (node, agent, label)
     ("intake", "Intake Agent", "Understand complaint"),
-    ("hunch", "Detective", "Hunch (Sarvam Prism)"),
+    ("hunch", "Detective", "Fake-instruction check (Sarvam Prism)"),
     ("trail", "Detective", "Follow the money trail"),
     ("statements", "Detective", "Check merchant's statements"),
     ("lineup", "Detective", "Suspect lineup"),

@@ -20,7 +20,7 @@ from typing import Any
 from fastapi import Header, HTTPException
 
 DEMO_OTP = "123456"
-DEMO_SHOPS = ("M1001", "M1002", "M1003", "M1004", "M1005", "M1006", "M1007", "M1008")
+DEMO_SHOPS = ("M1001", "M1002", "M1003", "M1004", "M1005", "M1006", "M1007", "M1008", "M1009")
 ROLES = ("owner",)                      # staff (cashier) would get a narrower lens; not in the demo
 TOKEN_TTL_S = 8 * 60 * 60
 

@@ -1,4 +1,4 @@
-"""The 8 demo scenarios. Complaint texts are verbatim from docs/CONTRACTS.md; the facts behind them live in seed.py."""
+"""The 9 demo scenarios. Complaint texts are verbatim from docs/CONTRACTS.md; the facts behind them live in seed.py."""
 from __future__ import annotations
 
 from munim.models import Scenario
@@ -53,6 +53,12 @@ SCENARIOS: list[Scenario] = [
         teaser="No known suspect fits. The detective writes read-only SQL and finds a chargeback.",
         expect={"outcome": "IMPROVISED", "culprit": None, "decision": "ALLOW", "final_amount_paise": 0},
     ),
+    Scenario(
+        id="stuck_return", title="Return never collected", merchant_id="M1009", language="hi", channel="chat",
+        complaint_text="मैंने 22 अगस्त को साउंडबॉक्स वापस करने की रिक्वेस्ट डाली थी, पर कोई लेने नहीं आया। तीन बार फ़ोन भी किया। मशीन तब से बंद पड़ी है, फिर भी सितंबर से हर महीने ₹299 कट रहा है। पैसा वापस करो और मशीन ले जाओ।",
+        teaser="The return was requested, the Soundbox went silent, but no courier came. Rent after the 7-day pickup window is refunded and a pickup is booked.",
+        expect={"outcome": "REFUND_DUE", "culprit": "RETURN_STUCK", "decision": "ALLOW", "final_amount_paise": 89700},
+    ),
 ]
 
 # How each complaint reached the support inbox (fictional demo data): source, call length or ticket no., time received.
@@ -65,6 +71,7 @@ _INBOX = {
     "kyc_hold": ("call", "4 min 05 s", "10:48"),
     "prompt_injection": ("email", "", "11:02"),
     "cold_case": ("ticket", "TKT-48077", "11:20"),
+    "stuck_return": ("call", "5 min 20 s", "11:34"),
 }
 SCENARIOS = [s.model_copy(update=dict(zip(("via", "via_note", "received"), _INBOX[s.id]))) if s.id in _INBOX else s
              for s in SCENARIOS]

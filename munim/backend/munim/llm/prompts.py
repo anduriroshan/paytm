@@ -258,7 +258,8 @@ Rules:
   ledger amount of those debits (verdict.damages_paise when you include them all). Only when outcome is REFUND_DUE.
 - Targets come from verdict.targets: CANCEL_SUBSCRIPTION → subscription_id; SCHEDULE_PICKUP → device_id;
   SEND_KYC_LINK / RELEASE_HOLD → hold_id. ESCALATE needs team: risk | billing | logistics | payments | lending.
-- By outcome: REFUND_DUE → refund the damages (+ cancel the subscription if permitted). HOLD_EXPLAINED → the permitted
+- By outcome: REFUND_DUE → refund the damages (+ cancel the subscription if permitted, + book a pickup if SCHEDULE_PICKUP
+  is in remedies). HOLD_EXPLAINED → the permitted
   remedy (KYC → SEND_KYC_LINK; RISK → ESCALATE to risk; never release a risk hold). NO_FAULT → the permitted remedy
   (e.g. SCHEDULE_PICKUP) or NO_ACTION; never refund legitimate charges. IMPROVISED → ESCALATE (usually payments).
   NO_EVIDENCE → NO_ACTION or ESCALATE. UNSOLVED → ESCALATE billing.

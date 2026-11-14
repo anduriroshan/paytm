@@ -6,7 +6,7 @@ About 5 minutes for the main track, plus optional extras. Read *Live vs scripted
 
 ```powershell
 cd munim\backend
-.venv\Scripts\python.exe -m pytest -q                      # 252 tests, offline, no credits
+.venv\Scripts\python.exe -m pytest -q                      # 262 tests, offline, no credits
 .venv\Scripts\python.exe scripts\check_providers.py --ping # one tiny call per live role
 cd ..
 .\run.ps1 -Reset -Build                                    # fresh DB + fresh UI, http://127.0.0.1:8000
@@ -111,6 +111,8 @@ The same engine, opened by the shop owner from their phone. Open **Merchant app*
 - **Your own words or voice:** on the start screen, pick a merchant in the header, then type or press the mic in any language.
 - **Ask anything:** after a case, ask in English ("can we refund anyway?") or paste the merchant's message ("paisa kab aayega?"). Munim answers in English from the case facts, plus a reply draft in the merchant's language when they're the merchant's words. It can't take new actions from chat.
 - **S4 merchant is mistaken** (**Charged after returning in Oct**): Munim says *no* with proof (the pickup failed twice) and books a new pickup.
+- **S9 return never collected** (**More** → **Nobody came to collect the Soundbox**, or **Pooja Fancy Store** on the Inbox): the opposite of S4. The return was asked for on 22 Aug, no courier came, and the Soundbox took no payments after that. Rent after the 7-day pickup window is our fault: ₹897 (3 × ₹299) refunded, the plan stopped and a pickup booked for 16 Nov, all within the rules. The sweep finds 7 more shops, ₹4,790. "Same claim as S4, different records, different answer."
+  - The window is `MUNIM_RETURN_PICKUP_DAYS` in `backend/.env` (default 7). Restart the server after changing it.
 - **S1 again (double refund):** run S1 a second time. Munim finds the earlier refund. In scripted mode the model tries to refund again and the rules **block** it. The DB `UNIQUE(refund_of)` is the last line of defence either way.
 - **S5 risk hold:** live, Gemini sends it to the risk team. `?replay=s5_risk_hold` shows the rules hard-denying a release.
 
@@ -119,19 +121,19 @@ The same engine, opened by the shop owner from their phone. Open **Merchant app*
 |---|---|
 | Venue Wi-Fi is down or slow | Stop the server and run `.\run.ps1 -Mock`. Same UI; the sidebar says **Scripted brain**, and every catch is visible. |
 | A live call fails mid-case | Nothing to do. That call falls back to the scripted brain. |
-| Sarvam credits run out (402) | The writer and hunch fall back automatically. Gemini keeps working. |
+| Sarvam credits run out (402) | The writer and the fake-instruction check fall back automatically. Gemini keeps working. |
 | The backend won't start at all | `cd frontend; npm run preview`, then open `http://localhost:4173/?replay=s1_zombie_rent` |
 | The demo state is messy | Click **Reset demo** in the sidebar. |
 
 Replays work offline, with no backend. Add `&speed=2` (or `0.5`) to change the pace. Available: `s1_zombie_rent`, `s2_double_billing`, `s3_duplicate_edi`, `s4_legit_rent`,
-`s5_risk_hold`, `s6_kyc_hold`, `s7_prompt_injection`, `s8_cold_case` (all scripted), and **`s1_live_gemini_sarvam`**, a real recorded
+`s5_risk_hold`, `s6_kyc_hold`, `s7_prompt_injection`, `s8_cold_case`, `s9_stuck_return` (all scripted), and **`s1_live_gemini_sarvam`**, a real recorded
 run with Gemini, Sarvam-105b and Prism. With no backend running, the start-screen chips play these recordings. In a replay:
 - Chat is limited to the recorded follow-ups.
 - **Send** on a reply and the batch-fix approval are simulated (marked "simulated"). The batch review lists the shops, but full ledger rows need the live backend.
 - Single approvals need the live backend.
 
 ## Credits per live case
-- **Sarvam:** 1 Prism call (hunch) and 1 chat call (reply), plus 1 more for the follow-up after an approval.
+- **Sarvam:** 1 Prism call (fake-instruction check) and 1 chat call (reply), plus 1 more for the follow-up after an approval.
   - **Listen** (TTS) bills per character.
   - The **mic** (STT) bills per minute of audio.
   - Writer reasoning is off (`MUNIM_WRITER_REASONING_EFFORT=none`). Otherwise sarvam-105b thinks for about 25 s and can run out of tokens.
@@ -141,7 +143,8 @@ run with Gemini, Sarvam-105b and Prism. With no backend running, the start-scree
 ## Likely questions
 - **"Isn't this just text-to-SQL?"** No. SQL is the *last* resort (S8). Most cases use a deterministic money trail, claim checks and known causes. The verdict and the rupee amount are computed from rows. The LLM reads, explains and proposes, and it has no write tools.
 - **"What stops a bad refund?"** The safety rules recompute the amount, bind it to the verdict's ledger rows, and check ownership, preconditions, limits and hard denies (RISK holds). On top of that, the DB has UNIQUE `refund_of` and an idempotency key.
-- **"Why Sarvam?"** Replies and voice in Indian languages. Prism also gives calibrated probabilities over the causes plus an injection score in about 300 ms.
+- **"Why Sarvam?"** Replies and voice in Indian languages. Prism also scores each complaint for fake instructions in about 300 ms. It returns a guess at the cause too; Munim shows it but does not use it.
+- **"Do you handle repairs or pricing?"** No. Munim covers deductions from the payout: device rent, loan instalments, holds and chargebacks. Repairs, pricing and dispute decisions go to their own teams.
 - **"Can the AI message the merchant on its own?"** Not from the team side. Every reply and update is a draft on the case until a teammate presses **Send** (who sent it and whether it was edited are recorded). The merchant app is the exception: the shop owner is chatting with Munim directly, and those replies are checked in code before they are shown.
 - **"Can a merchant see another shop, or move money?"** No. The shop comes from the signed login token, never from the chat. The merchant view reads only that shop's rows and allowed fields (risk reasons become "routine safety review"). Any money action from an app case waits for a teammate. Every reply is checked in code before it is shown. Tests cover a forged token, another shop's case, risk words and refunds.
-- **"Is the data real?"** No. All merchants, phones and amounts are fictional seed data: 8 scenarios plus 180 background merchants.
+- **"Is the data real?"** No. All merchants, phones and amounts are fictional seed data: 9 scenarios plus 180 background merchants.

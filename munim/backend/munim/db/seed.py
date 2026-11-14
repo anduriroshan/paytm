@@ -616,6 +616,76 @@ def _seed_background(s: _Seeder, n: int = 180) -> dict[str, int]:
             "risk_holds": len(risk), "kyc_holds": len(kyc)}
 
 
+# ───────────────────────────── stuck returns (seeded last, so every earlier row keeps its id and values) ─────────────
+
+def _seed_stuck_returns(s: _Seeder, n: int = 10) -> dict[str, int]:
+    """S9 plus background shops whose Soundbox return was requested but never collected (device idle since)."""
+    rng = s.rng
+
+    # S9 stuck_return ─ M1009 Pooja Fancy Store: return asked 22 Aug, the 25 Aug pickup never came, ₹299 rent still cut
+    s.merchant("M1009", "Pooja Fancy Store", "Pooja Agarwal", "Kanpur", "hi", "kirana", "2025-12-01", "93XXXX6620")
+    _base_rental(s, "M1009", "D50009", "SBLT-8H3R27", "PLAN_SB299", "2025-12-03", device_status="RETURN_REQUESTED",
+                 shop="Pooja Fancy Store")
+    s.event("D50009", "RETURN_REQUESTED", "2026-08-22T17:05:00", "PK-260822-1009", "Merchant requested return in app")
+    s.event("D50009", "PICKUP_SCHEDULED", "2026-08-23T10:40:00", "PK-260822-1009", "Pickup slot 25 Aug 2026")
+    s.ticket("PK-260822-1009", "D50009", "M1009", "SCHEDULED", "2026-08-22T17:05:00", "2026-08-25", None, None, 0, None)
+    _daily(s, "M1009", date(2026, 8, 1), date(2026, 8, 21), "D50009", (2, 5), (20, 700))
+    _daily(s, "M1009", date(2026, 8, 22), LAST_DAY, None, (2, 4), (20, 700))        # static QR since the return request
+    s.settle("M1009")
+    s.kyc("M1009", "PAN", verified="2025-12-01")
+    s.kyc("M1009", "AADHAAR", verified="2025-12-01")
+
+    # background: n shops, ids after the main population. #0 missed the courier itself (shop closed);
+    # the last two asked only days ago (still inside the pickup window); the rest are stuck with us.
+    region_names = list(REGIONS)
+    region_w = [REGIONS[r][0] for r in region_names]
+    cat_names = list(CATEGORIES)
+    cat_w = [CATEGORIES[c][0] for c in cat_names]
+    win = TODAY - timedelta(days=30)
+    for i in range(n):
+        mid = f"M{2181 + i}"
+        num = mid[1:]
+        reg = REGIONS[rng.choices(region_names, region_w)[0]]
+        city, lang = rng.choice(reg[1])
+        first, last = rng.choice(reg[2]), rng.choice(reg[3])
+        cat = rng.choices(cat_names, cat_w)[0]
+        _, _, ticket, card_share = CATEGORIES[cat]
+        name = s.business_name(cat, last, city)
+        onboarded = TODAY - timedelta(days=rng.randint(150, 600))
+        installed = onboarded + timedelta(days=rng.randint(1, 6))
+        plan = "PLAN_SB499" if rng.random() < 0.7 else "PLAN_SB299"
+        model = PLAN_MODEL[plan]
+        did, sub, mdt = f"D5{num}", f"SUB-{num}-A", f"MDT-{num}-A"
+        recent = i >= n - 2
+        requested = TODAY - timedelta(days=rng.randint(2, 5) if recent else rng.randint(26, 80))
+        slot = requested + timedelta(days=rng.randint(2, 3))
+        tid = f"PK-{requested.strftime('%y%m%d')}-{num}"
+        s.merchant(mid, name, f"{first} {last}", city, lang, cat, onboarded)
+        s.device(did, s.serial(model), model, mid, "RETURN_REQUESTED", installed)
+        s.event(did, "INSTALLED", _ts(installed, rng.randint(10, 18), rng.randint(0, 59)),
+                f"INS-{installed.strftime('%y%m%d')}-{num}", f"Installed at {name}")
+        s.event(did, "RETURN_REQUESTED", _ts(requested, rng.randint(9, 19), rng.randint(0, 59)), tid, "Merchant requested return in app")
+        s.event(did, "PICKUP_SCHEDULED", _ts(requested + timedelta(days=1), 10, rng.randint(0, 59)), tid,
+                f"Pickup slot {slot.day:02d} {MONTHS[slot.month - 1]} {slot.year}")
+        if i == 0:
+            s.event(did, "PICKUP_FAILED", _ts(slot, 13, rng.randint(0, 59)), tid, "SHOP_CLOSED")
+            s.ticket(tid, did, mid, "FAILED", _ts(requested, 10, 0), str(slot), None,
+                     f"DLV{rng.randint(10_000_000, 99_999_999)}", 1, "SHOP_CLOSED")
+        else:
+            s.ticket(tid, did, mid, "SCHEDULED", _ts(requested, 10, 0), str(slot), None, None, 0, None)
+        s.subscription(sub, mid, did, plan, "ACTIVE", installed)
+        s.mandate(mdt, mid, "SUBSCRIPTION", sub=sub, max_paise=PLAN_FEE[plan] * 2, created=installed)
+        s.rent(mid, sub, mdt, plan, _firsts(installed, LAST_DAY))
+        for d in _days(win, LAST_DAY):                                   # static QR once the return was asked
+            k = rng.randint(0, 4)
+            if k:
+                s.day_payments(mid, d, did if d < requested else None, k, ticket, card_share, fail_p=0.02)
+        s.kyc(mid, "PAN", verified=onboarded)
+        s.kyc(mid, "AADHAAR", verified=onboarded)
+        s.settle(mid)
+    return {"stuck_returns": n}
+
+
 # ───────────────────────────── public API ─────────────────────────────
 
 def build_rows() -> dict[str, list[tuple]]:
@@ -624,6 +694,7 @@ def build_rows() -> dict[str, list[tuple]]:
     s.t["plans"].extend(PLANS)
     _seed_scenarios(s)
     _seed_background(s)
+    _seed_stuck_returns(s)
     s.t["payments"] = [tuple(p) for p in s.pay]
     return s.t
 
@@ -691,7 +762,7 @@ def main() -> None:
         from munim.forensics.suspects import find_victims
         from munim.models import rupees
         conn = _c(config.DB_PATH)
-        for sid in ("ZOMBIE_BILLING", "DUPLICATE_SUBSCRIPTION", "DUPLICATE_EDI"):
+        for sid in ("ZOMBIE_BILLING", "RETURN_STUCK", "DUPLICATE_SUBSCRIPTION", "DUPLICATE_EDI"):
             v = find_victims(conn, sid, None, config.DEMO_TODAY)
             print(f"  sweep {sid:<24} {len(v):>3} merchants  {rupees(sum(x.damages_paise for x in v))}")
         conn.close()

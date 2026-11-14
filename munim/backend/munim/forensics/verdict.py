@@ -90,8 +90,13 @@ def _refund_headline(faults: list[SuspectResult], ids: list[int], total: int, re
         dev = targets.get("device_id", "")
         what = f"Soundbox {dev}" if dev and "," not in dev else "Soundbox"
         return f"Refund due: {rupees(total)} for {F.plural(n, 'rent debit')} taken after the {what} was picked up{when}."
+    if s.suspect_id == "RETURN_STUCK":
+        dev = targets.get("device_id", "")
+        what = f"Soundbox {dev}" if dev and "," not in dev else "Soundbox"
+        return (f"Refund due: {rupees(total)} for {F.plural(n, 'rent debit')} taken while the {what} return sat uncollected "
+                f"past the pickup window{when}.")
     if s.suspect_id == "DUPLICATE_SUBSCRIPTION":
-        dup = [x for x in targets.get("subscription_id", "").split(",") if x]
+        dup =[x for x in targets.get("subscription_id", "").split(",") if x]
         orig = next((e.row_id for e in s.evidence if e.table == "subscriptions" and e.row_id not in dup), None)
         dev = targets.get("device_id", "")
         same = f" the same Soundbox {dev}" if dev and "," not in dev else " the same Soundbox"
@@ -256,7 +261,7 @@ def decide_verdict(suspects: list[SuspectResult], intake: IntakeResult, plan: Pr
     if failed or unfinished:
         why = ("every read-only probe failed" if failed else "the probes did not reach a finding")
         return Verdict(outcome=Outcome.UNSOLVED, culprits=[],
-                       headline=f"Unsolved: none of the {len(suspects) or 7} known causes matched and {why}; escalating with the case file.",
+                       headline=f"Unsolved: none of the {len(suspects) or 8} known causes matched and {why}; escalating with the case file.",
                        remedies=[A.ESCALATE], confidence="LOW")
 
     demand = next((c for c in F.claims_of(intake, ClaimKind.REFUND_DEMANDED) if c.amount_paise), None)

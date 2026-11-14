@@ -142,12 +142,15 @@ MERCHANTS = {
     "kyc_hold": dict(id="M1006", business_name="Sri Sai Medicals", owner_name="P. Venkata Rao", city="Vijayawada", language="te", category="pharmacy"),
     "prompt_injection": dict(id="M1007", business_name="QuickMart Express", owner_name="Arjun Shetty", city="Bengaluru", language="en", category="kirana"),
     "cold_case": dict(id="M1008", business_name="Krishna Sweets", owner_name="Ganesh Kulkarni", city="Pune", language="hi-Latn", category="sweets"),
+    "stuck_return": dict(id="M1009", business_name="Pooja Fancy Store", owner_name="Pooja Agarwal", city="Kanpur", language="hi", category="kirana"),
 }
 SLUGS = list(MERCHANTS)
 
 SUSPECTS = [
     {"id": "ZOMBIE_BILLING", "title": "Billing continued after device return",
      "description": "Soundbox rent keeps being debited after the device was picked up / returned."},
+    {"id": "RETURN_STUCK", "title": "Return stuck on our side",
+     "description": "The merchant asked to return the Soundbox and stopped using it, but no courier collected it in time and rent kept being debited."},
     {"id": "DUPLICATE_SUBSCRIPTION", "title": "Two subscriptions on one device",
      "description": "One Soundbox is billed by two active rental subscriptions, so rent is charged twice a month."},
     {"id": "DUPLICATE_EDI", "title": "Loan EDI debited twice",
@@ -296,6 +299,23 @@ def build_case(slug: str, rerun: bool = False) -> dict:
         p = ProposedAction(action_type=A.REFUND_DEBITS, amount_paise=5000000)
         fw_actions = [av(p, Decision.BLOCK, None)]
         execs = [ex(A.REFUND_DEBITS, "BLOCKED", 5000000, "Blocked: no evidence, injection suspected")]
+    elif slug == "stuck_return":
+        req = ref("device_events", 3109, "D50009 Return requested · 22 Aug 2026 17:05 · PK-260822-1009", "2026-08-22T17:05:00")
+        debits = [rent(1900 + i, f"2026-{m_:02d}-01", "SUB-1009-A", 29900) for i, m_ in enumerate((9, 10, 11), start=1)]
+        verdict = Verdict(outcome="REFUND_DUE", culprits=["RETURN_STUCK"],
+                          headline="Refund due: ₹897 for 3 rent debits taken while the Soundbox D50009 return sat uncollected "
+                                   "past the pickup window (01 Sep, 01 Oct, 01 Nov 2026).",
+                          smoking_gun=[req] + debits, damages_ledger_ids=[1901, 1902, 1903], damages_paise=89700,
+                          targets={"subscription_id": "SUB-1009-A", "device_id": "D50009"},
+                          remedies=[A.REFUND_DEBITS, A.CANCEL_SUBSCRIPTION, A.SCHEDULE_PICKUP], sweepable_suspect="RETURN_STUCK")
+        stmts = [st(intake, "DEVICE_RETURNED", "PARTLY_TRUE", "Return requested 22 Aug 2026; no payments since, but not collected yet.", [req])]
+        refund = ProposedAction(action_type=A.REFUND_DEBITS, amount_paise=89700, ledger_entry_ids=[1901, 1902, 1903])
+        cancel = ProposedAction(action_type=A.CANCEL_SUBSCRIPTION, target_id="SUB-1009-A")
+        pick = ProposedAction(action_type=A.SCHEDULE_PICKUP, target_id="D50009")
+        fw_actions = [av(refund, Decision.ALLOW), av(cancel, Decision.ALLOW), av(pick, Decision.ALLOW)]
+        execs = [ex(A.REFUND_DEBITS, "EXECUTED", 89700, "Refunded ₹897 (3 debits)", [9101, 9102, 9103]),
+                 ex(A.CANCEL_SUBSCRIPTION, "EXECUTED", 0, "SUB-1009-A cancelled"),
+                 ex(A.SCHEDULE_PICKUP, "EXECUTED", 0, "Booked pickup PK-261114-M0003 for device D50009 on 16 Nov 2026 and sent the merchant an SMS.")]
     else:                                                          # cold_case
         verdict = Verdict(outcome="IMPROVISED", culprits=[],
                           headline="Settlement STL-1008-20261113 was ₹2,340 short because chargeback CB-1008-01 (GOODS_NOT_RECEIVED) "
@@ -347,12 +367,14 @@ EXPECTED_CLAIMS = {
     "kyc_hold": {"SETTLEMENT_NOT_RECEIVED"},
     "prompt_injection": {"REFUND_DEMANDED"},
     "cold_case": {"SETTLEMENT_SHORT"},
+    "stuck_return": {"DEVICE_RETURNED", "DEDUCTION_AMOUNT", "DEDUCTION_COUNT", "REFUND_DEMANDED"},
 }
 EXPECTED_INTAKE = {   # language, intent
     "zombie_rent": ("hi", "RENT_DEDUCTION"), "double_billing": ("te", "RENT_DEDUCTION"),
     "duplicate_edi": ("hi-Latn", "LOAN_DEDUCTION"), "legit_rent": ("hi", "RENT_DEDUCTION"),
     "risk_hold": ("en", "SETTLEMENT_ISSUE"), "kyc_hold": ("te", "SETTLEMENT_ISSUE"),
     "prompt_injection": ("en", "OTHER"), "cold_case": ("hi-Latn", "SETTLEMENT_ISSUE"),
+    "stuck_return": ("hi", "RENT_DEDUCTION"),
 }
 
 
@@ -449,6 +471,10 @@ def test_mock_propose_trusts_the_witness():
 
     s8 = _acts("cold_case")
     assert set(s8) == {"ESCALATE"} and s8["ESCALATE"].team == "payments" and "chargeback" in s8["ESCALATE"].reason
+
+    s9 = _acts("stuck_return")
+    assert s9["REFUND_DEBITS"].amount_paise == 89700 and s9["CANCEL_SUBSCRIPTION"].target_id == "SUB-1009-A"
+    assert s9["SCHEDULE_PICKUP"].target_id == "D50009"
 
     rerun = _acts("zombie_rent", rerun=True)                           # gullible double refund on the refunded ids
     assert rerun["REFUND_DEBITS"].amount_paise == 149700
@@ -616,6 +642,9 @@ def test_mock_respond_facts():
     s8 = _reply("cold_case")
     assert "CB-1008-01" in s8 and "₹2,340" in s8
 
+    s9 = _reply("stuck_return")
+    assert "22 अगस्त" in s9 and "₹897" in s9 and "16 नवंबर" in s9 and "पूजा" in s9
+
     rerun = _reply("zombie_rent", rerun=True)
     assert "₹998" in rerun and mock.S["hi"]["no_double"] in rerun
 
@@ -686,9 +715,11 @@ async def test_mock_hunch_injection_scores(slug):
 
 
 def test_mock_hunch_tops():
-    tops = {s: router._mock_hunch(hunch_ctx(s), 0).top for s in ("zombie_rent", "double_billing", "duplicate_edi", "risk_hold", "kyc_hold")}
+    tops = {s: router._mock_hunch(hunch_ctx(s), 0).top for s in ("zombie_rent", "double_billing", "duplicate_edi", "risk_hold", "kyc_hold",
+                                                                     "stuck_return")}
     assert tops == {"zombie_rent": "ZOMBIE_BILLING", "double_billing": "DUPLICATE_SUBSCRIPTION",
-                    "duplicate_edi": "DUPLICATE_EDI", "risk_hold": "RISK_HOLD", "kyc_hold": "KYC_HOLD"}
+                    "duplicate_edi": "DUPLICATE_EDI", "risk_hold": "RISK_HOLD", "kyc_hold": "KYC_HOLD",
+                    "stuck_return": "RETURN_STUCK"}
 
 
 PRISM_RESPONSE = {

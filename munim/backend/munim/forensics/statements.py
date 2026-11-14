@@ -25,7 +25,7 @@ class _Ctx:
     @property
     def wrong(self) -> dict[int, str]:
         if self._wrong is None:
-            self._wrong = F.wrongful_debits(self.conn, self.mid, self.money_areas, include_refunded=True)
+            self._wrong = F.wrongful_debits(self.conn, self.mid, self.money_areas, include_refunded=True, today=self.today)
         return self._wrong
 
     @property
@@ -102,6 +102,12 @@ def _device_returned(cx: _Ctx, c: Claim) -> StatementCheck:
         since = (f"{F.plural(pay.count, 'payment')} since, the last on {F.fdate(pay.last)}" if pay.count
                  else "no payments since")
         ev = [F.event_ref(lc.request)] + [F.event_ref(e) for e in lc.failed] + ([F.ticket_ref(lc.ticket)] if lc.ticket else [])
+        merchant_side = [e for e in lc.failed if str(e["note"] or "").upper() in F.MERCHANT_SIDE_FAILURES]
+        if not pay.count and not merchant_side:      # asked to return, stopped using it; the courier never came
+            days = (cx.today - F.as_date(lc.request["at"])).days
+            return _check(c, "PARTLY_TRUE", f"Return of {s['device_id']} requested {F.fdate(lc.request['at'])} and the Soundbox "
+                                            f"has taken no payments since, but it is not collected yet ({why}, "
+                                            f"{F.plural(days, 'day')} on).", ev)
         if pay.count:
             ev.append(F.payments_ref(pay, f"{F.plural(pay.count, 'payment')} via {s['device_id']} since the return request, "
                                           f"last {F.fdate(pay.last)} {F.fhm(pay.last)}"))
@@ -339,7 +345,7 @@ def _settlement_not_received(cx: _Ctx, c: Claim) -> StatementCheck:
 # ───────────────────────────── refund demand ─────────────────────────────
 
 def _refund_demanded(cx: _Ctx, c: Claim) -> StatementCheck:
-    open_ = F.debit_rows(cx.conn, cx.mid, F.wrongful_debits(cx.conn, cx.mid, cx.money_areas, include_refunded=False))
+    open_ = F.debit_rows(cx.conn, cx.mid, F.wrongful_debits(cx.conn, cx.mid, cx.money_areas, include_refunded=False, today=cx.today))
     done = [d for d in F.debit_rows(cx.conn, cx.mid, cx.wrong) if d["id"] not in {o["id"] for o in open_}]
     owed = sum(d["amount_paise"] for d in open_)
     ev = [F.ledger_ref(d) for d in open_]

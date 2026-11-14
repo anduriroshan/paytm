@@ -35,7 +35,7 @@ Run tests with `backend/.venv/Scripts/python.exe -m pytest -q tests/...` from `b
 - All seed data is **fictional**. Use no real people or lenders, and masked phones like `98XXXX1234`.
 - Imports are absolute (`from munim.models import ...`). Modules must not do network or DB work at import time.
 
-## The 8 demo scenarios (A seeds the facts; B's mock scripts the LLM behaviour)
+## The 9 demo scenarios (A seeds the facts; B's mock scripts the LLM behaviour)
 
 Each scenario merchant has a full history, so the trail is non-trivial. The complaint texts below are **verbatim**, so use them exactly.
 
@@ -151,6 +151,21 @@ Each scenario merchant has a full history, so the trail is non-trivial. The comp
   - The outcome is **IMPROVISED** with LOW confidence. The mock proposes ESCALATE team=payments ("help merchant contest the chargeback"), which is ALLOWED.
 - **Statements:** SETTLEMENT_SHORT ₹2,340 on 2026-11-13 → VERIFIED (gross ₹18,220 − net ₹15,880).
 
+### S9 `stuck_return`: the return is stuck on our side; refund the rent after the pickup window and book the pickup
+- **Merchant:** M1009 *Pooja Fancy Store*, owner Pooja Agarwal, Kanpur, `hi`, kirana.
+- **Complaint:** `मैंने 22 अगस्त को साउंडबॉक्स वापस करने की रिक्वेस्ट डाली थी, पर कोई लेने नहीं आया। तीन बार फ़ोन भी किया। मशीन तब से बंद पड़ी है, फिर भी सितंबर से हर महीने ₹299 कट रहा है। पैसा वापस करो और मशीन ले जाओ।`
+- **Facts:**
+  - Plan `PLAN_SB299`, ₹299/month. Device D50009 (SBLT-8H3R27) installed 2025-12-03, status RETURN_REQUESTED. SUB-1009-A is ACTIVE.
+  - Device events: RETURN_REQUESTED 2026-08-22 17:05, PICKUP_SCHEDULED 2026-08-23 (slot 25 Aug). Ticket PK-260822-1009 is SCHEDULED for 2026-08-25 with 0 attempts. No PICKED_UP, no failed attempt.
+  - Payments through D50009 stop on 2026-08-21. From 22 Aug the shop takes payments on a static QR (no device).
+  - Rent debits of ₹299 on 1 Sep, 1 Oct and 1 Nov 2026, all after the pickup window.
+- **Pickup window:** `MUNIM_RETURN_PICKUP_DAYS` (default 7). Rent with a value date after request + window is ours to refund.
+- **Expected outcome:**
+  - RETURN_STUCK **MATCH**. Damages = **₹897** (3 × ₹299). ZOMBIE_BILLING and PICKUP_NOT_COMPLETED are ELIMINATED.
+  - The mock proposes REFUND_DEBITS ₹897, CANCEL_SUBSCRIPTION SUB-1009-A and SCHEDULE_PICKUP D50009. All are **ALLOWED** (the old ticket's slot is in the past).
+  - Sweep: RETURN_STUCK finds 7 other merchants (₹4,790).
+- **Statements:** DEVICE_RETURNED 2026-08-22 → PARTLY_TRUE (return requested and no payments since, but not collected yet).
+
 ### Background population (A): makes sweeps and the trail meaningful
 About 180 fictional merchants, M2001–M2180, across many cities, languages and categories. Each has a device, a subscription (₹499 `PLAN_SB499` or
 ₹299 `PLAN_SB299` "Soundbox Lite"), monthly rent debits, settlements for the last 14 days, and light payments for the last 30 days. About 25% have a loan with
@@ -158,6 +173,7 @@ daily EDI for the last 30 days. Seeded failure patterns:
 - **About 36 ZOMBIE_BILLING victims:** pickup completed 1–3 months ago, subscription still ACTIVE, 1–3 debits after pickup.
 - About 20 healthy returns: pickup completed and the subscription correctly cancelled.
 - About 6 DUPLICATE_SUBSCRIPTION, about 5 DUPLICATE_EDI, about 8 PICKUP_NOT_COMPLETED, 3 RISK holds, 5 KYC holds.
+- **10 stuck returns, M2181–M2190** (seeded after the rest, so earlier ids and values do not move): 7 are RETURN_STUCK victims (pickup slot passed, no payments since the request, rent after the window); 1 had the courier turned away (SHOP_CLOSED, merchant side); 2 asked to return a few days ago (window still open).
 
 Use `random.Random(42)` so data is deterministic. Seeding must take under 5 s.
 
@@ -166,6 +182,7 @@ Use `random.Random(42)` so data is deterministic. Seeding must take under 5 s.
 | suspect_id | kind | intents | MATCH when (deterministic) | damages | remedies | sweepable |
 |---|---|---|---|---|---|---|
 | ZOMBIE_BILLING | FAULT | RENT | Subscription's device has PICKED_UP (or a COMPLETED pickup ticket), and SUCCESS RENT_DEBITs for that subscription have value_date > pickup date and are not refunded | those debits | REFUND_DEBITS, CANCEL_SUBSCRIPTION | yes |
+| RETURN_STUCK | FAULT | RENT | Return requested, no PICKED_UP, no payments through the device since the request, no failed attempt on the merchant's side (SHOP_CLOSED, MERCHANT_UNAVAILABLE, MERCHANT_REFUSED), and request + `RETURN_PICKUP_DAYS` is past | unrefunded SUCCESS RENT_DEBITs with value_date after the window | REFUND_DEBITS, CANCEL_SUBSCRIPTION, SCHEDULE_PICKUP (one device) | yes |
 | DUPLICATE_SUBSCRIPTION | FAULT | RENT | ≥2 ACTIVE subscriptions on the same device | the later subscription's unrefunded SUCCESS debits | REFUND_DEBITS, CANCEL_SUBSCRIPTION (target = later sub) | yes |
 | DUPLICATE_EDI | FAULT | LOAN | More than 1 SUCCESS EDI_DEBIT for the same loan and due_date | the extra ones (all but the first), unrefunded | REFUND_DEBITS | yes |
 | PICKUP_NOT_COMPLETED | INNOCENT | RENT | Return requested, no PICKED_UP, and the device processed payments after the request | none | SCHEDULE_PICKUP | no |
@@ -262,7 +279,7 @@ def describe() -> dict                        # {"reasoner": {"provider","model"
 
   ctx values are plain dicts (model_dump(mode="json")).
 - **Mock propose logic:** trust the witness.
-  - REFUND_DUE: amount = DEDUCTION_COUNT.count × DEDUCTION_AMOUNT.amount when both claims exist, else verdict.damages_paise. ledger ids = verdict damages. Add CANCEL_SUBSCRIPTION when it is in remedies and targets has subscription_id (for DUPLICATE_SUBSCRIPTION, the duplicate's id is in targets).
+  - REFUND_DUE: amount = DEDUCTION_COUNT.count × DEDUCTION_AMOUNT.amount when both claims exist, else verdict.damages_paise. ledger ids = verdict damages. Add CANCEL_SUBSCRIPTION when it is in remedies and targets has subscription_id (for DUPLICATE_SUBSCRIPTION, the duplicate's id is in targets). Add SCHEDULE_PICKUP when it is in remedies and targets names one device_id (RETURN_STUCK).
   - HOLD with RISK_HOLD: RELEASE_HOLD hold_id plus ESCALATE risk. HOLD with KYC_HOLD: SEND_KYC_LINK hold_id.
   - NO_FAULT with PICKUP_NOT_COMPLETED: SCHEDULE_PICKUP device_id.
   - NO_FAULT with ALREADY_REFUNDED, and claims carry count/amount: REFUND_DEBITS of the claimed amount on the refunded ids (gullible; the firewall must block it).

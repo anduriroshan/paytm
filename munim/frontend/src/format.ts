@@ -76,6 +76,7 @@ export function langLabel(code: string | null | undefined): string {
 
 export const SUSPECT_TITLES: Record<string, string> = {
   ZOMBIE_BILLING: "Billing continued after device return",
+  RETURN_STUCK: "Return stuck on our side",
   DUPLICATE_SUBSCRIPTION: "Two subscriptions on one device",
   DUPLICATE_EDI: "Loan instalment debited twice",
   PICKUP_NOT_COMPLETED: "Pickup never completed",

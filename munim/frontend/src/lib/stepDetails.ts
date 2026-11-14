@@ -181,16 +181,17 @@ function hunch(view: CaseView): StepDetail | null {
     .sort((a, b) => b[1] - a[1])
     .slice(0, 4)
     .map(([id, p]): DetailLine => ({ text: causeTitle(id), right: pct(p), bar: p }));
-  const groups: DetailGroup[] = [{ title: "Likely causes", lines: top }];
+  const groups: DetailGroup[] = [];
   if (typeof h.injection_score === "number") {
     groups.push({
-      lines: [{ label: "Trick score", text: pct(h.injection_score), tag: h.injection_score >= 0.5 ? { text: "High", tone: "bad" } : undefined, sub: "The safety rules read this score." }],
+      lines: [{ label: "Fake-instruction score", text: pct(h.injection_score), tag: h.injection_score >= 0.5 ? { text: "High", tone: "bad" } : undefined, sub: "The safety rules read this score." }],
     });
   }
+  if (top.length) groups.push({ title: "Guess at the cause (shown only, not used)", lines: top });
   return {
     by: scripted ? "Scripted brain (offline stand-in for the AI)" : `AI · ${brainName(h.source)} · ${h.source}`,
     ai: true,
-    what: "A quick guess at the cause before any records are read. The verdict comes from the records, not from this guess.",
+    what: "Scores how likely the complaint is trying to give the system orders. Only this score is used, by the safety rules. Causes are found from the records.",
     groups,
   };
 }

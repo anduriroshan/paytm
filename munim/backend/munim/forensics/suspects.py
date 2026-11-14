@@ -34,6 +34,11 @@ CATALOGUE: dict[str, SuspectSpec] = {s.id: s for s in [
                     "cancelled, so monthly rent kept being debited after the pickup.",
         intents=[Intent.RENT_DEDUCTION], remedies=[A.REFUND_DEBITS, A.CANCEL_SUBSCRIPTION], sweepable=True),
     SuspectSpec(
+        id="RETURN_STUCK", title="Return stuck on our side", kind="FAULT",
+        description="The merchant asked to return the Soundbox and stopped using it, but no courier collected it within the "
+                    "pickup window (no failed attempt on the shop's side), and the monthly rent kept being debited.",
+        intents=[Intent.RENT_DEDUCTION], remedies=[A.REFUND_DEBITS, A.CANCEL_SUBSCRIPTION, A.SCHEDULE_PICKUP], sweepable=True),
+    SuspectSpec(
         id="DUPLICATE_SUBSCRIPTION", title="Two subscriptions on one device", kind="FAULT",
         description="One Soundbox is billed by two active rental subscriptions (for example after a duplicate re-onboarding), "
                     "so the merchant pays the monthly rent twice.",
@@ -63,7 +68,7 @@ CATALOGUE: dict[str, SuspectSpec] = {s.id: s for s in [
         intents=[Intent.SETTLEMENT_ISSUE], remedies=[A.SEND_KYC_LINK]),
 ]}
 
-_AREAS = {"ZOMBIE_BILLING": {F.RENT}, "DUPLICATE_SUBSCRIPTION": {F.RENT}, "DUPLICATE_EDI": {F.LOAN},
+_AREAS = {"ZOMBIE_BILLING": {F.RENT}, "RETURN_STUCK": {F.RENT}, "DUPLICATE_SUBSCRIPTION": {F.RENT}, "DUPLICATE_EDI": {F.LOAN},
           "PICKUP_NOT_COMPLETED": {F.RENT}, "ALREADY_REFUNDED": {F.RENT, F.LOAN}, "RISK_HOLD": {F.SETTLEMENT},
           "KYC_HOLD": {F.SETTLEMENT}}
 _TOPIC = {F.RENT: "Soundbox rent", F.LOAN: "loan EDI", F.SETTLEMENT: "settlements"}
@@ -150,7 +155,7 @@ def _zombie(conn, mid: str, ctx: dict) -> SuspectResult:
         since = (f"{F.plural(pay.count, 'payment')} since, the last on {F.fdate(pay.last)}" if pay.count
                  else "no payments since")
         summary = (f"Never picked up: the return of {z.sub['device_id']} was requested on {F.fdate(lc.request['at'])} but "
-                   f"{fails}, and the Soundbox has taken {since}, so the rent is not after a return.")
+                   f"{fails}, and the Soundbox has taken {since}, so no rent was taken after a pickup.")
         ev = [F.event_ref(lc.request)] + [F.event_ref(e) for e in lc.failed]
         if lc.ticket:
             ev.append(F.ticket_ref(lc.ticket))
@@ -176,6 +181,94 @@ def _zombie(conn, mid: str, ctx: dict) -> SuspectResult:
     ev = [F.sub_ref(z.sub)]
     if pay.count:
         ev.append(F.payments_ref(pay, f"{F.plural(pay.count, 'payment')} via {z.sub['device_id']} in the last 30 days, last {F.fdate(pay.last)}"))
+    return _result(sid, "ELIMINATED", summary, ev)
+
+
+def _not_collected(st: F.StuckReturn) -> str:
+    """Why the courier has not collected it: 'the pickup booked for 25 Aug 2026 never happened' / courier-side failures."""
+    lc = st.lc
+    if lc.failed:
+        return f"{F.plural(len(lc.failed), 'pickup attempt')} failed ({F.failed_phrase(lc)})"
+    t = lc.ticket
+    if t and t["scheduled_for"]:
+        return f"the pickup booked for {F.fdate(t['scheduled_for'])} never happened"
+    return "no courier was sent"
+
+
+def _stuck(conn, mid: str, ctx: dict) -> SuspectResult:
+    sid = "RETURN_STUCK"
+    from munim import config
+    subs = [s for s in F.subscriptions(conn, mid) if s["device_id"]]
+    if not subs:
+        return _result(sid, "NOT_APPLICABLE", f"{mid} has no Soundbox rental, so there is no return to check.")
+    window = config.RETURN_PICKUP_DAYS
+    sts = F.stuck_returns(conn, mid, ctx["today_d"])
+    hits = [st for st in sts if st.stuck and st.damages]
+    if hits:
+        st = hits[0]
+        lc, dev = st.lc, st.sub["device_id"]
+        dmg = [d for h in hits for d in h.damages]
+        days = (ctx["today_d"] - F.as_date(lc.request["at"])).days
+        extra = f" (plus {F.plural(len(hits) - 1, 'other device')})" if len(hits) > 1 else ""
+        summary = (f"The return of {dev} was requested on {F.fdate(lc.request['at'])} and the Soundbox has taken no payment "
+                   f"since, but {_not_collected(st)}: still not collected after {days} days. {st.sub['id']} took "
+                   f"{F.plural(len(st.damages), 'rent debit')} of {_amounts(st.damages)} after the {window}-day pickup window "
+                   f"({F.fdates(d['value_date'] for d in st.damages)}){extra}: "
+                   f"{rupees(sum(d['amount_paise'] for d in dmg))} never refunded.")
+        ev = [F.event_ref(lc.request)]
+        ev += [F.event_ref(e) for e in lc.events if e["event_type"] == "PICKUP_SCHEDULED" and e["at"] >= lc.request["at"]][:1]
+        ev += [F.event_ref(e) for e in lc.failed]
+        if lc.ticket:
+            ev.append(F.ticket_ref(lc.ticket))
+        last = F.payments_via(conn, dev, mid, before=lc.request["at"])
+        if last.count:
+            ev.append(F.payments_ref(last, f"Last payment through {dev}: {F.fdate(last.last)} {F.fhm(last.last)}, "
+                                           f"before the return request"))
+        ev.append(F.sub_ref(st.sub))
+        ev += [F.ledger_ref(d) for d in dmg]
+        subs_hit = [h.sub for h in hits]
+        remedies = [A.REFUND_DEBITS] + ([A.CANCEL_SUBSCRIPTION] if any(x["status"] == "ACTIVE" for x in subs_hit) else [])
+        devices = list(dict.fromkeys(x["device_id"] for x in subs_hit))
+        if len(devices) == 1:
+            remedies.append(A.SCHEDULE_PICKUP)
+        targets = {"subscription_id": ",".join(x["id"] for x in subs_hit if x["status"] == "ACTIVE")
+                   or ",".join(x["id"] for x in subs_hit),
+                   "device_id": ",".join(devices)}
+        return _result(sid, "MATCH", summary, ev, damages=dmg, targets=targets, remedies=remedies)
+
+    if not sts:
+        lcs = [(x, F.lifecycle(conn, x["device_id"], mid, x["started_at"])) for x in subs]
+        picked = [(x, lc) for x, lc in lcs if lc.pickup_at]
+        if picked:
+            x, lc = picked[-1]
+            awb = f" (AWB {lc.pickup_ref})" if lc.pickup_ref else ""
+            summary = f"Soundbox {x['device_id']} was collected on {F.fdate(lc.pickup_at)}{awb}, so its return is not stuck."
+            ev = ([F.event_ref(lc.pickup_event)] if lc.pickup_event else []) + ([F.ticket_ref(lc.ticket)] if lc.ticket else [])
+            return _result(sid, "ELIMINATED", summary, ev)
+        return _result(sid, "NOT_APPLICABLE", "No return was ever requested for the Soundbox, so no return can be stuck.")
+
+    st = sts[0]
+    lc, dev = st.lc, st.sub["device_id"]
+    req = F.fdate(lc.request["at"])
+    ev = [F.event_ref(lc.request)] + [F.event_ref(e) for e in lc.failed] + ([F.ticket_ref(lc.ticket)] if lc.ticket else [])
+    if st.pay.count:
+        summary = (f"The return of {dev} was requested on {req}, but the Soundbox has taken {F.plural(st.pay.count, 'payment')} "
+                   f"since (last on {F.fdate(st.pay.last)}), so it is still in use in the shop.")
+        ev.append(F.payments_ref(st.pay, f"{F.plural(st.pay.count, 'payment')} via {dev} since the return request, "
+                                         f"last {F.fdate(st.pay.last)} {F.fhm(st.pay.last)}"))
+    elif st.merchant_failed:
+        summary = (f"The courier came for {dev} after the {req} return request but could not collect it on the shop's side "
+                   f"({F.failed_phrase(lc)}), so the delay is not ours.")
+    elif not st.overdue:
+        summary = (f"The return of {dev} was requested on {req}; the {window}-day pickup window runs until "
+                   f"{F.fdate(st.due_by)}, so the pickup is not late yet.")
+    elif st.after:
+        summary = (f"Rent taken after the pickup window for {dev} ({F.fdates(d['value_date'] for d in st.after)}, "
+                   f"{rupees(sum(d['amount_paise'] for d in st.after))}) was already refunded, so nothing is owed.")
+        ev += [F.ledger_ref(d) for d in st.after]
+    else:
+        summary = (f"The return of {dev} requested on {req} is not collected yet, but no rent was debited after the "
+                   f"{window}-day pickup window ({F.fdate(st.due_by)}).")
     return _result(sid, "ELIMINATED", summary, ev)
 
 
@@ -320,7 +413,7 @@ def _pickup(conn, mid: str, ctx: dict) -> SuspectResult:
 def _already_refunded(conn, mid: str, ctx: dict) -> SuspectResult:
     sid = "ALREADY_REFUNDED"
     areas = ctx["areas"] & {F.RENT, F.LOAN}
-    wrong = F.wrongful_debits(conn, mid, areas, include_refunded=True)
+    wrong = F.wrongful_debits(conn, mid, areas, include_refunded=True, today=ctx["today_d"])
     candidates = set(wrong) | set(ctx["disputed_ledger"])
     debits = F.debit_rows(conn, mid, candidates)
     if not debits:
@@ -411,7 +504,7 @@ def _kyc(conn, mid: str, ctx: dict) -> SuspectResult:
                    targets={"hold_id": h["id"], "settlement_ids": ",".join(s["id"] for s in stls)}, remedies=[A.SEND_KYC_LINK])
 
 
-_TESTS: dict[str, Callable] = {"ZOMBIE_BILLING": _zombie, "DUPLICATE_SUBSCRIPTION": _dup_sub, "DUPLICATE_EDI": _dup_edi,
+_TESTS: dict[str, Callable] = {"ZOMBIE_BILLING": _zombie, "RETURN_STUCK": _stuck, "DUPLICATE_SUBSCRIPTION": _dup_sub, "DUPLICATE_EDI": _dup_edi,
                                "PICKUP_NOT_COMPLETED": _pickup, "ALREADY_REFUNDED": _already_refunded, "RISK_HOLD": _risk,
                                "KYC_HOLD": _kyc}
 
@@ -445,6 +538,10 @@ _CANDIDATES = {
     "ZOMBIE_BILLING": """SELECT DISTINCT s.merchant_id FROM subscriptions s
                          WHERE s.device_id IN (SELECT device_id FROM device_events WHERE event_type = 'PICKED_UP'
                                                UNION SELECT device_id FROM pickup_tickets WHERE status = 'COMPLETED')""",
+    "RETURN_STUCK": """SELECT DISTINCT s.merchant_id FROM subscriptions s
+                       WHERE s.device_id IN (SELECT device_id FROM device_events WHERE event_type = 'RETURN_REQUESTED')
+                         AND s.device_id NOT IN (SELECT device_id FROM device_events WHERE event_type = 'PICKED_UP'
+                                                 UNION SELECT device_id FROM pickup_tickets WHERE status = 'COMPLETED')""",
     "DUPLICATE_SUBSCRIPTION": """SELECT DISTINCT merchant_id FROM subscriptions WHERE status = 'ACTIVE' AND device_id IS NOT NULL
                                  GROUP BY merchant_id, device_id HAVING COUNT(*) > 1""",
     "DUPLICATE_EDI": """SELECT DISTINCT l.merchant_id FROM ledger_entries l LEFT JOIN edi_attempts a ON a.ledger_entry_id = l.id

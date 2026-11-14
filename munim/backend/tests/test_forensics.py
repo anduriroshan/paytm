@@ -30,6 +30,7 @@ EXPECTED = {
     "kyc_hold": ("HOLD_EXPLAINED", "KYC_HOLD", 0, 0),
     "prompt_injection": ("NO_EVIDENCE", None, 0, 0),
     "cold_case": ("IMPROVISED", None, 0, 0),
+    "stuck_return": ("REFUND_DUE", "RETURN_STUCK", 89700, 3),
 }
 
 
@@ -115,7 +116,7 @@ def test_scenario_pipeline(conn, db, scenario_id):
     assert len(checks) == len(intake.claims)
     assert all(one_sentence(c.finding) for c in checks), [c.finding for c in checks]
 
-    # suspects: all 7, MATCHes first, one-sentence summaries, real evidence
+    # suspects: the full catalogue, MATCHes first, one-sentence summaries, real evidence
     assert sorted(s.suspect_id for s in suspects) == sorted(CATALOGUE)
     statuses = [s.status for s in suspects]
     assert statuses == sorted(statuses, key=lambda st: st != "MATCH")
@@ -187,6 +188,34 @@ def test_imprecise_intake_still_finds_zombie(conn):
     assert zombie.status == "MATCH" and zombie.damages_paise == 99800
 
 
+def test_stuck_return_found_and_alibis(conn):
+    _, _, _, checks, suspects = investigate(conn, "stuck_return")
+    returned = next(c for c in checks if c.claim.kind == "DEVICE_RETURNED")
+    assert returned.status == "PARTLY_TRUE" and "not collected yet" in returned.finding
+    by_id = {s.suspect_id: s for s in suspects}
+    stuck = by_id["RETURN_STUCK"]
+    assert stuck.status == "MATCH" and stuck.damages_paise == 89700 and len(stuck.damages_ledger_ids) == 3
+    assert [a.value for a in stuck.remedies] == ["REFUND_DEBITS", "CANCEL_SUBSCRIPTION", "SCHEDULE_PICKUP"]
+    assert stuck.targets == {"subscription_id": "SUB-1009-A", "device_id": "D50009"}
+    assert "25 Aug 2026 never happened" in stuck.summary
+    assert by_id["ZOMBIE_BILLING"].status == "ELIMINATED"
+    assert by_id["PICKUP_NOT_COMPLETED"].status == "ELIMINATED"
+    # S4: the Soundbox kept taking payments after the request, so the return is not stuck
+    _, _, _, _, s4 = investigate(conn, "legit_rent")
+    s4_stuck = next(s for s in s4 if s.suspect_id == "RETURN_STUCK")
+    assert s4_stuck.status == "ELIMINATED" and "still in use" in s4_stuck.summary
+    # S1: collected, so not stuck
+    _, _, _, _, s1 = investigate(conn, "zombie_rent")
+    assert next(s for s in s1 if s.suspect_id == "RETURN_STUCK").status == "ELIMINATED"
+
+
+def test_stuck_return_respects_pickup_window(conn, monkeypatch):
+    monkeypatch.setattr(config, "RETURN_PICKUP_DAYS", 90)   # 22 Aug + 90 days is after today
+    _, _, _, _, suspects = investigate(conn, "stuck_return")
+    stuck = next(s for s in suspects if s.suspect_id == "RETURN_STUCK")
+    assert stuck.status == "ELIMINATED" and "not late yet" in stuck.summary
+
+
 # ───────────────────────────── sweeps ─────────────────────────────
 
 def test_find_victims_zombie(conn):
@@ -196,6 +225,17 @@ def test_find_victims_zombie(conn):
     assert "M1001" not in mids and len(set(mids)) == len(mids)
     assert all(v.status == "MATCH" and v.damages_paise > 0 and v.damages_ledger_ids for v in victims)
     assert len(find_victims(conn, "ZOMBIE_BILLING", None, TODAY)) == len(victims) + 1
+
+
+def test_find_victims_stuck_return(conn):
+    victims = find_victims(conn, "RETURN_STUCK", "M1009", TODAY)
+    mids = {v.merchant_id for v in victims}
+    assert len(victims) == 7 and "M1009" not in mids
+    assert "M2181" not in mids                       # the shop was closed when the courier came
+    assert not mids & {"M2189", "M2190"}             # requested a few days ago, window still open
+    assert all(v.status == "MATCH" and v.damages_paise > 0 for v in victims)
+    # rentals that are not stuck do not show up
+    assert not mids & {"M1001", "M1004"}
 
 
 # ───────────────────────────── already refunded ─────────────────────────────
