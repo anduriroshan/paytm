@@ -190,7 +190,7 @@ def test_sweep_approves_only_the_picked_merchants(client):
 def test_inbox_lists_new_issues_then_cases_with_reply_state(client):
     c = client
     items = c.get("/api/inbox").json()
-    assert len(items) == 9 and all(i["status"] == "NEW" and i["case_id"] is None for i in items)
+    assert len(items) == 11 and all(i["status"] == "NEW" and i["case_id"] is None for i in items)
     assert {i["via"] for i in items} == {"call", "email", "ticket"}
     assert all(i["business_name"] and i["summary"] and i["received"] for i in items)
     assert [i["received"] for i in items] == sorted(i["received"] for i in items)
@@ -200,7 +200,7 @@ def test_inbox_lists_new_issues_then_cases_with_reply_state(client):
     row = next(i for i in items if i["case_id"] == cid)
     assert row["scenario_id"] == "kyc_hold" and row["via"] == "call" and row["reply"] == "draft"
     assert row["summary"] and row["language"] == "te" and row["received"] == "10:48"
-    assert sum(i["status"] == "NEW" for i in items) == 8
+    assert sum(i["status"] == "NEW" for i in items) == 10
     c.post(f"/api/cases/{cid}/replies/send", json={})
     assert next(i for i in c.get("/api/inbox").json() if i["case_id"] == cid)["reply"] == "sent"
 

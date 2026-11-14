@@ -12,6 +12,8 @@ export const START_CHIPS: ReadonlyArray<{ scenario: string; label: string }> = [
   { scenario: "kyc_hold", label: "Settlement not received" },
   { scenario: "prompt_injection", label: "Fake admin asks ₹50,000" },
   { scenario: "cold_case", label: "₹2,340 missing from settlement" },
+  { scenario: "bus_turned_back", label: "Bus turned back, no refund" },
+  { scenario: "flight_refund", label: "Airline refund never arrived" },
 ];
 export const START_CHIPS_SHOWN = 4;
 
@@ -31,7 +33,7 @@ const WHEN_MONEY: Record<string, string> = {
   "hi-Latn": "Paisa kab tak aayega?",
   en: "When will I get my money?",
 };
-const WHEN_MONEY_LABEL = "Merchant: when's my money?";
+const whenMoneyLabel = (who: string) => `${who}: when's my money?`;
 
 /** The teammate's own questions (English). Keep in sync with backend/scripts/record_fixtures.py FOLLOWUPS. */
 const PER_SCENARIO: Record<string, FollowUp[]> = {
@@ -43,19 +45,19 @@ const PER_SCENARIO: Record<string, FollowUp[]> = {
 };
 
 /** Suggested questions for a case, minus the ones already asked. */
-export function followUps(scenarioId: string | null | undefined, language: string | null | undefined, asked: string[], opts: { whenMoney: boolean }): FollowUp[] {
+export function followUps(scenarioId: string | null | undefined, language: string | null | undefined, asked: string[], opts: { whenMoney: boolean; who?: string }): FollowUp[] {
   const lang = language && WHEN_MONEY[language] ? language : "en";
   const list = [...(PER_SCENARIO[scenarioId ?? ""] ?? [])];
-  if (opts.whenMoney) list.push({ text: WHEN_MONEY[lang], label: WHEN_MONEY_LABEL, language: lang });
+  if (opts.whenMoney) list.push({ text: WHEN_MONEY[lang], label: whenMoneyLabel(opts.who ?? "Merchant"), language: lang });
   const seen = new Set(asked.map((a) => a.trim()));
   return list.filter((f) => !seen.has(f.text.trim()));
 }
 
 /** Chip label for a recorded question (replays): the known label, else its English. */
-export function followUpLabel(question: string, en: string | null, language: string | null): string {
+export function followUpLabel(question: string, en: string | null, language: string | null, who = "Merchant"): string {
   const q = question.trim();
   const known = Object.values(PER_SCENARIO).flat().find((f) => f.text.trim() === q);
   if (known) return known.label;
-  if (Object.values(WHEN_MONEY).some((t) => t.trim() === q)) return WHEN_MONEY_LABEL;
-  return en && language && !language.toLowerCase().startsWith("en") ? `Merchant: ${en}` : (en ?? question);
+  if (Object.values(WHEN_MONEY).some((t) => t.trim() === q)) return whenMoneyLabel(who);
+  return en && language && !language.toLowerCase().startsWith("en") ? `${who}: ${en}` : (en ?? question);
 }

@@ -186,7 +186,7 @@ export function Inbox({ items, loading, offline, activeCaseId, busy, error, onOp
             <thead>
               <tr>
                 <th style={{ width: 150 }}>Source</th>
-                <th>Merchant</th>
+                <th>Customer</th>
                 <th>What it's about</th>
                 <th>Lang</th>
                 <th>Received</th>

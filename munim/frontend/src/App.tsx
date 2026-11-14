@@ -608,6 +608,7 @@ export default function App() {
   const typingText = running ? (view.caseId ? phaseText(view) : "Reading the complaint…") : null;
 
   // Follow-up chips.
+  const customerWord = view.info?.merchant?.category === "passenger" ? "Passenger" : "Merchant";
   const lastMsg = view.messages[view.messages.length - 1];
   const awaitingAnswer = !!pendingQ || lastMsg?.role === "team";
   let chips: FollowChip[] = [];
@@ -618,13 +619,13 @@ export default function App() {
         .filter((t) => !t.used)
         .map((t) => ({
           key: `t${t.index}`,
-          label: followUpLabel(t.question, t.en, t.language),
+          label: followUpLabel(t.question, t.en, t.language, customerWord),
           language: isEnglish(t.language) ? null : t.language,
           onClick: () => playTurn(t.index),
         }));
     } else if (live) {
       const asked = view.messages.filter((m) => m.role === "team").map((m) => m.text);
-      chips = followUps(view.info?.scenario_id, lang, asked, { whenMoney: status !== "BLOCKED" }).map((f) => ({
+      chips = followUps(view.info?.scenario_id, lang, asked, { whenMoney: status !== "BLOCKED", who: customerWord }).map((f) => ({
         key: f.text,
         label: f.label,
         language: f.language,

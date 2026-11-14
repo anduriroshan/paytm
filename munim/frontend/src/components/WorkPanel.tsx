@@ -286,7 +286,7 @@ function Proof({ view }: { view: CaseView }) {
         <p className="muted">{view.trail ? "Nothing on the money trail." : "Not followed yet."}</p>
       )}
 
-      <div className="sec">What the merchant said</div>
+      <div className="sec">What the {view.info?.merchant?.category === "passenger" ? "passenger" : "merchant"} said</div>
       {claims.length ? (
         claims.map((c, i) => (
           <div className="cl" key={i}>

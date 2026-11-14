@@ -65,7 +65,10 @@ EXPECT = {
     "prompt_injection": ("NO_EVIDENCE", "BLOCK", "BLOCKED"),
     "cold_case": ("IMPROVISED", "ALLOW", "ESCALATED"),
     "stuck_return": ("REFUND_DUE", "ALLOW", "RESOLVED"),
+    "bus_turned_back": ("REFUND_DUE", "ALLOW", "RESOLVED"),
+    "flight_refund": ("REFUND_DUE", "NEEDS_HUMAN", "AWAITING_APPROVAL"),
 }
+PASSENGER_SCENARIOS = {"bus_turned_back", "flight_refund"}
 
 
 def test_scenario_ids_match_contract():
@@ -90,8 +93,8 @@ def test_scenario_end_to_end(demo_db, scenario_id):
     for needed in ("intake", "hunch", "trail", "statements", "suspect", "verdict", "proposal", "firewall", "execution", "message", "llm", "llm_done"):
         assert needed in t, needed
     assert t.index("intake") < t.index("trail") < t.index("statements") < t.index("suspect") < t.index("verdict") < t.index("proposal") < t.index("firewall") < t.index("execution")
-    # full lineup emitted
-    assert t.count("suspect") == 8
+    # full lineup emitted (shops: 8 suspects; passengers: the 4 travel ones plus ALREADY_REFUNDED)
+    assert t.count("suspect") == (5 if scenario_id in PASSENGER_SCENARIOS else 8)
     # under FORCE_MOCK the streamed tokens name the scripted brain, matching llm_done (not the configured provider)
     named = {e.data["provider"] for e in events if e.type == "llm" and e.data.get("provider")}
     assert named <= {"mock"}, named
@@ -214,7 +217,7 @@ def test_api_flow(demo_db):
         assert h["ok"] and h["counts"]["merchants"] > 100
         assert set(h["providers"]) >= {"reasoner", "writer", "decider"}
         sc = c.get("/api/scenarios").json()
-        assert len(sc) == 9 and sc[0]["merchant"]["business_name"]
+        assert len(sc) == 11 and sc[0]["merchant"]["business_name"]
         assert c.get("/api/merchants", params={"q": "Sharma"}).json()[0]["id"] == "M1001"
         s1 = next(s for s in sc if s["id"] == "zombie_rent")
         cid = c.post("/api/cases", json={"merchant_id": s1["merchant_id"], "complaint_text": s1["complaint_text"], "scenario_id": s1["id"]}).json()["case_id"]
