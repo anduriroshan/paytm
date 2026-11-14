@@ -4,7 +4,7 @@ A merchant writes in Hindi, Telugu, Hinglish or English, for example *"I returne
 Munim then works the case:
 
 1. **Investigates like a detective**:
-   - It forms a hunch (Sarvam Prism).
+   - It checks the complaint for fake instructions (Sarvam Prism).
    - It follows the money trail through the ledger, mandates, subscriptions, devices, pickups and payments.
    - It checks the merchant's statements against the evidence.
    - It lines up known failure patterns. Each one is **matched** (smoking gun) or **eliminated** (alibi).
@@ -32,7 +32,7 @@ Copy `backend/.env.example` to `backend/.env`, then fill in:
 | key | used for | where |
 |---|---|---|
 | `GEMINI_API_KEY` | reasoner: intake, propose, improvise (JSON) | Google AI Studio. Cloud credits apply when the key's project is linked to billing |
-| `SARVAM_API_KEY` | writer (vernacular replies), decider (Prism hunch), voice | dashboard.sarvam.ai |
+| `SARVAM_API_KEY` | writer (vernacular replies), decider (Prism fake-instruction score), voice | dashboard.sarvam.ai |
 
 Check them with `backend\.venv\Scripts\python.exe backend\scripts\check_providers.py`. Add `--ping` for one tiny call per role.
 Any role without a key falls back to the mock brain. Any live failure (network, 402 no credits, 429, bad JSON) also falls back for that call, and the UI shows a `fallback` badge, so the demo never crashes.
@@ -47,7 +47,7 @@ MUNIM_WRITER_REASONING_EFFORT=none     # replies: sarvam-105b otherwise thinks ~
 ```
 Verified live on 13 Nov 2026:
 - Gemini handles intake and propose in about 3 s.
-- Prism returns the hunch in about 0.3 s.
+- Prism returns the fake-instruction score in about 0.3 s.
 - Sarvam writes the Hindi reply in about 1 s.
 - TTS uses `bulbul:v4-flash` and STT uses `saaras:v4`.
 
@@ -75,10 +75,10 @@ START ─┬─ intake (LLM) ──┐
 |---|---|
 | `backend/munim/graph/` | LangGraph nodes, graph and the runner (event buffer, SSE fan-out) |
 | `backend/munim/forensics/` | trail, statements, suspect catalogue (lineup), verdict, guarded SQL probes |
-| `backend/munim/llm/` | provider-agnostic router (Gemini / Sarvam / OpenAI-compatible / mock), prompts, Prism hunch |
+| `backend/munim/llm/` | provider-agnostic router (Gemini / Sarvam / OpenAI-compatible / mock), prompts, Prism fake-instruction check (`hunch` node) |
 | `backend/munim/firewall/` | Action Firewall policy (11 checks) |
 | `backend/munim/actions/` | executor, approvals, fleet sweep |
-| `backend/munim/db/` | schema, demo seed (8 scenarios + 180 background merchants) |
+| `backend/munim/db/` | schema, demo seed (9 scenarios + 180 background merchants) |
 | `backend/sources/` | **connected sources**: one YAML file per system Munim can reach (database, CSV/JSON file, API), and when. See its README |
 | `backend/munim/sources/` | loads that folder, routes a complaint to sources, reads files and APIs |
 | `frontend/` | the live investigation UI |

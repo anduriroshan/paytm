@@ -264,17 +264,17 @@ svg.cn text { font: 600 11.5px "Segoe UI", system-ui, sans-serif; fill: var(--in
           </div>
         </div>
         <div class="card ai">
-          <div class="ch"><span class="n">2</span><b>First hunch</b><span class="who ai"><svg class="i"><use href="#spark"/></svg>Sarvam Prism</span></div>
-          <p class="what" style="margin-left:31px">A quick guess at the cause, and a check for tricks.</p>
+          <div class="ch"><span class="n">2</span><b>Fake-instruction check</b><span class="who ai"><svg class="i"><use href="#spark"/></svg>Sarvam Prism</span></div>
+          <p class="what" style="margin-left:31px">Checks if the complaint tries to give orders. Its guess at the cause is shown, not used.</p>
           <div class="out" style="margin-left:31px">
             <div class="bars">
-              <span class="l top">Two plans on one device</span><span class="t top"><i style="width:68%"></i></span><b>68%</b>
+              <span class="l top">Fake instructions</span><span class="t top"><i style="width:3%"></i></span><b>3%</b>
+              <span class="l">Guess: two plans on one device</span><span class="t"><i style="width:68%"></i></span><b>68%</b>
               <span class="l">Charged after return</span><span class="t"><i style="width:6%"></i></span><b>6%</b>
               <span class="l">5 other causes</span><span class="t"><i style="width:5%"></i></span><b>5%</b>
-              <span class="l">Trick / injection</span><span class="t"><i style="width:3%"></i></span><b>3%</b>
-            </div>
+                          </div>
           </div>
-          <p class="note" style="margin-left:31px">Only a hint. Code still tests every cause.</p>
+          <p class="note" style="margin-left:31px">Only the fake-instruction score is used, by the safety rules. Code tests every cause.</p>
         </div>
       </div>
       <svg class="cn" viewBox="0 0 760 42" height="42"><path d="M186 0V14M574 0V14M186 14H574M380 14V33"/><path class="h" d="M374 33l6 8 6-8z"/></svg>
@@ -524,7 +524,7 @@ svg.cn text { font: 600 11.5px "Segoe UI", system-ui, sans-serif; fill: var(--in
       <li><b>Over ₹2,000 waits for a person</b>and a refund can't be paid twice.</li>
     </ul>
   </div>
-  <p class="foot">From the recorded run of this case (replay <code>s2_double_billing</code>). A live run reaches the same verdict and amounts; AI wording and the hunch percentages can differ. All merchants and amounts are fictional.</p>
+  <p class="foot">From the recorded run of this case (replay <code>s2_double_billing</code>). A live run reaches the same verdict and amounts; AI wording and the Prism percentages can differ. All merchants and amounts are fictional.</p>
 </div>
 </body>
 </html>
