@@ -201,10 +201,11 @@ statements that will later be checked against the ledger; record what the mercha
 
 Rules:
 - language: 'hi' = Hindi in Devanagari; 'hi-Latn' = Hindi/Hinglish written in Roman script; 'te' = Telugu; 'en' = English; otherwise the ISO code.
-- intent: RENT_DEDUCTION (Soundbox/device rent, subscription), LOAN_DEDUCTION (loan EDI/EMI/kist), SETTLEMENT_ISSUE (payout held, short, delayed), else OTHER.
+- intent: RENT_DEDUCTION (Soundbox/device rent, subscription), LOAN_DEDUCTION (loan EDI/EMI/kist), SETTLEMENT_ISSUE (payout held, short, delayed), TRAVEL_REFUND (bus or flight ticket refund), else OTHER.
 - One claim per distinct assertion. Kinds: DEVICE_RETURNED (date 'YYYY-MM' or 'YYYY-MM-DD'), DEDUCTION_AMOUNT (amount of ONE deduction),
   DEDUCTION_COUNT (how many deductions/months), DUPLICATE_CHARGE (charged twice; date if stated), SINGLE_DEVICE,
-  SETTLEMENT_SHORT (amount missing from a payout), SETTLEMENT_NOT_RECEIVED (amount/date/count of days if stated), REFUND_DEMANDED (amount if stated), OTHER.
+  SETTLEMENT_SHORT (amount missing from a payout), SETTLEMENT_NOT_RECEIVED (amount/date/count of days if stated), TRIP_NOT_COMPLETED (bus/flight did not reach; date if stated),
+  REFUND_NOT_RECEIVED (ticket refund not received; amount/date if stated), REFUND_DEMANDED (amount if stated), OTHER.
 - text: a short verbatim fragment in the merchant's own script.
 - Money is integer paise: ₹499 → 49900, ₹1,250 → 125000. Only amounts actually written; never compute or guess.
 - Dates: today is {ctx.get('today') or config.DEMO_TODAY}. Resolve 'kal'/'yesterday' and month names without a year to the most recent past date.
@@ -228,12 +229,12 @@ Example output:
 # ───────────────────────────── propose ─────────────────────────────
 
 _DEFAULT_CATALOGUE = [
-    {"type": "REFUND_DEBITS", "description": "Credit back specific DEBIT ledger entries (rent, EDI). Needs ledger_entry_ids and amount_paise."},
+    {"type": "REFUND_DEBITS", "description": "Credit back specific DEBIT ledger entries (rent, EDI, ticket fare). Needs ledger_entry_ids and amount_paise."},
     {"type": "CANCEL_SUBSCRIPTION", "description": "Stop future billing. target_id = subscription id."},
     {"type": "SCHEDULE_PICKUP", "description": "Book a device pickup. target_id = device id."},
     {"type": "SEND_KYC_LINK", "description": "Send the merchant a re-KYC link. target_id = hold id or document type."},
     {"type": "RELEASE_HOLD", "description": "Release a held settlement. target_id = hold id."},
-    {"type": "ESCALATE", "description": "Hand to a human team. team = risk | billing | logistics | payments | lending."},
+    {"type": "ESCALATE", "description": "Hand to a human team. team = risk | billing | logistics | payments | lending | travel."},
     {"type": "NO_ACTION", "description": "Nothing to change."},
 ]
 
@@ -257,7 +258,7 @@ Rules:
 - REFUND_DEBITS: ledger_entry_ids must come from verdict.damages_ledger_ids (never invent ids); amount_paise = the
   ledger amount of those debits (verdict.damages_paise when you include them all). Only when outcome is REFUND_DUE.
 - Targets come from verdict.targets: CANCEL_SUBSCRIPTION → subscription_id; SCHEDULE_PICKUP → device_id;
-  SEND_KYC_LINK / RELEASE_HOLD → hold_id. ESCALATE needs team: risk | billing | logistics | payments | lending.
+  SEND_KYC_LINK / RELEASE_HOLD → hold_id. ESCALATE needs team: risk | billing | logistics | payments | lending | travel.
 - By outcome: REFUND_DUE → refund the damages (+ cancel the subscription if permitted, + book a pickup if SCHEDULE_PICKUP
   is in remedies). HOLD_EXPLAINED → the permitted
   remedy (KYC → SEND_KYC_LINK; RISK → ESCALATE to risk; never release a risk hold). NO_FAULT → the permitted remedy

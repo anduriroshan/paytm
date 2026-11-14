@@ -71,8 +71,8 @@ MONEY_ACTIONS = frozenset({ActionType.REFUND_DEBITS, ActionType.RELEASE_HOLD})
 ALWAYS_PERMITTED = frozenset({ActionType.ESCALATE, ActionType.NO_ACTION})
 # what a case opened in the merchant app may complete without a teammate (nothing here moves money)
 MERCHANT_SELF_SERVE = frozenset({ActionType.SCHEDULE_PICKUP, ActionType.SEND_KYC_LINK, ActionType.ESCALATE, ActionType.NO_ACTION})
-ESCALATION_TEAMS: tuple[str, ...] = ("risk", "billing", "logistics", "payments", "lending")
-REFUNDABLE_ENTRY_TYPES = frozenset({"RENT_DEBIT", "EDI_DEBIT"})
+ESCALATION_TEAMS: tuple[str, ...] = ("risk", "billing", "logistics", "payments", "lending", "travel")
+REFUNDABLE_ENTRY_TYPES = frozenset({"RENT_DEBIT", "EDI_DEBIT", "BOOKING_DEBIT"})
 BAD_KYC_STATUSES = ("EXPIRED", "PENDING", "REJECTED")
 
 MAX_ACTIONS = 8              # a proposal longer than this is itself suspicious
@@ -116,7 +116,7 @@ def describe_debits(ledger_rows: list[dict]) -> str:
     if not ledger_rows:
         return "no debits"
     kinds = {r.get("entry_type") for r in ledger_rows}
-    noun = {"RENT_DEBIT": "rent debit", "EDI_DEBIT": "EDI debit"}.get(next(iter(kinds)), "debit") if len(kinds) == 1 else "debit"
+    noun = {"RENT_DEBIT": "rent debit", "EDI_DEBIT": "EDI debit", "BOOKING_DEBIT": "ticket fare"}.get(next(iter(kinds)), "debit") if len(kinds) == 1 else "debit"
     ordered = sorted(ledger_rows, key=lambda r: (r.get("value_date") or "", r.get("id") or 0))
     dates = join_human(fmt_date(r.get("value_date")) for r in ordered)
     if len(ordered) == 1:
@@ -538,7 +538,7 @@ def _idempotency(ctx: _Ctx, w: _Work, idx: int, key: str) -> FirewallCheck:
             )
             if refunded:
                 first = refunded[0]
-                noun = {"RENT_DEBIT": "rent debit", "EDI_DEBIT": "EDI debit"}.get(first["entry_type"], "debit")
+                noun = {"RENT_DEBIT": "rent debit", "EDI_DEBIT": "EDI debit", "BOOKING_DEBIT": "ticket fare"}.get(first["entry_type"], "debit")
                 more = f" (and {plural(len(refunded) - 1, 'other debit')})" if len(refunded) > 1 else ""
                 return make_check("idempotency", "FAIL",
                                   f"The {rupees(first['orig_amount'])} {noun} of {fmt_date(first['orig_date'])}{more} was already refunded "
@@ -592,7 +592,7 @@ def _preconditions(ctx: _Ctx, w: _Work) -> FirewallCheck:
             b = bad[0]
             return make_check("preconditions", "FAIL",
                               f"Ledger entry {b['id']} is a {b['status']} {b['entry_type']} ({b['direction']}) of {fmt_date(b['value_date'])}, "
-                              f"not a successful rent or EDI debit, so it cannot be refunded.")
+                              f"not a successful rent, EDI or ticket fare debit, so it cannot be refunded.")
         return make_check("preconditions", "PASS",
                           f"All {plural(len(found), 'entry', 'entries')} are successful debits that can be refunded.")
     if t == ActionType.CANCEL_SUBSCRIPTION:

@@ -31,7 +31,7 @@ from munim.models import ActionType, ClaimKind, IntakeResult, Intent, SourceHit,
 
 from . import connectors
 
-TOPICS = {"rent": "RENT", "loan": "LOAN", "settlement": "SETTLEMENT"}
+TOPICS = {"rent": "RENT", "loan": "LOAN", "settlement": "SETTLEMENT", "travel": "TRAVEL"}
 UNOWNABLE = {ActionType.ESCALATE, ActionType.NO_ACTION}       # always available: a human takes over / nothing to do
 KIND_ORDER = {"database": 0, "file": 1, "api": 2}
 _SECRET_HEADER = re.compile(r"auth|key|token|secret|cookie|password", re.I)
@@ -45,7 +45,7 @@ class _Strict(BaseModel):
 
 class When(_Strict):
     always: bool = False
-    topics: list[str] = []          # stored upper case: RENT | LOAN | SETTLEMENT
+    topics: list[str] = []          # stored upper case: RENT | LOAN | SETTLEMENT | TRAVEL
     claims: list[str] = []          # stored upper case ClaimKind values
     words: list[str] = []           # stored lower case
 
@@ -56,7 +56,7 @@ class When(_Strict):
         for t in _as_list(v):
             key = str(t).strip().lower()
             if key not in TOPICS:
-                raise ValueError(f"'{t}' is not a topic (use rent, loan or settlement)")
+                raise ValueError(f"'{t}' is not a topic (use rent, loan, settlement or travel)")
             out.append(TOPICS[key])
         return out
 

@@ -27,6 +27,7 @@ class Intent(StrEnum):
     RENT_DEDUCTION = "RENT_DEDUCTION"        # device rental / subscription charges
     LOAN_DEDUCTION = "LOAN_DEDUCTION"        # loan EDI debits
     SETTLEMENT_ISSUE = "SETTLEMENT_ISSUE"    # payout held, short or delayed
+    TRAVEL_REFUND = "TRAVEL_REFUND"          # bus / flight ticket refund not received
     OTHER = "OTHER"
 
 
@@ -39,6 +40,8 @@ class ClaimKind(StrEnum):
     SETTLEMENT_SHORT = "SETTLEMENT_SHORT"          # amount_paise missing from a payout; date optional
     SETTLEMENT_NOT_RECEIVED = "SETTLEMENT_NOT_RECEIVED"  # amount_paise / date optional
     REFUND_DEMANDED = "REFUND_DEMANDED"            # amount_paise demanded, if stated
+    TRIP_NOT_COMPLETED = "TRIP_NOT_COMPLETED"      # "the bus turned back / never reached"; date optional
+    REFUND_NOT_RECEIVED = "REFUND_NOT_RECEIVED"    # ticket refund promised or due but not received; amount/date optional
     OTHER = "OTHER"
 
 
@@ -103,7 +106,8 @@ class TrailNode(BaseModel):
     table: str
     row_id: str
     kind: Literal["merchant", "money", "subscription", "mandate", "device", "device_event", "pickup",
-                  "loan", "edi_attempt", "settlement", "hold", "kyc", "payments_summary", "chargeback", "action"]
+                  "loan", "edi_attempt", "settlement", "hold", "kyc", "payments_summary", "chargeback", "action",
+                  "booking", "trip", "trip_event", "airline_refund", "call"]
     label: str
     at: str | None = None
     amount_paise: int | None = None

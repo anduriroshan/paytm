@@ -109,6 +109,18 @@ def _refund_headline(faults: list[SuspectResult], ids: list[int], total: int, re
         tail = ", after the gateway timed out but the bank still debited" if "timed out" in s.summary else ""
         what = "the duplicate EDI debit" if n == 1 else f"{F.plural(n, 'duplicate EDI debit')}"
         return f"Refund due: {rupees(total)} for {what} on loan {loan}{when}{tail}."
+    if s.suspect_id == "BUS_TRIP_FAILED":
+        m = re.search(r"Bus (\S+) \(.*?, (\d{2} \w{3})\) turned back at (km [\d.]+)", s.summary)
+        what = f"bus {m.group(1)} on {m.group(2)}, which turned back at {m.group(3)}" if m else "a bus that turned back"
+        status = " and was never marked cancelled" if "never marked it cancelled" in s.summary else ""
+        fares = "fare" if n == 1 else f"{F.num(n)} fares"
+        return f"Refund due: {rupees(total)} {fares} for {what}{status}."
+    if s.suspect_id == "AIRLINE_REFUND_NOT_PASSED":
+        m = re.search(r"^(.+?) cancelled .*? back to us on (\d{2} \w{3} \d{4})", s.summary)
+        booking = targets.get("booking_id", "")
+        to = f" to booking {booking}" if booking and "," not in booking else " to the booking"
+        who = f"that {m.group(1)} paid back on {m.group(2)}" if m else "that the airline paid back"
+        return f"Refund due: {rupees(total)} {who} but was never matched{to}."
     return f"Refund due: {rupees(total)} for {F.plural(n, 'wrongful debit')}{when} ({s.title.lower()})."
 
 
@@ -140,6 +152,8 @@ def _hold_headline(h: SuspectResult) -> str:
                 docs.append(f"{status.split(' ')[0].lower()} {name}" if status else name)
         why = f" until the {F.join_and(docs)} is updated" if docs else " until the KYC documents are updated"
         return f"Payout held for KYC: hold {hid} is keeping back {what}{why}."
+    if h.suspect_id == "AIRLINE_NOT_PAID":
+        return f"Waiting on the airline: {h.summary}"
     return f"Payout held: {F.lc_first(h.summary)}"
 
 

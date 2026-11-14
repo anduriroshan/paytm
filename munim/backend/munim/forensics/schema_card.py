@@ -12,7 +12,8 @@ from munim import config
 
 # card order (not alphabetical: related tables sit together)
 CARD_ORDER = ("merchants", "plans", "devices", "device_events", "pickup_tickets", "subscriptions", "loans", "mandates",
-              "edi_attempts", "settlements", "payments", "chargebacks", "holds", "kyc_documents", "ledger_entries")
+              "edi_attempts", "settlements", "payments", "chargebacks", "holds", "kyc_documents", "ledger_entries",
+              "operators", "trips", "bookings", "trip_events", "airline_refunds", "support_calls")
 
 _HEAD = """\
 SQLite database of one payments company's merchant accounts. You may read ONLY these business tables.
@@ -29,6 +30,9 @@ _JOINS: list[tuple[str, set[str]]] = [
      {"ledger_entries"}),
     ("Settlement deductions = SUM(payments.mdr_paise) of the batch + chargebacks/adjustments posted that day.",
      {"settlements", "payments"}),
+    ("bookings.passenger_id = merchants.id (category 'passenger');  bookings.trip_id = trips.id;  "
+     "bookings.ledger_entry_id = the fare (BOOKING_DEBIT);  trip_events.trip_id = trips.id;  "
+     "airline_refunds.booking_id = bookings.id (NULL = never matched; match by pnr)", {"bookings"}),
 ]
 
 _RULES = """\

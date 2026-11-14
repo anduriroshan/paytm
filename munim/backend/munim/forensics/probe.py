@@ -26,7 +26,8 @@ MAX_SQL_CHARS = 4000
 MAX_VALUE_BYTES = 1_000_000
 
 BUSINESS_TABLES = ("merchants", "plans", "devices", "device_events", "pickup_tickets", "subscriptions", "loans", "mandates",
-                   "settlements", "payments", "chargebacks", "holds", "kyc_documents", "ledger_entries", "edi_attempts")
+                   "settlements", "payments", "chargebacks", "holds", "kyc_documents", "ledger_entries", "edi_attempts",
+                   "operators", "trips", "bookings", "trip_events", "airline_refunds", "support_calls")
 WORKFLOW_TABLES = ("cases", "actions", "audit_log", "notifications", "sweeps", "case_events")
 _BAD_FUNCS = {"load_extension", "randomblob", "zeroblob", "fts3_tokenizer", "readfile", "writefile", "edit"}
 
@@ -39,6 +40,12 @@ _SCOPE = {
                 "OR id IN (SELECT device_id FROM main.payments WHERE merchant_id = ?)", 4),
     "device_events": ("device_id IN (SELECT id FROM temp.devices)", 0),
     "edi_attempts": ("loan_id IN (SELECT id FROM main.loans WHERE merchant_id = ?)", 1),
+    "operators": ("1", 0),
+    "bookings": ("passenger_id = ?", 1),
+    "trips": ("id IN (SELECT trip_id FROM main.bookings WHERE passenger_id = ?)", 1),
+    "trip_events": ("trip_id IN (SELECT trip_id FROM main.bookings WHERE passenger_id = ?)", 1),
+    "airline_refunds": ("booking_id IN (SELECT id FROM main.bookings WHERE passenger_id = ?) "
+                        "OR pnr IN (SELECT pnr FROM main.bookings WHERE passenger_id = ? AND pnr IS NOT NULL)", 2),
 }
 _FORBIDDEN = re.compile(r"\b(INSERT|UPDATE|DELETE|REPLACE\s+INTO|UPSERT|ATTACH|DETACH|PRAGMA|PRAGMA_\w+|CREATE|DROP|ALTER|VACUUM|"
                         r"REINDEX|ANALYZE|BEGIN|COMMIT|END\s+TRANSACTION|ROLLBACK|SAVEPOINT|RELEASE|LOAD_EXTENSION)\b", re.I)

@@ -26,12 +26,12 @@ from .state import CaseState
 AGENT = {n: a for n, a, _ in NODES}
 
 ACTION_CATALOGUE = [
-    {"type": ActionType.REFUND_DEBITS, "description": "Credit back specific DEBIT ledger entries (rent, EDI). Needs ledger_entry_ids and amount_paise."},
+    {"type": ActionType.REFUND_DEBITS, "description": "Credit back specific DEBIT ledger entries (rent, EDI, ticket fare). Needs ledger_entry_ids and amount_paise."},
     {"type": ActionType.CANCEL_SUBSCRIPTION, "description": "Stop future billing. target_id = subscription id."},
     {"type": ActionType.SCHEDULE_PICKUP, "description": "Book a new device pickup. target_id = device id."},
     {"type": ActionType.SEND_KYC_LINK, "description": "Send the merchant a re-KYC / document upload link. target_id = hold id."},
     {"type": ActionType.RELEASE_HOLD, "description": "Release a settlement hold. target_id = hold id."},
-    {"type": ActionType.ESCALATE, "description": "Hand the case file to a human team. team = risk | billing | logistics | payments | lending."},
+    {"type": ActionType.ESCALATE, "description": "Hand the case file to a human team. team = risk | billing | logistics | payments | lending | travel."},
     {"type": ActionType.NO_ACTION, "description": "Nothing to do; explain to the merchant."},
 ]
 MONEY_ACTIONS = {ActionType.REFUND_DEBITS, ActionType.RELEASE_HOLD}
@@ -153,11 +153,13 @@ async def intake(state: CaseState, w: Writer):
 
 @graph_node("hunch", soft=True)
 async def hunch(state: CaseState, w: Writer):
-    from munim.forensics.suspects import CATALOGUE
+    from munim.forensics.suspects import CATALOGUE, lineup
     from munim.llm import router
+    with tx() as conn:
+        suspects = [CATALOGUE[sid] for sid in lineup(conn, state["merchant"]["id"])]
     ctx = {
         "complaint_text": state["complaint_text"], "merchant": state["merchant"], "scenario_id": state.get("scenario_id"),
-        "suspects": [{"id": s.id, "title": s.title, "description": s.description} for s in CATALOGUE.values()],
+        "suspects": [{"id": s.id, "title": s.title, "description": s.description} for s in suspects],
     }
     h: Hunch = await router.hunch(ctx)
     emit(w, "hunch", h)
@@ -375,13 +377,14 @@ async def sweep(state: CaseState, w: Writer):
     from munim.models import SweepResult, SweepVictim
     suspect_id = state["verdict"]["sweepable_suspect"]
     merchant_id = state["merchant"]["id"]
+    who = "passengers" if state["merchant"].get("category") == "passenger" else "merchants"
     with tx() as conn:
         existing = conn.execute(
             "SELECT id FROM sweeps WHERE suspect_id=? AND status='PENDING' ORDER BY created_at DESC LIMIT 1", (suspect_id,)
         ).fetchone()
         victims = find_victims(conn, suspect_id, merchant_id, state["today"])
         if not victims:
-            return ({"sweep": None}, "no other merchants affected")
+            return ({"sweep": None}, f"no other {who} affected")
         if existing:   # a sweep for this pattern is already waiting for sign-off: show it, don't queue twice
             action_ids = [r[0] for r in conn.execute(
                 "SELECT id FROM actions WHERE sweep_id=? AND status='PENDING_APPROVAL' ORDER BY id", (existing[0],))]
@@ -394,7 +397,7 @@ async def sweep(state: CaseState, w: Writer):
         else:
             result = create_sweep(conn, source_case_id=state["case_id"], suspect_id=suspect_id, victims=victims, today=state["today"])
     if not result.sweep_id or not result.merchant_count:
-        return ({"sweep": None}, "no other merchants qualify for a refund")
+        return ({"sweep": None}, f"no other {who} qualify for a refund")
     emit(w, "sweep", result)
     return ({"sweep": result.model_dump(mode="json")},
-            f"{suspect_id} in {result.merchant_count} more merchants · {rupees(result.total_paise)} queued for sign-off")
+            f"{suspect_id} in {result.merchant_count} more {who} · {rupees(result.total_paise)} queued for sign-off")

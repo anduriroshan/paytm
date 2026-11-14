@@ -13,9 +13,11 @@ from typing import Any, Iterable
 
 from munim.models import Claim, ClaimKind, EvidenceRef, IntakeResult, Intent, rupees
 
-RENT, LOAN, SETTLEMENT = "RENT", "LOAN", "SETTLEMENT"
-AREAS = (RENT, LOAN, SETTLEMENT)
-INTENT_AREA = {Intent.RENT_DEDUCTION: RENT, Intent.LOAN_DEDUCTION: LOAN, Intent.SETTLEMENT_ISSUE: SETTLEMENT}
+RENT, LOAN, SETTLEMENT, TRAVEL = "RENT", "LOAN", "SETTLEMENT", "TRAVEL"
+AREAS = (RENT, LOAN, SETTLEMENT)                   # a shop's money areas
+ALL_AREAS = (RENT, LOAN, SETTLEMENT, TRAVEL)       # + ticket refunds (passenger accounts)
+INTENT_AREA = {Intent.RENT_DEDUCTION: RENT, Intent.LOAN_DEDUCTION: LOAN, Intent.SETTLEMENT_ISSUE: SETTLEMENT,
+               Intent.TRAVEL_REFUND: TRAVEL}
 
 MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 MONTH_FULL = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
@@ -206,8 +208,17 @@ class Scope:
     strict: set[str] = field(default_factory=set)   # areas reached only via OTHER/hints: dispute only explicit matches
 
 
+def is_passenger(conn, account_id: str) -> bool:
+    """A travel customer: an account with category 'passenger' (no shop, no Soundbox, no loan)."""
+    r = conn.execute("SELECT category FROM merchants WHERE id=?", (account_id,)).fetchone()
+    return bool(r) and r[0] == "passenger"
+
+
 def scope(conn, merchant_id: str, intake: IntakeResult | None) -> Scope:
-    """Which money areas the complaint touches. OTHER → all areas; claims can widen a misclassified intent."""
+    """Which money areas the complaint touches. OTHER → all areas; claims can widen a misclassified intent.
+    A passenger account only has ticket refunds to look at."""
+    if is_passenger(conn, merchant_id) or (intake is not None and intake.intent == Intent.TRAVEL_REFUND):
+        return Scope({TRAVEL})
     if intake is None:
         return Scope(set(AREAS))
     base = {INTENT_AREA[intake.intent]} if intake.intent in INTENT_AREA else set()
@@ -521,6 +532,10 @@ def wrongful_debits(conn, merchant_id: str, areas: set[str] | None = None, *, in
         for le in edi_analysis(conn, merchant_id):
             for d in (le.extra if include_refunded else le.damages):
                 out[d["id"]] = "DUPLICATE_EDI"
+    if TRAVEL in areas:
+        from munim.forensics import travel             # lazy: travel builds on this module
+        for lid, sid in travel.wrongful(conn, merchant_id, today, include_refunded=include_refunded).items():
+            out.setdefault(lid, sid)
     return out
 
 
@@ -580,7 +595,7 @@ def stl_phrase(stls: list[dict]) -> str:
 
 # ───────────────────────────── evidence labels ─────────────────────────────
 
-_ENTRY = {"RENT_DEBIT": "rent debit", "EDI_DEBIT": "EDI debit", "SETTLEMENT_CREDIT": "settlement credit",
+_ENTRY = {"RENT_DEBIT": "rent debit", "EDI_DEBIT": "EDI debit", "BOOKING_DEBIT": "fare", "SETTLEMENT_CREDIT": "settlement credit",
           "REFUND_CREDIT": "refund credit", "CHARGEBACK_DEBIT": "chargeback debit"}
 
 

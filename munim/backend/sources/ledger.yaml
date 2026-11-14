@@ -19,5 +19,5 @@ tables:
       ledger_entries(id, merchant_id, txn_ref, entry_type, direction DEBIT|CREDIT, amount_paise (always > 0),
                      status SUCCESS|FAILED|REVERSED, source_type, source_id, mandate_id, value_date, posted_at, narration,
                      refund_of -> ledger_entries.id)           -- every rupee in or out; narration = passbook text
-          entry_type: RENT_DEBIT | EDI_DEBIT | SETTLEMENT_CREDIT | REFUND_CREDIT | CHARGEBACK_DEBIT
-          source_type/source_id: subscription/SUB-..., loan/LN-..., settlement/STL-..., chargeback/CB-..., action/<id>
+          entry_type: RENT_DEBIT | EDI_DEBIT | BOOKING_DEBIT | SETTLEMENT_CREDIT | REFUND_CREDIT | CHARGEBACK_DEBIT
+          source_type/source_id: subscription/SUB-..., loan/LN-..., settlement/STL-..., chargeback/CB-..., booking/PT-..., action/<id>

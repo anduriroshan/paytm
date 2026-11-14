@@ -1,0 +1,33 @@
+# Built-in: bus and flight bookings in Munim's demo database (fictional operators and airlines).
+id: travel
+name: Trips and ticket refunds
+kind: database
+holds: Bus and flight bookings paid through the app, what happened to each trip (bus GPS, driver reports, airline cancellations), money airlines sent back for cancelled flights, and helpline call notes.
+when:
+  topics: [travel]
+  claims: [trip_not_completed, refund_not_received]
+  words: [bus, flight, ticket, pnr, airline, boarding, seat]
+tables:
+  - name: operators
+    about: |
+      operators(id 'OP-VEGA', name, kind BUS|AIRLINE)
+  - name: trips
+    about: |
+      trips(id 'TR-VS2117-1109', operator_id -> operators, kind BUS|FLIGHT, service_no, origin, destination, departs_at,
+            arrives_at (scheduled), status SCHEDULED|DEPARTED|COMPLETED|CANCELLED (set by the operator), status_at)
+  - name: bookings
+    about: |
+      bookings(id 'PT-BUS-7731042', passenger_id -> merchants.id, trip_id -> trips, passenger_name, seat, pnr, pax,
+               fare_paise, status CONFIRMED|CANCELLED, booked_at, boarded_at (bus boarding scan; NULL = no scan),
+               cancelled_at, ledger_entry_id -> ledger_entries)   -- the fare is a BOOKING_DEBIT; filter by passenger_id
+  - name: trip_events
+    about: |
+      trip_events(id, trip_id -> trips, source GPS|DRIVER|OPERATOR|AIRLINE,
+                  event_type DEPARTED|STOPPED|TURNED_BACK|RETURNED_TO_ORIGIN|ARRIVED|REPORT|CANCELLED, at, km (from origin), note)
+  - name: airline_refunds
+    about: |
+      airline_refunds(id 'ARF-...', operator_id -> operators, pnr, passenger_name (upper case), amount_paise, received_at,
+                      booking_id -> bookings (NULL = never matched to a booking), status UNMATCHED|PASSED_ON)
+  - name: support_calls
+    about: |
+      support_calls(id, merchant_id, booking_id -> bookings, at, summary)   -- helpline call notes

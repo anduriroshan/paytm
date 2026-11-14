@@ -18,7 +18,7 @@ class _Ctx:
     def __init__(self, conn, mid: str, intake: IntakeResult, trail: Trail | None, today: date) -> None:
         self.conn, self.mid, self.intake, self.trail, self.today = conn, mid, intake, trail, today
         self.scope = F.scope(conn, mid, intake)
-        self.money_areas = self.scope.areas & {F.RENT, F.LOAN}
+        self.money_areas = self.scope.areas & {F.RENT, F.LOAN, F.TRAVEL}
         self._wrong: dict[int, str] | None = None
         self._disputed: list[dict] | None = None
 
@@ -365,9 +365,72 @@ def _refund_demanded(cx: _Ctx, c: Claim) -> StatementCheck:
     return _check(c, "CONTRADICTED", f"{rupees(c.amount_paise)} demanded, but {tail}.")
 
 
+# ───────────────────────────── travel ─────────────────────────────
+
+def _in_period(rows: list, at, p: tuple[date, date] | None) -> list:
+    if not p:
+        return rows
+    hit = [r for r in rows if (d := F.as_date(at(r))) and p[0] <= d <= p[1]]
+    return hit or rows
+
+
+def _trip_not_completed(cx: _Ctx, c: Claim) -> StatementCheck:
+    from munim.forensics import travel as T
+    p = F.claim_period(c.date, cx.today)
+    buses = _in_period(T.bus_checks(cx.conn, cx.mid), lambda x: x.booking["departs_at"], p)
+    if buses:
+        x = next((b for b in buses if b.failed), buses[-1])
+        b = x.booking
+        ev = [T.booking_ref(b), T.trip_ref(b)] + [T.event_ref(e, b) for e in (x.turned, x.report, x.back, x.arrived) if e]
+        if x.failed:
+            said = f"; the driver reported “{x.report['note'].rstrip('.')}”" if x.report else ""
+            return _check(c, "VERIFIED", f"GPS shows bus {b['service_no']} turning back at {T.km(x.km)} and back at "
+                                         f"{b['origin']} at {F.fhm(x.back['at'])} on {F.fday(x.back['at'])}{said}; it never "
+                                         f"reached {b['destination']}, though the operator status still says {b['trip_status']}.", ev)
+        if x.arrived:
+            return _check(c, "CONTRADICTED", f"GPS shows bus {b['service_no']} reached {b['destination']} at "
+                                             f"{F.fhm(x.arrived['at'])} on {F.fday(x.arrived['at'])}.", ev)
+        return _check(c, "UNVERIFIABLE", f"No GPS or driver record shows bus {b['service_no']} turning back; the operator "
+                                         f"status is {b['trip_status']}.", ev)
+    flights = [f for f in T.flight_checks(cx.conn, cx.mid, cx.today) if f.cancelled]
+    if flights:
+        f = flights[-1]
+        b = f.booking
+        return _check(c, "VERIFIED", f"{b['operator_name']} cancelled flight {b['service_no']} ({T.route(b)}) on "
+                                     f"{F.fdate(b['trip_status_at'])}.", [T.booking_ref(b)] + ([T.event_ref(f.cancel, b)] if f.cancel else []))
+    return _check(c, "UNVERIFIABLE", f"{cx.mid} has no bus or flight booking on record, so the trip cannot be checked.")
+
+
+def _refund_not_received(cx: _Ctx, c: Claim) -> StatementCheck:
+    from munim.forensics import travel as T
+    checks: list = [x for x in T.bus_checks(cx.conn, cx.mid) if x.fare] + \
+                   [x for x in T.flight_checks(cx.conn, cx.mid, cx.today) if x.fare]
+    if not checks:
+        return _check(c, "UNVERIFIABLE", f"{cx.mid} has no ticket payment on record, so a refund cannot be checked.")
+    if c.amount_paise:
+        checks = [x for x in checks if F.amount_eq(c.amount_paise, x.fare["amount_paise"])] or checks
+    at_issue = [x for x in checks if getattr(x, "failed", False) or getattr(x, "cancelled", False)] or checks
+    x = at_issue[-1]
+    b, fare = x.booking, x.fare
+    paid = getattr(x, "paid", None)
+    ev = [T.booking_ref(b), F.ledger_ref(fare)] + ([T.airline_refund_ref(paid, b["operator_name"])] if paid else [])
+    if x.refunded:
+        return _check(c, "CONTRADICTED", f"The {rupees(fare['amount_paise'])} fare for {b['id']} was refunded on "
+                                         f"{F.fdate(fare['refund_date'])} ({fare['refund_ref']}).",
+                      ev + [F.ledger_ref(F.ledger_row(cx.conn, fare["refund_id"]))])
+    airline = (f"; {b['operator_name']} paid it back to us on {F.fdate(paid['received_at'])}, {x.days} days ago"
+               if paid else "")
+    finding = f"No refund of the {rupees(fare['amount_paise'])} fare for {b['id']} has been paid{airline}."
+    if c.amount_paise and not F.amount_eq(c.amount_paise, fare["amount_paise"]):
+        return _check(c, "PARTLY_TRUE", f"{rupees(c.amount_paise)} claimed, but the fare paid was {rupees(fare['amount_paise'])}. "
+                                        + finding, ev)
+    return _check(c, "VERIFIED", finding, ev)
+
+
 _CHECKS = {K.DEVICE_RETURNED: _device_returned, K.SINGLE_DEVICE: _single_device, K.DEDUCTION_AMOUNT: _deduction_amount,
            K.DEDUCTION_COUNT: _deduction_count, K.DUPLICATE_CHARGE: _duplicate_charge, K.SETTLEMENT_SHORT: _settlement_short,
-           K.SETTLEMENT_NOT_RECEIVED: _settlement_not_received, K.REFUND_DEMANDED: _refund_demanded}
+           K.SETTLEMENT_NOT_RECEIVED: _settlement_not_received, K.REFUND_DEMANDED: _refund_demanded,
+           K.TRIP_NOT_COMPLETED: _trip_not_completed, K.REFUND_NOT_RECEIVED: _refund_not_received}
 
 
 def check_statements(conn, merchant_id: str, intake: IntakeResult, trail: Trail, today: str) -> list[StatementCheck]:

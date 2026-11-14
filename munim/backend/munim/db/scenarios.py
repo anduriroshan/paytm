@@ -1,4 +1,4 @@
-"""The 9 demo scenarios. Complaint texts are verbatim from docs/CONTRACTS.md; the facts behind them live in seed.py."""
+"""The 11 demo scenarios (S10 and S11 are passengers, not shops). Complaint texts are verbatim from docs/CONTRACTS.md; the facts behind them live in seed.py."""
 from __future__ import annotations
 
 from munim.models import Scenario
@@ -59,6 +59,21 @@ SCENARIOS: list[Scenario] = [
         teaser="The return was requested, the Soundbox went silent, but no courier came. Rent after the 7-day pickup window is refunded and a pickup is booked.",
         expect={"outcome": "REFUND_DUE", "culprit": "RETURN_STUCK", "decision": "ALLOW", "final_amount_paise": 89700},
     ),
+    Scenario(
+        id="bus_turned_back", title="Bus turned back, no refund", merchant_id="P2001", language="te", channel="chat",
+        complaint_text="నవంబర్ 9న విజయవాడ నుంచి బెంగళూరుకు వేగా స్లీపర్ లైన్స్ బస్సు ఎక్కాను. కొంత దూరం వెళ్ళాక డీజిల్ అయిపోయిందని డ్రైవర్ బస్సును వెనక్కి తీసుకొచ్చాడు. రీఫండ్ ఇస్తామన్నారు, ఇప్పటివరకు ఏమీ రాలేదు. నా ₹1,640 తిరిగి ఇవ్వండి.",
+        teaser="GPS and the driver's report show the bus turned back at km 38, but the operator never marked it cancelled. "
+               "The fare comes back, and the sweep finds 18 more passengers on the same bus.",
+        expect={"outcome": "REFUND_DUE", "culprit": "BUS_TRIP_FAILED", "decision": "ALLOW", "final_amount_paise": 164000},
+    ),
+    Scenario(
+        id="flight_refund", title="Airline paid, passenger didn't get it", merchant_id="P2002", language="en", channel="chat",
+        complaint_text="My refund of ₹21,860 for booking PT-FLT-5520918 has been pending since 21 Sep, when Nimbus Air cancelled my flight. The airline gives incomplete answers and Paytm says it is waiting on the airline. Who has my money?",
+        teaser="The airline paid the refund to Paytm on 3 Oct, but it came in with only the PNR and was never matched to the booking. "
+               "Over the auto limit, so a human signs off; the sweep finds 8 more.",
+        expect={"outcome": "REFUND_DUE", "culprit": "AIRLINE_REFUND_NOT_PASSED", "decision": "NEEDS_HUMAN",
+                "final_amount_paise": 2186000},
+    ),
 ]
 
 # How each complaint reached the support inbox (fictional demo data): source, call length or ticket no., time received.
@@ -72,6 +87,8 @@ _INBOX = {
     "prompt_injection": ("email", "", "11:02"),
     "cold_case": ("ticket", "TKT-48077", "11:20"),
     "stuck_return": ("call", "5 min 20 s", "11:34"),
+    "bus_turned_back": ("call", "3 min 10 s", "11:48"),
+    "flight_refund": ("email", "", "12:05"),
 }
 SCENARIOS = [s.model_copy(update=dict(zip(("via", "via_note", "received"), _INBOX[s.id]))) if s.id in _INBOX else s
              for s in SCENARIOS]

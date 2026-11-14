@@ -12,6 +12,7 @@ from typing import Callable, Literal
 from pydantic import BaseModel
 
 from munim.forensics import facts as F
+from munim.forensics import travel as T
 from munim.models import ActionType, EvidenceRef, Intent, IntakeResult, SuspectResult, Trail, rupees
 
 A = ActionType
@@ -56,7 +57,7 @@ CATALOGUE: dict[str, SuspectSpec] = {s.id: s for s in [
     SuspectSpec(
         id="ALREADY_REFUNDED", title="Already refunded", kind="INNOCENT",
         description="The debits the merchant is complaining about were already refunded, so nothing more is owed.",
-        intents=[Intent.RENT_DEDUCTION, Intent.LOAN_DEDUCTION], remedies=[A.NO_ACTION]),
+        intents=[Intent.RENT_DEDUCTION, Intent.LOAN_DEDUCTION, Intent.TRAVEL_REFUND], remedies=[A.NO_ACTION]),
     SuspectSpec(
         id="RISK_HOLD", title="Settlement held by risk", kind="HOLD",
         description="A payout is held by the risk team (for example a card-velocity spike); only risk can release it after review.",
@@ -66,12 +67,33 @@ CATALOGUE: dict[str, SuspectSpec] = {s.id: s for s in [
         description="Payouts are held because a KYC document (such as a drug or shop licence) expired or is pending; "
                     "updating the document releases them.",
         intents=[Intent.SETTLEMENT_ISSUE], remedies=[A.SEND_KYC_LINK]),
+    SuspectSpec(
+        id="BUS_TRIP_FAILED", title="Bus trip failed, fare not refunded", kind="FAULT",
+        description="The bus turned back or broke down and never reached the destination (GPS and the driver's report), but "
+                    "the operator never marked the trip cancelled, so no refund was triggered for passengers who boarded.",
+        intents=[Intent.TRAVEL_REFUND], remedies=[A.REFUND_DEBITS, A.ESCALATE], sweepable=True),
+    SuspectSpec(
+        id="AIRLINE_REFUND_NOT_PASSED", title="Airline refund received, not passed on", kind="FAULT",
+        description="The airline cancelled the flight and paid the fare back to us, but the payment came with only a PNR and "
+                    "a name and was never matched to the booking, so it never reached the passenger.",
+        intents=[Intent.TRAVEL_REFUND], remedies=[A.REFUND_DEBITS], sweepable=True),
+    SuspectSpec(
+        id="TRAVEL_NO_SHOW", title="Passenger did not board", kind="INNOCENT",
+        description="The bus left without the passenger: there is no boarding scan for the booking, so under the no-show rule "
+                    "the fare is not refunded.",
+        intents=[Intent.TRAVEL_REFUND], remedies=[A.NO_ACTION]),
+    SuspectSpec(
+        id="AIRLINE_NOT_PAID", title="Airline has not paid back yet", kind="HOLD",
+        description="The airline cancelled the flight but has not yet sent the fare back to us; the travel team has to chase "
+                    "the airline.",
+        intents=[Intent.TRAVEL_REFUND], remedies=[A.ESCALATE]),
 ]}
 
 _AREAS = {"ZOMBIE_BILLING": {F.RENT}, "RETURN_STUCK": {F.RENT}, "DUPLICATE_SUBSCRIPTION": {F.RENT}, "DUPLICATE_EDI": {F.LOAN},
-          "PICKUP_NOT_COMPLETED": {F.RENT}, "ALREADY_REFUNDED": {F.RENT, F.LOAN}, "RISK_HOLD": {F.SETTLEMENT},
-          "KYC_HOLD": {F.SETTLEMENT}}
-_TOPIC = {F.RENT: "Soundbox rent", F.LOAN: "loan EDI", F.SETTLEMENT: "settlements"}
+          "PICKUP_NOT_COMPLETED": {F.RENT}, "ALREADY_REFUNDED": {F.RENT, F.LOAN, F.TRAVEL}, "RISK_HOLD": {F.SETTLEMENT},
+          "KYC_HOLD": {F.SETTLEMENT}, "BUS_TRIP_FAILED": {F.TRAVEL}, "AIRLINE_REFUND_NOT_PASSED": {F.TRAVEL},
+          "TRAVEL_NO_SHOW": {F.TRAVEL}, "AIRLINE_NOT_PAID": {F.TRAVEL}}
+_TOPIC = {F.RENT: "Soundbox rent", F.LOAN: "loan EDI", F.SETTLEMENT: "settlements", F.TRAVEL: "ticket refunds"}
 _ORDER = {"MATCH": 0, "ELIMINATED": 1, "NOT_APPLICABLE": 2}
 
 
@@ -412,7 +434,7 @@ def _pickup(conn, mid: str, ctx: dict) -> SuspectResult:
 
 def _already_refunded(conn, mid: str, ctx: dict) -> SuspectResult:
     sid = "ALREADY_REFUNDED"
-    areas = ctx["areas"] & {F.RENT, F.LOAN}
+    areas = ctx["areas"] & {F.RENT, F.LOAN, F.TRAVEL}
     wrong = F.wrongful_debits(conn, mid, areas, include_refunded=True, today=ctx["today_d"])
     candidates = set(wrong) | set(ctx["disputed_ledger"])
     debits = F.debit_rows(conn, mid, candidates)
@@ -504,9 +526,167 @@ def _kyc(conn, mid: str, ctx: dict) -> SuspectResult:
                    targets={"hold_id": h["id"], "settlement_ids": ",".join(s["id"] for s in stls)}, remedies=[A.SEND_KYC_LINK])
 
 
+# ───────────────────────────── travel (passenger accounts) ─────────────────────────────
+
+def _bus_evidence(c: T.BusCheck) -> list[EvidenceRef]:
+    b = c.booking
+    ev = [T.booking_ref(b), T.trip_ref(b)]
+    ev += [T.event_ref(e, b) for e in (c.departed, c.stopped, c.turned, c.report, c.back, c.arrived) if e]
+    return ev
+
+
+def _bus_failed(conn, mid: str, ctx: dict) -> SuspectResult:
+    sid = "BUS_TRIP_FAILED"
+    cs = T.bus_checks(conn, mid)
+    if not cs:
+        return _result(sid, "NOT_APPLICABLE", f"{mid} has no bus booking, so there is no bus trip to check.")
+    hits = [c for c in cs if c.owed]
+    if hits:
+        c = hits[0]
+        b = c.booking
+        dmg = [h.fare for h in hits]
+        report = f"; the driver reported at {F.fhm(c.report['at'])}: “{c.report['note'].rstrip('.')}”" if c.report else ""
+        status = ("the operator never marked it cancelled (status still " + b["trip_status"] + ")"
+                  if b["trip_status"] != "CANCELLED" else "the operator marked it cancelled")
+        extra = f" (plus {F.plural(len(hits) - 1, 'other ticket')})" if len(hits) > 1 else ""
+        summary = (f"Bus {b['service_no']} ({T.route(b)}, {F.fday(b['departs_at'])}) turned back at {T.km(c.km)}: GPS shows "
+                   f"it back at {b['origin']} at {F.fhm(c.back['at'])} and it never arrived{report}. Yet {status}. "
+                   f"The passenger boarded (berth {b['seat']}, scanned {F.fhm(b['boarded_at'])}), and the "
+                   f"{rupees(sum(int(d['amount_paise']) for d in dmg))} fare{extra} was never refunded.")
+        ev = _bus_evidence(c) + [F.ledger_ref(d) for d in dmg]
+        ev += [T.call_ref(x) for x in T.calls(conn, mid, b["id"])]
+        targets = {"booking_id": ",".join(h.booking["id"] for h in hits),
+                   "trip_id": ",".join(dict.fromkeys(h.booking["trip_id"] for h in hits)),
+                   "operator": b["operator_name"]}
+        return _result(sid, "MATCH", summary, ev, damages=dmg, targets=targets, remedies=[A.REFUND_DEBITS, A.ESCALATE])
+
+    done = [c for c in cs if c.failed and c.refunded]
+    if done:
+        c = done[0]
+        b = c.booking
+        summary = (f"Bus {b['service_no']} on {F.fday(b['departs_at'])} turned back, but the {rupees(c.fare['amount_paise'])} "
+                   f"fare was already refunded on {F.fdate(c.fare['refund_date'])}, so nothing is owed.")
+        return _result(sid, "ELIMINATED", summary, [T.booking_ref(b), F.ledger_ref(c.fare)])
+    skipped = [c for c in cs if c.no_show]
+    if skipped:
+        b = skipped[0].booking
+        summary = (f"Bus {b['service_no']} turned back on {F.fday(b['departs_at'])}, but there is no boarding scan for "
+                   f"{b['id']}: the passenger was not on it.")
+        return _result(sid, "ELIMINATED", summary, _bus_evidence(skipped[0]))
+    c = cs[-1]
+    b = c.booking
+    if c.arrived:
+        summary = (f"Bus {b['service_no']} ({T.route(b)}) reached {b['destination']} at {F.fhm(c.arrived['at'])} on "
+                   f"{F.fday(c.arrived['at'])} (GPS), so the trip happened.")
+    elif not c.confirmed:
+        summary = f"Booking {b['id']} was cancelled on {F.fdate(b['cancelled_at'])}" + \
+                  (f" and refunded on {F.fdate(c.fare['refund_date'])}." if c.refunded else ".")
+    else:
+        summary = (f"No GPS or driver record shows bus {b['service_no']} turning back; the operator status is "
+                   f"{b['trip_status']}.")
+    return _result(sid, "ELIMINATED", summary, _bus_evidence(c))
+
+
+def _no_show(conn, mid: str, ctx: dict) -> SuspectResult:
+    sid = "TRAVEL_NO_SHOW"
+    cs = [c for c in T.bus_checks(conn, mid) if c.departed]
+    if not cs:
+        return _result(sid, "NOT_APPLICABLE", f"{mid} has no bus booking on a bus that left, so there is no boarding to check.")
+    hits = [c for c in cs if c.confirmed and not c.boarded and not c.refunded]
+    if hits:
+        c = hits[0]
+        b = c.booking
+        summary = (f"Bus {b['service_no']} left {b['origin']} at {F.fhm(c.departed['at'])} on {F.fday(c.departed['at'])} "
+                   f"with no boarding scan for {b['id']} (berth {b['seat']}): the passenger did not board, so the "
+                   f"{rupees(b['fare_paise'])} fare is not refunded under the no-show rule.")
+        return _result(sid, "MATCH", summary, _bus_evidence(c) + ([F.ledger_ref(c.fare)] if c.fare else []),
+                       targets={"booking_id": b["id"]}, remedies=[A.NO_ACTION])
+    c = next((c for c in cs if c.boarded), cs[-1])
+    b = c.booking
+    if c.boarded:
+        summary = f"The passenger boarded: {b['id']} (berth {b['seat']}) was scanned at {F.fhm(b['boarded_at'])} on {F.fday(b['boarded_at'])}."
+    else:
+        summary = f"Booking {b['id']} was cancelled or refunded before the trip, so this is not a no-show."
+    return _result(sid, "ELIMINATED", summary, [T.booking_ref(b)])
+
+
+def _flight_evidence(conn, mid: str, c: T.FlightCheck) -> list[EvidenceRef]:
+    b = c.booking
+    ev = [T.booking_ref(b)] + ([T.event_ref(c.cancel, b)] if c.cancel else [])
+    if c.paid:
+        ev.append(T.airline_refund_ref(c.paid, b["operator_name"]))
+    return ev
+
+
+def _airline_not_passed(conn, mid: str, ctx: dict) -> SuspectResult:
+    sid = "AIRLINE_REFUND_NOT_PASSED"
+    cs = T.flight_checks(conn, mid, ctx["today_d"])
+    if not cs:
+        return _result(sid, "NOT_APPLICABLE", f"{mid} has no flight booking, so there is no airline refund to trace.")
+    hits = [c for c in cs if c.stuck]
+    if hits:
+        c = hits[0]
+        b, paid = c.booking, c.paid
+        dmg = [h.fare for h in hits]
+        late = [x for x in T.calls(conn, mid, b["id"]) if x["at"] > paid["received_at"]]
+        helpline = (f" On {F.fdate(late[-1]['at'])}, {(F.as_date(late[-1]['at']) - F.as_date(paid['received_at'])).days} days "
+                    f"after the money arrived, the helpline still told the passenger we were waiting for the airline.") if late else ""
+        extra = f" (plus {F.plural(len(hits) - 1, 'other booking')})" if len(hits) > 1 else ""
+        summary = (f"{b['operator_name']} cancelled {b['service_no']} ({T.route(b)}, {F.fdate(b['departs_at'])}) and paid "
+                   f"{rupees(paid['amount_paise'])} back to us on {F.fdate(paid['received_at'])} ({paid['id']}, PNR {paid['pnr']}), "
+                   f"but it was never matched to booking {b['id']}{extra}: no refund in {c.days} days, past the "
+                   f"{T.PASS_ON_DAYS}-day pass-on limit.{helpline}")
+        ev = _flight_evidence(conn, mid, c) + [F.ledger_ref(d) for d in dmg]
+        ev += [T.call_ref(x) for x in T.calls(conn, mid, b["id"])]
+        targets = {"booking_id": ",".join(h.booking["id"] for h in hits),
+                   "airline_refund_id": ",".join(h.paid["id"] for h in hits), "pnr": ",".join(h.booking["pnr"] for h in hits)}
+        return _result(sid, "MATCH", summary, ev, damages=dmg, targets=targets, remedies=[A.REFUND_DEBITS])
+
+    c = cs[-1]
+    b = c.booking
+    if c.refunded:
+        summary = f"The {rupees(c.fare['amount_paise'])} fare for {b['id']} was refunded on {F.fdate(c.fare['refund_date'])}."
+    elif c.in_window:
+        due = F.as_date(c.paid["received_at"]) + timedelta(days=T.PASS_ON_DAYS)
+        summary = (f"{b['operator_name']} paid {rupees(c.paid['amount_paise'])} back on {F.fdate(c.paid['received_at'])}, "
+                   f"{F.plural(c.days or 0, 'day')} ago: still inside the {T.PASS_ON_DAYS}-day window (due by {F.fdate(due)}).")
+    elif c.not_paid:
+        summary = f"{b['operator_name']} has not paid anything back for PNR {b['pnr']} yet, so there is nothing of ours to pass on."
+    else:
+        summary = f"Flight {b['service_no']} on {F.fdate(b['departs_at'])} was not cancelled, so no airline refund is due."
+    return _result(sid, "ELIMINATED", summary, _flight_evidence(conn, mid, c))
+
+
+def _airline_not_paid(conn, mid: str, ctx: dict) -> SuspectResult:
+    sid = "AIRLINE_NOT_PAID"
+    cs = [c for c in T.flight_checks(conn, mid, ctx["today_d"]) if c.cancelled]
+    if not cs:
+        return _result(sid, "NOT_APPLICABLE", f"{mid} has no cancelled flight, so no airline refund is awaited.")
+    hits = [c for c in cs if c.not_paid]
+    if hits:
+        c = hits[0]
+        b = c.booking
+        since = F.as_date(b["cancelled_at"] or b["trip_status_at"])
+        days = (ctx["today_d"] - since).days if since else 0
+        summary = (f"{b['operator_name']} cancelled {b['service_no']} ({T.route(b)}, {F.fdate(b['departs_at'])}) but has not "
+                   f"paid the {rupees(b['fare_paise'])} fare back for PNR {b['pnr']} in {F.plural(days, 'day')}; "
+                   f"the travel team has to chase the airline.")
+        return _result(sid, "MATCH", summary, _flight_evidence(conn, mid, c),
+                       targets={"booking_id": b["id"], "pnr": b["pnr"], "operator": b["operator_name"]}, remedies=[A.ESCALATE])
+    c = next((c for c in cs if c.paid), cs[-1])
+    b = c.booking
+    if c.paid:
+        summary = (f"{b['operator_name']} already paid {rupees(c.paid['amount_paise'])} back on {F.fdate(c.paid['received_at'])} "
+                   f"({c.paid['id']}), so the money is not waiting on the airline.")
+    else:
+        summary = f"The fare for {b['id']} was already refunded, so nothing is waiting on the airline."
+    return _result(sid, "ELIMINATED", summary, _flight_evidence(conn, mid, c))
+
+
 _TESTS: dict[str, Callable] = {"ZOMBIE_BILLING": _zombie, "RETURN_STUCK": _stuck, "DUPLICATE_SUBSCRIPTION": _dup_sub, "DUPLICATE_EDI": _dup_edi,
                                "PICKUP_NOT_COMPLETED": _pickup, "ALREADY_REFUNDED": _already_refunded, "RISK_HOLD": _risk,
-                               "KYC_HOLD": _kyc}
+                               "KYC_HOLD": _kyc, "BUS_TRIP_FAILED": _bus_failed, "AIRLINE_REFUND_NOT_PASSED": _airline_not_passed,
+                               "TRAVEL_NO_SHOW": _no_show, "AIRLINE_NOT_PAID": _airline_not_paid}
 
 
 # ───────────────────────────── public API ─────────────────────────────
@@ -516,15 +696,24 @@ def _today(today: str | None) -> date:
     return F.as_date(today) or F.as_date(config.DEMO_TODAY) or date.today()
 
 
+def lineup(conn, merchant_id: str, intake: IntakeResult | None = None) -> list[str]:
+    """The suspects that fit this account: a passenger gets the ticket-refund suspects, a shop the shop ones
+    (plus the ticket-refund ones if the complaint is about a ticket). ALREADY_REFUNDED fits both."""
+    if F.is_passenger(conn, merchant_id):
+        return [sid for sid in CATALOGUE if F.TRAVEL in _AREAS[sid]]
+    travel = intake is not None and intake.intent == Intent.TRAVEL_REFUND
+    return [sid for sid in CATALOGUE if (_AREAS[sid] - {F.TRAVEL}) or travel]
+
+
 def interrogate(conn, merchant_id: str, intake: IntakeResult, trail: Trail, today: str) -> list[SuspectResult]:
-    """Every suspect in the catalogue, MATCHes first (then ELIMINATED, then NOT_APPLICABLE; catalogue order within)."""
+    """Every suspect that fits the account, MATCHes first (then ELIMINATED, then NOT_APPLICABLE; catalogue order within)."""
     sc = F.scope(conn, merchant_id, intake)
     ctx = {"today_d": _today(today), "areas": sc.areas, "disputed_ledger": F.disputed_ledger_ids(trail), "intake": intake}
-    topic = F.join_and([_TOPIC[a] for a in F.AREAS if a in sc.areas]) or "nothing testable"
+    topic = F.join_and([_TOPIC[a] for a in F.ALL_AREAS if a in sc.areas]) or "nothing testable"
     out = []
-    for sid in CATALOGUE:
+    for sid in lineup(conn, merchant_id, intake):
         if not (_AREAS[sid] & sc.areas):
-            areas = " or ".join(_TOPIC[a] for a in F.AREAS if a in _AREAS[sid])
+            areas = " or ".join(_TOPIC[a] for a in F.ALL_AREAS if a in _AREAS[sid])
             out.append(_result(sid, "NOT_APPLICABLE", f"Not tested: the complaint is about {topic}, not {areas}."))
             continue
         try:
@@ -547,6 +736,10 @@ _CANDIDATES = {
     "DUPLICATE_EDI": """SELECT DISTINCT l.merchant_id FROM ledger_entries l LEFT JOIN edi_attempts a ON a.ledger_entry_id = l.id
                         WHERE l.entry_type = 'EDI_DEBIT' AND l.status = 'SUCCESS' AND l.direction = 'DEBIT'
                         GROUP BY l.merchant_id, l.source_id, COALESCE(a.due_date, l.value_date) HAVING COUNT(*) > 1""",
+    "BUS_TRIP_FAILED": """SELECT DISTINCT b.passenger_id FROM bookings b JOIN trips t ON t.id = b.trip_id
+                          WHERE t.kind = 'BUS' AND t.id IN (SELECT trip_id FROM trip_events WHERE event_type = 'RETURNED_TO_ORIGIN')""",
+    "AIRLINE_REFUND_NOT_PASSED": """SELECT DISTINCT b.passenger_id FROM bookings b JOIN trips t ON t.id = b.trip_id
+                                    WHERE t.kind = 'FLIGHT' AND t.status = 'CANCELLED'""",
 }
 
 
@@ -555,7 +748,7 @@ def find_victims(conn, suspect_id: str, exclude_merchant_id: str | None, today: 
     spec = CATALOGUE.get(suspect_id)
     if not spec or not spec.sweepable or suspect_id not in _CANDIDATES:
         return []
-    ctx = {"today_d": _today(today), "areas": set(F.AREAS), "disputed_ledger": [], "intake": None}
+    ctx = {"today_d": _today(today), "areas": set(F.ALL_AREAS), "disputed_ledger": [], "intake": None}
     out = []
     mids = sorted({r[0] for r in conn.execute(_CANDIDATES[suspect_id]).fetchall()} - {exclude_merchant_id})
     for mid in mids:

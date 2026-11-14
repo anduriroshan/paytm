@@ -9,9 +9,10 @@ holds: What this source contains, in one sentence. The AI reads this.
 
 when:                          # when Munim should reach it. Any match is enough.
   always: false                # true = every case
-  topics: [rent]               # rent | loan | settlement  (from the complaint's topic)
+  topics: [rent]               # rent | loan | settlement | travel  (from the complaint's topic)
   claims: [device_returned]    # device_returned | single_device | duplicate_charge | deduction_amount | deduction_count
                                # | settlement_short | settlement_not_received | refund_demanded
+                               # | trip_not_completed | refund_not_received
   words: [pickup, courier]     # any of these words in the complaint (or its English translation)
 
 max_rows: 20                   # most rows read per case (file and api)

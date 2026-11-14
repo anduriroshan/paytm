@@ -19,6 +19,10 @@ MAX_DISPUTED = 12
 LEDGER_COLS = ("id", "merchant_id", "txn_ref", "entry_type", "direction", "amount_paise", "status", "source_type", "source_id",
                "mandate_id", "value_date", "posted_at", "narration", "refund_of")
 ATTEMPT_COLS = ("id", "loan_id", "due_date", "attempt_no", "gateway_ref", "status", "responded_at", "ledger_entry_id")
+BOOKING_COLS = ("id", "passenger_id", "trip_id", "passenger_name", "seat", "pnr", "pax", "fare_paise", "status", "booked_at",
+                "boarded_at", "cancelled_at", "ledger_entry_id")
+TRIP_COLS = ("trip_id", "operator_name", "trip_kind", "service_no", "origin", "destination", "departs_at", "arrives_at",
+             "trip_status", "trip_status_at")
 
 
 def _pick(row: dict, cols: tuple[str, ...]) -> dict:
@@ -470,6 +474,58 @@ def _actions(conn, b: _Builder, mid: str) -> None:
 
 # ───────────────────────────── public API ─────────────────────────────
 
+# ───────────────────────────── travel ─────────────────────────────
+
+_EVENT_EDGE = {"GPS": "GPS log", "DRIVER": "driver report", "AIRLINE": "airline notice", "OPERATOR": "operator update"}
+
+
+def _travel(conn, b: _Builder, root: str, mid: str, today: date) -> None:
+    """Bookings with their fare, the trip and what happened to it (GPS, driver, airline), airline refunds and helpline calls."""
+    from munim.forensics import travel as T
+    checks: list = [*T.bus_checks(conn, mid), *T.flight_checks(conn, mid, today)]
+    for x in sorted(checks, key=lambda c: c.booking["booked_at"])[-6:]:
+        bk = x.booking
+        bus = bk["trip_kind"] == "BUS"
+        at_issue = x.failed if bus else x.cancelled
+        bflags = ["NO_BOARDING_SCAN"] if bus and not bk["boarded_at"] and bk["status"] == "CONFIRMED" else []
+        bnid = b.node("bookings", bk["id"], "booking", T.booking_label(bk), at=bk["booked_at"], amount=bk["fare_paise"],
+                      flags=bflags, data=_pick(bk, BOOKING_COLS), prio=1 if at_issue else 3)
+        b.edge(root, bnid, "booked")
+        tflags = []
+        if bus and x.failed and bk["trip_status"] != "CANCELLED":
+            tflags.append("STATUS_NOT_UPDATED")
+        if bk["trip_status"] == "CANCELLED":
+            tflags.append("CANCELLED")
+        tnid = b.node("trips", bk["trip_id"], "trip", T.trip_label(bk), at=bk["departs_at"], flags=tflags,
+                      data=_pick(bk, TRIP_COLS), prio=2)
+        b.edge(bnid, tnid, "ticket for")
+        fnid = None
+        if x.fare:
+            fnid = _ledger_node(b, x.fare, 1 if at_issue else 3)
+            if at_issue and not x.refunded and (not bus or bk["boarded_at"]):
+                b.dispute(fnid)
+            b.edge(fnid, bnid, "paid for")
+            _refund_nodes(conn, b, fnid, x.fare)
+        events = [e for e in (x.departed, x.stopped, x.turned, x.report, x.back, x.arrived) if e] if bus else \
+                 ([x.cancel] if x.cancel else [])
+        for e in events:
+            eflags = ["TURNED_BACK"] if e["event_type"] in ("TURNED_BACK", "RETURNED_TO_ORIGIN") else []
+            enid = b.node("trip_events", e["id"], "trip_event", T.event_label(e, bk), at=e["at"], flags=eflags, data=e, prio=2)
+            b.edge(tnid, enid, _EVENT_EDGE.get(e["source"], "logged"))
+        if not bus and x.paid:
+            paid = x.paid
+            aflags = [] if x.matched else ["UNMATCHED"]
+            if x.stuck:
+                aflags.append("NOT_PASSED_ON")
+            anid = b.node("airline_refunds", paid["id"], "airline_refund", T.airline_refund_label(paid, bk["operator_name"]),
+                          at=paid["received_at"], amount=paid["amount_paise"], flags=aflags, data=paid, prio=1)
+            b.edge(anid, bnid, "matched to" if x.matched else "same PNR as")
+        for c in T.calls(conn, mid, bk["id"]):
+            cnid = b.node("support_calls", c["id"], "call", T.call_label(c), at=c["at"], data=c, prio=3)
+            b.edge(root, cnid, "called helpline")
+            b.edge(cnid, bnid, "about")
+
+
 def build_trail(conn, merchant_id: str, intake: IntakeResult, today: str) -> Trail:
     """Chain of custody for the complaint: disputed money first, then everything linked to it (≤ ~45 nodes)."""
     from munim import config
@@ -478,7 +534,9 @@ def build_trail(conn, merchant_id: str, intake: IntakeResult, today: str) -> Tra
     m = F._one(conn, "SELECT * FROM merchants WHERE id=?", (merchant_id,))
     if not m:
         return Trail(merchant_id=merchant_id, window_start=today_d.isoformat(), window_end=today_d.isoformat())
-    root = b.node("merchants", m["id"], "merchant", f"{m['id']} · {m['business_name']} · {m['owner_name']} · {m['city']}",
+    who = (f"{m['id']} · {m['owner_name']} · passenger · {m['city']}" if m["category"] == "passenger"
+           else f"{m['id']} · {m['business_name']} · {m['owner_name']} · {m['city']}")
+    root = b.node("merchants", m["id"], "merchant", who,
                   at=m["onboarded_at"], data={k: m[k] for k in ("id", "business_name", "owner_name", "city", "category", "status")}, prio=0)
     sc = F.scope(conn, merchant_id, intake)
     if F.RENT in sc.areas:
@@ -487,5 +545,7 @@ def build_trail(conn, merchant_id: str, intake: IntakeResult, today: str) -> Tra
         _loan(conn, b, root, merchant_id, intake, F.LOAN in sc.strict, today_d)
     if F.SETTLEMENT in sc.areas:
         _settlement(conn, b, root, merchant_id, intake, F.SETTLEMENT in sc.strict, today_d)
+    if F.TRAVEL in sc.areas:
+        _travel(conn, b, root, merchant_id, today_d)
     _actions(conn, b, merchant_id)
     return b.build(merchant_id, today_d)
