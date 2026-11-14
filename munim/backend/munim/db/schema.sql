@@ -151,7 +151,7 @@ CREATE TABLE ledger_entries (                  -- every rupee that moved in or o
   id            INTEGER PRIMARY KEY,
   merchant_id   TEXT NOT NULL REFERENCES merchants(id),
   txn_ref       TEXT NOT NULL UNIQUE,          -- bank/NPCI style reference shown to the merchant
-  entry_type    TEXT NOT NULL,  -- RENT_DEBIT | EDI_DEBIT | SETTLEMENT_CREDIT | REFUND_CREDIT | CHARGEBACK_DEBIT
+  entry_type    TEXT NOT NULL,  -- RENT_DEBIT | EDI_DEBIT | SETTLEMENT_CREDIT | REFUND_CREDIT | CHARGEBACK_DEBIT | BOOKING_DEBIT
   direction     TEXT NOT NULL,                 -- DEBIT | CREDIT
   amount_paise  INTEGER NOT NULL CHECK (amount_paise > 0),
   status        TEXT NOT NULL,                 -- SUCCESS | FAILED | REVERSED
@@ -174,6 +174,79 @@ CREATE TABLE edi_attempts (                    -- every attempt to collect a loa
   responded_at    TEXT NOT NULL,
   ledger_entry_id INTEGER REFERENCES ledger_entries(id)
 );
+
+-- ───────────────────────────── travel: bus and flight tickets bought in the app ─────────────────────────────
+-- A passenger is an account in `merchants` with category 'passenger'; the fare is a BOOKING_DEBIT ledger row,
+-- so a fare refund is the same REFUND_CREDIT (refund_of = the fare row) as any other refund.
+
+CREATE TABLE operators (                       -- bus operators and airlines (fictional)
+  id    TEXT PRIMARY KEY,                      -- 'OP-VEGA'
+  name  TEXT NOT NULL,
+  kind  TEXT NOT NULL                          -- BUS | AIRLINE
+);
+
+CREATE TABLE trips (                           -- one bus run or one flight on one day
+  id          TEXT PRIMARY KEY,                -- 'TR-VS2117-1109'
+  operator_id TEXT NOT NULL REFERENCES operators(id),
+  kind        TEXT NOT NULL,                   -- BUS | FLIGHT
+  service_no  TEXT NOT NULL,                   -- 'VS-2117' | 'NB 615'
+  origin      TEXT NOT NULL,
+  destination TEXT NOT NULL,
+  departs_at  TEXT NOT NULL,
+  arrives_at  TEXT NOT NULL,                   -- scheduled arrival
+  status      TEXT NOT NULL,                   -- SCHEDULED | DEPARTED | COMPLETED | CANCELLED  (set by the operator)
+  status_at   TEXT
+);
+
+CREATE TABLE bookings (
+  id              TEXT PRIMARY KEY,            -- 'PT-BUS-7731042' | 'PT-FLT-5520918'
+  passenger_id    TEXT NOT NULL REFERENCES merchants(id),   -- the paying account (category 'passenger')
+  trip_id         TEXT NOT NULL REFERENCES trips(id),
+  passenger_name  TEXT NOT NULL,               -- name on the ticket
+  seat            TEXT,                        -- bus berth, e.g. 'U7'
+  pnr             TEXT,                        -- airline PNR
+  pax             INTEGER NOT NULL DEFAULT 1,
+  fare_paise      INTEGER NOT NULL CHECK (fare_paise > 0),
+  status          TEXT NOT NULL,               -- CONFIRMED | CANCELLED
+  booked_at       TEXT NOT NULL,
+  boarded_at      TEXT,                        -- bus boarding scan; NULL = no scan
+  cancelled_at    TEXT,
+  ledger_entry_id INTEGER REFERENCES ledger_entries(id)   -- the fare debit
+);
+
+CREATE TABLE trip_events (                     -- what happened to the trip, from each source
+  id         INTEGER PRIMARY KEY,
+  trip_id    TEXT NOT NULL REFERENCES trips(id),
+  source     TEXT NOT NULL,                    -- GPS | DRIVER | OPERATOR | AIRLINE
+  event_type TEXT NOT NULL,                    -- DEPARTED | STOPPED | TURNED_BACK | RETURNED_TO_ORIGIN | ARRIVED | REPORT | CANCELLED
+  at         TEXT NOT NULL,
+  km         REAL,                             -- distance from the origin (GPS)
+  note       TEXT
+);
+
+CREATE TABLE airline_refunds (                 -- money an airline sends back to Paytm for a cancelled flight
+  id             TEXT PRIMARY KEY,             -- 'ARF-...'
+  operator_id    TEXT NOT NULL REFERENCES operators(id),
+  pnr            TEXT NOT NULL,
+  passenger_name TEXT NOT NULL,
+  amount_paise   INTEGER NOT NULL CHECK (amount_paise > 0),
+  received_at    TEXT NOT NULL,
+  booking_id     TEXT REFERENCES bookings(id), -- NULL until matched to a booking
+  status         TEXT NOT NULL                 -- UNMATCHED | PASSED_ON
+);
+
+CREATE TABLE support_calls (                   -- helpline calls about a booking (summary written by the agent)
+  id          TEXT PRIMARY KEY,
+  merchant_id TEXT NOT NULL REFERENCES merchants(id),
+  booking_id  TEXT REFERENCES bookings(id),
+  at          TEXT NOT NULL,
+  summary     TEXT NOT NULL
+);
+
+CREATE INDEX ix_bookings_trip      ON bookings(trip_id);
+CREATE INDEX ix_bookings_passenger ON bookings(passenger_id);
+CREATE INDEX ix_tripev_trip        ON trip_events(trip_id, at);
+CREATE INDEX ix_airref_pnr         ON airline_refunds(pnr);
 
 -- ───────────────────────────── Munim workflow tables ─────────────────────────────
 

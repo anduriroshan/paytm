@@ -1,4 +1,4 @@
-"""Deterministic demo data: the 8 scenario merchants (full histories) + ~180 background merchants.
+"""Deterministic demo data: the scenario merchants (full histories), ~190 background merchants and the travel passengers.
 
     python -m munim.db.seed            # recreate backend/data/munim.db
 
@@ -44,6 +44,13 @@ COLUMNS: dict[str, tuple[str, ...]] = {   # insertion order respects foreign key
     "ledger_entries": ("id", "merchant_id", "txn_ref", "entry_type", "direction", "amount_paise", "status", "source_type",
                        "source_id", "mandate_id", "value_date", "posted_at", "narration", "refund_of"),
     "edi_attempts": ("id", "loan_id", "due_date", "attempt_no", "gateway_ref", "status", "responded_at", "ledger_entry_id"),
+    "operators": ("id", "name", "kind"),
+    "trips": ("id", "operator_id", "kind", "service_no", "origin", "destination", "departs_at", "arrives_at", "status", "status_at"),
+    "bookings": ("id", "passenger_id", "trip_id", "passenger_name", "seat", "pnr", "pax", "fare_paise", "status", "booked_at",
+                 "boarded_at", "cancelled_at", "ledger_entry_id"),
+    "trip_events": ("id", "trip_id", "source", "event_type", "at", "km", "note"),
+    "airline_refunds": ("id", "operator_id", "pnr", "passenger_name", "amount_paise", "received_at", "booking_id", "status"),
+    "support_calls": ("id", "merchant_id", "booking_id", "at", "summary"),
 }
 WORKFLOW_TABLES = ("cases", "sweeps", "actions", "notifications", "audit_log")
 
@@ -196,7 +203,7 @@ class _Seeder:
         lid = self.next("ledger")
         direction = "CREDIT" if etype in ("SETTLEMENT_CREDIT", "REFUND_CREDIT") else "DEBIT"
         prefix = {"RENT_DEBIT": "NACH", "EDI_DEBIT": "NACH", "SETTLEMENT_CREDIT": "NEFT",
-                  "REFUND_CREDIT": "RFD", "CHARGEBACK_DEBIT": "CBK"}[etype]
+                  "REFUND_CREDIT": "RFD", "CHARGEBACK_DEBIT": "CBK", "BOOKING_DEBIT": "UPI"}[etype]
         txn_ref = f"{prefix}{str(value_date).replace('-', '')[2:]}{lid:07d}"
         self.t["ledger_entries"].append((lid, mid, txn_ref, etype, direction, amount, status, source_type, source_id,
                                          mandate_id, str(value_date), posted_at, narration, refund_of))
@@ -686,6 +693,141 @@ def _seed_stuck_returns(s: _Seeder, n: int = 10) -> dict[str, int]:
     return {"stuck_returns": n}
 
 
+# ───────────────────────────── travel (seeded last, so every earlier row keeps its id and values) ─────────────
+# Fictional operators, passengers, ids and amounts. Two complaint patterns seen in public posts, rebuilt with invented
+# data: a bus that turned back but was never marked cancelled, and airline refunds that reached Paytm but not the passenger.
+
+OPERATORS = [("OP-VEGA", "Vega Sleeper Lines", "BUS"), ("OP-NIMBUS", "Nimbus Air", "AIRLINE"),
+             ("OP-KOEL", "Koel Skyways", "AIRLINE")]
+OPERATOR_NAME = {o[0]: o[1] for o in OPERATORS}
+BUS_FARE = {"L": 179000, "U": 164000}           # lower / upper sleeper berth
+
+# S10 bus: (berth, account, name, booked_at, boarding scan). Kavya (U7) complains; the sweep finds the rest.
+BUS_TRIP = "TR-VS2117-1109"
+BUS_SEATS = [
+    ("U7", "P2001", "Kavya R.", "2026-11-07T11:24:00", "2026-11-09T16:52:00"),
+    ("L1", "P2101", "Sravani K.", "2026-11-01T09:12:00", "2026-11-09T16:41:00"),
+    ("L2", "P2102", "Ravi Teja P.", "2026-11-01T19:40:00", "2026-11-09T16:43:00"),
+    ("L4", "P2103", "Naresh B.", "2026-11-02T08:05:00", "2026-11-09T16:44:00"),
+    ("L5", "P2104", "Anusha M.", "2026-11-03T13:30:00", "2026-11-09T16:46:00"),
+    ("L7", "P2105", "Kiran Kumar S.", "2026-11-03T21:18:00", "2026-11-09T16:47:00"),
+    ("L8", "P2106", "Padma V.", "2026-11-04T10:02:00", "2026-11-09T16:48:00"),
+    ("L10", "P2107", "Harish N.", "2026-11-05T07:55:00", "2026-11-09T16:49:00"),
+    ("L13", "P2108", "Deepa G.", "2026-11-05T18:21:00", "2026-11-09T16:50:00"),
+    ("L14", "P2109", "Sai Kumar T.", "2026-11-06T12:44:00", "2026-11-09T16:51:00"),
+    ("L16", "P2110", "Madhavi R.", "2026-11-07T09:36:00", "2026-11-09T16:53:00"),
+    ("U2", "P2111", "Prasad Ch.", "2026-11-02T16:10:00", "2026-11-09T16:42:00"),
+    ("U3", "P2112", "Lakshmi D.", "2026-11-03T11:27:00", "2026-11-09T16:44:00"),
+    ("U5", "P2113", "Manjunath H.", "2026-11-04T20:05:00", "2026-11-09T16:45:00"),
+    ("U9", "P2114", "Shilpa B.", "2026-11-05T14:48:00", "2026-11-09T16:50:00"),
+    ("U10", "P2115", "Ramana K.", "2026-11-06T08:33:00", "2026-11-09T16:52:00"),
+    ("U12", "P2116", "Nagesh P.", "2026-11-06T22:14:00", "2026-11-09T16:54:00"),
+    ("U15", "P2117", "Swathi Y.", "2026-11-07T15:02:00", "2026-11-09T16:55:00"),
+    ("U17", "P2118", "Venkatesh A.", "2026-11-08T10:40:00", "2026-11-09T16:57:00"),
+    ("L11", "P2119", "Gopal S.", "2026-11-02T10:15:00", None),                     # cancelled 8 Nov, refunded then
+    ("U13", "P2120", "Rekha N.", "2026-11-04T17:50:00", "2026-11-09T16:51:00"),    # operator refunded 10 Nov
+    ("L17", "P2121", "Arun V.", "2026-11-08T21:05:00", None),                      # never boarded: no-show rule
+]
+
+# S11 flights: (trip id, operator, flight no, from, to, departs, cancelled at)
+FLIGHTS = [
+    ("TR-NB615-0921", "OP-NIMBUS", "NB 615", "Delhi", "Bengaluru", "2026-09-21T07:40:00", "2026-09-21T05:10:00"),
+    ("TR-KS208-0928", "OP-KOEL", "KS 208", "Hyderabad", "Mumbai", "2026-09-28T18:15:00", "2026-09-28T12:30:00"),
+    ("TR-NB233-1004", "OP-NIMBUS", "NB 233", "Mumbai", "Kolkata", "2026-10-04T09:05:00", "2026-10-03T22:40:00"),
+    ("TR-KS512-1012", "OP-KOEL", "KS 512", "Chennai", "Pune", "2026-10-12T14:50:00", "2026-10-12T09:15:00"),
+    ("TR-NB104-1015", "OP-NIMBUS", "NB 104", "Jaipur", "Delhi", "2026-10-15T06:30:00", "2026-10-14T23:05:00"),
+    ("TR-KS208-1019", "OP-KOEL", "KS 208", "Hyderabad", "Mumbai", "2026-10-19T18:15:00", "2026-10-19T11:50:00"),
+    ("TR-NB441-1026", "OP-NIMBUS", "NB 441", "Kochi", "Delhi", "2026-10-26T10:20:00", "2026-10-26T04:45:00"),
+    ("TR-NB902-1024", "OP-NIMBUS", "NB 902", "Lucknow", "Bengaluru", "2026-10-24T08:00:00", "2026-10-23T20:30:00"),
+    ("TR-KS117-1030", "OP-KOEL", "KS 117", "Pune", "Delhi", "2026-10-30T19:40:00", "2026-10-30T13:00:00"),
+    ("TR-NB790-1102", "OP-NIMBUS", "NB 790", "Bengaluru", "Ahmedabad", "2026-11-02T16:10:00", "2026-11-02T09:20:00"),
+]
+# (booking id, account, name, trip, pnr, pax, fare, booked_at, airline paid Paytm at, passed on to the passenger at)
+FLIGHT_BOOKINGS = [
+    ("PT-FLT-5520918", "P2002", "Arjun M.", "TR-NB615-0921", "Q4M7XK", 2, 2186000, "2026-09-02T20:16:00", "2026-10-03T14:22:00", None),
+    ("PT-FLT-5527341", "P2201", "Neha S.", "TR-NB615-0921", "H7T2PA", 2, 1840900, "2026-09-04T09:30:00", "2026-10-03T14:22:00", None),
+    ("PT-FLT-5561077", "P2202", "Rahul K.", "TR-NB615-0921", "ZK9W4M", 1, 1093000, "2026-09-09T22:05:00", "2026-10-03T14:22:00", None),
+    ("PT-FLT-5618402", "P2203", "Fatima Z.", "TR-KS208-0928", "R2B8NQ", 1, 621500, "2026-09-12T13:44:00", "2026-10-09T11:05:00", None),
+    ("PT-FLT-5703619", "P2204", "Vikram J.", "TR-NB233-1004", "M6X3TD", 2, 987000, "2026-09-18T18:20:00", "2026-10-17T15:40:00", None),
+    ("PT-FLT-5822964", "P2205", "Ananya P.", "TR-KS512-1012", "F9L2VC", 1, 346000, "2026-09-27T08:12:00", "2026-10-24T10:30:00", None),
+    ("PT-FLT-5857090", "P2206", "Rohan D.", "TR-NB104-1015", "W3P8KJ", 1, 482000, "2026-10-01T19:55:00", "2026-10-29T16:15:00", None),
+    ("PT-FLT-5931538", "P2207", "Meera T.", "TR-KS208-1019", "B5N7RY", 1, 710500, "2026-10-06T07:48:00", "2026-10-31T12:00:00", None),
+    ("PT-FLT-6004725", "P2208", "Siddharth G.", "TR-NB441-1026", "T8D4GH", 1, 554000, "2026-10-10T21:33:00", "2026-11-05T13:25:00", None),
+    ("PT-FLT-6012456", "P2209", "Priya L.", "TR-NB902-1024", "C2V9ML", 1, 612000, "2026-10-08T11:10:00", "2026-11-04T10:05:00", "2026-11-06T09:40:00"),
+    ("PT-FLT-6088113", "P2210", "Karan B.", "TR-KS117-1030", "J7Q3XS", 1, 498000, "2026-10-14T16:02:00", None, None),
+    ("PT-FLT-6061287", "P2211", "Isha V.", "TR-NB790-1102", "N4F6WB", 1, 539000, "2026-10-19T10:45:00", "2026-11-11T15:50:00", None),
+]
+
+
+def _seed_travel(s: _Seeder) -> dict[str, int]:
+    """S10 bus_turned_back (P2001), S11 flight_refund (P2002) and the other passengers on the same trips."""
+    s.t["operators"].extend(OPERATORS)
+    fixed = {"P2001": ("Vijayawada", "te", "94XXXX3187"), "P2002": ("Delhi", "en", "98XXXX4410")}
+    n_phone = 0
+
+    def passenger(pid: str, name: str, lang: str, town: str) -> None:
+        nonlocal n_phone
+        if pid in fixed:
+            town, lang, phone = fixed[pid]
+        else:
+            n_phone += 1
+            phone = f"9{(n_phone * 7) % 10}XXXX{4000 + n_phone * 37}"
+        s.merchant(pid, name, name, town, lang, "passenger", "2025-06-01", phone)
+
+    def fare_debit(pid: str, bid: str, amount: int, at: str, what: str) -> int:
+        return s.ledger(pid, "BOOKING_DEBIT", amount, at[:10], at, "booking", bid, what)
+
+    def refund(pid: str, bid: str, amount: int, at: str, of: int, why: str) -> None:
+        s.ledger(pid, "REFUND_CREDIT", amount, at[:10], at, "booking", bid, why, refund_of=of)
+
+    def trip_event(trip: str, source: str, etype: str, at: str, km=None, note=None) -> None:
+        s.t["trip_events"].append((s.next("trip_event"), trip, source, etype, at, km, note))
+
+    # ── S10: Vega Sleeper Lines VS-2117, Vijayawada → Bengaluru, 9 Nov 17:00. Turned back at km 38; status still DEPARTED.
+    s.t["trips"].append((BUS_TRIP, "OP-VEGA", "BUS", "VS-2117", "Vijayawada", "Bengaluru", "2026-11-09T17:00:00",
+                         "2026-11-10T06:50:00", "DEPARTED", "2026-11-09T17:06:00"))
+    trip_event(BUS_TRIP, "GPS", "DEPARTED", "2026-11-09T17:06:00", 0, "Left Vijayawada")
+    trip_event(BUS_TRIP, "GPS", "STOPPED", "2026-11-09T17:51:00", 38, "Stopped 47 min")
+    trip_event(BUS_TRIP, "GPS", "TURNED_BACK", "2026-11-09T18:38:00", 38, "Heading back to Vijayawada")
+    trip_event(BUS_TRIP, "DRIVER", "REPORT", "2026-11-09T19:10:00", 38, "Fuel ran out near km 38. Passengers taken back.")
+    trip_event(BUS_TRIP, "GPS", "RETURNED_TO_ORIGIN", "2026-11-09T19:34:00", 0, "Back at Vijayawada")
+    for i, (seat, pid, name, booked, boarded) in enumerate(BUS_SEATS):
+        bid = "PT-BUS-7731042" if pid == "P2001" else f"PT-BUS-77{31100 + i * 7:05d}"
+        fare = BUS_FARE[seat[0]]
+        passenger(pid, name, "te" if i % 3 else "kn", "Vijayawada" if i % 4 else "Guntur")
+        lid = fare_debit(pid, bid, fare, booked, f"Bus ticket {bid} · Vega Sleeper Lines VS-2117 · 09 Nov · {seat}")
+        status, cancelled = ("CANCELLED", "2026-11-08T20:14:00") if seat == "L11" else ("CONFIRMED", None)
+        s.t["bookings"].append((bid, pid, BUS_TRIP, name, seat, None, 1, fare, status, booked, boarded, cancelled, lid))
+        if seat == "L11":
+            refund(pid, bid, fare, "2026-11-08T20:16:00", lid, f"Refund of Bus ticket {bid} · cancelled by passenger")
+        if seat == "U13":
+            refund(pid, bid, fare, "2026-11-10T12:05:00", lid, f"Refund of Bus ticket {bid} · by Vega Sleeper Lines")
+    s.t["support_calls"].append(("SC-261110-2001", "P2001", "PT-BUS-7731042", "2026-11-10T10:30:00",
+                                 "Passenger says the bus turned back after the fuel ran out. Told: refund in 3 days."))
+
+    # ── S11: cancelled flights. The airline paid Paytm back; most payments came in with the PNR only and were never matched.
+    flights = {f[0]: f for f in FLIGHTS}
+    for trip, op, no, frm, to, dep, cancelled_at in FLIGHTS:
+        arr = f"{dep[:11]}{(int(dep[11:13]) + 2) % 24:02d}{dep[13:]}"
+        s.t["trips"].append((trip, op, "FLIGHT", no, frm, to, dep, arr, "CANCELLED", cancelled_at))
+        trip_event(trip, "AIRLINE", "CANCELLED", cancelled_at, None, f"Cancelled by {OPERATOR_NAME[op]}: operational reasons")
+    for bid, pid, name, trip, pnr, pax, fare, booked, paid, passed in FLIGHT_BOOKINGS:
+        _, op, no, *_rest = flights[trip]
+        passenger(pid, name, "en", "Delhi")
+        lid = fare_debit(pid, bid, fare, booked, f"Flight {bid} · {OPERATOR_NAME[op]} {no} · PNR {pnr}")
+        s.t["bookings"].append((bid, pid, trip, name, None, pnr, pax, fare, "CANCELLED", booked, None, flights[trip][6], lid))
+        if paid:
+            s.t["airline_refunds"].append((f"ARF-{paid[2:10].replace('-', '')}-{pnr}", op, pnr, name.upper(), fare, paid,
+                                           bid if passed else None, "PASSED_ON" if passed else "UNMATCHED"))
+        if passed:
+            refund(pid, bid, fare, passed, lid, f"Refund of Flight {bid} · {no} cancelled by the airline")
+    s.t["support_calls"].append(("SC-260929-2002", "P2002", "PT-FLT-5520918", "2026-09-29T12:10:00",
+                                 "Passenger asked about the NB 615 refund. Told: waiting for Nimbus Air to pay."))
+    s.t["support_calls"].append(("SC-261020-2002", "P2002", "PT-FLT-5520918", "2026-10-20T18:45:00",
+                                 "Passenger called again about the refund. Told: still waiting for the airline."))
+    return {"passengers": len(BUS_SEATS) + len(FLIGHT_BOOKINGS)}
+
+
 # ───────────────────────────── public API ─────────────────────────────
 
 def build_rows() -> dict[str, list[tuple]]:
@@ -695,6 +837,7 @@ def build_rows() -> dict[str, list[tuple]]:
     _seed_scenarios(s)
     _seed_background(s)
     _seed_stuck_returns(s)
+    _seed_travel(s)
     s.t["payments"] = [tuple(p) for p in s.pay]
     return s.t
 
@@ -762,7 +905,8 @@ def main() -> None:
         from munim.forensics.suspects import find_victims
         from munim.models import rupees
         conn = _c(config.DB_PATH)
-        for sid in ("ZOMBIE_BILLING", "RETURN_STUCK", "DUPLICATE_SUBSCRIPTION", "DUPLICATE_EDI"):
+        for sid in ("ZOMBIE_BILLING", "RETURN_STUCK", "DUPLICATE_SUBSCRIPTION", "DUPLICATE_EDI",
+                    "BUS_TRIP_FAILED", "AIRLINE_REFUND_NOT_PASSED"):
             v = find_victims(conn, sid, None, config.DEMO_TODAY)
             print(f"  sweep {sid:<24} {len(v):>3} merchants  {rupees(sum(x.damages_paise for x in v))}")
         conn.close()
