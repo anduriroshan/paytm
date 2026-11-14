@@ -122,7 +122,9 @@ def case_status(state: dict) -> str:
     statuses = {e.get("status") for e in execs}
     if "PENDING_APPROVAL" in statuses:
         return "AWAITING_APPROVAL"
-    if any(e.get("status") == "EXECUTED" and e.get("action_type") == "ESCALATE" for e in execs):
+    refunded = any(e.get("status") == "EXECUTED" and e.get("action_type") == "REFUND_DEBITS" for e in execs)
+    # An escalation next to an executed refund is only cost recovery (e.g. from a bus operator): the customer is done.
+    if not refunded and any(e.get("status") == "EXECUTED" and e.get("action_type") == "ESCALATE" for e in execs):
         return "ESCALATED"
     if any(e.get("status") == "EXECUTED" and e.get("action_type") != "NO_ACTION" for e in execs):
         return "RESOLVED"

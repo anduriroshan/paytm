@@ -154,7 +154,7 @@ export interface DoneEventData {
 
 // ───────────────────────────── models.py ─────────────────────────────
 
-export type Intent = "RENT_DEDUCTION" | "LOAN_DEDUCTION" | "SETTLEMENT_ISSUE" | "OTHER";
+export type Intent = "RENT_DEDUCTION" | "LOAN_DEDUCTION" | "SETTLEMENT_ISSUE" | "TRAVEL_REFUND" | "OTHER";
 
 export type ClaimKind =
   | "DEVICE_RETURNED"
@@ -164,6 +164,8 @@ export type ClaimKind =
   | "SINGLE_DEVICE"
   | "SETTLEMENT_SHORT"
   | "SETTLEMENT_NOT_RECEIVED"
+  | "TRIP_NOT_COMPLETED"
+  | "REFUND_NOT_RECEIVED"
   | "REFUND_DEMANDED"
   | "OTHER";
 
@@ -209,6 +211,11 @@ export type TrailKind =
   | "mandate"
   | "device"
   | "device_event"
+  | "booking"
+  | "trip"
+  | "trip_event"
+  | "airline_refund"
+  | "call"
   | "pickup"
   | "loan"
   | "edi_attempt"

@@ -18,6 +18,8 @@ export interface SweepReviewRow {
 interface Props {
   sweepId: string;
   merchants: number;
+  /** "merchant" or "passenger". */
+  who?: string;
   busy: boolean;
   disabled: boolean;
   simulated: boolean;
@@ -26,7 +28,7 @@ interface Props {
   onApprove: (merchantIds: string[]) => Promise<void>;
 }
 
-export function SweepReview({ sweepId, merchants, busy, disabled, simulated, preview, load, onApprove }: Props) {
+export function SweepReview({ sweepId, merchants, who = "merchant", busy, disabled, simulated, preview, load, onApprove }: Props) {
   const [open, setOpen] = useState(false);
   const [rows, setRows] = useState<SweepReviewRow[] | null>(null);
   const [note, setNote] = useState<string | null>(null);
@@ -58,7 +60,7 @@ export function SweepReview({ sweepId, merchants, busy, disabled, simulated, pre
         <div className="srv-go">
           <span className="spacer" />
           <button type="button" className="btn pri" onClick={start} disabled={disabled}>
-            Review {merchants} merchants
+            Review {merchants} {who}s
           </button>
         </div>
       </>
@@ -90,11 +92,11 @@ export function SweepReview({ sweepId, merchants, busy, disabled, simulated, pre
 
   return (
     <div className="srv">
-      <div className="srv-intro">Check each shop. Only the ticked ones get the fix.</div>
+      <div className="srv-intro">Check each {who === "merchant" ? "shop" : who}. Only the ticked ones get the fix.</div>
       {loading ? (
         <div className="srv-load">
           <LoaderCircle className="ico spin" aria-hidden />
-          Loading the merchants…
+          Loading the {who}s…
         </div>
       ) : (
         <>
@@ -175,7 +177,7 @@ export function SweepReview({ sweepId, merchants, busy, disabled, simulated, pre
         {simulated && <span className="srv-note">Simulated: the recording has no backend</span>}
         <button type="button" className="btn ok" onClick={approve} disabled={busy || loading || chosen.length === 0}>
           {busy ? <LoaderCircle className="ico spin" aria-hidden /> : <Check className="ico" aria-hidden />}
-          Approve {chosen.length} {chosen.length === 1 ? "merchant" : "merchants"} · {rupees(sum)}
+          Approve {chosen.length} {chosen.length === 1 ? who : `${who}s`} · {rupees(sum)}
         </button>
       </div>
     </div>

@@ -83,6 +83,10 @@ export const SUSPECT_TITLES: Record<string, string> = {
   ALREADY_REFUNDED: "Already refunded",
   RISK_HOLD: "Settlement held by risk team",
   KYC_HOLD: "Settlement held for KYC",
+  BUS_TRIP_FAILED: "Bus trip failed, fare not refunded",
+  AIRLINE_REFUND_NOT_PASSED: "Airline refund received, not passed on",
+  TRAVEL_NO_SHOW: "Passenger did not board",
+  AIRLINE_NOT_PAID: "Airline has not paid back yet",
 };
 
 export function suspectTitle(id: string | null | undefined): string {

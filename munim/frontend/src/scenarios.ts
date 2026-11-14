@@ -1,4 +1,4 @@
-// Offline copy of the 9 demo scenarios (docs/CONTRACTS.md). Used only when /api/scenarios is unreachable
+// Offline copy of the 11 demo scenarios (docs/CONTRACTS.md). Used only when /api/scenarios is unreachable
 // (replay mode / backend down) so the left rail never looks empty on stage. Live data always wins.
 import type { Scenario } from "./types";
 
@@ -90,6 +90,28 @@ const BASE: Scenario[] = [
     teaser: "The return was requested, the Soundbox went silent, but no courier came. Rent after the 7-day pickup window is refunded and a pickup is booked.",
     merchant: { id: "M1009", business_name: "Pooja Fancy Store", owner_name: "Pooja Agarwal", city: "Kanpur", language: "hi", category: "kirana" },
   },
+  {
+    id: "bus_turned_back",
+    title: "Bus turned back, no refund",
+    merchant_id: "P2001",
+    language: "te",
+    complaint_text:
+      "నవంబర్ 9న విజయవాడ నుంచి బెంగళూరుకు వేగా స్లీపర్ లైన్స్ బస్సు ఎక్కాను. కొంత దూరం వెళ్ళాక డీజిల్ అయిపోయిందని డ్రైవర్ బస్సును వెనక్కి తీసుకొచ్చాడు. రీఫండ్ ఇస్తామన్నారు, ఇప్పటివరకు ఏమీ రాలేదు. నా ₹1,640 తిరిగి ఇవ్వండి.",
+    teaser:
+      "GPS and the driver's report show the bus turned back at km 38, but the operator never marked it cancelled. The fare comes back, and the sweep finds 18 more passengers on the same bus.",
+    merchant: { id: "P2001", business_name: "Kavya R.", owner_name: "Kavya R.", city: "Vijayawada", language: "te", category: "passenger" },
+  },
+  {
+    id: "flight_refund",
+    title: "Airline paid, passenger didn't get it",
+    merchant_id: "P2002",
+    language: "en",
+    complaint_text:
+      "My refund of ₹21,860 for booking PT-FLT-5520918 has been pending since 21 Sep, when Nimbus Air cancelled my flight. The airline gives incomplete answers and Paytm says it is waiting on the airline. Who has my money?",
+    teaser:
+      "The airline paid the refund to Paytm on 3 Oct, but it came in with only the PNR and was never matched to the booking. Over the auto limit, so a human signs off; the sweep finds 8 more.",
+    merchant: { id: "P2002", business_name: "Arjun M.", owner_name: "Arjun M.", city: "Delhi", language: "en", category: "passenger" },
+  },
 ];
 
 // How each demo complaint reached support (same fictional values as the backend's scenarios.py).
@@ -103,6 +125,8 @@ const INBOX: Record<string, [string, string, string]> = {
   prompt_injection: ["email", "", "11:02"],
   cold_case: ["ticket", "TKT-48077", "11:20"],
   stuck_return: ["call", "5 min 20 s", "11:34"],
+  bus_turned_back: ["call", "3 min 10 s", "11:48"],
+  flight_refund: ["email", "", "12:05"],
 };
 
 export const FALLBACK_SCENARIOS: Scenario[] = BASE.map((s) => {

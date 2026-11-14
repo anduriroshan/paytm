@@ -17,6 +17,8 @@ export interface FollowChip {
 
 export interface SweepLine {
   count: number;
+  /** "merchant" or "passenger". */
+  who: string;
   total: number;
   fixed: { executed: number; total: number; simulated: boolean; merchants: number; all: boolean } | null;
 }
@@ -344,7 +346,7 @@ export function ChatView(p: Props) {
       {p.sweep.fixed && !p.sweep.fixed.all ? (
         <>
           <span>
-            Fixed for {p.sweep.fixed.merchants} of {p.sweep.count} merchants · {rupees(p.sweep.fixed.total)} refunded{p.sweep.fixed.simulated ? " (simulated)" : ""}
+            Fixed for {p.sweep.fixed.merchants} of {p.sweep.count} {p.sweep.who}s · {rupees(p.sweep.fixed.total)} refunded{p.sweep.fixed.simulated ? " (simulated)" : ""}
           </span>
           <button type="button" className="link" onClick={p.onReview}>
             Review the rest
@@ -352,13 +354,13 @@ export function ChatView(p: Props) {
         </>
       ) : p.sweep.fixed ? (
         <span>
-          Fixed for {p.sweep.fixed.executed ? `${p.sweep.count} more merchants` : "the other merchants"} · {rupees(p.sweep.fixed.total)} refunded
+          Fixed for {p.sweep.fixed.executed ? `${p.sweep.count} more ${p.sweep.who}s` : `the other ${p.sweep.who}s`} · {rupees(p.sweep.fixed.total)} refunded
           {p.sweep.fixed.simulated ? " (simulated)" : ""}
         </span>
       ) : (
         <>
           <span>
-            Same bug found in {p.sweep.count} more merchants · {rupees(p.sweep.total)}
+            Same bug found in {p.sweep.count} more {p.sweep.who}s · {rupees(p.sweep.total)}
           </span>
           <button type="button" className="link" onClick={p.onReview}>
             Review

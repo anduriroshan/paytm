@@ -1,0 +1,17 @@
+# Never ship secrets or local state into the image
+**/.env
+**/.env.*
+!**/.env.example
+backend/.venv/
+backend/data/
+**/__pycache__/
+**/.pytest_cache/
+**/*.db
+**/*.db-*
+frontend/node_modules/
+frontend/dist/
+frontend/*.tsbuildinfo
+docs/
+design/
+.git/
+*.log

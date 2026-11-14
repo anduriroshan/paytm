@@ -58,8 +58,20 @@ export const CAUSE_TITLES: Record<string, string> = {
   ALREADY_REFUNDED: "Already refunded",
   RISK_HOLD: "Held by the risk team",
   KYC_HOLD: "Held for KYC documents",
+  BUS_TRIP_FAILED: "Bus turned back, fare kept",
+  AIRLINE_REFUND_NOT_PASSED: "Airline paid, refund not passed on",
+  TRAVEL_NO_SHOW: "Passenger did not board",
+  AIRLINE_NOT_PAID: "Airline has not paid back yet",
 };
 export const causeTitle = (id: string | null | undefined) => (id ? (CAUSE_TITLES[id] ?? cap(id.replace(/_/g, " ").toLowerCase())) : "");
+
+const TRAVEL_CAUSES = new Set(["BUS_TRIP_FAILED", "AIRLINE_REFUND_NOT_PASSED", "TRAVEL_NO_SHOW", "AIRLINE_NOT_PAID"]);
+
+/** "merchant(s)" for shop causes, "passenger(s)" for travel ones (the sweep finds people on the same bus or flight). */
+export function peopleWord(suspectId: string | null | undefined, n = 2): string {
+  const w = suspectId && TRAVEL_CAUSES.has(suspectId) ? "passenger" : "merchant";
+  return n === 1 ? w : `${w}s`;
+}
 
 // ───────────────────────────── actions ─────────────────────────────
 
@@ -286,7 +298,7 @@ function brainFor(view: CaseView, node: string, role: string | undefined, provid
   return p ? brainName(p.provider, p.live) : "AI";
 }
 
-const INTENT_SHORT: Record<string, string> = { RENT_DEDUCTION: "rent cut", LOAN_DEDUCTION: "loan EDI", SETTLEMENT_ISSUE: "settlement", OTHER: "other" };
+const INTENT_SHORT: Record<string, string> = { RENT_DEDUCTION: "rent cut", LOAN_DEDUCTION: "loan EDI", SETTLEMENT_ISSUE: "settlement", TRAVEL_REFUND: "ticket refund", OTHER: "other" };
 
 function statementCounts(checks: StatementCheck[]): string {
   const c = { VERIFIED: 0, PARTLY_TRUE: 0, CONTRADICTED: 0, UNVERIFIABLE: 0 } as Record<string, number>;
@@ -386,7 +398,7 @@ function stepResult(view: CaseView, node: string): string {
       const s = view.sweep;
       if (view.nodes.sweep?.status === "skip") return "No others found";
       if (!s) return "";
-      return s.merchant_count > 0 ? `${s.merchant_count} more merchants hit` : "No others found";
+      return s.merchant_count > 0 ? `${s.merchant_count} more ${peopleWord(s.suspect_id, s.merchant_count)} hit` : "No others found";
     }
     default:
       return "";
@@ -526,6 +538,26 @@ function trailLabel(n: TrailNode): string {
       return s[0] ?? n.label;
     case "pickup":
       return `Pickup ${(s[1] ?? "").toLowerCase()}`;
+    case "booking": {
+      const svc = /([A-Z]{2}[ -]?\d+)$/.exec(s[1] ?? "")?.[1] ?? "";
+      const boarded = /boarded (\d{2}:\d{2})/.exec(n.label)?.[1];
+      return n.label.startsWith("Bus") ? `Bus ticket booked · ${svc}${boarded ? ` · boarded ${boarded}` : ""}` : `Flight booked · ${svc}`;
+    }
+    case "trip": {
+      const st = /operator status (\w+)/.exec(n.label)?.[1]?.toLowerCase() ?? "";
+      return flags.includes("STATUS_NOT_UPDATED") ? `Operator still shows it ${st}` : `Operator status: ${st}`;
+    }
+    case "trip_event": {
+      if (s[0] === "Driver report") return `Driver: ${(s[2] ?? "").replace(/[“”]/g, "")}`;
+      if (s[0] === "Airline") return s[1] ?? n.label;
+      return s[1] ?? s[0] ?? n.label;
+    }
+    case "airline_refund":
+      return s[0] ?? n.label;
+    case "call": {
+      const told = /Told: ([^.]+)/.exec(n.label)?.[1];
+      return told ? `Helpline call · told “${told}”` : "Helpline call";
+    }
     default:
       return s[0] ?? n.label;
   }
@@ -549,6 +581,8 @@ export function deriveTrail(view: CaseView): TrailRow[] {
     if (n.kind === "pickup" && hasDeviceEvents) continue;
     if (flags.includes("SUMMARY") && !inGun) continue;
     if (n.kind === "device_event" && !inGun && !n.label.startsWith("Return requested")) continue;
+    // A cancelled flight already shows as the airline's own notice; the trip row would repeat it.
+    if (n.kind === "trip" && flags.includes("CANCELLED") && nodes.some((x) => x.kind === "trip_event" && x.label.startsWith("Airline"))) continue;
 
     const out: TrailFlag[] = [];
     let row: TrailRow["row"] = "";
@@ -566,6 +600,12 @@ export function deriveTrail(view: CaseView): TrailRow[] {
     if (n.kind === "settlement" && flags.includes("UNEXPLAINED_DEDUCTION")) out.push({ text: "SHORT", cls: "warn" });
     if (n.kind === "kyc" && flags.includes("EXPIRED")) out.push({ text: "EXPIRED", cls: "bad" });
     if (flags.includes("FAILED") && n.kind === "device_event") out.push({ text: "FAILED", cls: "warn" });
+    if (n.kind === "trip_event" && flags.includes("TURNED_BACK") && n.label.includes("Turned back")) out.push({ text: "TURNED BACK", cls: "bad" });
+    if (n.kind === "trip_event" && n.label.startsWith("Airline")) out.push({ text: "CANCELLED", cls: "warn" });
+    if (n.kind === "trip" && flags.includes("STATUS_NOT_UPDATED")) out.push({ text: "NOT CANCELLED", cls: "warn" });
+    if (n.kind === "booking" && flags.includes("NO_BOARDING_SCAN")) out.push({ text: "NOT BOARDED", cls: "warn" });
+    if (n.kind === "airline_refund" && flags.includes("NOT_PASSED_ON")) out.push({ text: "NOT PASSED ON", cls: "bad" });
+    else if (n.kind === "airline_refund" && flags.includes("UNMATCHED")) out.push({ text: "UNMATCHED", cls: "warn" });
 
     let chip: string | null = null;
     const awb = /AWB (\w+)/.exec(n.label)?.[1];
@@ -625,6 +665,10 @@ function claimPhrase(c: StatementCheck["claim"]): string {
       return c.amount_paise ? `${rupees(c.amount_paise)} settlement not received` : "Settlement not received";
     case "REFUND_DEMANDED":
       return c.amount_paise ? `Wants ${rupees(c.amount_paise)} back` : "Wants the money back";
+    case "TRIP_NOT_COMPLETED":
+      return "The trip never reached";
+    case "REFUND_NOT_RECEIVED":
+      return c.amount_paise ? `${rupees(c.amount_paise)} refund not received` : "Refund not received";
     default:
       return c.text;
   }

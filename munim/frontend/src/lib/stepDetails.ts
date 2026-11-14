@@ -3,7 +3,7 @@
 import { asArray, fmtDate, langLabel, pct, rupees } from "../format";
 import type { CaseView } from "../state/caseReducer";
 import type { EvidenceRef } from "../types";
-import { actionShort, aiWords, brainName, cap, causeTitle, deriveClaims, shortDate } from "./explain";
+import { actionShort, aiWords, brainName, cap, causeTitle, deriveClaims, peopleWord, shortDate } from "./explain";
 
 export type DetailTone = "ok" | "bad" | "warn" | "key" | "muted";
 
@@ -414,13 +414,14 @@ function respond(view: CaseView): StepDetail | null {
 
 function sweep(view: CaseView): StepDetail | null {
   const nv = view.nodes.sweep;
-  const what = "Looks for the same cause in other merchants' records. Fixes it finds wait for sign-off.";
+  const who = peopleWord(view.sweep?.suspect_id ?? view.verdict?.culprits?.[0], 2);
+  const what = `Looks for the same cause in other ${who}' records. Fixes it finds wait for sign-off.`;
   if (nv?.status === "skip") return { by: CODE, ai: false, what, groups: [{ lines: [{ label: "Skipped", text: cap(nv.summary || "nothing to look for") }] }] };
   const s = view.sweep;
   if (!s) return null;
   const lines: DetailLine[] = [
     { label: "Cause", text: causeTitle(s.suspect_id) },
-    { label: "Merchants", text: String(s.merchant_count) },
+    { label: cap(who), text: String(s.merchant_count) },
   ];
   if (s.total_paise) lines.push({ label: "Total", text: rupees(s.total_paise) });
   if (s.sweep_id) lines.push({ label: "Batch", text: s.sweep_id, refs: asArray(s.action_ids).length ? [plural(asArray(s.action_ids).length, "action")] : undefined });

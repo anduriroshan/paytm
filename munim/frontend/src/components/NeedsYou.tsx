@@ -17,6 +17,8 @@ export interface SweepGroup {
   sweepId: string;
   cause: string;
   merchants: number;
+  /** "merchant" or "passenger": who the batch fix is for. */
+  who: string;
   total: number;
   actions: number;
   names: string[];
@@ -124,7 +126,7 @@ export function NeedsYou({ approvals, sweeps, handed, decided, busy, replay, onA
                   <Users className="ico" aria-hidden />
                 </span>
                 <div>
-                  <b>Same bug in {s.merchants} more merchants</b>
+                  <b>Same bug in {s.merchants} more {s.who}s</b>
                   <small>{s.cause}</small>
                 </div>
               </div>
@@ -140,6 +142,7 @@ export function NeedsYou({ approvals, sweeps, handed, decided, busy, replay, onA
               <SweepReview
                 sweepId={s.sweepId}
                 merchants={s.merchants}
+                who={s.who}
                 busy={isBusy}
                 disabled={!!busy && !isBusy}
                 simulated={replay}

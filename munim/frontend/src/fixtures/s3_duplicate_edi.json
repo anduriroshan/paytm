@@ -2624,7 +2624,7 @@
      "action_type": "REFUND_DEBITS",
      "status": "EXECUTED",
      "amount_paise": 125000,
-     "detail": "Refunded ₹1,250 to Patel Mobile Point as 1 credit for the the EDI debit on 12 Nov 2026.",
+     "detail": "Refunded ₹1,250 to Patel Mobile Point as 1 credit for the EDI debit on 12 Nov 2026.",
      "ledger_entry_ids": [
       8373
      ]

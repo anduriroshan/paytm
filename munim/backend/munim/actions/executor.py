@@ -187,7 +187,7 @@ def _apply(conn: sqlite3.Connection, action_id: int, a: ProposedAction, *, merch
         total = sum(int(o["amount_paise"]) for o in originals)
         if total != a.amount_paise:
             raise EffectError(f"the ledger now sums to {rupees(total)}, not the approved {rupees(a.amount_paise)}")
-        return (f"Refunded {rupees(total)} to {name} as {plural(len(created), 'credit')} for the {describe_debits(originals)}.", created)
+        return (f"Refunded {rupees(total)} to {name} as {plural(len(created), 'credit')} for {describe_debits(originals)}.", created)
 
     if t == ActionType.CANCEL_SUBSCRIPTION:
         sub = one(conn, "SELECT * FROM subscriptions WHERE id = ? AND merchant_id = ?", (a.target_id, m))
@@ -367,7 +367,8 @@ def _settle_case(conn: sqlite3.Connection, case_id: str | None) -> None:
     if not acts or any(a["status"] == "PENDING_APPROVAL" for a in acts):
         return
     executed = [a for a in acts if a["status"] == "EXECUTED"]
-    if any(a["action_type"] == ActionType.ESCALATE.value for a in executed):
+    refunded = any(a["action_type"] == ActionType.REFUND_DEBITS.value for a in executed)
+    if not refunded and any(a["action_type"] == ActionType.ESCALATE.value for a in executed):
         status = "ESCALATED"
     elif executed or any(a["status"] == "REJECTED" for a in acts):
         status = "RESOLVED"

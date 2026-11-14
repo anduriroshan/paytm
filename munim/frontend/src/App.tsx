@@ -19,6 +19,7 @@ import {
   cap,
   caseHeadline,
   causeTitle,
+  peopleWord,
   effectiveStatus,
   escalationTeam,
   firstName,
@@ -396,6 +397,7 @@ export default function App() {
             sweepId: sw.sweep_id,
             cause: causeTitle(sw.suspect_id),
             merchants: left,
+            who: peopleWord(sw.suspect_id, 1),
             total: done.size ? victims.reduce((t, v) => t + (v.damages_paise ?? 0), 0) : (sw.total_paise ?? 0),
             actions: everyone.length ? Math.round((allActions * victims.length) / everyone.length) : allActions,
             names: uniq(victims.map((v) => v.business_name)),
@@ -424,6 +426,7 @@ export default function App() {
           sweepId,
           cause: causeTitle(rows[0]?.sweep_suspect),
           merchants: new Set(rows.map((r) => r.merchant_id)).size,
+          who: peopleWord(rows[0]?.sweep_suspect, 1),
           total: rows.filter((r) => r.action_type === "REFUND_DEBITS").reduce((s, r) => s + (r.amount_paise ?? 0), 0),
           actions: rows.length,
           names: uniq(rows.map((r) => r.business_name ?? r.merchant_id)),
@@ -493,7 +496,8 @@ export default function App() {
     const g = needs.sweeps.find((s) => s.sweepId === sweepId);
     if (!g || merchantIds.length === 0) return;
     const all = merchantIds.length >= g.merchants;
-    const who = all ? `${merchantIds.length === 1 ? "the last" : `all ${merchantIds.length}`} ${merchantIds.length === 1 ? "merchant" : "merchants"}` : `${merchantIds.length} of ${g.merchants} merchants`;
+    const w = g.who;
+    const who = all ? `${merchantIds.length === 1 ? "the last" : `all ${merchantIds.length}`} ${merchantIds.length === 1 ? w : `${w}s`}` : `${merchantIds.length} of ${g.merchants} ${w}s`;
     if (!live || isReplay) {
       // Recording: no backend to execute against. Show what approval does, clearly labelled as simulated.
       const victims = asArray(view.sweep?.victims).filter((v) => merchantIds.includes(v.merchant_id));
@@ -647,6 +651,7 @@ export default function App() {
     view.sweep && view.sweep.merchant_count > 0
       ? {
           count: view.sweep.merchant_count,
+          who: peopleWord(view.sweep.suspect_id, 1),
           total: view.sweep.total_paise ?? 0,
           fixed: sweepOutcome ? { executed: sweepOutcome.executed, total: sweepOutcome.total, simulated: sweepOutcome.simulated, merchants: sweepOutcome.merchants, all: sweepOutcome.all } : null,
         }
