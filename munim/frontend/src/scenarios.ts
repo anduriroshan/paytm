@@ -2,7 +2,7 @@
 // (replay mode / backend down) so the left rail never looks empty on stage. Live data always wins.
 import type { Scenario } from "./types";
 
-export const FALLBACK_SCENARIOS: Scenario[] = [
+const BASE: Scenario[] = [
   {
     id: "zombie_rent",
     title: "Rent after return",
@@ -81,3 +81,20 @@ export const FALLBACK_SCENARIOS: Scenario[] = [
     merchant: { id: "M1008", business_name: "Krishna Sweets", owner_name: "Ganesh Kulkarni", city: "Pune", language: "hi-Latn", category: "sweets" },
   },
 ];
+
+// How each demo complaint reached support (same fictional values as the backend's scenarios.py).
+const INBOX: Record<string, [string, string, string]> = {
+  zombie_rent: ["call", "6 min 12 s", "09:12"],
+  double_billing: ["ticket", "TKT-48213", "09:31"],
+  risk_hold: ["email", "", "09:40"],
+  duplicate_edi: ["call", "3 min 40 s", "10:15"],
+  legit_rent: ["ticket", "TKT-48190", "10:22"],
+  kyc_hold: ["call", "4 min 05 s", "10:48"],
+  prompt_injection: ["email", "", "11:02"],
+  cold_case: ["ticket", "TKT-48077", "11:20"],
+};
+
+export const FALLBACK_SCENARIOS: Scenario[] = BASE.map((s) => {
+  const m = INBOX[s.id];
+  return m ? { ...s, via: m[0], via_note: m[1], received: m[2] } : s;
+});

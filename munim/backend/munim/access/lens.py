@@ -227,15 +227,23 @@ def progress(case_id: str) -> list[dict]:
 
 
 def latest_reply(case_id: str) -> dict | None:
-    """Munim's last message TO THE MERCHANT on this case (the reply, or an update after approval).
-    Team-only chat answers (kind 'chat') are never included."""
+    """Munim's last message that actually went TO THE MERCHANT on this case: a reply or update a teammate sent
+    (kind 'sent'), or one written in the merchant app's own chat. Drafts waiting for a teammate and team-only
+    chat answers (kind 'chat') are never included."""
     from munim.graph import runner
     run = runner.load_run(case_id)
     msg = None
     for e in (run.events if run else []):
         d = e.data if isinstance(e.data, dict) else {}
-        if str(e.type) == "message" and d.get("role") == "munim" and d.get("final") and d.get("kind") in (None, "update") and d.get("text"):
-            msg = {"text": d["text"], "en": d.get("en") or "", "language": d.get("language") or "en", "kind": d.get("kind") or "reply"}
+        if str(e.type) != "message" or d.get("role") != "munim" or not d.get("final") or not d.get("text") or d.get("draft"):
+            continue
+        if d.get("kind") == "sent":
+            kind = "update" if d.get("reply_kind") == "update" else "reply"
+        elif d.get("kind") in (None, "update"):
+            kind = d.get("kind") or "reply"
+        else:
+            continue
+        msg = {"text": d["text"], "en": d.get("en") or "", "language": d.get("language") or "en", "kind": kind}
     return msg
 
 

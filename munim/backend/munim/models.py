@@ -308,6 +308,9 @@ class Scenario(BaseModel):
     complaint_text: str
     teaser: str                                  # one line for the UI card
     expect: dict[str, Any] = {}                  # outcome, culprit, decision, final_amount_paise (used by tests)
+    via: Literal["call", "email", "ticket"] = "ticket"   # how it reached the support inbox (demo data)
+    via_note: str = ""                           # call length or ticket number, shown under the source
+    received: str = ""                           # HH:MM on the demo day
 
 
 def rupees(paise: int | None) -> str:

@@ -445,7 +445,10 @@ def _history_brief(ctx: dict, limit: int = 8) -> str:
     rows = []
     for m in _l(ctx.get("history"))[-limit:]:
         m = _d(m)
-        rows.append({"from": m.get("role"), "text": str(m.get("en") or m.get("text") or "")[:400]})
+        row = {"from": m.get("role"), "text": str(m.get("en") or m.get("text") or "")[:400]}
+        if m.get("status"):
+            row["status"] = m["status"]
+        rows.append(row)
     return f"Conversation so far (English): {_j(rows)}" if rows else "Conversation so far: (none)"
 
 

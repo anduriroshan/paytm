@@ -60,6 +60,16 @@ class ChatBody(BaseModel):
     text: str
 
 
+class SendBody(BaseModel):
+    seq: int | None = None          # which draft (event seq); default: the latest one not sent
+    text: str | None = None         # the teammate's edit; default: Munim's draft as written
+    by: str = "ops.lead"
+
+
+class SweepApprove(Approver):
+    merchant_ids: list[str] | None = None    # only these merchants; default: every pending one
+
+
 class TTSBody(BaseModel):
     text: str
     language: str = "hi"
@@ -201,6 +211,69 @@ async def case_message(case_id: str, body: ChatBody):
     return {"events": [e.model_dump(mode="json") for e in events]}
 
 
+@app.post("/api/cases/{case_id}/replies/send")
+def send_reply(case_id: str, body: SendBody = Body(default_factory=SendBody)):
+    """A teammate sends Munim's draft reply (as written or edited). Nothing reaches the merchant before this."""
+    if body.text is not None and len(body.text) > runner.MAX_REPLY_CHARS:
+        raise HTTPException(400, f"reply is too long (max {runner.MAX_REPLY_CHARS} characters)")
+    try:
+        ev = runner.send_reply(case_id, body.seq, body.text, body.by)
+    except KeyError as e:
+        raise HTTPException(404, str(e))
+    except runner.ChatRefused as e:
+        raise HTTPException(409, str(e))
+    except ValueError as e:
+        raise HTTPException(400, str(e))
+    return {"event": ev.model_dump(mode="json")}
+
+
+# ───────────────────────────── inbox ─────────────────────────────
+
+@app.get("/api/inbox")
+def inbox():
+    """Every issue for the support team: cases Munim has worked (with where the reply stands), then complaints that
+    came in and nobody has opened yet (the demo scenarios, with how they arrived)."""
+    from munim.db.scenarios import SCENARIOS
+    by_sc = {s.id: s for s in SCENARIOS}
+    with tx() as conn:
+        cases = rows(conn, """SELECT c.id, c.merchant_id, m.business_name, m.owner_name, m.city, c.status, c.outcome,
+                                     c.language, c.complaint_text, c.created_at, c.scenario_id, c.channel
+                              FROM cases c JOIN merchants m ON m.id = c.merchant_id
+                              ORDER BY CAST(SUBSTR(c.id, 6) AS INTEGER) DESC LIMIT 100""")
+        waiting = {r["case_id"]: r["n"] for r in rows(conn, """SELECT case_id, COUNT(*) AS n FROM actions
+                                                               WHERE status = 'PENDING_APPROVAL' AND case_id IS NOT NULL
+                                                               GROUP BY case_id""")}
+        shops = {s.merchant_id: runner.merchant_dict(conn, s.merchant_id) for s in SCENARIOS}
+    items, opened = [], set()
+    for c in cases:
+        run = runner.load_run(c["id"])
+        evs = run.events if run else []
+        intake = next((e.data for e in evs if str(e.type) == "intake" and isinstance(e.data, dict)), {})
+        sc = by_sc.get(c["scenario_id"] or "")
+        if sc:
+            opened.add(sc.id)
+        via = "app" if c["channel"] == "app" else (sc.via if sc else ("call" if c["channel"] == "voice" else "chat"))
+        items.append({
+            "id": c["id"], "case_id": c["id"], "scenario_id": c["scenario_id"], "merchant_id": c["merchant_id"],
+            "business_name": c["business_name"], "owner_name": c["owner_name"], "city": c["city"],
+            "language": c["language"] or intake.get("language") or (sc.language if sc else None),
+            "summary": (sc.title if sc else "") or intake.get("summary_en") or c["complaint_text"][:120],
+            "text": c["complaint_text"], "via": via, "via_note": sc.via_note if sc else "",
+            "received": sc.received if sc else None, "created_at": c["created_at"],
+            "status": c["status"], "outcome": c["outcome"], "approvals": waiting.get(c["id"], 0),
+            "reply": runner.reply_state(evs)["state"],
+        })
+    for s in sorted((s for s in SCENARIOS if s.id not in opened), key=lambda s: s.received):
+        shop = shops.get(s.merchant_id) or {}
+        items.append({
+            "id": f"NEW-{s.id}", "case_id": None, "scenario_id": s.id, "merchant_id": s.merchant_id,
+            "business_name": shop.get("business_name"), "owner_name": shop.get("owner_name"), "city": shop.get("city"),
+            "language": s.language, "summary": s.title, "text": s.complaint_text, "via": s.via, "via_note": s.via_note,
+            "received": s.received, "created_at": None, "status": "NEW", "outcome": None, "approvals": 0, "reply": None,
+        })
+    return items
+
+
 # ───────────────────────────── approvals + sweeps ─────────────────────────────
 
 @app.get("/api/approvals")
@@ -240,12 +313,25 @@ async def reject_action(action_id: int, body: Approver = Body(default_factory=Ap
     return {"result": result.model_dump(mode="json")}
 
 
-@app.post("/api/sweeps/{sweep_id}/approve")
-async def approve_sweep(sweep_id: str, body: Approver = Body(default_factory=Approver)):
-    from munim.actions.sweep import approve_sweep as do
+@app.get("/api/sweeps/{sweep_id}")
+def sweep_detail(sweep_id: str):
+    """Per merchant: actions + checks, the proof, and the ledger rows the refund would reverse. For review before sign-off."""
+    from munim.actions.sweep import sweep_detail as detail
     try:
         with tx() as conn:
-            results = do(conn, sweep_id, body.approver)
+            return detail(conn, sweep_id)
+    except LookupError as e:
+        raise HTTPException(404, str(e))
+
+
+@app.post("/api/sweeps/{sweep_id}/approve")
+async def approve_sweep(sweep_id: str, body: SweepApprove = Body(default_factory=SweepApprove)):
+    from munim.actions.sweep import approve_sweep as do
+    if body.merchant_ids is not None and not body.merchant_ids:
+        raise HTTPException(400, "pick at least one merchant")
+    try:
+        with tx() as conn:
+            results = do(conn, sweep_id, body.approver, body.merchant_ids)
     except LookupError as e:
         raise HTTPException(404, str(e))
     executed = [r for r in results if r.status == "EXECUTED"]

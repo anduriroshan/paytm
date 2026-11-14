@@ -22,9 +22,20 @@ export async function loadFixture(name: string): Promise<MunimEvent[]> {
   // Accept a bare Event[] or a GET /api/cases/{id} payload ({case, events}).
   const list = Array.isArray(raw) ? raw : raw && typeof raw === "object" && Array.isArray((raw as { events?: unknown }).events) ? (raw as { events: unknown[] }).events : [];
   const events = list.filter((e): e is MunimEvent => !!e && typeof e === "object" && typeof (e as MunimEvent).type === "string");
-  return events
-    .map((e, i) => ({ ...e, seq: typeof e.seq === "number" ? e.seq : i }))
-    .sort((a, b) => a.seq - b.seq);
+  const sorted = events.map((e, i) => ({ ...e, seq: typeof e.seq === "number" ? e.seq : i })).sort((a, b) => a.seq - b.seq);
+  return asDrafts(sorted);
+}
+
+/** Older recordings predate drafts: a team case's reply is a draft until a teammate presses Send. */
+function asDrafts(events: MunimEvent[]): MunimEvent[] {
+  const data = (e: MunimEvent) => (e.data && typeof e.data === "object" ? (e.data as Record<string, unknown>) : {});
+  const app = events.some((e) => data(e).channel === "app");
+  const marked = events.some((e) => e.type === "message" && ("draft" in data(e) || data(e).kind === "sent"));
+  if (app || marked) return events;
+  return events.map((e) => {
+    const d = data(e);
+    return e.type === "message" && d.role === "munim" && d.kind !== "chat" && d.final === true ? ({ ...e, data: { ...d, draft: true } } as MunimEvent) : e;
+  });
 }
 
 /** Human title for a fixture name: "s1_zombie_rent" → "S1 · zombie rent". */

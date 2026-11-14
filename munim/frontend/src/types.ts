@@ -123,6 +123,13 @@ export interface MessageEventData {
   sources?: string[] | null;
   /** Chat answers: the question is a different problem and needs a new chat. */
   new_case?: boolean | null;
+  /** Team cases: Munim's reply or update waits on the case until a teammate presses Send. */
+  draft?: boolean | null;
+  /** kind "sent": the draft (event seq) a teammate sent, who sent it, and whether they edited it. */
+  ref?: number | null;
+  by?: string | null;
+  edited?: boolean | null;
+  reply_kind?: string | null;
 }
 
 export interface ApprovalEventData {
@@ -418,6 +425,10 @@ export interface Scenario {
   teaser: string;
   expect?: Record<string, unknown>;
   merchant?: MerchantInfo;
+  /** how it reached support in the demo: call | email | ticket */
+  via?: string;
+  via_note?: string;
+  received?: string;
 }
 
 // ───────────────────────────── REST payloads ─────────────────────────────
@@ -501,6 +512,67 @@ export interface ApprovalRow {
 export interface ApproveResponse {
   result: ExecutionResult;
   message?: { text: string; language?: string } | null;
+}
+
+/** GET /api/inbox: a case Munim worked, or a complaint nobody has opened yet (status "NEW", case_id null). */
+export interface InboxItem {
+  id: string;
+  case_id: string | null;
+  scenario_id?: string | null;
+  merchant_id: string;
+  business_name?: string | null;
+  owner_name?: string | null;
+  city?: string | null;
+  language?: string | null;
+  summary: string;
+  text: string;
+  /** How it reached support: call | email | ticket | chat | app. */
+  via: string;
+  via_note?: string;
+  received?: string | null;
+  created_at?: string | null;
+  status: string;
+  outcome?: string | null;
+  approvals: number;
+  /** Munim's reply: "draft" (waiting for Send), "sent", or null. */
+  reply?: "draft" | "sent" | null;
+}
+
+export interface SweepLedgerRow {
+  id: number;
+  txn_ref: string;
+  entry_type: string;
+  amount_paise: number;
+  status: string;
+  value_date: string;
+  narration: string;
+}
+
+export interface SweepMerchant {
+  merchant_id: string;
+  business_name: string;
+  owner_name?: string;
+  city?: string;
+  amount_paise: number;
+  status: string;
+  evidence: EvidenceRef[];
+  targets: Record<string, string>;
+  ledger: SweepLedgerRow[];
+  actions: { action_id: number; action_type: string; amount_paise: number; status: string; decided_by?: string | null;
+    params?: Record<string, unknown>; checks: FirewallCheck[] }[];
+}
+
+/** GET /api/sweeps/{id}: what a reviewer checks before signing a sweep. */
+export interface SweepDetail {
+  sweep_id: string;
+  suspect_id: string;
+  status: string;
+  created_at?: string;
+  source_case?: { id: string; complaint_text: string; business_name: string } | null;
+  merchant_count: number;
+  pending: number;
+  total_paise: number;
+  merchants: SweepMerchant[];
 }
 
 export interface SweepApproveResponse {

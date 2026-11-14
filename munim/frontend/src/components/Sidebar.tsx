@@ -1,5 +1,5 @@
 // Left sidebar: new chat, the chat list, "Needs you", and the footer (which brain is running, reset, replay controls).
-import { Pause, Play, Plug, Plus, RotateCcw, Smartphone, UserRound, X } from "lucide-react";
+import { Inbox, Pause, Play, Plug, Plus, RotateCcw, Smartphone, UserRound, X } from "lucide-react";
 import type { Tone } from "../lib/explain";
 import { fixtureTitle } from "../replay";
 import type { ReplayControls } from "../state/useCaseSession";
@@ -18,7 +18,10 @@ interface Props {
   activeId: string | null;
   onOpen: (id: string) => void;
   onNewChat: () => void;
-  page: "chat" | "needs" | "sources";
+  page: "inbox" | "chat" | "needs" | "sources";
+  onInbox: () => void;
+  /** new complaints + replies waiting for Send */
+  inboxCount: number;
   onNeeds: () => void;
   onSources: () => void;
   needsCount: number;
@@ -31,7 +34,7 @@ interface Props {
 
 const SPEEDS = [1, 2, 4];
 
-export function Sidebar({ items, activeId, onOpen, onNewChat, page, onNeeds, onSources, needsCount, brain, onReset, replay, controls, onExitReplay }: Props) {
+export function Sidebar({ items, activeId, onOpen, onNewChat, page, onInbox, inboxCount, onNeeds, onSources, needsCount, brain, onReset, replay, controls, onExitReplay }: Props) {
   return (
     <aside className="side" aria-label="Chats">
       <div className="logo">
@@ -66,6 +69,11 @@ export function Sidebar({ items, activeId, onOpen, onNewChat, page, onNeeds, onS
       </div>
 
       <div className="navsec">
+        <button type="button" className={`navi${page === "inbox" ? " on" : ""}`} onClick={onInbox} title="Every complaint, by source and status">
+          <Inbox className="ico" aria-hidden />
+          Inbox
+          <span className={`badge${inboxCount ? "" : " zero"}`}>{inboxCount}</span>
+        </button>
         <button type="button" className={`navi${page === "needs" ? " on" : ""}`} onClick={onNeeds}>
           <UserRound className="ico" aria-hidden />
           Needs you

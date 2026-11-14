@@ -55,6 +55,20 @@ SCENARIOS: list[Scenario] = [
     ),
 ]
 
+# How each complaint reached the support inbox (fictional demo data): source, call length or ticket no., time received.
+_INBOX = {
+    "zombie_rent": ("call", "6 min 12 s", "09:12"),
+    "double_billing": ("ticket", "TKT-48213", "09:31"),
+    "risk_hold": ("email", "", "09:40"),
+    "duplicate_edi": ("call", "3 min 40 s", "10:15"),
+    "legit_rent": ("ticket", "TKT-48190", "10:22"),
+    "kyc_hold": ("call", "4 min 05 s", "10:48"),
+    "prompt_injection": ("email", "", "11:02"),
+    "cold_case": ("ticket", "TKT-48077", "11:20"),
+}
+SCENARIOS = [s.model_copy(update=dict(zip(("via", "via_note", "received"), _INBOX[s.id]))) if s.id in _INBOX else s
+             for s in SCENARIOS]
+
 _BY_ID = {s.id: s for s in SCENARIOS}
 
 

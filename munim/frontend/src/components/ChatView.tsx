@@ -1,7 +1,7 @@
 // The conversation, for the support teammate. Munim reports and answers in English. The merchant's language shows only
 // where the merchant used it: their words (with an English reading under them) and replies going to them (on demand).
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { ArrowRight, Ban, Check, CircleCheck, Copy, Flag, Globe, Hourglass, MessageSquarePlus, Send, Shield, TriangleExclamationPoint, Users } from "lucide-react";
+import { ArrowRight, Ban, Check, CircleCheck, Copy, Flag, Globe, Hourglass, MessageSquarePlus, Pencil, Send, Shield, TriangleExclamationPoint, Users } from "lucide-react";
 import { fmtMs, langLabel, rupees } from "../format";
 import { clock, firstName, isEnglish, langTag, resultCard, type ResultCard, type ResultLine } from "../lib/explain";
 import type { CaseView, ChatMessage } from "../state/caseReducer";
@@ -18,7 +18,7 @@ export interface FollowChip {
 export interface SweepLine {
   count: number;
   total: number;
-  fixed: { executed: number; total: number; simulated: boolean } | null;
+  fixed: { executed: number; total: number; simulated: boolean; merchants: number; all: boolean } | null;
 }
 
 interface Props {
@@ -36,6 +36,8 @@ interface Props {
   onOpenHow: () => void;
   onReview: () => void;
   onNewChat: () => void;
+  /** A teammate sends Munim's draft (optionally edited). Nothing reaches the merchant before this. */
+  onSendReply: (m: ChatMessage, text?: string) => Promise<void>;
 }
 
 const Dots = () => (
@@ -166,9 +168,68 @@ function ReplyBlock({ title, text, en, language, voice, copy }: { title: string;
   );
 }
 
+/** Munim's reply waiting on the case: the team reads it, edits if needed, and presses Send. */
+function DraftBlock({ m, kind, to, voice, onSend }: { m: ChatMessage; kind: MunimKind; to: string; voice: boolean; onSend: (text?: string) => Promise<void> }) {
+  const [editing, setEditing] = useState(false);
+  const [text, setText] = useState(m.text);
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
+  const native = !isEnglish(m.language) || hasIndic(m.text);
+  const title = `${kind === "update" ? "Update for" : "Reply to"} ${to}${native ? ` · ${langLabel(m.language)}` : ""}`;
+  const changed = editing && text.trim() !== m.text.trim();
+  const send = async () => {
+    if (busy || (editing && !text.trim())) return;
+    setBusy(true);
+    setErr(null);
+    try {
+      await onSend(changed ? text.trim() : undefined);
+      setEditing(false);
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Could not send");
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <div className="draftbox">
+      <div className="dh">
+        <Send className="ico" aria-hidden />
+        <span className="t">{title}</span>
+        <span className="pill warn">Not sent</span>
+      </div>
+      <div className="db">
+        {native && m.en && <div className="en">{m.en}</div>}
+        {editing ? (
+          <textarea className={native ? "ind" : ""} value={text} onChange={(e) => setText(e.target.value)} rows={Math.min(8, Math.max(3, Math.ceil(text.length / 70)))} maxLength={2000} aria-label={`Edit the reply to ${to}`} autoFocus />
+        ) : (
+          <div className={native ? "native ind" : "native"}>{m.text}</div>
+        )}
+      </div>
+      <div className="df">
+        <button type="button" className="btn pri" onClick={send} disabled={busy || (editing && !text.trim())}>
+          <Send className="ico" aria-hidden />
+          {busy ? "Sending…" : changed ? "Send edited" : `Send to ${to}`}
+        </button>
+        {editing ? (
+          <button type="button" className="btn" onClick={() => { setEditing(false); setText(m.text); }} disabled={busy}>
+            Cancel
+          </button>
+        ) : (
+          <button type="button" className="btn" onClick={() => setEditing(true)} disabled={busy}>
+            <Pencil className="ico" aria-hidden />
+            Edit
+          </button>
+        )}
+        {voice && <SpeakButton text={editing ? text : m.text} language={m.language} />}
+        <span className="note">{err ?? `Nothing goes to ${to} until you press Send.`}</span>
+      </div>
+    </div>
+  );
+}
+
 type MunimKind = "main" | "update" | "chat";
 
-function MunimBubble({ m, kind, name, lead, extra, took, voice, onNewChat }: { m: ChatMessage; kind: MunimKind; name: string; lead: string | null; extra: ReactNode; took: string; voice: boolean; onNewChat: () => void }) {
+function MunimBubble({ m, kind, name, lead, extra, took, voice, onNewChat, onSendReply }: { m: ChatMessage; kind: MunimKind; name: string; lead: string | null; extra: ReactNode; took: string; voice: boolean; onNewChat: () => void; onSendReply: (m: ChatMessage, text?: string) => Promise<void> }) {
   const lang = m.language;
   const native = !isEnglish(lang) || hasIndic(m.text);
   const label = langLabel(lang);
@@ -200,7 +261,9 @@ function MunimBubble({ m, kind, name, lead, extra, took, voice, onNewChat }: { m
       ? m.reply
         ? { title: `Reply for ${to}${isEnglish(m.reply.language) ? "" : ` · ${langLabel(m.reply.language)}`}`, text: m.reply.text, en: null, language: m.reply.language, copy: true }
         : null
-      : { title: `${kind === "update" ? "Update sent" : "Sent"} to ${to}${inLang}`, text: m.text, en: m.en ?? null, language: lang, copy: false };
+      : m.draft
+        ? null
+        : { title: `${kind === "update" ? "Update sent" : "Sent"} to ${to}${inLang}${m.sent ? ` · by ${m.sent.by}${m.sent.edited ? " · edited" : ""}` : ""}`, text: m.text, en: m.en ?? null, language: lang, copy: false };
   return (
     <div className="row mu">
       <span className="mav">M</span>
@@ -224,6 +287,7 @@ function MunimBubble({ m, kind, name, lead, extra, took, voice, onNewChat }: { m
             </button>
           </div>
         )}
+        {kind !== "chat" && m.draft && <DraftBlock m={m} kind={kind} to={to} voice={voice} onSend={(t) => onSendReply(m, t)} />}
         {reply && <ReplyBlock {...reply} voice={voice} />}
         {tm && (
           <div className="tm">
@@ -275,9 +339,18 @@ export function ChatView(p: Props) {
   };
 
   const sweepLine = p.sweep && p.sweep.count > 0 && (
-    <div className={`sys${p.sweep.fixed ? " ok" : ""}`} key="sweep">
-      {p.sweep.fixed ? <CircleCheck className="ico" aria-hidden /> : <Users className="ico" aria-hidden />}
-      {p.sweep.fixed ? (
+    <div className={`sys${p.sweep.fixed?.all ? " ok" : ""}`} key="sweep">
+      {p.sweep.fixed?.all ? <CircleCheck className="ico" aria-hidden /> : <Users className="ico" aria-hidden />}
+      {p.sweep.fixed && !p.sweep.fixed.all ? (
+        <>
+          <span>
+            Fixed for {p.sweep.fixed.merchants} of {p.sweep.count} merchants · {rupees(p.sweep.fixed.total)} refunded{p.sweep.fixed.simulated ? " (simulated)" : ""}
+          </span>
+          <button type="button" className="link" onClick={p.onReview}>
+            Review the rest
+          </button>
+        </>
+      ) : p.sweep.fixed ? (
         <span>
           Fixed for {p.sweep.fixed.executed ? `${p.sweep.count} more merchants` : "the other merchants"} · {rupees(p.sweep.fixed.total)} refunded
           {p.sweep.fixed.simulated ? " (simulated)" : ""}
@@ -324,7 +397,7 @@ export function ChatView(p: Props) {
             // Munim's report to the teammate: the verdict in plain English (written by code, not the model).
             const lead = isMain ? view.verdict?.headline?.trim() || null : null;
             return [
-              <MunimBubble key={m.id} m={m} kind={kind} name={name} lead={lead} extra={extra} took={took} voice={p.voice} onNewChat={p.onNewChat} />,
+              <MunimBubble key={m.id} m={m} kind={kind} name={name} lead={lead} extra={extra} took={took} voice={p.voice} onNewChat={p.onNewChat} onSendReply={p.onSendReply} />,
               isMain && m.final ? sweepLine : null,
             ];
           })}

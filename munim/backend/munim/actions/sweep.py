@@ -7,6 +7,7 @@ actions the firewall blocks outright (already refunded, already queued), are lef
 """
 from __future__ import annotations
 
+import json
 import re
 import sqlite3
 
@@ -140,21 +141,74 @@ def create_sweep(conn: sqlite3.Connection, *, source_case_id: str, suspect_id: s
                        victims=out_victims, action_ids=action_ids)
 
 
-def approve_sweep(conn: sqlite3.Connection, sweep_id: str, approver: str = "ops.lead") -> list[ExecutionResult]:
-    """Approve every pending action of the sweep through approve() (each one is re-checked, so a victim refunded in the
-    meantime is BLOCKED, not paid twice). The sweep becomes APPROVED once nothing is pending."""
+def approve_sweep(conn: sqlite3.Connection, sweep_id: str, approver: str = "ops.lead",
+                  merchant_ids: list[str] | None = None) -> list[ExecutionResult]:
+    """Approve the sweep's pending actions through approve() (each one is re-checked, so a victim refunded in the
+    meantime is BLOCKED, not paid twice). `merchant_ids` limits it to the merchants the reviewer ticked; the rest stay
+    pending. The sweep becomes APPROVED once nothing is pending."""
     sweep = one(conn, "SELECT * FROM sweeps WHERE id = ?", (sweep_id,))
     if not sweep:
         raise LookupError(f"sweep {sweep_id} not found")
-    ids = [r["id"] for r in rows(conn, "SELECT id FROM actions WHERE sweep_id = ? AND status = 'PENDING_APPROVAL' ORDER BY id", (sweep_id,))]
+    pending_rows = rows(conn, "SELECT id, merchant_id FROM actions WHERE sweep_id = ? AND status = 'PENDING_APPROVAL' ORDER BY id",
+                        (sweep_id,))
+    picked = set(merchant_ids) if merchant_ids is not None else None
+    ids = [r["id"] for r in pending_rows if picked is None or r["merchant_id"] in picked]
     results = [approve(conn, aid, approver) for aid in ids]
     _settle_sweep(conn, sweep_id)
     executed = [r for r in results if r.status == "EXECUTED"]
     paid = sum(r.amount_paise for r in executed if r.action_type == ActionType.REFUND_DEBITS)
     audit(conn, sweep["source_case_id"], "human", "sweep_approved",
           {"sweep_id": sweep_id, "approver": approver, "executed": len(executed), "refunded_paise": paid,
+           "merchants": sorted(picked) if picked is not None else "all",
            "blocked": sum(r.status in ("BLOCKED", "DUPLICATE") for r in results), "failed": sum(r.status == "FAILED" for r in results)})
     return results
 
 
-__all__ = ["create_sweep", "approve_sweep", "SWEEP_WARN"]
+def _j(v: str | None, default):
+    try:
+        return json.loads(v) if v else default
+    except (TypeError, ValueError):
+        return default
+
+
+def sweep_detail(conn: sqlite3.Connection, sweep_id: str) -> dict:
+    """Everything a reviewer needs before signing a sweep, per merchant: the actions and their checks, the proof the
+    same fault hit them, and the ledger rows the refund would reverse. Read-only."""
+    sweep = one(conn, "SELECT * FROM sweeps WHERE id = ?", (sweep_id,))
+    if not sweep:
+        raise LookupError(f"sweep {sweep_id} not found")
+    acts = rows(conn, """SELECT a.id, a.merchant_id, a.action_type, a.amount_paise, a.status, a.params_json, a.firewall_json,
+                                a.verdict_json, a.decided_by, m.business_name, m.owner_name, m.city
+                         FROM actions a JOIN merchants m ON m.id = a.merchant_id
+                         WHERE a.sweep_id = ? ORDER BY a.id""", (sweep_id,))
+    by_m: dict[str, dict] = {}
+    for a in acts:
+        params, fw, verdict = _j(a["params_json"], {}), _j(a["firewall_json"], {}), _j(a["verdict_json"], {})
+        m = by_m.setdefault(a["merchant_id"], {
+            "merchant_id": a["merchant_id"], "business_name": a["business_name"], "owner_name": a["owner_name"],
+            "city": a["city"], "amount_paise": 0, "actions": [], "evidence": verdict.get("smoking_gun") or [],
+            "targets": verdict.get("targets") or {}, "ledger_ids": [], "ledger": []})
+        if a["action_type"] == ActionType.REFUND_DEBITS:
+            m["amount_paise"] += int(a["amount_paise"] or 0)
+            m["ledger_ids"] += [int(i) for i in params.get("ledger_entry_ids") or []]
+        m["actions"].append({"action_id": a["id"], "action_type": a["action_type"], "amount_paise": a["amount_paise"],
+                             "status": a["status"], "decided_by": a["decided_by"], "params": params,
+                             "checks": fw.get("checks") or []})
+    for m in by_m.values():
+        ids = sorted(set(m.pop("ledger_ids")))
+        if ids:
+            marks = ",".join("?" * len(ids))
+            m["ledger"] = rows(conn, f"""SELECT id, txn_ref, entry_type, amount_paise, status, value_date, narration
+                                        FROM ledger_entries WHERE merchant_id = ? AND id IN ({marks}) ORDER BY value_date, id""",
+                               (m["merchant_id"], *ids))
+        sts = {x["status"] for x in m["actions"]}
+        m["status"] = "PENDING_APPROVAL" if "PENDING_APPROVAL" in sts else ("EXECUTED" if "EXECUTED" in sts else sorted(sts)[0])
+    source = one(conn, "SELECT c.id, c.complaint_text, m.business_name FROM cases c JOIN merchants m ON m.id = c.merchant_id "
+                       "WHERE c.id = ?", (sweep["source_case_id"],))
+    return {"sweep_id": sweep_id, "suspect_id": sweep["suspect_id"], "status": sweep["status"],
+            "created_at": sweep["created_at"], "source_case": source, "merchant_count": len(by_m),
+            "pending": sum(m["status"] == "PENDING_APPROVAL" for m in by_m.values()),
+            "total_paise": sum(m["amount_paise"] for m in by_m.values()), "merchants": list(by_m.values())}
+
+
+__all__ = ["create_sweep", "approve_sweep", "sweep_detail", "SWEEP_WARN"]

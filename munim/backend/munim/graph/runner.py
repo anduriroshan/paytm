@@ -197,7 +197,7 @@ async def followup_after_approval(action_id: int, result: Any, approver: str) ->
         if not act or not act["case_id"]:
             return None
         merchant = merchant_dict(conn, act["merchant_id"])
-        case = one(conn, "SELECT language FROM cases WHERE id=?", (act["case_id"],))
+        case = one(conn, "SELECT language, channel FROM cases WHERE id=?", (act["case_id"],))
     case_id = act["case_id"]
     run = load_run(case_id)
     rdata = result.model_dump(mode="json") if hasattr(result, "model_dump") else result
@@ -217,9 +217,79 @@ async def followup_after_approval(action_id: int, result: Any, approver: str) ->
     if run:
         run.emit(EventType.LLM_DONE, {"node": "respond", "role": "writer", "provider": res.provider, "model": res.model,
                                       "ms": res.ms, "text": text, "usage": res.usage, "live": res.live, "fallback": res.fallback})
-        run.emit(EventType.MESSAGE, {"role": "munim", "text": text, "en": en, "language": language, "final": True, "kind": "update"})
+        msg = {"role": "munim", "text": text, "en": en, "language": language, "final": True, "kind": "update"}
+        if (case or {}).get("channel") != "app":     # team cases: a draft until a teammate presses Send
+            msg["draft"] = True
+        run.emit(EventType.MESSAGE, msg)
         persist_events(run)
     return {"text": text, "language": language}
+
+
+# ───────────────────────────── replies: Munim drafts, a teammate sends ─────────────────────────────
+
+MAX_REPLY_CHARS = 2000
+
+
+def _is_draft(d: dict) -> bool:
+    return d.get("role") == "munim" and bool(d.get("draft")) and bool(d.get("final")) and bool(d.get("text"))
+
+
+def reply_state(events: list[Event]) -> dict[str, Any]:
+    """Where the merchant replies on a case stand: drafts not yet sent, and how many were sent."""
+    drafts: list[int] = []
+    sent: set[int] = set()
+    for e in events:
+        d = e.data if isinstance(e.data, dict) else {}
+        if str(e.type) != "message":
+            continue
+        if _is_draft(d):
+            drafts.append(e.seq)
+        elif d.get("kind") == "sent" and isinstance(d.get("ref"), int):
+            sent.add(d["ref"])
+    waiting = [s for s in drafts if s not in sent]
+    return {"waiting": waiting, "sent": len(sent), "state": "draft" if waiting else ("sent" if sent else None)}
+
+
+def send_reply(case_id: str, seq: int | None = None, text: str | None = None, by: str = "ops.lead") -> Event:
+    """A teammate sends Munim's draft (as written, or edited) to the merchant. Appends a `sent` message that points
+    at the draft (`ref`). Nothing reaches the merchant before this."""
+    run = load_run(case_id)
+    if run is None:
+        raise KeyError(f"unknown case {case_id}")
+    if not run.done:
+        raise ChatRefused("Munim is still working on this case")
+    st = reply_state(run.events)
+    if seq is None:
+        if not st["waiting"]:
+            raise ChatRefused("no reply waiting to be sent")
+        seq = st["waiting"][-1]
+    draft = next((e for e in run.events if e.seq == seq and str(e.type) == "message" and _is_draft(e.data)), None)
+    if draft is None:
+        raise KeyError(f"no draft reply {seq} on {case_id}")
+    if seq not in st["waiting"]:
+        raise ChatRefused("this reply was already sent")
+    d = draft.data
+    body = (text if text is not None else d["text"]).strip()[:MAX_REPLY_CHARS]
+    if not body:
+        raise ValueError("reply is empty")
+    edited = body != d["text"].strip()
+    lang = d.get("language") or "en"
+    by = (str(by or "").strip() or "ops.lead")[:64]
+    ev = run.emit(EventType.MESSAGE, {
+        "role": "munim", "kind": "sent", "ref": seq, "reply_kind": d.get("kind") or "reply", "text": body,
+        "en": (body if lang == "en" else None) if edited else d.get("en"), "language": lang, "final": True,
+        "by": by, "edited": edited})
+    persist_events(run)
+    try:
+        with tx() as conn:
+            conn.execute("UPDATE cases SET reply_text=? WHERE id=?", (body, case_id))
+            if case := one(conn, "SELECT merchant_id FROM cases WHERE id=?", (case_id,)):   # shows in the shop's app
+                conn.execute("INSERT INTO notifications(merchant_id, case_id, channel, template, body, sent_at) "
+                             "VALUES (?,?,?,?,?,?)", (case["merchant_id"], case_id, "app", "case_reply", body, now_iso()))
+            audit(conn, case_id, "human", "reply_sent", {"ref": seq, "by": by, "edited": edited, "language": lang})
+    except Exception:
+        log.exception("could not record sent reply for %s", case_id)
+    return ev
 
 
 # ───────────────────────────── chat: follow-up questions on a finished case ─────────────────────────────
@@ -237,8 +307,13 @@ def case_context(run: CaseRun) -> dict[str, Any]:
     """Everything the case file says, rebuilt from its events. Read-only: this is what chat answers from."""
     ctx: dict[str, Any] = {"case_id": run.case_id, "today": config.DEMO_TODAY, "history": [], "suspects": []}
     execs: list[dict] = []
+    drafts: dict[int, dict] = {}
     for ev in run.events:
         t, d = str(ev.type), ev.data if isinstance(ev.data, dict) else {}
+        if t == "message" and d.get("kind") == "sent":      # a teammate sent a draft: mark it, don't repeat it
+            if (h := drafts.get(d.get("ref"))) is not None:
+                h.update(status="sent", text=d.get("text") or h["text"], en=d.get("en") or ("" if d.get("edited") else h["en"]))
+            continue
         if t == "case":
             ctx.update(merchant=d.get("merchant") or {}, complaint_text=d.get("complaint_text"), scenario_id=d.get("scenario_id"))
         elif t in ("intake", "trail", "sources", "verdict", "firewall", "sweep"):
@@ -258,7 +333,11 @@ def case_context(run: CaseRun) -> dict[str, Any]:
                     e["status"] = d.get("status") or res.get("status") or e.get("status")
                     e["detail"] = res.get("detail") or e.get("detail")
         elif t == "message" and d.get("final") and d.get("text"):
-            ctx["history"].append({"role": d.get("role"), "text": d.get("text"), "en": d.get("en") or ""})
+            h = {"role": d.get("role"), "text": d.get("text"), "en": d.get("en") or ""}
+            if d.get("draft"):
+                h["status"] = "draft, not sent yet"
+                drafts[ev.seq] = h
+            ctx["history"].append(h)
         elif t == "done":
             ctx["status"] = d.get("status")
     ctx["executions"] = execs

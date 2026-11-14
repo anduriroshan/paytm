@@ -1,0 +1,33 @@
+/* Batch fix review: one row per merchant, proof on demand. Uses the tokens in index.css. */
+.srv-go { display: flex; align-items: center; margin-top: 10px; }
+.srv { margin-top: 12px; border-top: 1px solid #f1f5f9; padding-top: 12px; }
+.srv-intro { font-size: 13px; color: var(--ink2); margin-bottom: 8px; }
+.srv-load { display: flex; align-items: center; gap: 8px; color: var(--ink2); padding: 12px 0; }
+.srv-load .ico { width: 16px; height: 16px; }
+.srv-bar { display: flex; align-items: center; gap: 10px; padding: 6px 10px; background: #f8fafc; border: 1px solid var(--line); border-bottom: 0; border-radius: 10px 10px 0 0; font-size: 12.5px; color: var(--ink2); }
+.srv-all { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
+.srv-note { font-size: 12px; color: var(--ink3); }
+.srv-bar .srv-note { margin-left: auto; }
+.srv-list { max-height: 380px; overflow: auto; border: 1px solid var(--line); border-radius: 0 0 10px 10px; }
+.srv-row { border-bottom: 1px solid #eef2f7; }
+.srv-row:last-child { border-bottom: 0; }
+.srv-row.off .srv-who, .srv-row.off .srv-amt { opacity: .45; }
+.srv-main { display: grid; grid-template-columns: 18px minmax(0, 1fr) auto auto; gap: 10px; align-items: center; padding: 8px 10px; }
+.srv input[type="checkbox"] { width: 15px; height: 15px; margin: 0; accent-color: var(--brand); }
+.srv-who b { display: block; font-size: 13.5px; font-weight: 650; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.srv-who small { display: block; font-size: 12px; color: var(--ink3); }
+.srv-amt { font-weight: 700; font-size: 13.5px; font-variant-numeric: tabular-nums; }
+.srv-proof { display: inline-flex; align-items: center; gap: 3px; border: 1px solid var(--line2); background: #fff; border-radius: 7px; padding: 2px 6px 2px 9px; font-size: 12px; font-weight: 600; color: var(--ink2); }
+.srv-proof .ico { width: 14px; height: 14px; }
+.srv-proof[aria-expanded="true"] { border-color: var(--accentline); background: var(--accentbg); color: var(--accent); }
+.srv-detail { margin: 0 10px 10px 38px; padding: 8px 10px; background: #f8fafc; border: 1px solid var(--line); border-radius: 8px; font-size: 12.5px; color: var(--ink2); }
+.srv-detail ul { list-style: none; margin: 0 0 6px; padding: 0; display: flex; flex-direction: column; gap: 3px; }
+.srv-detail li { display: flex; gap: 6px; align-items: flex-start; }
+.srv-detail li .ico { width: 13px; height: 13px; color: var(--good); flex: none; margin-top: 2px; }
+.srv-detail table { width: 100%; border-collapse: collapse; }
+.srv-detail th { text-align: left; font-size: 10.5px; letter-spacing: .05em; text-transform: uppercase; color: var(--ink3); font-weight: 700; padding: 3px 6px; border-bottom: 1px solid var(--line); }
+.srv-detail td { padding: 4px 6px; border-bottom: 1px solid #eef2f7; vertical-align: top; }
+.srv-detail tr:last-child td { border-bottom: 0; }
+.srv-detail .mono { font-family: Consolas, "Cascadia Mono", monospace; font-size: 11.5px; }
+.srv-err { margin-top: 8px; color: var(--bad); font-size: 12.5px; }
+.srv-foot { display: flex; align-items: center; gap: 10px; margin-top: 10px; flex-wrap: wrap; }

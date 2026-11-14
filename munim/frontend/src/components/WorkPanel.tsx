@@ -1,6 +1,6 @@
 // Right-hand panel. While Munim works: the 12 steps, live. Afterwards: "How Munim decided" (Steps / Proof / Decision).
-import { ArrowRight, Ban, Check, Code, Coins, Database, FileText, Flag, Globe, Hourglass, LoaderCircle, Search, Shield, Sparkles, TriangleExclamationPoint, Users, X } from "lucide-react";
-import type { ReactNode } from "react";
+import { ArrowRight, Ban, Check, ChevronDown, ChevronRight, Code, Coins, Database, FileText, Flag, Globe, Hourglass, LoaderCircle, Search, Shield, Sparkles, TriangleExclamationPoint, Users, X } from "lucide-react";
+import { useState, type ReactNode } from "react";
 import {
   deriveCause,
   deriveClaims,
@@ -13,8 +13,10 @@ import {
   type StepIcon,
   type StepRow,
 } from "../lib/explain";
+import { stepDetails, type DetailLine, type StepDetail } from "../lib/stepDetails";
 import type { CaseView } from "../state/caseReducer";
 import type { ProviderSet, SourceHit, SourcesReport } from "../types";
+import "./steps.css";
 
 export type HowTab = "steps" | "proof" | "decision";
 
@@ -28,26 +30,112 @@ const Dots = () => (
   </span>
 );
 
-function Steps({ rows }: { rows: StepRow[] }) {
+function DetailRow({ l }: { l: DetailLine }) {
+  return (
+    <div className={`sd-l${l.label ? " kv" : ""}`}>
+      {l.label && <span className="sd-k">{l.label}</span>}
+      <div className="sd-v">
+        <div className="sd-top">
+          {l.tag && <span className={`sd-tag ${l.tag.tone}`}>{l.tag.text}</span>}
+          {l.text && <span className="sd-t">{l.text}</span>}
+          {l.right && <span className="sd-r">{l.right}</span>}
+        </div>
+        {typeof l.bar === "number" && (
+          <span className="sd-bar" aria-hidden>
+            <i style={{ width: `${Math.max(2, Math.round(l.bar * 100))}%` }} />
+          </span>
+        )}
+        {l.sub && <div className="sd-sub">{l.sub}</div>}
+        {l.code && <code className="sd-code">{l.code}</code>}
+        {l.refs && l.refs.length > 0 && (
+          <div className="sd-refs">
+            {l.refs.map((r) => (
+              <span key={r}>{r}</span>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function StepBody({ d, id }: { d: StepDetail; id: string }) {
+  return (
+    <div className="sd" id={id}>
+      {d.by && (
+        <div className="sd-by">
+          <span className={`ic ${d.ai ? "ai" : "code"}`}>{d.ai ? <Sparkles className="ico" aria-hidden /> : <Code className="ico" aria-hidden />}</span>
+          {d.by}
+        </div>
+      )}
+      <p className="sd-what">{d.what}</p>
+      {d.groups.map((g, i) => (
+        <div className="sd-g" key={i}>
+          {g.title && <div className="sd-h">{g.title}</div>}
+          <div className="sd-list">
+            {g.lines.map((l, j) => (
+              <DetailRow l={l} key={j} />
+            ))}
+          </div>
+          {g.more ? <div className="sd-more">+{g.more} more</div> : null}
+        </div>
+      ))}
+      {d.raw && (
+        <details className="sd-raw">
+          <summary>{d.raw.label}</summary>
+          <pre>{d.raw.text}</pre>
+        </details>
+      )}
+    </div>
+  );
+}
+
+function Steps({ rows, view }: { rows: StepRow[]; view: CaseView }) {
+  const [open, setOpen] = useState<Record<string, boolean>>({});
+  const toggle = (node: string) => setOpen((o) => ({ ...o, [node]: !o[node] }));
   return (
     <>
       {rows.map((r) => {
         const Icon = STEP_ICONS[r.icon];
         const cls = r.state === "done" ? "" : r.state;
+        const detail = r.state === "wait" ? null : stepDetails(view, r.node);
+        const isOpen = !!detail && !!open[r.node];
+        const bodyId = `sd-${r.node}`;
+        const inner = (
+          <>
+            <span className="n">{r.n}</span>
+            <span className={`ic ${r.kind}`}>
+              <Icon className="ico" aria-hidden />
+            </span>
+            <b>{r.name}</b>
+            <span className="r" title={r.result}>
+              {r.result}
+            </span>
+            <span className="t">{r.state === "now" ? r.kind === "ai" ? <Dots /> : <LoaderCircle className="ico spin" aria-hidden /> : r.time}</span>
+            <span className="cv">{detail && (isOpen ? <ChevronDown className="ico" aria-hidden /> : <ChevronRight className="ico" aria-hidden />)}</span>
+          </>
+        );
         return (
           <div key={r.node}>
             {r.phase && <div className="sec">{r.phase}</div>}
-            <div className={`st ${cls}`} aria-current={r.state === "now" ? "step" : undefined}>
-              <span className="n">{r.n}</span>
-              <span className={`ic ${r.kind}`}>
-                <Icon className="ico" aria-hidden />
-              </span>
-              <b>{r.name}</b>
-              <span className="r" title={r.result}>
-                {r.result}
-              </span>
-              <span className="t">{r.state === "now" ? r.kind === "ai" ? <Dots /> : <LoaderCircle className="ico spin" aria-hidden /> : r.time}</span>
-            </div>
+            {detail ? (
+              <button
+                type="button"
+                className={`st sx ${cls}${isOpen ? " open" : ""}`}
+                aria-current={r.state === "now" ? "step" : undefined}
+                aria-expanded={isOpen}
+                aria-controls={isOpen ? bodyId : undefined}
+                title={isOpen ? "Hide details" : "Show what this step did"}
+                onClick={() => toggle(r.node)}
+              >
+                {inner}
+              </button>
+            ) : (
+              <div className={`st sx ${cls}`} aria-current={r.state === "now" ? "step" : undefined}>
+                {inner}
+              </div>
+            )}
+            {isOpen && detail && <StepBody d={detail} id={bodyId} />}
           </div>
         );
       })}
@@ -63,6 +151,10 @@ function Steps({ rows }: { rows: StepRow[] }) {
             <Code className="ico" aria-hidden />
           </span>
           Plain code
+        </span>
+        <span className="lg-tip">
+          <ChevronRight className="ico" aria-hidden />
+          Click a step for details
         </span>
       </div>
     </>
@@ -405,7 +497,7 @@ export function WorkPanel({ view, providers, mode, tab, onTab, onClose }: Props)
           <i style={{ width: `${Math.round(steps.progress * 100)}%` }} />
         </div>
         <div className="pbody scroll">
-          <Steps rows={steps.rows} />
+          <Steps rows={steps.rows} view={view} />
         </div>
       </aside>
     );
@@ -426,7 +518,7 @@ export function WorkPanel({ view, providers, mode, tab, onTab, onClose }: Props)
         ))}
       </nav>
       <div className="pbody scroll" role="tabpanel">
-        {tab === "steps" ? <Steps rows={steps.rows} /> : tab === "proof" ? <Proof view={view} /> : <Decision view={view} />}
+        {tab === "steps" ? <Steps rows={steps.rows} view={view} /> : tab === "proof" ? <Proof view={view} /> : <Decision view={view} />}
       </div>
     </aside>
   );

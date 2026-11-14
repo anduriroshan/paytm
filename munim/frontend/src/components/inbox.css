@@ -1,0 +1,82 @@
+/* Inbox: the list of every complaint, and the "Hand this to Munim" page for a new one. Uses the tokens in index.css. */
+.inbox { padding: 28px 32px 60px; max-width: 1080px; width: 100%; }
+.inbox h1 { margin: 0 0 4px; font-size: 22px; font-weight: 700; }
+.inbox > p { margin: 0 0 16px; color: var(--ink2); }
+
+.ifilters { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 12px; }
+.ichip { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line2); background: #fff; border-radius: 999px; padding: 5px 12px; font-weight: 600; font-size: 12.5px; color: #334155; }
+.ichip .ico { width: 14px; height: 14px; }
+.ichip i { font-style: normal; font-weight: 700; opacity: .7; }
+.ichip.on { background: var(--brand); border-color: var(--brand); color: #fff; }
+.ichip:hover:not(.on) { border-color: #94a3b8; }
+.ifilters .sep { width: 1px; height: 20px; background: var(--line2); margin: 0 4px; }
+
+.itbl { width: 100%; border-collapse: separate; border-spacing: 0; background: #fff; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.itbl th { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink3); text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); font-weight: 700; background: #fbfcfe; }
+.itbl td { padding: 11px 14px; border-bottom: 1px solid #eef2f7; vertical-align: middle; }
+.itbl tr:last-child td { border-bottom: 0; }
+.itbl tbody tr { cursor: pointer; }
+.itbl tbody tr:hover td, .itbl tbody tr:focus-visible td { background: #f8fbff; }
+.itbl tbody tr:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.itbl tbody tr.on td { background: var(--accentbg); }
+.itbl .mer b { display: block; font-weight: 650; }
+.itbl .mer span { font-size: 12px; color: var(--ink2); }
+.itbl .said { color: #334155; max-width: 380px; }
+.itbl .time { color: var(--ink2); font-size: 12.5px; white-space: nowrap; }
+.inbox .lang { font-size: 10.5px; font-weight: 700; letter-spacing: .04em; background: #f1f5f9; color: var(--ink2); border-radius: 5px; padding: 2px 6px; }
+
+.isrc { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: #334155; white-space: nowrap; }
+.isrc small { display: block; font-size: 11.5px; color: var(--ink3); font-weight: 500; }
+.inbox .ic { width: 28px; height: 28px; border-radius: 8px; border: 0; display: grid; place-items: center; flex: none; }
+.inbox .ic .ico { width: 15px; height: 15px; }
+.inbox .ic.call { background: #e0f2fe; color: #0369a1; }
+.inbox .ic.mail { background: var(--warnbg); color: var(--warn); }
+.inbox .ic.tkt { background: var(--aibg); color: var(--ai); }
+.inbox .ic.app { background: var(--goodbg); color: var(--good); }
+.inbox .ic.chat { background: #f1f5f9; color: var(--ink2); }
+
+.inbox .ist { display: inline-flex; align-items: center; gap: 5px; border-radius: 999px; padding: 3px 10px; font-weight: 650; font-size: 12px; white-space: nowrap; }
+.inbox .ist .ico { width: 13px; height: 13px; }
+.ist.new { background: var(--accentbg); color: var(--accent); }
+.ist.run { background: #dbeafe; color: #1e40af; }
+.ist.draft { background: var(--aibg); color: var(--ai); border: 1px dashed var(--ailine); }
+.ist.hum { background: var(--humbg); color: var(--ai); }
+.ist.sent { background: var(--goodbg); color: var(--good); }
+.ist.esc { background: var(--warnbg); color: var(--warn); }
+.ist.bad { background: var(--badbg); color: var(--bad); }
+.ist.gray { background: #eef2f7; color: var(--ink2); }
+
+/* a new complaint, opened */
+.inbox .back { margin-bottom: 14px; }
+.ihead { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.ihead .av { width: 36px; height: 36px; border-radius: 50%; background: var(--accentbg); color: var(--accent); display: grid; place-items: center; font-size: 12.5px; font-weight: 700; flex: none; }
+.ihead b { display: block; font-size: 16px; }
+.ihead small { display: block; font-size: 12.5px; color: var(--ink2); }
+.icase { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 18px; align-items: start; }
+.icard { background: #fff; border: 1px solid var(--line); border-radius: 12px; }
+.icard > header { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+.icard > header h3 { margin: 0; font-size: 14px; font-weight: 700; }
+.imeta { display: flex; gap: 14px; flex-wrap: wrap; padding: 10px 16px; border-bottom: 1px solid #eef2f7; font-size: 12.5px; color: var(--ink2); }
+.imeta span { display: inline-flex; align-items: center; gap: 5px; }
+.imeta .ico { width: 14px; height: 14px; }
+.isaid { display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 10px; padding: 14px 16px 18px; }
+.isaid .spk { font-size: 11.5px; font-weight: 700; color: var(--accent); padding-top: 3px; text-transform: uppercase; letter-spacing: .04em; overflow: hidden; text-overflow: ellipsis; }
+.isaid .say { border-radius: 10px; padding: 9px 12px; background: var(--accentbg); border: 1px solid var(--accentline); color: var(--ink); line-height: 1.55; }
+.isaid .say.ind { font-size: 15px; }
+.isaid .say .lang { margin-right: 8px; vertical-align: 1px; }
+
+.icard.hand { padding: 24px 22px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.hand .mm { width: 46px; height: 46px; border-radius: 12px; background: var(--brand); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 20px; }
+.hand h2 { margin: 0; font-size: 17px; }
+.hand p { margin: 0; color: var(--ink2); max-width: 300px; }
+.hand .go { display: inline-flex; align-items: center; gap: 8px; background: var(--brand); color: #fff; border: 0; border-radius: 10px; padding: 11px 18px; font-weight: 700; font-size: 14.5px; }
+.hand .go:disabled { opacity: .6; }
+.hand .go .ico { width: 16px; height: 16px; }
+.hand .ierr { color: var(--bad); font-size: 12.5px; }
+.ticks { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; text-align: left; font-size: 13px; color: var(--ink2); }
+.ticks li { display: flex; gap: 8px; align-items: flex-start; }
+.ticks .ico { width: 15px; height: 15px; color: var(--good); flex: none; margin-top: 2px; }
+
+@media (max-width: 1100px) {
+  .icase { grid-template-columns: minmax(0, 1fr); }
+}

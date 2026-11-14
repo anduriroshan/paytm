@@ -359,7 +359,10 @@ async def respond(state: CaseState, w: Writer):
     llm_done(w, "respond", "writer", res)
     text = res.text.strip()
     en = await router.english_copy(text, lang, router.mock_english("respond", ctx), live_source=res.live)
-    emit(w, "message", {"role": "munim", "text": text, "en": en, "language": lang, "final": True})
+    msg = {"role": "munim", "text": text, "en": en, "language": lang, "final": True}
+    if state.get("channel") != "app":     # team cases: a draft on the case; a teammate presses Send
+        msg["draft"] = True
+    emit(w, "message", msg)
     if not should_sweep(state):
         node_status(w, "sweep", "skip", summary="no fleet-wide fault to sweep for")
     return ({"reply": text, "language": lang}, f"{len(text.split())} words · {lang} · {res.provider}")

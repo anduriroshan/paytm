@@ -4,8 +4,10 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { api, ApiError } from "./api";
 import { ChatHeader, type StatusPill } from "./components/ChatHeader";
 import { ChatView, type FollowChip, type SweepLine } from "./components/ChatView";
+import { Inbox, inboxStatus } from "./components/Inbox";
 import { NeedsYou, type CaseApproval, type Decided, type HandedCase, type SweepGroup } from "./components/NeedsYou";
 import { Sources } from "./components/Sources";
+import type { SweepReviewRow } from "./components/SweepReview";
 import { Sidebar, type SideItem } from "./components/Sidebar";
 import { StartScreen } from "./components/StartScreen";
 import { WorkPanel, type HowTab } from "./components/WorkPanel";
@@ -29,18 +31,20 @@ import {
 import { START_CHIPS, followUpLabel, followUps } from "./lib/suggestions";
 import { fixtureForScenario } from "./replay";
 import { FALLBACK_SCENARIOS } from "./scenarios";
-import { elapsedMs } from "./state/caseReducer";
+import { elapsedMs, type ChatMessage } from "./state/caseReducer";
 import { deriveApprovals, deriveProviders } from "./state/derive";
 import { useCaseSession } from "./state/useCaseSession";
-import type { ApprovalRow, CaseRow, Health, MerchantInfo, ProviderInfo, ProviderSet, Scenario } from "./types";
+import type { ApprovalRow, CaseRow, Health, InboxItem, MerchantInfo, MunimEvent, ProviderInfo, ProviderSet, Scenario } from "./types";
 
 type Backend = "checking" | "online" | "offline" | "skipped";
-type Page = "chat" | "needs" | "sources";
+type Page = "inbox" | "chat" | "needs" | "sources";
 interface SweepDone {
   executed: number;
   total: number;
   merchants: number;
   simulated: boolean;
+  /** every merchant in the batch is done (a reviewer may approve them in parts) */
+  all: boolean;
 }
 
 function readParams() {
@@ -92,7 +96,9 @@ export default function App() {
   const [approvals, setApprovals] = useState<ApprovalRow[]>([]);
 
   // UI
-  const [page, setPage] = useState<Page>("chat");
+  // Inbox is the first page; a recording opened by URL goes straight to its chat.
+  const [page, setPage] = useState<Page>(initial.replay ? "chat" : "inbox");
+  const [inbox, setInbox] = useState<InboxItem[]>([]);
   const [openId, setOpenId] = useState<string | null>(null);
   const [howOpen, setHowOpen] = useState(false);
   const [howTab, setHowTab] = useState<HowTab>("steps");
@@ -107,6 +113,7 @@ export default function App() {
   const [busy, setBusy] = useState<string | null>(null);
   const [decisions, setDecisions] = useState<Decided[]>([]);
   const [sweepOutcomes, setSweepOutcomes] = useState<Record<string, SweepDone>>({});
+  const [sweepPicked, setSweepPicked] = useState<Record<string, string[]>>({}); // recording: merchants already approved
   const [now, setNow] = useState(() => Date.now());
 
   const live = backend === "online";
@@ -114,11 +121,12 @@ export default function App() {
 
   // ── data loading ──
   const loadLive = useCallback(async () => {
-    const [sc, me, ca, ap] = await Promise.allSettled([api.scenarios(), api.merchants(), api.cases(), api.approvals()]);
+    const [sc, me, ca, ap, ib] = await Promise.allSettled([api.scenarios(), api.merchants(), api.cases(), api.approvals(), api.inbox()]);
     if (sc.status === "fulfilled" && Array.isArray(sc.value) && sc.value.length) setScenarios(sc.value);
     if (me.status === "fulfilled" && Array.isArray(me.value)) setMerchants(me.value);
     if (ca.status === "fulfilled" && Array.isArray(ca.value)) setCases(ca.value);
     if (ap.status === "fulfilled" && Array.isArray(ap.value)) setApprovals(ap.value);
+    if (ib.status === "fulfilled" && Array.isArray(ib.value)) setInbox(ib.value);
   }, []);
 
   const checkBackend = useCallback(async () => {
@@ -142,6 +150,10 @@ export default function App() {
     api
       .cases()
       .then((r) => setCases(Array.isArray(r) ? r : []))
+      .catch(() => undefined);
+    api
+      .inbox()
+      .then((r) => setInbox(Array.isArray(r) ? r : []))
       .catch(() => undefined);
   }, [backend]);
 
@@ -233,6 +245,17 @@ export default function App() {
     startCase({ merchant_id: s.merchant_id, complaint_text: s.complaint_text, channel: s.channel ?? "chat", scenario_id: s.id });
   };
 
+  const continueItem = (item: InboxItem) => {
+    const s = scenarios.find((x) => x.id === item.scenario_id) ?? FALLBACK_SCENARIOS.find((x) => x.id === item.scenario_id);
+    if (!live) {
+      const fx = fixtureForScenario(item.scenario_id);
+      if (fx) playFixture(fx);
+      return;
+    }
+    setMerchantId(item.merchant_id);
+    startCase({ merchant_id: item.merchant_id, complaint_text: item.text, channel: s?.channel ?? "chat", scenario_id: item.scenario_id ?? undefined });
+  };
+
   const openCase = (id: string) => {
     setPage("chat");
     if (!live || id === openId) return;
@@ -262,10 +285,33 @@ export default function App() {
       ingest(asArray(r.events));
     } catch (e) {
       // 405 = the server has no chat route: it was started before chat existed and needs a restart.
-      setChatError(e instanceof ApiError && e.status === 405 ? "This server is older than the app. Restart it (.\run.ps1) to turn on chat." : errText(e));
+      setChatError(e instanceof ApiError && e.status === 405 ? "This server is older than the app. Restart it (.\\run.ps1) to turn on chat." : errText(e));
       setDraft(q);
     } finally {
       setPendingQ(null);
+    }
+  };
+
+  // A teammate sends Munim's draft. Nothing reaches the merchant before this.
+  const sendReply = async (m: ChatMessage, text?: string) => {
+    const id = view.caseId;
+    if (!id) return;
+    const lang = m.language ?? null;
+    const body = text?.trim() || m.text;
+    const edited = !!text && body !== m.text;
+    if (!live || isReplay) {
+      // Recording: no backend to send through. Show what Send does (no seq, so the recording plays on).
+      const ev = { case_id: id, type: "message", at: new Date().toISOString(), data: { role: "munim", kind: "sent", ref: m.seq, text: body, en: edited ? (isEnglish(lang) ? body : null) : (m.en ?? null), language: lang, final: true, by: "you (simulated)", edited } };
+      ingest([ev as unknown as MunimEvent]);
+      return;
+    }
+    try {
+      const r = await api.sendReply(id, m.seq ?? null, edited ? body : undefined);
+      ingest([r.event]);
+      refreshSide();
+    } catch (e) {
+      if (e instanceof ApiError && (e.status === 405 || (e.status === 404 && /^not found$/i.test(e.message)))) throw new Error("This server is older than the app. Restart it (.\\run.ps1) to turn on Send.");
+      throw e;
     }
   };
 
@@ -339,16 +385,21 @@ export default function App() {
     if (isReplay) {
       for (const a of deriveApprovals(view)) caseApprovals.push(toApproval(a, view.info?.scenario_id, view.info?.merchant?.city));
       const sw = view.sweep;
-      if (sw?.sweep_id && sw.merchant_count > 0 && !sweepOutcomes[sw.sweep_id]) {
-        const victims = asArray(sw.victims);
-        sweeps.push({
-          sweepId: sw.sweep_id,
-          cause: causeTitle(sw.suspect_id),
-          merchants: sw.merchant_count,
-          total: sw.total_paise ?? 0,
-          actions: asArray(sw.action_ids).length || victims.length,
-          names: uniq(victims.map((v) => v.business_name)),
-        });
+      if (sw?.sweep_id && sw.merchant_count > 0 && !sweepOutcomes[sw.sweep_id]?.all) {
+        const done = new Set(sweepPicked[sw.sweep_id] ?? []);
+        const everyone = asArray(sw.victims);
+        const victims = everyone.filter((v) => !done.has(v.merchant_id));
+        const left = everyone.length ? victims.length : sw.merchant_count;
+        const allActions = asArray(sw.action_ids).length || everyone.length;
+        if (left > 0)
+          sweeps.push({
+            sweepId: sw.sweep_id,
+            cause: causeTitle(sw.suspect_id),
+            merchants: left,
+            total: done.size ? victims.reduce((t, v) => t + (v.damages_paise ?? 0), 0) : (sw.total_paise ?? 0),
+            actions: everyone.length ? Math.round((allActions * victims.length) / everyone.length) : allActions,
+            names: uniq(victims.map((v) => v.business_name)),
+          });
       }
       const st = view.caseId ? effectiveStatus(view) : "";
       if (view.caseId && view.info && (st === "ESCALATED" || st === "BLOCKED")) {
@@ -368,7 +419,7 @@ export default function App() {
         else caseApprovals.push(toApproval(a, a.case_id ? byCase.get(a.case_id)?.scenario_id : null, a.city));
       }
       for (const [sweepId, rows] of groups) {
-        if (sweepOutcomes[sweepId]) continue;
+        if (sweepOutcomes[sweepId]?.all) continue;
         sweeps.push({
           sweepId,
           cause: causeTitle(rows[0]?.sweep_suspect),
@@ -392,26 +443,76 @@ export default function App() {
       }
     }
     return { caseApprovals, sweeps, handed };
-  }, [isReplay, live, view, approvals, cases, sweepOutcomes]);
+  }, [isReplay, live, view, approvals, cases, sweepOutcomes, sweepPicked]);
 
-  const approveSweep = async (sweepId: string) => {
-    const g = needs.sweeps.find((s) => s.sweepId === sweepId);
-    if (!g) return;
+  // The batch fix after a person checked each merchant: only the ticked ones are fixed; the rest stay for later.
+  const addOutcome = (sweepId: string, add: Omit<SweepDone, "all">, all: boolean) =>
+    setSweepOutcomes((o) => {
+      const prev = o[sweepId];
+      const next = prev
+        ? { executed: prev.executed + add.executed, total: prev.total + add.total, merchants: prev.merchants + add.merchants, simulated: prev.simulated || add.simulated, all }
+        : { ...add, all };
+      return { ...o, [sweepId]: next };
+    });
+
+  const loadSweep = async (sweepId: string): Promise<{ rows: SweepReviewRow[]; note: string | null }> => {
     if (!live || isReplay) {
-      // Replay: no backend to execute against. Show what approval does, clearly labelled as simulated.
-      setSweepOutcomes((o) => ({ ...o, [sweepId]: { executed: g.actions, total: g.total, merchants: g.merchants, simulated: true } }));
-      decide({ key: `s${sweepId}`, text: `Approved ${g.actions} actions · ${rupees(g.total)} refunded to ${g.merchants} merchants (simulated)`, bad: false });
+      const sw = view.sweep;
+      const done = new Set(sweepPicked[sweepId] ?? []);
+      const rows = asArray(sw?.sweep_id === sweepId ? sw.victims : [])
+        .filter((v) => !done.has(v.merchant_id))
+        .map((v) => ({
+          id: v.merchant_id,
+          name: v.business_name,
+          city: v.city,
+          amount: v.damages_paise ?? 0,
+          proof: [
+            `Same cause: ${causeTitle(sw?.suspect_id)}`,
+            ...Object.entries(v.targets ?? {}).map(([k, x]) => `${cap(k.replace(/_id$/, "").replace(/_/g, " "))} ${x}`),
+            ...(v.ledger_entry_ids?.length ? [`Debits to pay back: ${v.ledger_entry_ids.map((n) => `#${n}`).join(", ")}`] : []),
+          ],
+          ledger: [],
+        }));
+      return { rows, note: "Recording: full ledger rows need the live backend" };
+    }
+    const d = await api.sweepDetail(sweepId);
+    const rows = asArray(d.merchants)
+      .filter((m) => m.status === "PENDING_APPROVAL")
+      .map((m) => ({
+        id: m.merchant_id,
+        name: m.business_name,
+        city: m.city ?? "",
+        amount: m.amount_paise ?? 0,
+        proof: [`Same cause: ${causeTitle(d.suspect_id)}`, ...asArray(m.evidence).map((e) => e.label).filter(Boolean)],
+        ledger: asArray(m.ledger).map((l) => ({ date: l.value_date, ref: l.txn_ref, amount: l.amount_paise, note: l.narration })),
+      }));
+    return { rows, note: d.source_case ? `Found from ${d.source_case.business_name}'s case ${d.source_case.id}` : null };
+  };
+
+  const approveSweep = async (sweepId: string, merchantIds: string[]) => {
+    const g = needs.sweeps.find((s) => s.sweepId === sweepId);
+    if (!g || merchantIds.length === 0) return;
+    const all = merchantIds.length >= g.merchants;
+    const who = all ? `${merchantIds.length === 1 ? "the last" : `all ${merchantIds.length}`} ${merchantIds.length === 1 ? "merchant" : "merchants"}` : `${merchantIds.length} of ${g.merchants} merchants`;
+    if (!live || isReplay) {
+      // Recording: no backend to execute against. Show what approval does, clearly labelled as simulated.
+      const victims = asArray(view.sweep?.victims).filter((v) => merchantIds.includes(v.merchant_id));
+      const total = victims.reduce((t, v) => t + (v.damages_paise ?? 0), 0);
+      setSweepPicked((p) => ({ ...p, [sweepId]: [...(p[sweepId] ?? []), ...merchantIds] }));
+      addOutcome(sweepId, { executed: merchantIds.length, total, merchants: merchantIds.length, simulated: true }, all);
+      decide({ key: `s${sweepId}-${Date.now()}`, text: `Approved the fix for ${who} · ${rupees(total)} refunded (simulated)`, bad: false });
       return;
     }
     setBusy(`s${sweepId}`);
     try {
-      const r = await api.approveSweep(sweepId);
+      const r = await api.approveSweep(sweepId, all ? undefined : merchantIds);
       const executed = r.executed ?? 0;
-      setSweepOutcomes((o) => ({ ...o, [sweepId]: { executed, total: r.total_paise ?? 0, merchants: g.merchants, simulated: false } }));
-      decide({ key: `s${sweepId}`, text: `Approved ${executed} actions · ${rupees(r.total_paise ?? 0)} refunded to ${g.merchants} merchants`, bad: false });
+      addOutcome(sweepId, { executed, total: r.total_paise ?? 0, merchants: merchantIds.length, simulated: false }, all);
+      decide({ key: `s${sweepId}-${Date.now()}`, text: `Approved the fix for ${who} · ${rupees(r.total_paise ?? 0)} refunded`, bad: false });
       refreshSide();
     } catch (e) {
-      decide({ key: `s${sweepId}`, text: `Batch fix failed: ${errText(e)}`, bad: true });
+      decide({ key: `s${sweepId}-${Date.now()}`, text: `Batch fix failed: ${errText(e)}`, bad: true });
+      throw e;
     } finally {
       setBusy(null);
     }
@@ -426,6 +527,7 @@ export default function App() {
       setPage("chat");
       setDecisions([]);
       setSweepOutcomes({});
+      setSweepPicked({});
       await loadLive();
     } catch (e) {
       setStartError(`Reset failed: ${errText(e)}`);
@@ -546,7 +648,7 @@ export default function App() {
       ? {
           count: view.sweep.merchant_count,
           total: view.sweep.total_paise ?? 0,
-          fixed: sweepOutcome ? { executed: sweepOutcome.executed, total: sweepOutcome.total, simulated: sweepOutcome.simulated } : null,
+          fixed: sweepOutcome ? { executed: sweepOutcome.executed, total: sweepOutcome.total, simulated: sweepOutcome.simulated, merchants: sweepOutcome.merchants, all: sweepOutcome.all } : null,
         }
       : null;
 
@@ -580,6 +682,38 @@ export default function App() {
         : { label: "Connecting…", live: false };
   const needsCount = needs.caseApprovals.length + needs.sweeps.length;
 
+  let inboxItems: InboxItem[] = inbox;
+  if (!live || isReplay) {
+    const replyOf = (): InboxItem["reply"] => {
+      const mine = view.messages.filter((m) => m.role === "munim" && m.kind !== "chat" && m.final);
+      return mine.some((m) => m.draft) ? "draft" : mine.some((m) => m.sent) ? "sent" : null;
+    };
+    inboxItems = FALLBACK_SCENARIOS.filter((s) => fixtureForScenario(s.id))
+      .map((s): InboxItem => {
+        const playing = isReplay && !!view.caseId && view.info?.scenario_id === s.id;
+        return {
+          id: playing ? (view.caseId as string) : `NEW-${s.id}`,
+          case_id: playing ? view.caseId : null,
+          scenario_id: s.id,
+          merchant_id: s.merchant_id,
+          business_name: s.merchant?.business_name,
+          owner_name: s.merchant?.owner_name,
+          city: s.merchant?.city,
+          language: s.language,
+          summary: s.title,
+          text: s.complaint_text,
+          via: s.via ?? "ticket",
+          via_note: s.via_note,
+          received: s.received,
+          status: playing ? (view.done ? effectiveStatus(view) : "INVESTIGATING") : "NEW",
+          approvals: playing ? needs.caseApprovals.length : 0,
+          reply: playing ? replyOf() : null,
+        };
+      })
+      .sort((a, b) => (a.received ?? "").localeCompare(b.received ?? ""));
+  }
+  const inboxCount = inboxItems.filter((i) => ["new", "draft"].includes(inboxStatus(i).key)).length;
+
   return (
     <div className="shell">
       <Sidebar
@@ -593,6 +727,11 @@ export default function App() {
           refreshSide();
         }}
         onSources={() => setPage("sources")}
+        onInbox={() => {
+          setPage("inbox");
+          refreshSide();
+        }}
+        inboxCount={inboxCount}
         needsCount={needsCount}
         brain={brain}
         onReset={live && !isReplay ? onReset : null}
@@ -601,7 +740,18 @@ export default function App() {
         onExitReplay={exitReplay}
       />
       <div className="page">
-        {page === "sources" ? (
+        {page === "inbox" ? (
+          <Inbox
+            items={inboxItems}
+            loading={backend === "checking"}
+            offline={!live || isReplay}
+            activeCaseId={isReplay ? view.caseId : openId}
+            busy={creating}
+            error={startError}
+            onOpenCase={openCase}
+            onContinue={continueItem}
+          />
+        ) : page === "sources" ? (
           <Sources live={live && !isReplay} />
         ) : page === "needs" ? (
           <NeedsYou
@@ -614,6 +764,7 @@ export default function App() {
             onApprove={approve}
             onReject={reject}
             onApproveSweep={approveSweep}
+            loadSweep={loadSweep}
             onOpen={openCase}
           />
         ) : (
@@ -651,6 +802,7 @@ export default function App() {
                   onOpenHow={openHow}
                   onReview={() => setPage("needs")}
                   onNewChat={newChat}
+                  onSendReply={sendReply}
                 />
               )}
               {panelOpen && (
