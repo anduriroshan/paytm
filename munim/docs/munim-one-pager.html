@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Munim · one page</title>
-<!-- One A4 page for the judges. Print: msedge --headless --print-to-pdf=munim-one-pager.pdf --no-pdf-header-footer munim-one-pager.html -->
+<title>Munim · two pages for the judges</title>
+<!-- Two A4 pages for the judges. Edit this HTML; print from the browser (A4, no margins, background graphics on) when a PDF is needed. -->
 <style>
   @page { size: A4; margin: 0; }
   :root {
@@ -13,7 +13,12 @@
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; background: #fff; }
   body { font: 8.2pt/1.36 "Segoe UI", system-ui, sans-serif; color: var(--ink); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .page { width: 210mm; height: 297mm; padding: 8mm 10mm 7mm; display: flex; flex-direction: column; gap: 3.2mm; overflow: hidden; }
+  .page { width: 210mm; height: 297mm; padding: 8mm 10mm 7mm; display: flex; flex-direction: column; gap: 3mm; overflow: hidden; background: #fff; break-after: page; }
+  .page:last-child { break-after: auto; }
+  @media screen {
+    html, body { background: #cbd5e1; }
+    .page { margin: 6mm auto; box-shadow: 0 1mm 4mm rgba(15, 23, 42, .18); }
+  }
   h2 { margin: 0 0 1.6mm; font-size: 10pt; color: var(--brand); display: flex; align-items: center; gap: 2mm; }
   h2 .n { width: 5mm; height: 5mm; border-radius: 1.4mm; background: var(--brand); color: #fff; font-size: 7.5pt; display: grid; place-items: center; flex: none; }
   h2 small { font-size: 8pt; font-weight: 600; color: var(--ink3); }
@@ -22,6 +27,8 @@
   li { margin: .3mm 0; }
   sup { font-size: 6pt; color: var(--ink3); }
   .card { border: 1px solid var(--line); border-radius: 3mm; padding: 2.8mm 3.4mm; background: #fff; }
+  em.ai, em.code, em.hum { font-style: normal; font-weight: 700; }
+  em.ai { color: var(--ai); } em.code { color: var(--code); } em.hum { color: var(--hum); }
 
   /* header */
   .top { display: flex; align-items: center; gap: 4mm; background: var(--brand); color: #fff; border-radius: 3mm; padding: 3mm 4.4mm; }
@@ -29,22 +36,42 @@
   .top h1 { margin: 0; font-size: 17pt; line-height: 1.1; }
   .top p { font-size: 8.8pt; opacity: .92; margin-top: .4mm; }
   .top .meta { margin-left: auto; text-align: right; font-size: 7.6pt; opacity: .88; white-space: nowrap; }
+  .top2 { display: flex; align-items: center; gap: 2.4mm; font-size: 7.8pt; color: var(--ink3); border-bottom: 1px solid var(--line); padding-bottom: 1.6mm; }
+  .top2 .logo { width: 6mm; height: 6mm; border-radius: 1.6mm; font-size: 9pt; background: var(--brand); color: #fff; }
+  .top2 b { color: var(--brand); font-size: 9pt; }
+  .top2 span:last-child { margin-left: auto; }
 
-  /* row 1 */
-  .row1 { display: grid; grid-template-columns: 66mm 1fr; gap: 3.2mm; }
+  /* page 1: problem + what exists */
+  .row1 { display: grid; grid-template-columns: 1fr 1fr; gap: 3.2mm; }
   .stat { margin-top: 2mm; border-top: 1px solid var(--line); padding-top: 1.8mm; display: flex; align-items: center; gap: 2.4mm; }
   .stat b { font-size: 15pt; color: var(--brand); white-space: nowrap; }
   .stat span { font-size: 7.4pt; color: var(--ink2); line-height: 1.3; }
+  .fit { margin-top: 1.8mm; font-size: 7.8pt; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 2mm; padding: 1.4mm 2.2mm; }
+  .fit b { color: var(--brand); }
+
+  /* evidence */
+  .ev table { margin-top: 0; }
+  .ev td.when { white-space: nowrap; color: var(--ink2); font-weight: 600; }
+  .ev td.what i { color: var(--ink2); }
+  .ev td.fits { color: var(--ink2); }
+  .ev td.fits b { color: var(--ink); font-weight: 650; }
+  .note { margin-top: 1.6mm; font-size: 7.3pt; color: var(--ink2); line-height: 1.35; }
+
+  /* team side */
+  .teamgrid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 3mm; align-items: start; }
   .flow { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6mm; counter-reset: st; }
   .flow li { margin: 0; border: 1px solid var(--line); border-radius: 2mm; padding: 1.3mm 2mm 1.5mm; background: var(--bg); counter-increment: st; }
   .flow li b { display: block; font-size: 8.2pt; white-space: nowrap; }
   .flow li b::before { content: counter(st) ". "; color: var(--ink3); }
   .flow li span { display: block; font-size: 7.3pt; color: var(--ink2); line-height: 1.3; }
-  em.ai, em.code, em.hum { font-style: normal; font-weight: 700; }
-  em.ai { color: var(--ai); } em.code { color: var(--code); } em.hum { color: var(--hum); }
-  .example { margin-top: 1.6mm; font-size: 7.6pt; background: #f5f3ff; border: 1px solid #ddd6fe; border-radius: 2mm; padding: 1.4mm 2.2mm; }
+  .example { font-size: 7.6pt; background: #f5f3ff; border: 1px solid #ddd6fe; border-radius: 2mm; padding: 1.6mm 2.2mm; line-height: 1.38; }
   .example b { color: var(--ai); }
-  .rule { margin-top: 1.4mm; font-size: 8pt; font-weight: 600; }
+  .aiuse { margin-top: 2mm; display: grid; grid-template-columns: 1fr 1fr; gap: 2mm; }
+  .aiuse div { border-radius: 2mm; padding: 1.4mm 2.2mm; font-size: 7.6pt; line-height: 1.35; }
+  .aiuse .a { background: #faf5ff; border: 1px solid #e9d5ff; }
+  .aiuse .c { background: #f8fafc; border: 1px solid #cbd5e1; }
+  .aiuse b { display: block; font-size: 7.8pt; }
+  .rule { margin-top: 1.6mm; font-size: 8pt; font-weight: 600; }
 
   /* merchant side */
   .merchant { border: 1.4px solid var(--accent); }
@@ -88,7 +115,7 @@
   .tag.hum { background: #dbeafe; color: var(--hum); }
   .tag.no { background: #fee2e2; color: var(--bad); }
 
-  /* bottom */
+  /* page 2 bottom */
   .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3.2mm; }
   .row3 h2 { margin-bottom: 1mm; }
   .row3 ul { font-size: 7.6pt; }
@@ -96,18 +123,24 @@
   .big span { font-size: 7.6pt; font-weight: 600; color: var(--ink2); }
   .row3 p { font-size: 7.6pt; color: var(--ink2); margin-top: .6mm; }
 
-  footer { margin-top: auto; font-size: 6.6pt; color: var(--ink3); border-top: 1px solid var(--line); padding-top: 1.4mm; line-height: 1.45; }
-  footer a { color: var(--ink3); text-decoration: none; }
+  .sources ol { margin: 0; padding-left: 4.4mm; columns: 2; column-gap: 5mm; font-size: 6.7pt; line-height: 1.38; color: var(--ink2); }
+  .sources li { margin: 0 0 1mm; break-inside: avoid; }
+  .sources li b { color: var(--ink); font-weight: 650; }
+  .sources a { color: var(--accent); text-decoration: none; word-break: break-all; }
+
+  footer { margin-top: auto; font-size: 6.6pt; color: var(--ink3); border-top: 1px solid var(--line); padding-top: 1.4mm; line-height: 1.45; display: flex; justify-content: space-between; gap: 4mm; }
 </style>
 </head>
 <body>
+
+<!-- ───────────────────────────── page 1 ───────────────────────────── -->
 <div class="page">
 
   <header class="top">
     <div class="logo">M</div>
     <div>
       <h1>Munim</h1>
-      <p>An AI agent for merchant payout complaints. It finds which deduction went wrong, fixes what the rules allow, and replies in the merchant's language.</p>
+      <p>An AI teammate for merchant payout complaints. Code finds the wrong deduction and fixes it within set rules; AI reads the merchant's language and drafts the reply.</p>
     </div>
     <div class="meta">Paytm hackathon · 14 Nov 2026<br>One engine, two front doors:<br><b>support team</b> and <b>shop owner</b></div>
   </header>
@@ -115,34 +148,77 @@
   <div class="row1">
     <section class="card">
       <h2><span class="n">1</span>The problem</h2>
-      <p>When a merchant says their money is wrong, support has to find which deduction caused it, then get it reversed. That is slow because:</p>
+      <p>A merchant says money is missing from a payout. Someone has to find which deduction caused it, check it against device, pickup and plan records, and reverse it if it is wrong. Recent posts show where this still fails:</p>
       <ul>
-        <li>one payout mixes sales, fees, device rent, refunds and loan instalments <sup>1</sup></li>
-        <li>complaints come in many languages</li>
-        <li>support chatbots answer questions, but cannot fix money</li>
-        <li>one fault across many merchants is still fixed ticket by ticket</li>
+        <li>one payout mixes sales, fees, device rent, refunds, chargebacks and loan instalments&nbsp;<sup>1</sup></li>
+        <li>rent is still cut after the Soundbox went back or stopped working&nbsp;<sup>3–6</sup></li>
+        <li>merchants wait a month or more; tickets get closed unsolved&nbsp;<sup>6, 8</sup></li>
+        <li>many separate posts describe the same fault&nbsp;<sup>3–6</sup></li>
       </ul>
-      <div class="stat"><b>1.64 crore</b><span>merchant device subscriptions at Paytm, Q2 FY27 <sup>2</sup></span></div>
+      <div class="stat"><b>1.64 crore</b><span>merchant device subscriptions at Paytm, Q2 FY27&nbsp;<sup>2</sup></span></div>
     </section>
 
     <section class="card">
-      <h2><span class="n">2</span>Team side <small>· a support teammate brings the complaint</small></h2>
+      <h2><span class="n">2</span>What already exists</h2>
+      <p>Answering merchants is already well covered:</p>
+      <ul>
+        <li>Paytm's AI reportedly answers 10M+ customer queries a month&nbsp;<sup>10</sup></li>
+        <li>Paytm's AI Soundbox gives voice help and payment updates in 11 languages&nbsp;<sup>11</sup></li>
+        <li>Paytm says it uses AI for merchant onboarding and servicing, and is building merchant agents&nbsp;<sup>12</sup></li>
+        <li>Sep 2026: Razorpay, Cashfree, PayU, BharatPe and Pine Labs announced merchant agents; some chase refunds and chargebacks, with a person signing off money moves&nbsp;<sup>13</sup></li>
+      </ul>
+      <div class="fit"><b>Where Munim fits.</b> The posts below fail one step after the answer: checking a cut against device, pickup and plan records, stopping it, and finding other shops hit the same way. We don't know Paytm's internal tools; we used public information only.</div>
+    </section>
+  </div>
+
+  <section class="card ev">
+    <h2><span class="n">3</span>What merchants posted, Sep 2025 – May 2026 <small>· public complaint sites, names left out</small></h2>
+    <table>
+      <thead><tr><th style="width:11%">Posted</th><th>What the merchant says</th><th style="width:25%">Matches</th><th style="width:5%">Src</th></tr></thead>
+      <tbody>
+        <tr><td class="when">Mar 2026</td><td class="what">Returned the Soundbox, rent still cut: <i>"maine soundbox wapas kar diya fir bhi company soundbox charges kaat rahi hai"</i></td><td class="fits"><b>S1</b> rent after return</td><td>3</td></tr>
+        <tr><td class="when">Sep 2025</td><td class="what">Asked to deactivate; the box was picked up only after several follow-ups. The app still shows dues and a call asked for payment.</td><td class="fits"><b>S1, S4</b> pickup and rent</td><td>4</td></tr>
+        <tr><td class="when">May 2026</td><td class="what">Most of a settlement went to Soundbox rent for a device not in use, with no notice.</td><td class="fits"><b>S1</b> rent cut from the payout</td><td>5</td></tr>
+        <tr><td class="when">Jan 2026</td><td class="what">Box sent for replacement; no replacement after a month, tickets closed, SIM charges still billed.</td><td class="fits"><b>S1</b> charges with no working device</td><td>6</td></tr>
+        <tr><td class="when">Late 2025</td><td class="what">Rent rose from ₹29 to ₹135 a month. <i>"Whenever a complaint is made, they just deactivate the Soundbox."</i></td><td class="fits">Rent plan history <span style="color:var(--ink3)">(not a demo case)</span></td><td>7</td></tr>
+        <tr><td class="when">Apr 2026</td><td class="what">Money cut through a customer dispute; asked for an invoice that does not exist; waiting <i>"more than a month"</i>.</td><td class="fits"><b>S8</b> chargeback in a short payout</td><td>8</td></tr>
+        <tr><td class="when">Mar 2026</td><td class="what">Paid the loan settlement, but the loan still shows active and recovery asks for payment again.</td><td class="fits">Loan records <span style="color:var(--ink3)">(close to S3)</span></td><td>9</td></tr>
+      </tbody>
+    </table>
+    <p class="note">We kept posts from the last 15 months only. Older posts (2023–24) are left out because Paytm may have fixed those issues. Posts are self-selected: they show the problem exists, not how often it happens. We have no recent post for demo cases S2 (two rent plans on one box, last seen Oct 2024), S5 (risk hold) or S6 (KYC hold); they stay in as tests of the same engine.</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">4</span>Team side <small>· a support teammate brings the complaint</small></h2>
+    <div class="teamgrid">
       <ol class="flow">
         <li><b>Understand</b><span><em class="ai">AI</em> reads any Indian language, typed or spoken</span></li>
-        <li><b>Follow the money</b><span><em class="code">Code</em> pulls ledger, plans, payouts, other systems</span></li>
+        <li><b>Follow the money</b><span><em class="code">Code</em> pulls ledger, plans, pickups, payouts</span></li>
         <li><b>Find the cause</b><span><em class="code">Code</em> tests known causes; <em class="ai">AI</em> writes read-only SQL</span></li>
         <li><b>Propose, check</b><span><em class="ai">AI</em> proposes a fix; <em class="code">code</em> checks it against 11 rules</span></li>
         <li><b>Act</b><span><em class="code">Code</em> runs fixes; a <em class="hum">teammate</em> approves refunds over ₹2,000</span></li>
         <li><b>Reply, sweep</b><span><em class="ai">AI</em> drafts the reply, a <em class="hum">teammate</em> sends it; <em class="code">code</em> finds others hit</span></li>
       </ol>
-      <div class="example"><b>Example (fictional):</b> Lakshmi Tiffins writes in Telugu. Two rent plans bill one Soundbox: 5 extra debits, ₹2,495. The extra plan is cancelled, the refund waits for a teammate, and the sweep finds 6 more merchants (₹8,681). Live models: 11 s.</div>
-      <p class="rule"><em class="ai">AI</em> proposes, <em class="code">code</em> decides, a <em class="hum">teammate</em> approves larger amounts and sends every reply.</p>
-    </section>
-  </div>
+      <div class="example"><b>Example (fictional, demo case S1):</b> Sharma Kirana Store says in Hindi that ₹499 rent is still cut after the Soundbox went back. Code finds the pickup done on 12 Sep and 2 rent debits after it. Rent is stopped and ₹998 refunded. If the AI believes the merchant's "3 months" and asks for ₹1,497, the rules cut it to ₹998, what the ledger proves. The Hindi reply waits for a teammate to send. The sweep finds 36 more shops with the same fault (₹32,029) for a teammate to review.</div>
+    </div>
+    <div class="aiuse">
+      <div class="a"><b>Where AI is used</b>Reading complaints in Indian languages and voice, proposing a fix, drafting replies, and writing read-only SQL when no known cause fits.</div>
+      <div class="c"><b>Where it is not</b>Pulling records, testing known causes, the 11 rules, every amount, running fixes, the sweep and merchant access are plain code. AI output never moves money on its own.</div>
+    </div>
+    <p class="rule"><em class="ai">AI</em> proposes, <em class="code">code</em> decides, a <em class="hum">teammate</em> approves larger amounts and sends every reply.</p>
+  </section>
+
+  <footer><span>All merchants, phone numbers and amounts in the demo are fictional. Sources are on page 2.</span><span>1 / 2</span></footer>
+</div>
+
+<!-- ───────────────────────────── page 2 ───────────────────────────── -->
+<div class="page">
+
+  <div class="top2"><div class="logo">M</div><b>Munim</b><span>Paytm hackathon · 14 Nov 2026</span><span>2 / 2</span></div>
 
   <section class="card merchant">
-    <h2><span class="n">3</span>Merchant side <span class="new">NEW</span> <small>· the shop owner asks Munim from their phone</small></h2>
-    <p class="lead">The owner can ask what went wrong, follow an issue, and sometimes get it solved with no ticket. They must not get the team's data or powers, so the same engine sits behind <b>four gates, all enforced in code</b>. Nothing typed in chat and nothing the AI writes can widen access.</p>
+    <h2><span class="n">5</span>Merchant side <span class="new">NEW</span> <small>· the shop owner asks Munim from their phone</small></h2>
+    <p class="lead">The posts on page 1 describe owners chasing pickups and refunds for weeks. Here the owner can ask what went wrong, follow an issue, and sometimes get it solved with no ticket. They must not get the team's data or powers, so the same engine sits behind <b>four gates, all enforced in code</b>. Nothing typed in chat and nothing the AI writes can widen access.</p>
     <div class="gates">
       <div class="gate"><div class="gi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"/><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"/></svg></div>
         <div><b>Who · login</b><span>A signed login token (OTP) sets the shop. Ids typed in chat are ignored.</span></div></div>
@@ -210,11 +286,26 @@
     </section>
   </div>
 
-  <footer>
-    <b>Sources.</b> 1. Paytm Payments, settlement processing (net settlement = payments minus commission, GST and deductions such as rental, refund, chargeback, recovery): <a href="https://www.paytmpayments.com/docs/settlement-processing-in-paytm">https://www.paytmpayments.com/docs/settlement-processing-in-paytm</a>
-    · 2. Doon United News, Paytm Q2 results: <a href="https://doonitednews.in/paytm-q2-results-revenue-jumps-24-profit-at-rs-211-crore-5-key-takeaways/">https://doonitednews.in/paytm-q2-results-revenue-jumps-24-profit-at-rs-211-crore-5-key-takeaways/</a><br>
-    All merchants, phone numbers and amounts in the demo are fictional. We do not describe Paytm's internal systems.
-  </footer>
+  <section class="card sources">
+    <h2>Sources <small>· complaint posts are single accounts, not confirmed by Paytm</small></h2>
+    <ol>
+      <li><b>Paytm Payments, settlement processing.</b> Net settlement = payments minus commission, GST and deductions such as rental, refund, chargeback, recovery. <a href="https://www.paytmpayments.com/docs/settlement-processing-in-paytm">https://www.paytmpayments.com/docs/settlement-processing-in-paytm</a></li>
+      <li><b>Doon United News, Paytm Q2 results.</b> <a href="https://doonitednews.in/paytm-q2-results-revenue-jumps-24-profit-at-rs-211-crore-5-key-takeaways/">https://doonitednews.in/paytm-q2-results-revenue-jumps-24-profit-at-rs-211-crore-5-key-takeaways/</a></li>
+      <li><b>Voxya, 30 Mar 2026.</b> Soundbox returned, charges still cut. <a href="https://voxya.com/consumer-complaints/company-not-refunding-soundbox-charges-/262579">https://voxya.com/consumer-complaints/company-not-refunding-soundbox-charges-/262579</a></li>
+      <li><b>Voxya, 17 Sep 2025.</b> Pickup only after follow-ups; dues still shown. <a href="https://voxya.com/consumer-complaints/paytm-sound-box-rental/250578">https://voxya.com/consumer-complaints/paytm-sound-box-rental/250578</a></li>
+      <li><b>Voxya, 8 May 2026.</b> Settlement taken as Soundbox rent, no notice. <a href="https://voxya.com/consumer-complaints/fraud-deduction-paytm-for-business/266163">https://voxya.com/consumer-complaints/fraud-deduction-paytm-for-business/266163</a></li>
+      <li><b>Voxya, 8 Jan 2026.</b> Replacement delayed, tickets closed, SIM charges billed. <a href="https://voxya.com/consumer-complaints/paytm-soundbox-replacement/256692">https://voxya.com/consumer-complaints/paytm-soundbox-replacement/256692</a></li>
+      <li><b>DesiDime, about late 2025.</b> Rent raised from ₹29 to ₹135 a month. <a href="https://www.desidime.com/discussions/arbitrary-monthly-charges-on-paytm-business-soundbox">https://www.desidime.com/discussions/arbitrary-monthly-charges-on-paytm-business-soundbox</a></li>
+      <li><b>Voxya, 9 Apr 2026.</b> Deduction through a customer dispute. <a href="https://voxya.com/consumer-complaints/amount-is-deducted-and-not-credited-/263420">https://voxya.com/consumer-complaints/amount-is-deducted-and-not-credited-/263420</a></li>
+      <li><b>Voxya, 18 Mar 2026.</b> Loan settlement paid, loan still active. <a href="https://voxya.com/consumer-complaints/laon-settlement/261520">https://voxya.com/consumer-complaints/laon-settlement/261520</a></li>
+      <li><b>Free Press Journal (citing Bloomberg), Sep 2026.</b> Paytm's AI handles 10M+ customer queries a month. <a href="https://www.freepressjournal.in/business/paytm-bets-big-on-ai-plans-to-offer-ai-agents-to-banks-and-insurers-in-india-and-uae">https://www.freepressjournal.in/business/paytm-bets-big-on-ai-plans-to-offer-ai-agents-to-banks-and-insurers-in-india-and-uae</a></li>
+      <li><b>Paytm blog, Oct 2025.</b> AI Soundbox, 11 languages. <a href="https://paytm.com/blog/artificial-intelligence/paytm-launches-indias-first-ai-soundbox-for-payments/">https://paytm.com/blog/artificial-intelligence/paytm-launches-indias-first-ai-soundbox-for-payments/</a></li>
+      <li><b>Paytm blog, updated Aug 2026.</b> Applied AI for merchant onboarding, servicing, insights. <a href="https://paytm.com/blog/artificial-intelligence/why-paytm-is-building-applied-ai-not-just-another-chatbot/">https://paytm.com/blog/artificial-intelligence/why-paytm-is-building-applied-ai-not-just-another-chatbot/</a></li>
+      <li><b>Inc42, 16 Sep 2026.</b> Indian fintechs launch merchant AI agents. <a href="https://inc42.com/?p=572617">https://inc42.com/?p=572617</a></li>
+    </ol>
+  </section>
+
+  <footer><span>All merchants, phone numbers and amounts in the demo are fictional. We do not describe Paytm's internal systems.</span><span>2 / 2</span></footer>
 </div>
 </body>
 </html>
